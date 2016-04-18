@@ -575,14 +575,22 @@
 											<br />
 												    <div class="modal-dialog">
 												        <div class="modal-content">
-												            <div class="modal-header">
-												                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-												                <h4 class="modal-title" id="image-gallery-title"></h4>
-												            </div>
-												            <div class="modal-body">
+												            <div id="preview-carousel" class="carousel slide" data-ride="carousel">
 															    <% Book.where(:category => "Default", :title => @book.title, :issue => @book.issue.to_s).where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).each do |g| %>
 															    	<% g.previews.each do |h| %>
-																		<%= image_tag(h.image.url(:original), class: "img-responsive", :title => "Preview Image") %>
+																		<!-- Wrapper for slides -->
+																	  <div class="carousel-inner">
+																	    <div class="item">
+																	    	<%= image_tag(g.image.url(:original), class: "img-responsive", :title => "Preview Image") %>
+																	    </div>
+																	  </div>
+																	  <!-- Controls -->
+																	  <a class="left carousel-control" href="#preview-carousel" role="button" data-slide="prev">
+																	    <span class="glyphicon glyphicon-chevron-left"></span>
+																	  </a>
+																	  <a class="right carousel-control" href="#preview-carousel" role="button" data-slide="next">
+																	    <span class="glyphicon glyphicon-chevron-right"></span>
+																	  </a>
 																	<% end %>
 																<% end %>
 												            </div>
@@ -608,13 +616,23 @@
 											<br />
 										    <div class="modal-dialog">
 										        <div class="modal-content">
-										            <div class="modal-header">
-										                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-										                <h4 class="modal-title" id="image-gallery-title"></h4>
-										            </div>
-										            <div class="modal-body">
+										            <div id="preview-carousel" class="carousel slide" data-ride="carousel">
 													    <% @book.previews.each do |g| %>
-															<%= image_tag(g.image.url(:original), class: "img-responsive", :title => "Preview Image") %>
+
+													    	<!-- Wrapper for slides -->
+															  <div class="carousel-inner">
+															    <div class="item">
+															    	<%= image_tag(g.image.url(:original), class: "img-responsive", :title => "Preview Image") %>
+															    </div>
+															  </div>
+															  <!-- Controls -->
+															  <a class="left carousel-control" href="#preview-carousel" role="button" data-slide="prev">
+															    <span class="glyphicon glyphicon-chevron-left"></span>
+															  </a>
+															  <a class="right carousel-control" href="#preview-carousel" role="button" data-slide="next">
+															    <span class="glyphicon glyphicon-chevron-right"></span>
+															  </a>
+															
 													    <% end %>
 										            </div>
 										        </div>
