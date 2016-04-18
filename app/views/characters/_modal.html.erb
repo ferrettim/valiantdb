@@ -1,0 +1,12 @@
+<div class="text-center">
+<%= image_tag @character.image.url, :alt => "#{@character.name}", class: "text-center img-responsive img-shadow", :id => "character-img" %>
+</div>
+<div class="text-left">
+	<h2><%= @character.name %></h3>
+	<p><strong>Created by</strong> <%= @character.creator %> and <%= @character.creator2 %></p>
+	<p><strong>First appearance:</strong> 
+		<%= @character.apptitle %> #<%= @character.appissue %> (<%= @character.appera %>)</p>
+	<p><ul class="list-inline"><li><strong>Abilities:</strong> </li><li><%= @character.power %></li> <li><%= @character.power2 %></li> <li><%= @character.power3 %></li> <li><%= @character.power4 %></li> <li><%= @character.power5 %></li></ul></p>
+	<h4>Origin</h4>
+	<p><%= @character.origin %></p>
+</div>

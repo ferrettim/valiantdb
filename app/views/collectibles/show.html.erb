@@ -1,0 +1,167 @@
+<% if controller_name == "collectibles" && action_name == "show" %>
+    <div itemscope itemtype="http://schema.org/Book" class="hidden">
+      <meta itemprop="description" content="<%= @collectible.description %>">
+        <meta itemprop="datePublished" content="<%= @collectible.rdate.strftime("%B %d, %Y") %>">
+        <link itemprop="url" href="http://www.valiantdatabase.com/collectibles/<%= @collectible.id.to_s %>" rel="author"/>
+  		<img itemprop="image" src="<%= @collectible.image.url(:thumb) %>" alt="<%= @collectible.id.to_s %>" />
+        <a itemprop="url" href="http://www.valiantdatabase.com/collectibles/<%= @collectible.id.to_s %>"><span itemprop="name" style="display:block;"><strong><%= @collectible.title %></strong></span></a>
+        <span itemprop="author" itemscope itemtype="http://schema.org/Person" style="display:block;"><span itemprop="name"><%= @collectible.manufacturer %></span></span>
+  </div>
+<% end %>
+
+<div class="container">
+    <div class="row">
+    	<div class="col-md-4 col-sm-6 col-xs-12">
+            <!-- begin macbook pro mockup -->
+            <div class="md-glare">
+                <div class="md-lid">
+                    <div class="md-screen">
+                    <!-- content goes here -->                
+                        <div class="tab-featured-image">
+                            <div class="tab-content">
+                                <div class="tab-pane  in active" id="tab1">
+	                                	<%= link_to @collectible.image.url(:original), :title => @collectible.title, class: "fancybox" do %>
+	                                    	<%= image_tag @collectible.image.url(:original), :alt => @collectible.title, class: "img-responsive img-shadow" %>
+	                                    <% end %>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-base"></div>
+            </div> <!-- end macbook pro mockup -->
+
+        </div> <!-- / .col-md-6 -->
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <!-- begin panel group -->
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                
+                <!-- panel 1 -->
+                <div class="panel panel-default">
+                    <!--wrap panel heading in span to trigger image change as well as collapse -->
+                    <span class="side-tab" data-target="#tab1" data-toggle="tab" role="tab" aria-expanded="false">
+                        <div class="panel-heading" role="tab" id="headingOne"data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <h4>
+	                            <%= @collectible.title %>
+							</h4>
+                        </div>
+                    </span>
+                    
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+	                    <div class="panel-body">
+	                        	<!-- Tab content goes here -->
+                                <ul class="list-unstyled pull-right">
+                                        <% if user_signed_in? %>
+                                            <% unless @collectible.rdate.future? %>
+                                                <li id="<%= @collectible.id %>_owns">
+                                                    <%= render partial: "itemowns" %>
+                                                </li>
+                                            <% end %>
+                                            <li id="<%= @collectible.id %>_wishes">
+                                                <%= render partial: "itemwishes" %>
+                                            </li>
+                                            <!-- <li id="<%= @collectible.id %>_sales">
+                                                    <%= render partial: "itemsales" %>
+                                            </li> -->
+                                        <% end %>
+                                </ul>
+
+	                        	<p>
+	                        		
+	                        		<% if @collectible.rdate.future? %>
+										Will be released <%= @collectible.rdate.strftime("%B %d, %Y") %>
+			 						<% else %>
+										Released on <%= @collectible.rdate.strftime("%B %d, %Y") %>
+									<% end %>
+									<br />
+									Manufactured by <%= @collectible.manufacturer %><br />
+									<strong>Category:</strong> <%= @collectible.category %><br />
+									<% if @collectible.price? %>
+										<strong>Price:</strong> $<%= "%.2f" % @collectible.price_in_dollars %>
+									<% end %>
+                                    <% if @collectible.category == "Statue" %>
+                                        <% if @ownusers.count > 0 %>
+                                            <br />
+                                            <strong>Owned by:</strong> 
+                                            <a href="#" data-toggle="modal" data-target="#collectible_owners">
+                                                <%= @ownusers.count %> 
+                                                <% if @ownusers.count == 1 %>user<% else %>users<% end %>
+                                            </a>
+                                        <% end %>
+                                    <% end %>
+								</p>
+
+                                <% if user_signed_in? %>
+                                    <% if @collectible.category == "Statue" %>
+                                        <span id="<%= @collectible.id %>_quantity">
+                                            <%= render 'collectibles/itemownsquantity' %>
+                                        </span>
+                                    <% end %>
+                                <% end %>
+								
+								<div class="clearfix"></div>
+								<p>
+									<strong>Description:</strong>
+									<% if @collectible.description.blank? %>
+										No notes for this item. 
+									<% else %>
+										<%= @collectible.description.html_safe %>
+									<% end %>				
+								</p>
+
+								<%= link_to @collectible.link, data: { toggle: "tooltip" }, :title => "Click to purchase this item", class: "btn btn-default btn-sm", :target => "_blank" do %><span class="fa fa-shopping-cart"></span> Purchase this item<% end %>
+
+								<% if user_signed_in? && current_user.patron? %>
+								<% else %>
+									<%= link_to supportus_path, :title => "Support us", class: "btn btn-default btn-sm", :target => "_blank" do %>
+										<span class="fa fa-diamond"></span> Support Us
+									<% end %>
+								<% end %>
+
+                                <!-- Wishers Modal -->
+                                <div class="modal fade" id="collectible_owners" tabindex="-1" role="dialog" aria-labelledby="collectible_ownersLabel">
+                                  <br />
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h5 class="modal-title" id="myModalLabel">Users who own this</h5>
+                                      </div>
+                                      <div class="modal-body">
+                                        <% @ownusers.each do |w| %>
+                                                <div class="col-md-3 col-sm-4 col-xs-6">
+                                                    <% if w.avatar.blank? %>
+                                                        <%= link_to root_url + "users/" + w.slug.to_s + "/collection", :title => w.name.to_s + "'s Collection" do %>
+                                                            <img src="https://s3.amazonaws.com/valiantdb/images/noimage2.jpg" class="img-responsive">
+                                                        <% end %>
+                                                    <% else %>
+                                                        <%= link_to root_url + "users/" + w.slug.to_s + "/collection", :title => w.name.to_s + "'s Collection" do %>
+                                                            <%= image_tag w.avatar.url(:medium), :alt => "Profile image", class: "img-responsive" %>
+                                                        <% end %>
+                                                    <% end %>
+                                                    <% w.itemowns.each do |q| %><span class="col-md-12 col-md-offset-2 col-sm-12 col-sm-offset-4 col-xs-12 col-xs-offset-3">#<%= q.quantity %></span><% end %>
+                                                    <br />
+                                                </div>
+                                        <% end %>
+                                      </div>
+                                      <div class="clearfix"></div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+	                    </div>
+
+                    </div>
+
+                </div> 
+                <!-- / panel 1 -->
+
+        </div> <!-- /col-md-6 -->
+    </div> <!--/ .row -->
+</div> <!-- end sidetab container -->
+</div>
+<div class="clearfix"><br /></div>

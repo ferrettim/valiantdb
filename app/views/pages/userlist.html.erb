@@ -1,0 +1,47 @@
+<% if user_signed_in? && current_user.admin? %>
+<h2>User listing </h2>
+	<% if current_user.super_admin? %>
+        <%= switch_user_select %>
+    <% end %><span class="pull-right btn btn-primary"><%= @tcount %> members</span>
+<table class="table">
+	<tr>
+	<td><strong>ID</strong></td>
+	<td><strong>Status</strong></td>
+	<td><strong>Name</strong></td>
+	<td><strong>Email</strong></td>
+	<td><strong>Joined</strong></td>
+	<td class="text-center"><strong>Collection</strong></td>
+	<td class="text-center"><strong>Wishlist</strong></td>
+	<td class="text-center"><strong>Rated</strong></td>
+	<td class="text-right"><strong>Last Sign In</strong></td>
+	<td class="text-center"><strong>Actions</strong></td>
+	<% @members.each do |u| %>
+	<tr>
+	<td><%= u.id %></td>
+	<td><% if u.online? %>
+			<button class="btn btn-success btn-xs">Online</button>
+		<% else %>
+			<button class="btn btn-danger btn-xs">Offline</button>
+		<% end %></td>
+	<td><strong><%= link_to root_url + "users/" + u.id.to_s + "/profile" do %><%= u.name %><% end %></strong></td>
+	<td><%= u.email %></td>
+	<td><%= u.created_at.strftime("%B %d, %Y") %></td>
+	<td class="text-center"><span class="label label-success label-as-badge"><%= u.owned_books.count %> books</span></td>
+	<td class="text-center"><span class="label label-warning label-as-badge"><%= u.wished_books.count %> books</span></td>
+	<td class="text-center"><span class="label label-default label-as-badge"><%= u.ratings_given.count %> books</span></td>
+	<td class="text-right"><%= local_time u.current_sign_in_at %></td>
+	<% if user_signed_in? && current_user.admin? %>
+		<% unless u.admin? %>
+			<td class="text-center"><%= link_to admin_destroy_user_path(u), method: :delete, data: { confirm: "You sure?" }, class: "btn btn-danger btn-sm" do %><i class="fa fa-trash"></i><% end %></td>
+		<% end %>
+	<% end %>
+	</tr>
+
+	<% end %>
+</table>
+<div class="center"><%= paginate @members %></div>
+<div class="clearfix">
+<% else %>
+<h2 class="text-center">Oh, oh, you're not supposed to be here!</h2>
+<h3 class="text-center">Head <%= link_to "back home", root_path %>, I won't tell anyone you were here.</h3>
+<% end %>

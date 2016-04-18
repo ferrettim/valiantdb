@@ -1,0 +1,152 @@
+<% if user_signed_in? && current_user.admin? %>
+  <div class="container">
+    <% if @book.image.blank? %>
+      <span class="pull-right"><button class="btn btn-default">No image found</button></span>
+    <% else %>
+      <span><%= image_tag @book.image.url(:thumb), class: "img-responsive img-thumbnail", :height => "100px" %></span>
+    <% end %>
+    <%= simple_form_for(@book, html: { class: "form-horizontal" }) do |f| %>
+      <%= f.error_notification %>
+      <%= f.full_error :image_file_size, class: "alert alert-error" %>
+      <%= f.full_error :image_content_type, class: "alert alert-error" %>
+      <div class="row">
+        <div class="col-md-7">
+          <% if @book.image.blank? %>
+            <%= f.input :image, label: "Upload an image" %>
+          <% else %>
+            <%= f.input :image, label: "Change book image" %>
+          <% end %>
+            <ul class="list-inline">
+              <li><%= f.input :title, :url => autocomplete_book_title_books_path, :as => :autocomplete, label: false, placeholder: "Select a title" %></li>
+              <li>&nbsp;&nbsp;</li>
+              <li><%= f.input :issue, :label => "#" %></li>
+              <li><%= f.input :price_in_dollars, :label => "Cover Price" %></li>
+              <li><%= f.input :category, collection: ["Default", "Variant", "Paperback", "Hardcover", "Sketch", "Promo", "Misc"], include_blank: true %></li>
+            </ul>
+            <ul class="list-inline">
+              <li><%= f.input :rdate, :label => "Release date", as: :date, start_year: Date.today.year - 30 %></li>
+            </ul>
+            <ul class="list-inline">
+              <li><%= f.input :arc %></li>
+              <li><%= f.input :note %></li>
+              <% if @book.era? %>
+                <li><%= f.input :era, collection: ["VEI", "VH1", "VH2","Armada","Crime","Nintendo","Windjammer","Wrestling"], include_blank: true, selected: @book.era %></li>
+              <% else %>
+                <li><%= f.input :era, collection: ["VEI", "VH1", "VH2","Armada","Crime","Nintendo","Windjammer","Wrestling"], include_blank: true, selected: "VEI" %></li>
+              <% end %>
+              <li>&nbsp;</li>
+              <li><%= f.input :printing, collection: 1..10, selected: 1 %></li>
+            </ul>
+            <ul class="list-inline">
+              <li><%= f.input :isb, :label => "ISBN", as: :text, input_html: { rows: "1"} %></li>
+              <li><%= f.input :link, :label => "Purchase Link", as: :text, input_html: { rows: "1", cols: "30" } %></li>
+              <li><%= f.input :qr, :label => "YouTube Video ID", as: :text, input_html: { rows: "1" } %></li>
+            </ul>
+            <ul class="list-inline">
+              <li><%= f.input :event, :label => "Event Title" %></li>
+              <li><%= f.input :eventpart, :label => "Event Part #" %></li>
+            </ul>
+            <ul class="list-unstyled">
+              <li><%= f.input :iskey, as: :boolean, :label => "Key issue?" %></li>
+              <li><%= f.input :keynote, :label => "Key note", as: :text, input_html: { rows: "2", cols: "100" } %></li>
+            </ul>
+        </div>
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-2">
+          <ul class="list-unstyled">
+            <li><%= f.input :writer, :url => autocomplete_book_writer_books_path, :as => :autocomplete, label: false, :placeholder => "Enter writer" %></li>
+            <li><%= f.input :writer2, :url => autocomplete_book_writer2_books_path, :as => :autocomplete, label: false, placeholder: "Enter second writer" %></li>
+            <li><%= f.input :artist, :url => autocomplete_book_artist_books_path, :as => :autocomplete, label: false, placeholder: "Enter artist" %></li>
+            <li><%= f.input :artist2, :url => autocomplete_book_artist2_books_path, :as => :autocomplete, label: false, placeholder: "Enter second artist" %></li>
+            <li><%= f.input :colors, :url => autocomplete_book_colors_books_path, :as => :autocomplete, label: false, placeholder: "Enter colorist" %></li>
+            <li><%= f.input :cover, :url => autocomplete_book_cover_books_path, :as => :autocomplete, label: false, placeholder: "Enter cover artist" %></li>
+            <li><%= f.input :letters, :url => autocomplete_book_letters_books_path, :as => :autocomplete, label: false, placeholder: "Enter letterer" %></li>
+            <li><%= f.input :editor, :url => autocomplete_book_editor_books_path, :as => :autocomplete, label: false, placeholder: "Enter editor" %></li>
+            <li><%= f.input :eic, :url => autocomplete_book_eic_books_path, :as => :autocomplete, label: false, placeholder: "Enter EIC" %></li>
+            <li><%= f.input :publisher, :url => autocomplete_book_publisher_books_path, :as => :autocomplete, label: false, placeholder: "Enter Publisher" %></li>
+            <li><%= f.input :country, :url => autocomplete_book_country_books_path, :as => :autocomplete, label: false, placeholder: "Enter Country" %></li>
+          </ul>
+          <% if current_user.super_admin? %>
+            <ul class="list-inline">
+              
+              <li><%= f.input :value_in_dollars, :label => "NM Price" %></li>
+              <!-- <li><%= f.input :price98, :label => "CGC Price" %></li> -->
+              <li><%= f.input :printrun, :label => "Print run" %></li>
+              
+              <li><%= f.input :status, collection: ["Active",
+                                              "Pending"], 
+                                   selected: "Active",
+                                   label: "Select published status",
+                                   class: "form-control" %></li>
+            </ul>
+          <% end %>
+        </div>
+        <div class="col-md-12">
+          <li><%= f.input :tag_list %></li>
+        </div>
+        <div class="col-md-12">
+          <%= f.input :summary, as: :text, input_html: { rows: "10", :class => "tinymce" } %>
+          <%= tinymce %>
+
+          <div class="clearfix"><br /></div>
+          <%= f.label 'Preview Images' %><br>
+          <ul class="list-inline">
+            <% 8.times do |i| %>
+               <li>Preview <%= i + 1 %> &nbsp;
+               <%= file_field_tag "previews[#{i}]", accept: 'image/png,image/jpeg' %> &nbsp;
+               <%= @book.previews[i].nil? ? '' : label_tag(@book.previews[i].image_file_name,nil,id: "photo#{@book.previews[i].id}") %> &nbsp;
+               <br />
+            <% end %></li>
+          </ul>
+
+          <%= f.button :submit, data: {disable_with: "Saving..."} %>
+        </div>
+      </div>
+    <% end %>
+    <div class="clearfix"><br /></div>
+  </div>
+<% elsif user_signed_in? %>
+    <div class="container">
+    <% if @book.image.blank? %>
+      <span class="pull-right"><button class="btn btn-default">No image found</button></span>
+    <% else %>
+      <span><%= image_tag @book.image.url(:thumb), class: "img-responsive img-thumbnail", :height => "100px" %></span>
+    <% end %>
+    <%= simple_form_for(@book, html: { class: "form-horizontal" }) do |f| %>
+      <%= f.error_notification %>
+      <%= f.full_error :image_file_size, class: "alert alert-error" %>
+      <%= f.full_error :image_content_type, class: "alert alert-error" %>
+      <div class="row">
+        <div class="col-md-7">
+          <% if @book.image.blank? %>
+            <%= f.input :image, label: "Upload an image" %>
+          <% else %>
+            <%= f.input :image, label: "Change book image" %>
+          <% end %>
+            <ul class="list-unstyled">
+              <li><%= f.input :issue, :label => "Issue #" %></li>
+              <li><%= f.input :title, :url => autocomplete_book_title_books_path, :as => :autocomplete, label: false, placeholder: "Select a book title", class: "form-group" %></li>
+              <li><%= f.input :cover, :url => autocomplete_book_cover_books_path, :as => :autocomplete, label: false, placeholder: "Enter cover artist" %></li>
+              <li><%= f.input :colors, :url => autocomplete_book_colors_books_path, :as => :autocomplete, label: false, placeholder: "Enter colorist" %></li>
+            </ul>
+            <ul class="list-inline">
+              <li><%= f.input :rdate, :label => "Sketch date", as: :date, start_year: Date.today.year - 25 %></li>
+            </ul>
+            <ul class="list-inline">
+              <li><%= f.input :note, :input_html => { :value => current_user.name.to_s }, as: "hidden" %></li>
+                <%= f.input :status, :input_html => { :value => "Pending" }, as: "hidden" %></li>
+              <li><%= f.input :category, :input_html => { :value => "Sketch" }, as: "hidden" %></li>
+            </ul>
+        </div>
+        <div class="col-md-12">
+          <%= f.input :summary, as: :text, input_html: { rows: "10", :class => "tinymce" }, label: "Summary - Enter any relevant data like who is on the cover, where you acquired it, etc." %>
+          <%= tinymce %>
+          <div class="pull-right"><%= f.button :submit, data: {disable_with: "Saving..."} %></div>
+        </div>
+      </div>
+    <% end %>
+    <div class="clearfix"><br /></div>
+  </div>
+<% else %>
+  NOPE
+<% end %>

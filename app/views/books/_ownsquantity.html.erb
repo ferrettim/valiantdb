@@ -1,0 +1,15 @@
+<% if user_signed_in? && current_user.owns?(@book) %>
+		<% Own.where(user_id: current_user.id, book_id: @book.id).each do |own| %>
+			<%= form_for [own.book, own], remote: true, input_html: { class: "form-inline" }, :method => 'put' do |f| %>
+				You own <span id="quantity"> <%= f.text_field :quantity, :placeholder => own.quantity, :size => "1", label: false, class: "text-center" %> </span> 
+				<% if own.quantity == 1 %>
+					copy 
+				<% else %>
+					copies
+				<% end %> 
+				of this book.
+				<%= f.submit "Save", :onclick => "submit()", :hidden => true %>
+			<% end %>
+		<% end %>
+	<br />
+<% end %>

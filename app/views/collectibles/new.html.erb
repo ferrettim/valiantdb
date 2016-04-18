@@ -1,0 +1,9 @@
+<div class="wellclear">
+  <% if user_signed_in? && current_user.admin? %>
+	<h1>New Collectible</h1>
+	<%= render 'form' %>
+  <% else %>
+	<h1 class="text-center">You're not supposed to be here!</h1>
+	<h2 class="text-center">Head back to <%= link_to "the database", root_url %>, I won't say anything.</h2>
+  <% end %>
+</div>

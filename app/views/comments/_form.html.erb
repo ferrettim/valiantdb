@@ -1,0 +1,3 @@
+<%= form_for [@book, @book.comments.build], remote: true do |f| %>
+											<%= f.text_field :content, placeholder: "Add your own notes to this book...", class: "form-control col-md-12 col-sm-12 col-xs-12 tinymce", :rows => "5", :id => "comment_content_#{@book.id}" %>
+										<% end %>

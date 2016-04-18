@@ -1,0 +1,27 @@
+<div class="container wellclear">
+	<h3 class="text-center">Users at a glance</h3>
+	<% if user_signed_in? && current_user.super_admin? %>
+			<div class="col-md-12">
+				<h4>New users by week</h4>
+				<div class="img-shadow"><%= area_chart @users.group_by_week(:created_at), xtitle: "Week", ytitle: "Registrations", format: "%B %d, %Y", range: (Date.today - 12.month).beginning_of_month..(Date.today), colors: ["red", "white"] %></div>
+			</div>
+
+			<div class="col-md-12">
+				<h4>New users by month</h4>
+				<div class="img-shadow"><%= area_chart @users.group_by_month(:created_at), xtitle: "Month", ytitle: "Registrations", format: "%B %d, %Y", range: (Date.today - 12.month).beginning_of_month..(Date.today), colors: ["blue", "white"] %></div>
+			</div>
+			<div class="col-md-12">
+				<h4>User activity by day</h4>
+				<div class="img-shadow">
+					<%= area_chart @users.group_by_day(:last_sign_in_at), xtitle: "Day", ytitle: "Count", format: "%l %P", range: (Date.today - 1.week)..(Date.today), colors: ["red", "white"] %>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<h4>User activity by week</h4>
+				<div class="img-shadow">
+					z<%= area_chart @users.group_by_week(:last_sign_in_at), range: (Date.today - 3.month).beginning_of_month..(Date.today), xtitle: "Week", ytitle: "Count", format: "%B %d", colors: ["blue", "white"] %>
+				</div>
+			</div>
+	<% end %> 
+	<div class="clearfix"><br /></div>
+</div>

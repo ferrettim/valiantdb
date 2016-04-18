@@ -1,0 +1,19 @@
+<div class="wellclear">
+	<% if user_signed_in? && current_user.admin? %>
+		<% if @book.category == "Hardcover" %>
+			<h2>Editing <%= @book.title %> HC Vol. <%= @book.issue %></h2>
+		<% elsif @book.category == "Paperback" %>
+			<h2>Editing <%= @book.title %> TPB Vol. <%= @book.issue %></h2>
+		<% else %>
+			<h2>Editing <%= @book.title %> #<%= @book.issue %></h2>
+		<% end %>
+
+	<%= render 'form' %>
+
+	<%= link_to 'Show', @book %> |
+	<%= link_to 'Back', all_books_path %>
+	<% else %>
+	<h1 class="text-center">You're not supposed to be here!</h1>
+	<h2 class="text-center">Head back to <%= link_to "the database", all_books_path %>, I won't say anything.</h2>
+	<% end %>
+</div>

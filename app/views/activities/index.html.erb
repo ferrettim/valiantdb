@@ -1,0 +1,20 @@
+<div class="wellclear">
+<h2>Stream</h2>
+<ul>
+	<% @activities.each do |a| %>
+		<% if a.key == "own.create" %>
+			<li>Added book to collection</li>
+		<% elsif a.key == "own.destroy" %>
+			<li>Removed book from collection</li>
+		<% elsif a.key == "wish.create" %>
+			<li>Added book to wishlist</li>
+		<% elsif a.key == "wish.destroy" %>
+			<li>Removed book from wishlist</li>
+		<% elsif a.key == "book.create" %>
+			<li><strong><%= Book.find(a.trackable_id).title %> #<%= Book.find(a.trackable_id).issue %> cover by <%= Book.find(a.trackable_id).cover %></strong> was added to the database.</li>
+		<% else %>
+			<li><%= a.inspect %></li>
+		<% end %>
+	<% end %>
+</ul>
+</div>

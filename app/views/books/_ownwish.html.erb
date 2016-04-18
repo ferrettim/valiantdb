@@ -1,0 +1,93 @@
+Owned by 
+<% if @owners.count > 0 %>
+	<a href="#" data-toggle="modal" data-target="#book_owners">
+		<%= @owners.count %> 
+		<% if @owners.count == 1 %>user<% else %>users<% end %>
+	</a>
+<% else %>
+	<%= @owners.count %> 
+		<% if @owners.count == 1 %>user<% else %>users<% end %>
+<% end %>
+
+and in 
+<% if @wishers.count > 0 %>
+	<a href="#" data-toggle="modal" data-target="#book_wishers">
+		<%= @wishers.count %> 
+		<% if @wishers.count == 1 %>wishlist<% else %>wishlists<% end %>
+	</a>.
+<% else %>
+	<%= @wishers.count %> 
+		<% if @wishers.count == 1 %>wishlist<% else %>wishlists<% end %>
+<% end %>
+ 
+
+
+<!-- Owners Modal -->
+<div class="modal fade" id="book_owners" tabindex="-1" role="dialog" aria-labelledby="book_ownersLabel">
+  <br />
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h5 class="modal-title" id="myModalLabel">Users who own this</h5>
+      </div>
+      <div class="modal-body">
+        <% @ownusers.each do |u| %>
+			                        		<% u.owned_books.where(:id => @book.id).limit(20).each do %>
+				                        		<div class="col-md-3 col-sm-4 col-xs-6">
+					                        		<% if u.avatar.blank? %>
+					                        			<%= link_to root_url + "users/" + u.slug.to_s + "/collection", :title => u.name.to_s + "'s Collection" do %>
+								                        	<img src="https://s3.amazonaws.com/valiantdb/images/noimage2.jpg" class="img-responsive">
+								                        <% end %>
+								                    <% else %>
+								                    	<%= link_to root_url + "users/" + u.slug.to_s + "/collection", :title => u.name.to_s + "'s Collection" do %>
+								                        	<%= image_tag u.avatar.url(:medium), :alt => "Profile image", class: "img-responsive" %>
+								                        <% end %>
+								                    <% end %>
+													<br /><br />
+				                        		</div>
+				                        	<% end %>
+		<% end %>
+      </div>
+      <div class="clearfix"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Wishers Modal -->
+<div class="modal fade" id="book_wishers" tabindex="-1" role="dialog" aria-labelledby="book_wishersLabel">
+  <br />
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h5 class="modal-title" id="myModalLabel">Users who want this</h5>
+      </div>
+      <div class="modal-body">
+        <% @wishusers.each do |w| %>
+			                        		<% w.wished_books.where(:id => @book.id).limit(20).each do %>
+				                        		<div class="col-md-3 col-sm-4 col-xs-6">
+					                        		<% if w.avatar.blank? %>
+					                        			<%= link_to root_url + "users/" + w.slug.to_s + "/wishlist", :title => w.name.to_s + "'s Wishlist" do %>
+								                        	<img src="https://s3.amazonaws.com/valiantdb/images/noimage2.jpg" class="img-responsive">
+								                        <% end %>
+								                    <% else %>
+								                    	<%= link_to root_url + "users/" + w.slug.to_s + "/wishlist", :title => w.name.to_s + "'s Wishlist" do %>
+								                        	<%= image_tag w.avatar.url(:medium), :alt => "Profile image", class: "img-responsive" %>
+								                        <% end %>
+								                    <% end %>
+													<br /><br />
+				                        		</div>
+				                        	<% end %>
+		<% end %>
+      </div>
+      <div class="clearfix"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

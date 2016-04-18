@@ -1,0 +1,25 @@
+<div class="media">
+  <div class="media-left">
+    <a href="#">
+      <%= image_tag current_user.avatar.url(:thumb), :width => "64px" %>
+    </a>
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading">
+      <%= conversation.subject %>
+    </h4>
+    Sent by <%= link_to conversation.originator.name, root_url + "users/" + conversation.originator.slug.to_s + "/profile" %> on <strong><%= conversation.messages.last.created_at.strftime("%A, %b %d, %Y") %></strong> at <strong><%= conversation.messages.last.created_at.strftime("%I:%M%p") %></strong>
+    <br />
+    <p><%= truncate conversation.messages.last.body, length: 145 %></p>
+  </div>
+  <p class="pull-right">
+    <% if conversation.messages.last.is_unread?(current_user) %>
+      <button class="btn btn-success">NEW!</button>
+    <% end %>
+    <%= link_to trash_conversation_path(conversation), class: 'btn btn-danger', method: :post,
+                              data: {confirm: 'Are you sure?'} do %>
+                    <i class="fa fa-trash"></i> Delete<% end %>
+    <%= link_to conversation_path(conversation) do %> <button class="btn btn-primary"> <i class="fa fa-eye"></i> View Message</button><% end %>
+  </p>
+</div>
+

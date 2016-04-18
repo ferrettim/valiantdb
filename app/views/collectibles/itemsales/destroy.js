@@ -1,0 +1,1 @@
+$("#<%= @collectible.id %>_sales").html("<%=j render partial: "collectibles/itemsales" %>");

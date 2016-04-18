@@ -1,0 +1,51 @@
+  <div class="container">
+    <% if @character.image.blank? %>
+    <% else %>
+      <span><%= image_tag @character.image.url(:thumb), class: "img-responsive img-thumbnail", :height => "100px" %></span>
+    <% end %>
+    <%= simple_form_for(@character, html: { class: "form-horizontal" }) do |f| %>
+      <%= f.error_notification %>
+      <%= f.full_error :image_file_size, class: "alert alert-error" %>
+      <%= f.full_error :image_content_type, class: "alert alert-error" %>
+      <div class="row">
+        <div class="col-md-6">
+          <% if @character.image.blank? %>
+            <%= f.input :image, label: "Upload an image" %>
+          <% else %>
+            <%= f.input :image, label: "Change book image" %>
+          <% end %>
+            <ul class="list-unstyled">
+              <li><%= f.input :name, label: false, placeholder: "Character name" %></li>
+              <li><%= f.input :creator, :url => autocomplete_character_creator_characters_path, :as => :autocomplete, :label => false, placeholder: "Creator name (1)", class: "form-control" %></li>
+              <% if current_user.super_admin? %>
+                <li><%= f.input :creator2, :url => autocomplete_character_creator2_characters_path, :as => :autocomplete, label: false, placeholder: "Creator name (2)", class: "form-control" %></li>
+              <% end %>
+            </ul>
+            <ul class="list-inline">
+              <li><%= f.input :power %></li>
+              <li><%= f.input :power2 %></li>
+              <li><%= f.input :power3 %></li>
+              <li><%= f.input :power4 %></li>
+              <li><%= f.input :power5 %></li>
+            </ul>
+        </div>
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-5">
+          <% if current_user.super_admin? %>
+            <h4>First appearance</h4>
+            <ul class="list-inline">
+              <li><%= f.input :apptitle, :label => "Title" %></li>
+              <li><%= f.input :appissue, :label => "Issue" %></li>
+              <li><%= f.input :appera, collection: ["Current", "Classic", "Acclaim"], include_blank: true %></li>
+            </ul>
+          <% end %> 
+        </div>
+        <div class="col-md-12">
+          <%= f.input :origin, as: :text, input_html: { rows: "10" } %>
+          <%= f.button :submit, data: {disable_with: "Saving..."} %>
+        </div>
+      </div>
+    <% end %>
+    <div class="clearfix"><br /></div>
+    <%= link_to @character, method: :delete, data: { confirm: 'Are you sure?' } do %><i class="fa fa-remove"></i><% end %>
+  </div>

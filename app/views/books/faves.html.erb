@@ -1,0 +1,30 @@
+<% if params[:query].present? %>
+  <% @search_count = Book.search(params[:query]).count %>
+  <% @title = Book.search(params[:query], page: params[:page], per_page: 20) %>
+  <%= render "pages/search" %>
+  <%= render "pages/book" %>
+<% else %>
+<div class="content transitions-enabled container-fluid">
+  <h3>My Collection (Deprecated)</h3>
+  <h4>Please remember that this page will not be available after May 31, 2015. Please begin using the new collection feature.</h4>
+    <div class="clearfix"></div>
+    <% if current_user.find_liked_items.blank? %>
+    <p>It looks like you haven't added anything to your collection yet. Browse the <%= link_to "list of books", all_books_path %> or select a title from the list above to add some!.</p>
+    <% else %> 
+    <div class="clearfix"></div>
+    <p>You have <span class="badge"><%= @collection.count %></span> <% if @collection == 1 %>book<% else %>books<% end %> in your collection.</p>
+    <% @collection.each do |book| %>
+        <div class="box">
+          <% if current_user.voted_up_for? book %>
+              <span class="status-button"><%= button_to unfave_book_path(book, method: :put, remote: true), class: "btn btn-default btn-danger", title: "Remove from Collection", data: {disable_with: "<span class='glyphicon glyphicon-minus'></span>"} do %>
+                    <span class="glyphicon glyphicon-heart-empty"></span>
+                  <% end %>
+              </span>
+            <% end %>
+          <%= link_to (image_tag book.image(:medium)), book, :title => book.title + " #" + book.issue.to_s, :class => "hovertext" %>
+        </div>
+    <% end %>
+    <% end %>
+<div class="clearfix"></div>
+</div>
+<% end %>

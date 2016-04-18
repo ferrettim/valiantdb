@@ -1,0 +1,122 @@
+<div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12 white-bg">
+<h2 class="text-center">Latest changes</h2>
+<ul>
+	<li><strong>April 17, 2016:</strong> Updated all current Valiant listings to include "missing from collection" pages. Also, other minor UI changes and bugfixes.</li>
+	<li><strong>April 13, 2016:</strong> Added an "accounted for" section to single book view to show how many copies of a book are accounted for by users of the database. Improved security features, and minor API changes.</li>
+	<li><strong>April 12, 2016:</strong> Added country and publisher fields to all books. Minor UI changes to the book create forms. Moved summary to modal button from slidedown, and update the single books view to be a bit more concise. Updated this week/next week releases page to conform to the layout of the monthly solicit pages.</li>
+	<li><strong>April 10, 2016:</strong> Fixed N+1 query errors in Books controller. Users can now see who owns what number statue.</li>
+	<li><strong>April 9, 2016:</strong> Added ability to see who owns/wants a book from the single book page. Added ability to see how many notes exist for a book, as well as a new "My Notes" page to see user notes. Updated values algorithm with more logic to differentiate books and bring more accurate results. Updated wishlist pages to be able to sort by era and titles like in collections.</li>
+	<li><strong>April 5, 2016:</strong> Moved Faith books to main menu, fixed minor bug which prevented Eternal Warrior books from showing up correctly in table view. Changed sketch cover pages to sort by added date instead of cover artist. Other minor bugfixes.</li>
+	<li><strong>March 14, 2016:</strong> Controller bugfixes, minor UI and menu updates, general bugfixes.</li>
+	<li><strong>March 13, 2016:</strong> Added collectibles to the database as well as the ability to own/wish for/sell these items. Minor menu updates and general bugfixes.</li>
+	<li><strong>March 9, 2016:</strong> Implemented previous/next book method and added to single book view. Implemented remember me functionality for user sign ins. Fixed critical bug that prevented users from resetting their passwords via Devise Recoverable. Updated wishes controller to only search for books for sale on released books.</li>
+	<li><strong>March 4, 2016:</strong> UI tweaks to collection pages, assets cleanup and recompile, key ribbons for key books, and minor bugfixes.</li>
+	<li><strong>March 2, 2016:</strong> Finalized book commenting system and implemented for patrons. Implemented new error and maintenance pages on production environment. Added spinner while Turbolinks loads pages. Added Cache-Control and Expires headers to all images - one day for book images and 30 days for others. Minor UI tweaks. Added links to the books that are included in a trade.</li>
+	<li><strong>February 29, 2016:</strong> Implemented simple commenting system for books. TONS of bugfixes and speed improvements.</li>
+	<li><strong>February 27, 2016:</strong> Users can now changed their profile settings without having to insert a password. Expanding message information users receive on book sale messages. Added unread notifier and delete message button to inbox for easier message management. Fixed error un user unfollow function. Update user sidebar menus with follow/unfollow and message links. Added books for sale menu to menu bar. Updated Armor Hunters controller to sort out separate pages.</li>
+	<li><strong>February 25, 2016:</strong> Implemented new sell feature for patrons only. Sale appears on friend's stream as well as by messaging users which have that book in their wishlist. Updated show page to include users selling a particular book. Minor UI tweaks to book show page including the ability to see how mahy users own/want a particular cover. Minor menu UI tweaks. Minor messaging system tweaks and bugfixes.</li>
+	<li><strong>February 22, 2016:</strong> SEO updates and improvements. Added collection valuation for each of the three different eras.</li>
+	<li><strong>February 19, 2016:</strong> Implemented voice commands and navigation.</li>
+	<li><strong>February 17, 2016:</strong> Update menus to add all Book of Death, Quantum and Woody, and X-O Manowar titles. Reorganized menus.</li>
+	<li><strong>February 16, 2016:</strong> Begin work on secret feature.</li>
+	<li><strong>February 14, 2016:</strong> Added pages for A&A, Divinity II, and Dr. Mirage Second Lives as well as submenu dropdowns for VEI.</li>
+	<li><strong>February 9, 2016:</strong> Updated database with all non-core Valiant titles including Armada, Nintendo, Windjammers, wrestling, and more.</li>
+	<li><strong>February 7, 2016:</strong> Minor improvements to the pricing guide algorithm, and fixed minor bug which prevented pricing guide value updates on certain titles. Also added pages for all non-Valiant books released by Valiant (Armada, Windjammer, etc).</li>
+	<li><strong>February 1, 2016:</strong> Pricing guide updated with January 2015 values.</li>
+	<li><strong>January 15, 2016:</strong> Backend and asset upgrades.</li>
+	<li><strong>January 9, 2016:</strong> Bugfix release.</li>
+	<li><strong>January 1, 2016:</strong> Added pricing guide for all VH1, VH2, an VEI books.</li>
+	<li><strong>December 14, 2015:</strong> Added book type to solicit exports, minor code improvements and bug fixes.</li>
+	<li><strong>December 6, 2015:</strong> Tons of bugfixes and tweaks since the last update as well as the addition of Patreon support levels for registered members.</li>
+	<li><strong>November 11, 2015:</strong> Added new sales statistics page with average/median/total sales by month with charts. Added number of variants to top selling books page.</li>
+	<li><strong>November 9, 2015:</strong> Updated book show page logic to only show the variant covers panel when a book actually has a variant cover. Updated the character show page with a split screen view to make the page look a bit tighter.</li>
+	<li><strong>November 8, 2015:</strong> Updated VEI views with new UI for grid and table views on all views which can filter by title, type, or issue number depending on which page is being displayed. Updated collection pages to only show titles in title filters for titles which were published in that era. Added option for user to select whether to default to grid or table view (in testing). Lots of code clean up and minor bugfixes. Removed table view from collection pages and added custom export for each different era. Implemented tagging system in books to have a way to discern which characters appear in which books. This tagging system is used to find the number of appearances made by the character.</li> 
+	<li><strong>November 6, 2015:</strong> Begin work on multiple sorting options.</li>
+	<li><strong>November 1, 2015:</strong> Added page for Wrath of Eternal Warrior, add own quantity when clicking heart icon. If a book is in your wishlist and you click on the own button, the system will now automatically add it to collection and remove it from the wishlist.</li>
+	<li><strong>October 30, 2015:</strong> Implemented bit.ly API for link shortening in share buttons.</li>
+	<li><strong>October 29, 2015:</strong> Book previews are live for all users, lots of UI tweaks and bugfixes, added latest book additions to home page. Updated user and character models to use friendly id slugs instead of ids.</li>
+	<li><strong>October 27, 2015:</strong> Logic changes in book and user controllers. Reimplemented Facebook and Google sign in.</li>
+	<li><strong>October 21, 2015:</strong> Removed Facebook and Google sign in due to redirect loop error caused by bug in Oauth.</li>
+	<li><strong>October 17, 2015:</strong> Implemented book previews, replaced all glyphicon references with Font Awesome icons, and tons of bugfixes.</li>
+	<li><strong>October 14, 2015:</strong> Updated parts of the site layout to only be available to signed in users. Added logic to estimate sales of ratio variant covers based on total sales. Begin localization testing. Added monthly sales totals to the 12 month trends page.</li>
+	<li><strong>October 12, 2015:</strong> Logic changes in the new releases sliders and minor styling tweaks. Updated solicitations pages to differentiate between tpb, hc, and single issues. Added a link to the single book page to direct to a trade for books collected in trade.</li>
+	<li><strong>October 10, 2015:</strong> Added new page to track the highest selling single issues and trades for each month over the past year and added top seller of current and last year. Also fixed issue with search bar not functioning on mobile devices.</li>
+	<li><strong>October 7, 2015:</strong> Fixed fatal error in user collections, updated all icons to Font Awesome library.
+	<li><strong>October 5, 2015:</strong> Timeline activity bugfixes to prevent double posting of adding books to collection. Implemented Mailchimp integration to user registrations to auto-include new users to the website mailing list. Minor character pages bugfixes and bugfixes to Javascript alerts. Added Editor-in-Chief section and cover price to book show page.</li>
+	<li><strong>October 1, 2015:</strong> All new event pages automatically fill in based on book information instead of manual entry and added event pages for classic Valiant titles. Created new dynamic key issue pages for classic and current titles to automatically add new issues instead of manually entering them in. Books that are part of an event now have a direct link to the event.</li>
+	<li><strong>September 30, 2015:</strong> Minor menu updates, begin collection quantities implementation. Update title logic to account for partial title requests.</li>
+	<li><strong>September 29, 2015:</strong> Added pages for Faith and Wrath of the Eternal Warrior, minor show page updates.</li>
+	<li><strong>September 25, 2015:</strong> Menu system bugfixes, improved page loads, minor controller changes.</li>
+	<li><strong>September 24, 2015:</strong> Removed JavaScript-based menus and replaced it with a pure CSS system for faster page loads.
+	<li><strong>September 15, 2015:</strong> December solicitations added, fixed about a dozen bugs.</li>
+	<li><strong>September 4, 2015:</strong> Added filtering option to title pages.</li>
+	<li><strong>September 2, 2015:</strong> Implemented option for users to submit sketch covers for administrator approval, as well as a book management system abd menu options for admins.</li>
+	<li><strong>July 3, 2015:</strong> Bugfix release.</li>
+	<li><strong>June 22, 2015:</strong> Implemented new admin features: user stats, database stats, background process stats. Lowered Puma worker threads to improve memory handling in production. WOrking on permanent fix.</li>
+	<li><strong>June 21, 2015:</strong> Added images to activity stream, fixed a bug where stream showed incorrect user rating. Added new book image style and optimized all site images for mobile. Minor bugfixes and menu changes.</li>
+	<li><strong>June 19, 2015:</strong> You can now follow and message users directly! Also, added a friend activity feed so you can follow what other users are adding to their collections and wishlists. Updated backend for Redis support, upped worker dynos for background processing improvements, moved image processing to background process for site speed improvements.</li>
+	<li><strong>June 8, 2015:</strong> Implemented title filtering in collections and wishlists, resolved memory exceeded error, minor search bugfixes, minor UI tweaks, and began work on slugged URLs for users and characters (books still undecided).</li>
+	<li><strong>June 6, 2015:</strong> Updated single book view with new layout, mobile improvements, menu improvements, and a few bugfixes.</li>
+	<li><strong>June 2, 2015:</strong> Added ability for users to follow/unfollow and message each other. More social features will be added over the next week or so.</li>
+	<li><strong>May 30, 2015:</strong> New layout for user directory, and top 25 users. Updated logic for sales by title page, tweaks in home UI, and minor bugfixes.</li>
+	<li><strong>May 29, 2015:</strong> Added previous/next book buttons to scroll between books in individual titles. Also fixed a fatal error in book controller logic.</li>
+	<li><strong>May 28, 2015:</strong> All new controller logic for books, clicking on book titles will take you to book category page on most books, admin changes, book model updates and backend improvements.</li>
+	<li><strong>May 26, 2015:</strong> New landing page for new users, menus now only available to registered users though content still available through search. UI tweaks and as always, a few bugfixes.</li>
+	<li><strong>May 24, 2015:</strong> Bugfix release, reverted to non-SSL site due to Chrome SSL bug.</li>
+	<li><strong>May 21, 2015:</strong> UI improvements, pagination logic changes, book controller optimization tweaks, minor bugfixes.</li>
+	<li><strong>May 19, 2015:</strong> Added all Acclaim titles and August 2015 solicitations. Site is now defaulting to secure HTTPS connections for all transactions using TLS 1.2.</li>
+	<li><strong>May 18, 2015:</strong> Bugfixes for UI transitions when varying screen resolutions, set max width at 1366px for improved user experience, updated banner images, improved Javascript performance and added menu fragment caching. Updated controllers and views for Acclaim titles.</li>
+	<li><strong>May 16, 2015:</strong> Material design updates across most of the site as well as UI optimizations for mobile, tablet and desktops.</li>
+	<li><strong>May 14, 2015:</strong> Bugfixes and tablet optimization.</li>
+	<li><strong>May 12, 2015:</strong> Tons of updates over the past few weeks including bugfixes, UI changes, new menu system, updated controller logic, key VEI issues, and events reading order for VEI.</li>
+	<li><strong>April 22, 2015:</strong> Some minor bugfixes, but most importantly, July 2015 solicitations!</li>
+	<li><strong>April 21, 2015:</strong> Added new timeline views in the Solicitations links to get a visual of publication dates for both classic and current Valiant books. Lots of minor tweaks and bugfixes have been performed as well as some code optimization.</li>
+	<li><strong>April 17, 2015:</strong> Front page now has image slider to accomodate more than 12 new releases, all new pagination code also allows for first page/last page view, major code cleanup in logic controllers, all new administrator controls, tons of bugfixes and minor mobile improvements.</li>
+	<li><strong>April 15, 2015:</strong> Apparently the site search was still using old code for adding/removing to/from your collection - oh no! This is now fixed, along with quite a bit of code optimization.</li>
+	<li><strong>April 12, 2015:</strong> All current (2012+) and classic (1991-1996) titles are now in the database! Also, added a sketch cover section for fans to showcase their collections. Oh yeah, and fixed about a dozen bugs.</li>
+	<li><strong>April 10, 2015:</strong> Users can now view other users' collections and wishlists. Implemented chat system for simple messaging between users.</li>
+	<li><strong>April 8, 2015:</strong> All new homepage and beautiful new profile pages for users including adding a profile image. Badge system for unlocking achievements on the site is in the works.</li>
+	<li><strong>April 7, 2015:</strong> The database now has a rating system! You must be logged in to rate books. Also, all assets have been offloaded to Amazon S3 for caching purposes. A few dozen minor tweaks and improvements.</li>
+	<li><strong>April 3, 2015:</strong> You can now sign in with your Facebook and Google accounts! If you already have a registered account on the site, you can connect those accounts to your existing database account and never worry about remembering your password again. Also, there have been tons of styling changes, tweaks and improvements as well as a new page listing VEI books in chronological release order. Also began work on a user guide as well as terms and a privacy policy.</li>
+	<li><strong>April 1, 2015:</strong> Mostly styling changes, minor code bugfixes, and backend stuff for book and user administration.</li> 
+	<li><strong>March 29, 2015:</strong> All new code for collection feature is NOT compatible with old collection. Also added new wishlist function, and squashed a few bugs. Table views now also show a cover images. Added pagination to collection and wishlist features.</li>
+	<li><strong>March 26, 2015:</strong> Begin adding classic Valiant titles, updated view logic for classic titles.</li>
+	<li><strong>March 24, 2015:</strong> Added June 2015 solicitations, minor code bugfixes, added view pages for all Classic Valiant titles.</li>
+	<li><strong>March 23, 2015:</strong> HUGE server upgrade will now allow for millions of records to be entered into the database along with some other nerdy stuff no one cares about but me. This means that Classic Valiant and Acclaim books will be making their way here shortly.</li>
+	<li><strong>March 15, 2015:</strong> Code update to allow input of Classic Valiant and Acclaim titles...coming soon.</li>
+	<li><strong>February 17, 2015:</strong> Tons of new creator bios, bugfixes and minor updates. Added May 2015 solicits.</li>
+	<li><strong>February 13, 2015:</strong> Layout changes for improved mobile viewing. Also bugfixes for about a dozen bugs. Update dynamic titles to display correct format on trades. Added dynamic sitemap generator and image alt tags for SEO. Updated models to allow for multiple creators and began adding creator bios.</li>
+	<li><strong>February 12, 2015:</strong> Introducing table views! All title pages can now be viewed in table format instead the usual graphical interface for those who prefer lists.</li>
+	<li><strong>February 11, 2015:</strong> Fixed a critical bug that forced the server to reset itself. Fixed critical bug that prevented image uploads. Added covers for Imperium #4, Unity #18, Bloodshot Reborn #2 and a FCBD 2015 variant announced this morning. Added Valiant Voyeur to links.</li>
+	<li><strong>February 9, 2015:</strong> Added releases by month section to main menu. Removed export pull list from weekly releases and into monthly releases for current month. Lots of code optimization.</li>
+	<li><strong>February 6, 2015:</strong> ValiantFans.com is now using database data to power new releases.</li>
+	<li><strong>February 5, 2015:</strong> Added rich web snippet implementation for improved search results outside the site.</li>
+	<li><strong>February 4, 2015:</strong> Added dynamic page titles for SEO purposes. Updated DB with new Bloodshot Reborn #2 covers. Front page now displays books being released the following week. Started work on new slug code to sync ValiantFans.com data.</li>
+	<li><strong>February 3, 2015:</strong> Tons of backend fixes and code cleanup which should lead to a 20% performance increase. Began reworking routes file for better link and book structuring. Updated search routing to optimize search code. Added about 20 new books to the list.</li>
+	<li><strong>January 23, 2015:</strong> All 45 variants of the Free Comic Book Day 2014 book should be added by the end of the day. Updated some covers to final release with Valiant logos, added The Valiant #1 second printing and X-O Omnibus DCBS variant. Some minor bugfixes and logic changes on the backend and the all books page is now sorted by book release date.</li>
+	<li><strong>January 20, 2015:</strong> Updated database with all books and trades from April 2015 solicitations. Home page now displays images of latest listing updates.</li>
+	<li><strong>January 19, 2015:</strong> Added X-O Manowar #1 ready-make, X-O Manowar #26 flat, and Lemire variant for Bloodshot Reborn #1.</li>
+	<li><strong>January 18, 2015:</strong> Backend for book values is complete, will begin adding them this week. Also added The Valiant #3 Hasting variant, and The Valiant #2 and #3 design variants (not final images, will update when finals are released).</li>
+	<li><strong>January 13, 2015:</strong> Added all missing info for X-O Manowar issues, missing Rai #6 cover by David Mack, new blank variant for Ivar, Timewalker #1. Minor bugfixes.</li>
+	<li><strong>January 12, 2015:</strong>Added all Bloodshot Reborn #1 covers, updated info on all Harbinger titles. Working on the backend for book values and creator profiles.</li>
+	<li><strong>January 11, 2015:</strong> Nearly done adding summaries and colorist to all books, but did finish adding ISBN and links to all trades and collections. Also added X-O Manowar Vol. 2 Hard Cover, unannounced but scheduled.</li>
+	<li><strong>January 9, 2015:</strong> Clicking on image in single-book view now pops up a modal with a close box instead of just taking the user to the original image. Still working on finishing up with ISBNs for trades and collections. Added covers for Ninjak #2. Updated backend code to allow for summary input from solicitations and color artist.</li>
+	<li><strong>January 6, 2015:</strong> Added links to listing to search for other books with same title. Added ISBN and links to purchase trades. Updated DB with missing Imperium cover.</li>
+	<li><strong>January 2, 2015:</strong> Fixed malformed links that prevented some users from using the links in single-book view to search for creative teams and arcs.</li>
+	<li><strong>January 1, 2015:</strong> Updated database with Unity #10 Dauterman variant, pullbox previews of Armor Hunters #1 and Eternal Warrior: Days of Steel #1, Bloodshot #23 Pere Perez variant, Armor Hunters Vol. 1 TPB and Dr. Mirage Vol. 1 TPB.</li>
+	<li><strong>December 30, 2014:</strong> Tons of changes to mobile layout, particularly for small screen devices. Updated database with new Tom Muller variant covers. Added links to single-book view whereby clicking on the writer, artist, or arc performs a search for other books matching that criteria.</li>
+	<li><strong>December 29, 2014:</strong> Added Must Read Valiant: Greatest Hits #2, The Delinquents TPB, Unity Vol. 4 TPB, Archer & Armstrong Vol. 6 TPB. Added an indicator so users known when the database was last update.</li>
+	<li><strong>December 28, 2014:</strong> Minor bugfixes and tweaks, new options and settings for admin account. Added chromium variants for Armor Hunters tie-in books.</li>
+	<li><strong>December 27, 2014:</strong> Added Rai #5 plus edition and Death Defying Dr. Mirage #1 second printing. Collection at 879 different books, variants, trades, and reprints. Minor bugfixes.</li>
+	<li><strong>December 26, 2014:</strong> Added options to add trades and collections. Included all TPBs up to X-O Manowar Vol. 8 (unreleased), all deluxe edition hardcovers up to Armor Hunters (unreleased), and both the Quantum and Woody and X-O Manowar Omnibuses.</li>
+	<li><strong>December 25, 2014:</strong> Added links to popular Valiant-related sites, podcasts, and groups. Included the option to add/remove books to/from Collection from any page instead of single-book view page. Added previous/next book navigation in single-book view.</li>
+	<li><strong>December 23, 2014:</strong> When in single-book view, if looking at a regular edition cover, you will see a list of variants and reprints underneath the main image. New batch of books added (780+). Tons of bugfixes.</li>
+	<li><strong>December 22, 2014:</strong> Added The Delinquents #1 Baltimore Comic Con exclusive, Harbinger #1 One Dollar Debut, QUantum & Woody #1 One Dollar Debut, Eternal Warrior/Bloodshot sketchbook, The Valiant #1 Retailer Shared Exclusive variant, and Unity #1 Phantom cover.</li>
+	<li><strong>December 21, 2014:</strong> Updated database with second batch of books (700+).</li>
+	<li><strong>December 20, 2014:</strong> Updated database with first batch of books (400+).</li>
+	<li><strong>December 19, 2014:</strong> Implemented full-text universal search so you can search for books, writers, artists, arcs, or whatever else from any page.</li>
+	<li><strong>December 18, 2014:</strong> Added an indicator (a little red heart) to any books in your collection so you know they're in there. Collections can now be exported to an Excel spreadsheet for those who like that method of tracking books.</li>
+	<li><strong>December 17, 2014:</strong> Implemented user collections, tons of bugfixes.</li>
+	<li><strong>December 15, 2014:</strong> Initial release with test data.
+</ul>
+</div>

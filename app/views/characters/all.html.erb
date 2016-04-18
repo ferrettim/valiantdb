@@ -1,0 +1,38 @@
+<div class="center">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+  	<h4 class="white text-center">Valiant Characters <span class="label label-primary label-as-badge"><%= @character.count %></span></h4>
+	<% if user_signed_in? %>
+			<% @character.each do |c| %>
+				<div class="col-md-3 col-sm-4 col-xs-12">
+		            <div class="profile-sidebar2">
+		                <!-- SIDEBAR USERPIC -->
+		                <div class="profile-userpic">
+		                	<%= image_tag c.image.url, :alt => c.name, class: "img-shadow", :width => "100%", :height => "100px" %>
+		                </div>
+		                <!-- END SIDEBAR USERPIC -->
+		                <!-- SIDEBAR USER TITLE -->
+		                <div class="profile-usertitle">
+		                    <div class="profile-usertitle-name">
+		                    	<div>
+									&nbsp;
+								</div>
+		                        <%= link_to c do %>
+		                        	<%= c.name %>
+				                <% end %>
+				                <br />
+		                 		
+		                    </div>
+		                </div>
+		                <!-- END SIDEBAR USER TITLE -->
+		            </div>
+		        </div>
+			<% end %>
+			<div class="clearfix"></div>
+			<div class="text-center"><%= paginate @character %></div>
+	<% else %>
+		<h2 class="text-center">Oh, oh, you're not supposed to be here!</h2>
+		<h3 class="text-center">Head <%= link_to "back home", root_path %>, I won't tell anyone you were here.</h3>
+	<% end %>
+  </div>
+  <div class="clearfix"></div>
+</div>

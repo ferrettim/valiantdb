@@ -1,0 +1,17 @@
+<% if @collectible.category == "Statue" %>
+	<% if user_signed_in? && current_user.itemowns?(@collectible) %>
+			<% Itemown.where(user_id: current_user.id, collectible_id: @collectible.id).each do |itemown| %>
+				<%= form_for [itemown.collectible, itemown], remote: true, input_html: { class: "form-inline" }, :method => 'put' do |f| %>
+					You own #<span id="quantity"> <%= f.text_field :quantity, :placeholder => itemown.quantity, :size => "1", label: false, class: "text-center" %> </span> 
+					<% if @collectible.printrun? %>of <strong><%= @collectible.printrun.to_s %></strong> units made <% end %> of this statue
+					<%= f.submit "Save", :onclick => "submit()", :hidden => true %>
+				<% end %>
+			<% end %>
+		<br />
+	<% else %>
+		<% if @collectible.printrun? %>
+			<strong>Limited to <%= @collectible.printrun.to_s %> units</strong>
+			<br /><br />
+		<% end %>
+	<% end %>
+<% end %>

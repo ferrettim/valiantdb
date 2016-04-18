@@ -1,0 +1,3 @@
+$('#comments_<%= @book.id %>').html("<%=j render 'comments/comment' %>");
+$('#comment_content_<%= @book.id %>').unbind("submit").val('')
+$("#own_notes").html("<%=j render partial: "books/ownsnotes" %>");

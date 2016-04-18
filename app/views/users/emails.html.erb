@@ -1,0 +1,9 @@
+<% if current_user.super_admin? %>
+	<% @users.each do |u| %>
+		<%= u.email %><br />
+	<% end %>
+<% else %>
+	<div class="container">
+    	<%= image_tag "https://s3.amazonaws.com/wethenerdy/images/nope.jpg", alt: "You're not supposed to be here", class: "col-md-10 col-md-offset-1", id: "nope" %>
+  	</div>
+<% end %>

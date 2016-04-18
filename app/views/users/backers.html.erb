@@ -1,0 +1,192 @@
+<div class="container">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+  	<h2 class="white text-center">Patreon backers <% if user_signed_in? && current_user.super_admin? %><span class="pull-right white label label-primary label-as-box"><%= @users.count + @producers.count + @sponsors.count %> <span class="gone">members</span></span><% end %></h2>
+  	<div class="white">
+  		<p>Thanks you to all our <strong><%= link_to "Patreon backers", "https://www.patreon.com/valiantdb?ty=h", :title => "ValiantDB Patreon", class: "white" %></strong> for helping make this site possible. If you're not yet a backer, <strong><%= link_to "consider pledging", "https://www.patreon.com/valiantdb?ty=h", :title => "ValiantDB Patreon", class: "white" %></strong> to support the site! This page is automatically generated but your name may take up to 24 hours to appear. Thank you for making this all possible at whatever level you decide to support. A very special thanks to our top contributors, our producers, for believing in us as well.</p>
+  	</div>
+  	<div class="clearfix"></div>
+  	<h4 class="white">Thank you to our sponsors!</h4>
+  	<% @sponsors.each do |u| %>
+				<div class="col-md-3 col-sm-4 col-xs-12">
+		            <div class="profile-sidebar2">
+		                <!-- SIDEBAR USERPIC -->
+		                <div class="profile-userpic">
+		                	<div class="place pull-right">
+					                <ul class="list-unstyled user-<%= u.id %>">
+					                	<% unless current_user == u %>
+					                    <li id="follow_form">
+					                        <% if current_user.follows?(u) %>
+					                            <%= button_to unfollow_path(user: u.id), remote: true, method: :get , class: 'btn btn-default btn-sm', title: "Unfollow" do %>
+					                            	<i class="fa fa-user-times"></i>
+					                        	<% end %>
+					                    	<% else %>
+					                        	<%= button_to follow_path(user: u.id) , remote: true, method: :get , class: "btn btn-default btn-sm", title: "Follow" do %> 
+					                                <i class="fa fa-user-plus"></i>
+					                            <% end %>
+					                        <% end %>
+					                    </li>
+								        <% end %>
+					                </ul>
+		                    </div>
+		                    <% if u.avatar.blank? %>
+		                        <img src="https://s3.amazonaws.com/valiantdb/images/noimg-med.png" class="img-responsive">
+		                    <% else %>
+		                        <%= image_tag u.avatar.url(:medium), :alt => "Profile image", class: "img-responsive" %>
+		                    <% end %>
+		                </div>
+		                <!-- END SIDEBAR USERPIC -->
+		                <!-- SIDEBAR USER TITLE -->
+		                <div class="profile-usertitle">
+		                    <div class="profile-usertitle-name">
+		                    	<div class="text-center">
+			                    	<% if u.online? %>
+										<div class="online-button">
+											<button class="btn btn-success btn-circle btn-sm" title="Online">&nbsp;</button>
+										</div>
+									<% else %>
+										<div>
+											&nbsp;
+										</div>
+									<% end %>
+								</div>
+		                        <%= link_to root_url + "users/" + u.slug + "/profile", :title => "See profile" do %>
+		                        	<%= u.name %> 
+				                <% end %>
+				                <% if @hardcats.include? u.id %>
+			                        <%= image_tag "https://s3.amazonaws.com/valiantdb/images/hardcorps.jpg", height: "12px", :title => "H.A.R.D. Cat" %>
+			                    <% end %>
+				                <br />
+		                 		
+		                    </div>
+		                </div>
+		                <!-- END SIDEBAR USER TITLE -->
+		            </div>
+		        </div>
+	<% end %>
+	<div class="clearfix"><br /></div>
+
+  	<h4 class="white">Thank you to our producers!</h4>
+  	<% @producers.each do |u| %>
+				<div class="col-md-3 col-sm-4 col-xs-12">
+		            <div class="profile-sidebar2">
+		                <!-- SIDEBAR USERPIC -->
+		                <div class="profile-userpic">
+		                	<div class="place pull-right">
+					                <ul class="list-unstyled user-<%= u.id %>">
+					                	<% unless current_user == u %>
+					                    <li id="follow_form">
+					                        <% if current_user.follows?(u) %>
+					                            <%= button_to unfollow_path(user: u.id), remote: true, method: :get , class: 'btn btn-default btn-sm', title: "Unfollow" do %>
+					                            	<i class="fa fa-user-times"></i>
+					                        	<% end %>
+					                    	<% else %>
+					                        	<%= button_to follow_path(user: u.id) , remote: true, method: :get , class: "btn btn-default btn-sm", title: "Follow" do %> 
+					                                <i class="fa fa-user-plus"></i>
+					                            <% end %>
+					                        <% end %>
+					                    </li>
+								        <% end %>
+					                </ul>
+		                    </div>
+		                    <% if u.avatar.blank? %>
+		                        <img src="https://s3.amazonaws.com/valiantdb/images/noimg-med.png" class="img-responsive">
+		                    <% else %>
+		                        <%= image_tag u.avatar.url(:medium), :alt => "Profile image", class: "img-responsive" %>
+		                    <% end %>
+		                </div>
+		                <!-- END SIDEBAR USERPIC -->
+		                <!-- SIDEBAR USER TITLE -->
+		                <div class="profile-usertitle">
+		                    <div class="profile-usertitle-name">
+		                    	<div class="text-center">
+			                    	<% if u.online? %>
+										<div class="online-button">
+											<button class="btn btn-success btn-circle btn-sm" title="Online">&nbsp;</button>
+										</div>
+									<% else %>
+										<div>
+											&nbsp;
+										</div>
+									<% end %>
+								</div>
+		                        <%= link_to root_url + "users/" + u.slug + "/profile", :title => "See profile" do %>
+		                        	<%= u.name %> 
+				                <% end %>
+				                <% if @hardcats.include? u.id %>
+			                        <%= image_tag "https://s3.amazonaws.com/valiantdb/images/hardcorps.jpg", height: "12px", :title => "H.A.R.D. Cat" %>
+			                    <% end %>
+				                <br />
+		                 		
+		                    </div>
+		                </div>
+		                <!-- END SIDEBAR USER TITLE -->
+		            </div>
+		        </div>
+	<% end %>
+	<div class="clearfix"><br /></div>
+
+	<% if @users.where(:level1 => true).count > 0 %>
+		<h4 class="white">Thank you patrons!</h4>
+		<% @users.each do |u| %>
+					<div class="col-md-2 col-sm-3 col-xs-6">
+			            <div class="profile-sidebar2">
+			                <!-- SIDEBAR USERPIC -->
+			                <div class="profile-userpic">
+			                	<div class="place pull-right">
+						                <ul class="list-unstyled user-<%= u.id %>">
+						                	<% unless current_user == u %>
+						                    <li id="follow_form">
+						                        <% if current_user.follows?(u) %>
+						                            <%= button_to unfollow_path(user: u.id), remote: true, method: :get , class: 'btn btn-default btn-sm', title: "Unfollow" do %>
+						                            	<i class="fa fa-user-times"></i>
+						                        	<% end %>
+						                    	<% else %>
+						                        	<%= button_to follow_path(user: u.id) , remote: true, method: :get , class: "btn btn-default btn-sm", title: "Follow" do %> 
+						                                <i class="fa fa-user-plus"></i>
+						                            <% end %>
+						                        <% end %>
+						                    </li>
+									        <% end %>
+						                </ul>
+			                    </div>
+			                    <% if u.avatar.blank? %>
+			                        <img src="https://s3.amazonaws.com/valiantdb/images/noimg-med.png" class="img-responsive">
+			                    <% else %>
+			                        <%= image_tag u.avatar.url(:medium), :alt => "Profile image", class: "img-responsive" %>
+			                    <% end %>
+			                </div>
+			                <!-- END SIDEBAR USERPIC -->
+			                <!-- SIDEBAR USER TITLE -->
+			                <div class="profile-usertitle">
+			                    <div class="profile-usertitle-name">
+			                    	<div class="text-center">
+				                    	<% if u.online? %>
+											<div class="online-button">
+												<button class="btn btn-success btn-circle btn-sm" title="Online">&nbsp;</button>
+											</div>
+										<% else %>
+											<div>
+												&nbsp;
+											</div>
+										<% end %>
+									</div>
+			                        <%= link_to root_url + "users/" + u.slug + "/profile", :title => "See profile" do %>
+			                        	<small><%= u.name %></small>
+					                <% end %>
+					                <% if @hardcats.include? u.id %>
+				                        <%= image_tag "https://s3.amazonaws.com/valiantdb/images/hardcorps.jpg", height: "12px", :title => "H.A.R.D. Cat" %>
+				                    <% end %>
+					                <br />
+			                 		
+			                    </div>
+			                </div>
+			                <!-- END SIDEBAR USER TITLE -->
+			            </div>
+			        </div>
+		<% end %>
+		<div class="clearfix"></div>
+	<% end %>
+	<div class="text-center"><%= paginate @users %></div>
+  </div>
+  <div class="clearfix"></div>
+</div>

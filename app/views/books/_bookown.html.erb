@@ -1,0 +1,117 @@
+<div id="books">
+
+<% unless params[:query].present? %>
+	<!-- Nav tabs -->
+  <div>
+    <ul class="list-inline btn-group collectionDropdowns">
+      <li class="btn btn-default">
+        <div class="dropdown dropdown-large">
+          <button class="btn btn-default dropdown-toggle" type="button" id="collectionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Collections
+            <span class="caret"></span>
+          </button>
+          <% if user_signed_in? %>
+          <ul class="dropdown-menu" aria-labelledby="collectionDropdown">
+            <li class="options"><%= link_to collection_path do %><strong>All</strong> (<%= @user.owned_books.count %>)<% end %></li>
+            <% if @bookvei.count > 0 %>
+              <li class="options"><%= link_to collectionvei_path do %>Current (<%= @bookvei.count %>)<% end %></li>
+            <% end %>
+            <% if @bookvh1.count > 0 %>
+              <li class="options"><%= link_to collectionvh1_path do %>Classic (<%= @bookvh1.count %>)<% end %></li>
+            <% end %>
+            <% if @bookvh2.count > 0 %>
+              <li class="options"><%= link_to collectionvh2_path do %>Acclaim (<%= @bookvh2.count %>)<% end %></li>
+            <% end %>           
+          </ul>
+          <% else %>
+          <ul class="dropdown-menu" aria-labelledby="collectionDropdown">
+            <li class="options"><%= link_to collection_path do %><strong>All</strong> (<%= @user.owned_books.count %>)<% end %></li>
+            <% if @bookvei.count > 0 %>
+              <li class="options"><%= link_to collectionvei_path do %>Current (<%= @bookvei.count %>)<% end %></li>
+            <% end %>
+            <% if @bookvh1.count > 0 %>
+              <li class="options"><%= link_to collectionvh1_path do %>Classic (<%= @bookvh1.count %>)<% end %></li>
+            <% end %>
+            <% if @bookvh2.count > 0 %>
+              <li class="options"><%= link_to collectionvh2_path do %>Acclaim (<%= @bookvh2.count %>)<% end %></li>
+            <% end %>           
+          </ul>
+          <% end %>
+        </div>
+      </li>
+      <li class="btn btn-default">
+        <%= form_tag "/users/" + @user.id.to_s + "/collection", :method => 'get', :role => "search" do %>
+                <select name="query" class="btn" onchange="this.form.submit()">
+                  <option value="">Filter by title</option>
+                    <% if action_name == "mybooks" %>
+                      <% @user.owned_books.select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                        <option value="<%= f.title %>"><%= f.title %></option>
+                      <% end %>
+                    <% elsif action_name == "mybooksvei" %>
+                      <% @user.owned_books.where(:era => "VEI").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                        <option value="<%= f.title %>"><%= f.title %></option>
+                      <% end %>
+                    <% elsif action_name == "mybooksvh1" %>
+                      <% @user.owned_books.where(:era => "VH1").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                        <option value="<%= f.title %>"><%= f.title %></option>
+                      <% end %>
+                    <% elsif action_name == "mybooksvh2" %>
+                      <% @user.owned_books.where(:era => "VH2").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                        <option value="<%= f.title %>"><%= f.title %></option>
+                      <% end %>
+                    <% end %>
+                </select>         
+        <% end %>
+      </li>
+      
+    </ul>
+
+
+	</div>
+<div class="clearfix"></div>
+<% end %>
+
+		<% @book.each do |title| %>
+		 	<div class="col-md-2 col-sm-4 col-xs-6 book-image">
+		 		<div class="site-actions">
+					<ul class="list-unstyled">
+						<% if user_signed_in? %>
+					        <li id="<%= title.id %>_owns" class="magic">
+					        	<% if user_signed_in? && current_user.owns?(title) %>
+									<%= link_to book_own_path(title), method: :delete, remote: true, class: "btn btn-default btn-danger btn-circle", title: "Remove from collection", data: {disable_with: "<i class='fa fa-minus'></i>"} do %><i class="fa fa-heart"></i><% end %>
+								<% else %>
+									<%= link_to book_own_path(title), method: :post, remote: true, class: "btn btn-success btn-circle", title: "Add to collection", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-heart"></i> <% end %>
+								<% end %>
+					        </li>
+					        
+						<% end %>
+					</ul>
+		 		</div>
+        <% if user_signed_in? && current_user.patron? %>
+            <% if title.pricenm? %>
+              <div class="ribbon"><span>$<%= '%.2f' % title.value_in_dollars %></span></div>
+            <% end %>
+        <% end %>
+		 		<% if title.category == "Paperback" %>
+		 			<%= link_to title, :title => title.title + " Vol. " + title.issue.to_s + " TPB" do %>
+		 				<%= image_tag title.image.url(:medium), class: "img-responsive img-shadow", :alt => title.title + " Vol. " + title.issue.to_s %>
+		 			<% end %>
+		 		<% elsif title.category == "Hardcover" %>
+		 			<%= link_to title, :title => title.title + " Vol. " + title.issue.to_s + " Deluxe HC" do %>
+		 				<%= image_tag title.image.url(:medium), class: "img-responsive img-shadow", :alt => title.title + " Vol. " + title.issue.to_s %>
+		 			<% end %>
+		 		<% else %>
+		 			<%= link_to title, :title => title.title + " #" + title.issue.to_s do %>
+		 				<%= image_tag title.image.url(:medium), class: "img-responsive img-shadow", :alt => title.title + title.issue.to_s %>
+		 			<% end %>
+		 		<% end %>
+		 	</div>
+	 	<% end %>
+	 	<div class="clearfix"></div>
+  		<div class="text-center"><%= paginate @book %></div>	
+	 
+
+  </div>
+
+
+</div>

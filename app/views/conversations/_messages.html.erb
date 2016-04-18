@@ -1,0 +1,24 @@
+<% @receipts.each do |receipt| %>
+    <% message = receipt.message %>
+    <div class="media">
+      <div class="media-left">
+        <!-- user avators can go here -->
+        <a href="#">
+          <%= image_tag message.sender.avatar.url(:thumb), :width => "64px" %>
+        </a>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">
+          <%= message.subject %>
+        </h4>
+        Received on <strong><%= message.created_at.strftime("%A, %b %d, %Y") %> at <%= message.created_at.strftime("%I:%M%p") %></strong>
+        <br /><br />
+        <p><%= message.body %></p>
+        <strong>
+          <%= link_to root_url + "users/" + message.sender.slug + "/profile" do %>
+            <%= message.sender.name %>
+          <% end %>
+        </strong>
+      </div>
+    </div>
+<% end %>

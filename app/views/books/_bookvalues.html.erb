@@ -1,0 +1,45 @@
+<div id="books">
+	<% @book.each do |title| %>
+ 	<div class="col-md-2 col-sm-4 col-xs-6 book-image">
+ 		<div class="site-actions">
+			<ul class="list-unstyled">
+				<% if user_signed_in? %>
+			        <li id="<%= title.id %>_owns" class="magic">
+			        	<% if user_signed_in? && current_user.owns?(title) %>
+							<%= link_to book_own_path(title), method: :delete, remote: true, class: "btn btn-default btn-danger btn-circle", title: "Remove from collection", data: {disable_with: "<i class='fa fa-minus'></i>"} do %><i class="fa fa-heart"></i><% end %>
+						<% else %>
+							<%= link_to book_own_path(title), method: :post, remote: true, class: "btn btn-success btn-circle", title: "Add to collection", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-heart"></i> <% end %>
+						<% end %>
+			        </li>
+			        <li class="magic"><br /></li>
+			        <li id="<%= title.id %>_wishes" class="magic">
+			        	<% if user_signed_in? && current_user.wishes?(title) %>
+							<%= link_to book_wish_path(title), method: :delete, remote: true, class: "btn btn-default btn-danger btn-circle", title: "Remove from wishlist", data: {disable_with: "<span class='fa fa-minus'></span>"} do %><i class="fa fa-star"></i><% end %>
+						<% else %>
+							<%= link_to book_wish_path(title), method: :post, remote: true, class: "btn btn-success btn-circle", title: "Add to wishlist", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-star"></i> <% end %>
+						<% end %>
+			        </li>
+				<% end %>
+			</ul>
+ 		</div>
+ 		<% if title.category == "Paperback" %>
+ 			<%= link_to title, :title => title.title + " Vol. " + title.issue.to_s + " TPB" do %>
+ 				<%= image_tag title.image.url(:medium), class: "img-responsive img-shadow", :alt => title.title + " Vol. " + title.issue.to_s %>
+ 			<% end %>
+ 		<% elsif title.category == "Hardcover" %>
+ 			<%= link_to title, :title => title.title + " Vol. " + title.issue.to_s + " Deluxe HC" do %>
+ 				<%= image_tag title.image.url(:medium), class: "img-responsive img-shadow", :alt => title.title + " Vol. " + title.issue.to_s %>
+ 			<% end %>
+ 		<% else %>
+ 			<%= link_to title, :title => title.title + " #" + title.issue.to_s do %>
+ 				<%= image_tag title.image.url(:medium), class: "img-responsive img-shadow", :alt => title.title + title.issue.to_s %>
+ 			<% end %>
+ 		<% end %>
+ 		<h4 class="text-center"><small>$<%= '%.2f' % title.value_in_dollars.to_f %></small></h4>
+ 	</div>
+ 	<% end %>
+</div>
+
+<div class="clearfix"></div>
+<div class="text-center" id="append_and_paginate"><%= paginate @book %></div>
+<div class="clearfix"></div>

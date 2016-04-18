@@ -1,0 +1,72 @@
+<div class="wellclear">
+	<h3 class="text-center">Top Ten Books by Era</h3>
+	<p>This page details the top ten books for each era of Valiant (current, classic, and Acclaim) based upon their value. Values are determined through a proprietary algorithm which looks at both online retailer pricing data, as well as eBay sold listings. These values are updated dynamically as the values change within the site. Pricing data is currently updated on a monthly basis.</p>
+
+	<h3 class="text-center">Top Ten Valiant Entertainment</h3>
+	<table class="table table-condensed">
+		<tr>
+			<td><strong>Title</strong></td>
+			<td><strong>Release date</strong></td>
+			<td><strong>Writer</strong></td>
+			<td><strong>Artist</strong></td>
+			<td><strong>Cover</strong></td>
+			<td class="text-right"><strong>Current Value</strong></td>
+		</tr>
+		<% Book.where("pricenm > ?", "0").where(:era => "VEI").where.not(:category => "Paperback").where.not(:category => "Hardcover").where.not(:category => "Sketch").order(pricenm: :desc).limit(10).each do |a| %>
+			<tr>
+				<td><%= link_to a do %><%= a.title.to_s %> #<%= a.issue.to_i %><% end %></td>
+				<td><%= a.rdate.strftime("%B %d, %Y") %></td>
+				<td><%= a.writer.to_s %></td>
+				<td><%= a.artist.to_s %></td>
+				<td><%= a.cover.to_s %></td>
+				<td class="text-right"><strong>$<%= '%.2f' % a.value_in_dollars.to_f %></strong></td>
+			</tr>
+		<% end %>
+	</table>
+
+	
+	<h3 class="text-center">Top Ten Classic Valiant</h3>
+	<table class="table table-condensed">
+		<tr>
+			<td><strong>Title</strong></td>
+			<td><strong>Release date</strong></td>
+			<td><strong>Writer</strong></td>
+			<td><strong>Artist</strong></td>
+			<td><strong>Cover</strong></td>
+			<td class="text-right"><strong>Current Value</strong></td>
+		</tr>
+		<% Book.where("pricenm > ?", "0").where(:era => "VH1").where.not(:category => "Paperback").where.not(:category => "Hardcover").where.not(:category => "Sketch").order(pricenm: :desc).limit(10).each do |a| %>
+			<tr>
+				<td><%= link_to a do %><%= a.title.to_s %> #<%= a.issue.to_i %><% end %></td>
+				<td><%= a.rdate.strftime("%B %d, %Y") %></td>
+				<td><%= a.writer.to_s %></td>
+				<td><%= a.artist.to_s %></td>
+				<td><%= a.cover.to_s %></td>
+				<td class="text-right"><strong>$<%= '%.2f' % a.value_in_dollars.to_f %></strong></td>
+			</tr>
+		<% end %>
+	</table>
+
+	<h3 class="text-center">Top Ten Acclaim Valiant</h3>
+	<table class="table table-condensed">
+		<tr>
+			<td><strong>Title</strong></td>
+			<td><strong>Release date</strong></td>
+			<td><strong>Writer</strong></td>
+			<td><strong>Artist</strong></td>
+			<td><strong>Cover</strong></td>
+			<td class="text-right"><strong>Current Value</strong></td>
+		</tr>
+		<% Book.where("pricenm > ?", "0").where(:era => "VH2").where.not(:category => "Paperback").where.not(:category => "Hardcover").where.not(:category => "Sketch").order(pricenm: :desc).limit(10).each do |a| %>
+			<tr>
+				<td><%= link_to a do %><%= a.title.to_s %> #<%= a.issue.to_i %><% end %></td>
+				<td><%= a.rdate.strftime("%B %d, %Y") %></td>
+				<td><%= a.writer.to_s %></td>
+				<td><%= a.artist.to_s %></td>
+				<td><%= a.cover.to_s %></td>
+				<td class="text-right"><strong>$<%= '%.2f' % a.value_in_dollars.to_f %></strong></td>
+			</tr>
+		<% end %>
+	</table>
+
+</div>

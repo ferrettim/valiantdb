@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <%= tag :meta, name: "viewport", content: "width=device-width, initial-scale=1.0" %>
+  <meta name="google-site-verification" content="qOD1tFyFsRxICbbFJ8f0EMC25VzGV2qMMMPZSQfmJG4" />
+  <% if controller_name == 'books' && action_name == 'show' %>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@valiantdatabase">
+    <% if @book.category == "Paperback" %>
+      <meta name="twitter:title" content="<%= @book.title + " TPB Vol. " + @book.issue.to_s %>">
+    <% elsif @book.category == "Hardcover" %>
+      <meta name="twitter:title" content="<%= @book.title + " Deluxe HC Vol. " + @book.issue.to_s %>">
+    <% else %>
+      <meta name="twitter:title" content="<%= @book.title + " #" + @book.issue.to_s %>">
+    <% end %>
+    <meta name="twitter:description" content="<%= raw strip_tags(@book.summary) %>">
+    <meta property="og:description" content="<%= raw strip_tags(@book.summary) %>">
+    <meta name="twitter:creator" content="@valiantdatabase">
+    <meta name="twitter:image:src" content="<%= @book.image.url %>">
+    <meta property="og:image" content="<%= @book.image.url %>">
+    <meta name="twitter:domain" content="ValiantDatabase.com">
+    <meta property="og:url" content="<%= "www.valiantdatabase.com/books/" + @book.id.to_s %>">
+  <% end %>
+  <% if controller_name == 'books' && action_name == 'show' %>
+    <meta name="description" content="<%= raw strip_tags(@book.summary) %>">
+  <% else %>
+    <meta name="description" content="Valiant Database, the ultimate comic book database for Valiant Comics. We have EVERY title ever published, soliciations, sales and pricing data, and more!">
+  <% end %>
+  <% if @pgtitle.blank? %>
+  <title>Valiant Database</title>
+  <% else %>
+  <title><%= @pgtitle %> | Valiant Database</title>
+  <% end %>
+  <link rel="icon" href="https://s3.amazonaws.com/valiantdb/images/favicon.ico" type="image/x-icon" />
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="http://valiantdatabase.com/sitemap.xml" />
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'application', "data-turbolinks-track" => true, :defer => "defer" %>
+  <%= csrf_meta_tags %>
+
+</head>
+<% if controller_name == 'books' && action_name == 'thisweek' %>
+<body id="padneg">
+<% else %>
+<body id="pad">
+<% end %>
+<% if user_signed_in? %>
+  <div id="page_loading">
+    <img src="https://s3.amazonaws.com/valiantdb/images/spinner.gif" style="position: absolute; left: 43.75%; top: 35%;" />
+  </div>
+<% end %>
+  <div id="main">
+    <%= render "layouts/header" unless @skip_footer %>
+
+    <%= render "books/banner" %>
+
+    <% if controller_name == 'books' && action_name.include?("tbl") %>
+      <div class="container-fluid">
+    <% else %>
+      <div class="container">
+    <% end %>
+
+    	<% flash.each do |name, msg| %>
+        <% if name == "alert" %>
+    		  <div class="alert alert-danger alert-dismissible alert-message" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <%= msg %>
+          </div>
+        <% else %>
+          <div class="alert alert-success alert-dismissible alert-message" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <%= msg %>
+          </div>
+        <% end %>
+    	<% end %>
+
+       <div id="content">
+    	  <%= yield %>
+        <% if controller_name == 'pages' && action_name == "home" %>
+          <%= render "layouts/footer" unless @skip_footer %>
+        <% end %>
+       </div>
+      
+  </div>
+  <% unless controller_name == 'pages' && action_name == "home" %>
+        
+  <% end %>
+</div>
+
+<% if request.host.start_with?('stark-waters-6024') %>
+  <audio id="foobar" src="https://s3.amazonaws.com/valiantdb/images/blip.mp3" preload="auto"> 
+  <% if user_signed_in? && current_user.patron? && current_user.voice? %>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.2.1/annyang.min.js"></script>
+    <script>
+      if (annyang) {
+      // Let's define a command.
+      var commands = {
+        <% if controller_name == "books" && action_name == "show" %>
+        '(add to collection)(i have this)': function() { $.rails.handleRemote($('<a>', { href: '<%= root_url %>/books/<%= @book.id %>/own', 'data-method': 'POST' })); document.getElementById("foobar").play(); },
+        '(remove from collection)(i dont have this)': function() { $.rails.handleRemote($('<a>', { href: '<%= root_url %>/books/<%= @book.id %>/own', 'data-method': 'DELETE' })); document.getElementById("foobar").play(); },
+        '(add to wish list)(i want this)': function() { $.rails.handleRemote($('<a>', { href: '<%= root_url %>/books/<%= @book.id %>/wish', 'data-method': 'POST' })); document.getElementById("foobar").play(); },
+        '(remove from wish list)(i dont want this)': function() { $.rails.handleRemote($('<a>', { href: '<%= root_url %>/books/<%= @book.id %>/wish', 'data-method': 'DELETE' })); document.getElementById("foobar").play(); },
+        '(add to sell list)(sell this)': function() { $.rails.handleRemote($('<a>', { href: '<%= root_url %>/books/<%= @book.id %>/sale', 'data-method': 'POST' })); document.getElementById("foobar").play(); },
+        '(remove from sell list)(dont sell this)': function() { $.rails.handleRemote($('<a>', { href: '<%= root_url %>/books/<%= @book.id %>/sale', 'data-method': 'DELETE' })); document.getElementById("foobar").play(); },
+        <% end %>
+        '(go to page *page)': function(page) { window.location.href = "<%= url_for(params.except(:page)) %>?page="+page; document.getElementById("foobar").play(); },
+        '(go home)': function() { window.location.href = "<%= root_url %>"; document.getElementById("foobar").play(); },
+        '(my collection)(take me to my collection)(go to my collection)': function() { window.location.href = "<%= root_url %>users/<%= current_user.slug.to_s %>/collection"; document.getElementById("foobar").play(); },
+        '(my wishlist)(take me to my wishlist)(go to my wishlist)': function() { window.location.href = "<%= root_url %>users/<%= current_user.slug.to_s %>/wishlist"; document.getElementById("foobar").play(); },
+        'my messages': function() { window.location.href = "<%= root_url %>mailbox/inbox"; document.getElementById("foobar").play(); },
+        '(whats out this week)(whats new this week)(this weeks books)(show me books this week)(show me this weeks books)(show this weeks books)': function() { window.location.href = "<%= root_url %>releases/currentweek"; document.getElementById("foobar").play(); },
+        '(whats out next week)(whats new next week)(next weeks books)(show me books for next week)(show me next weeks books)(show next weeks books)': function() { window.location.href = "<%= root_url %>releases/nextweek"; document.getElementById("foobar").play(); },
+        '(last month solicits)(last month solicitations)(last months solicitats)(last months solicitations)': function() { window.location.href = "<%= root_url %>releases/lastmonth"; document.getElementById("foobar").play(); },
+        '(next month solicits)(next month solicitations)(next month solicitations)(next months solicitations)': function() { window.location.href = "<%= root_url %>releases/nextmonth"; document.getElementById("foobar").play(); },
+        '(latest solicits)(latest solicitations)': function() { window.location.href = "<%= root_url %>releases/latestsolicitations"; document.getElementById("foobar").play(); },
+        '(current solicits)(current solicitations)': function() { window.location.href = "<%= root_url %>releases/thismonth"; document.getElementById("foobar").play(); },
+        '(show me sales figures)(sales figures)(sales data)': function() { window.location.href = "<%= root_url %>sales/veibytitle"; document.getElementById("foobar").play(); },
+        '(top sellers)(top selling books)(top selling)': function() { window.location.href = "<%= root_url %>sales/topselling"; document.getElementById("foobar").play(); },
+        '(show me key issues)(show me first appearances)(show me current keys)(show me current key issues)': function() { window.location.href = "<%= root_url %>books/keys"; document.getElementById("foobar").play(); },
+        '(show me classic key issues)(show me classic first appearances)(show me classic keys)': function() { window.location.href = "<%= root_url %>classic/books/keys"; document.getElementById("foobar").play(); },
+        '(show me armor hunters)': function() { window.location.href = "<%= root_url %>books/armorhunters"; document.getElementById("foobar").play(); },
+        '(show me archer and armstrong)': function() { window.location.href = "<%= root_url %>books/archerarmstrong"; document.getElementById("foobar").play(); },
+        '(show me adventures of archer and armstrong)': function() { window.location.href = "<%= root_url %>books/aa"; document.getElementById("foobar").play(); },
+        '(show me classic archer and armstrong)': function() { window.location.href = "<%= root_url %>books/classic/archerarmstrong"; document.getElementById("foobar").play(); },
+        '(show me armor hunters bloodshot)': function() { window.location.href = "<%= root_url %>books/armorhuntersbloodshot"; document.getElementById("foobar").play(); },
+        '(show me bloodshot)': function() { window.location.href = "<%= root_url %>books/bloodshot"; document.getElementById("foobar").play(); },
+        '(show me bloodshot reborn)': function() { window.location.href = "<%= root_url %>books/bloodshotreborn"; document.getElementById("foobar").play(); },
+        '(show me fall of bloodshot)': function() { window.location.href = "<%= root_url %>books/fallofbloodshot"; document.getElementById("foobar").play(); },
+        '(show me book of death)': function() { window.location.href = "<%= root_url %>books/bookofdeath"; document.getElementById("foobar").play(); },
+        '(show me dead drop)': function() { window.location.href = "<%= root_url %>books/deaddrop"; document.getElementById("foobar").play(); },
+        '(show me faith)': function() { window.location.href = "<%= root_url %>books/faith"; document.getElementById("foobar").play(); },
+        '(show me the delinquents)(show me delinquents)': function() { window.location.href = "<%= root_url %>books/delinquents"; document.getElementById("foobar").play(); },
+        '(show me divinity)': function() { window.location.href = "<%= root_url %>books/divinity"; document.getElementById("foobar").play(); },
+        '(show me divinity two)': function() { window.location.href = "<%= root_url %>books/divinity2"; document.getElementById("foobar").play(); },
+        '(show me doctor mirage)(show me death defying doctor mirage)': function() { window.location.href = "<%= root_url %>books/drmirage"; document.getElementById("foobar").play(); },
+        '(show me doctor mirage second live)(show me death defying doctor mirage second lives)(show me second lives)': function() { window.location.href = "<%= root_url %>books/drmirage"; document.getElementById("foobar").play(); },
+        '(show me eternal warrior)': function() { window.location.href = "<%= root_url %>books/eternalwarrior"; document.getElementById("foobar").play(); },
+        '(show me eternal warrior days of steel)(show me days of steel)': function() { window.location.href = "<%= root_url %>books/eternalwarriordaysofsteel"; document.getElementById("foobar").play(); },
+        '(show me wrath of the eternal warrior)(show me wrath)': function() { window.location.href = "<%= root_url %>books/wratheternalwarrior"; document.getElementById("foobar").play(); },
+        '(show me armor hunters harbinger)': function() { window.location.href = "<%= root_url %>books/armorhuntersharbinger"; document.getElementById("foobar").play(); },
+        '(show me harbinger)': function() { window.location.href = "<%= root_url %>books/harbinger"; document.getElementById("foobar").play(); },
+        '(show me fall of harbinger)': function() { window.location.href = "<%= root_url %>books/fallofharbinger"; document.getElementById("foobar").play(); },
+        '(show me harbinger omegas)': function() { window.location.href = "<%= root_url %>books/harbingeromegas"; document.getElementById("foobar").play(); },
+        '(show me harbinger wars)': function() { window.location.href = "<%= root_url %>books/harbingerwars"; document.getElementById("foobar").play(); },
+        '(show me imperium)': function() { window.location.href = "<%= root_url %>books/imperium"; document.getElementById("foobar").play(); },
+        '(show me ivar)(show me ivar timewalker)(show me timewalker)': function() { window.location.href = "<%= root_url %>books/ivar"; document.getElementById("foobar").play(); },
+        '(show me ninjak)': function() { window.location.href = "<%= root_url %>books/ninjak"; document.getElementById("foobar").play(); },
+        '(show me fall of ninjak)': function() { window.location.href = "<%= root_url %>books/fallofninjak"; document.getElementById("foobar").play(); },
+        '(show me previews)(show me promos)(show me previews and promos)': function() { window.location.href = "<%= root_url %>books/previews"; document.getElementById("foobar").play(); },
+        '(show me punk mambo)': function() { window.location.href = "<%= root_url %>books/punkmambo"; document.getElementById("foobar").play(); },
+        '(show me quantum and woody)': function() { window.location.href = "<%= root_url %>books/quantumwoody"; document.getElementById("foobar").play(); },
+        '(show me quantum and woody must die)': function() { window.location.href = "<%= root_url %>books/quantumwoodymustdie"; document.getElementById("foobar").play(); },
+        '(show me ray)': function() { window.location.href = "<%= root_url %>books/rai"; document.getElementById("foobar").play(); },
+        '(show me shadowman)': function() { window.location.href = "<%= root_url %>books/shadowman"; document.getElementById("foobar").play(); },
+        '(show me shadowman end times)(show me end times)': function() { window.location.href = "<%= root_url %>books/shadowmanendtimes"; document.getElementById("foobar").play(); },
+        '(show me sketch covers)': function() { window.location.href = "<%= root_url %>books/sketch"; document.getElementById("foobar").play(); },
+        '(show me trades)': function() { window.location.href = "<%= root_url %>books/trades"; document.getElementById("foobar").play(); },
+        '(show me unity)': function() { window.location.href = "<%= root_url %>books/unity"; document.getElementById("foobar").play(); },
+        '(show me the valiant)': function() { window.location.href = "<%= root_url %>books/thevaliant"; document.getElementById("foobar").play(); },
+        '(show me 4001 exo)': function() { window.location.href = "<%= root_url %>books/ad4001xomanowar"; document.getElementById("foobar").play(); },
+        '(show me exo)': function() { window.location.href = "<%= root_url %>books/xomanowar"; document.getElementById("foobar").play(); },
+        '(show me fall of exo)': function() { window.location.href = "<%= root_url %>books/fallofxomanowar"; document.getElementById("foobar").play(); },
+        '(show me exo specials)': function() { window.location.href = "<%= root_url %>books/xomanowarspecials"; document.getElementById("foobar").play(); },
+        '(show me classic exo)': function() { window.location.href = "<%= root_url %>books/classic/xomanowar"; document.getElementById("foobar").play(); },
+        '(search for *tag)': function(tag) { window.location.href = "<%= root_url %>search?utf8=✓&query="+tag; document.getElementById("foobar").play(); },
+        '(scroll down)': function jumpScroll() { window.scrollBy(0, 350); document.getElementById("foobar").play(); },
+        '(scroll to bottom)': function jumpScroll() { window.scrollBy(0, 1500); document.getElementById("foobar").play(); },
+        '(scroll up)': function jumpScroll() { window.scrollBy(0, -350); document.getElementById("foobar").play(); },
+      };
+
+      // Add our commands to annyang
+      annyang.addCommands(commands);
+
+      // Start listening.
+      annyang.start();
+    }
+    </script>
+  <% end %>
+<% end %>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+<% if user_signed_in? && current_user.owns?(@book) %>	
+	<% if user_signed_in? && current_user.sales?(@book) %>
+		<%= link_to book_sale_path(@book), method: :delete, remote: true, class: "btn btn-warning btn-circle", title: "Remove from sales", data: { toggle: "tooltip", disable_with: "<span class='fa fa-minus'></span>"} do %><span class="fa fa-dollar"></span><% end %>
+	<% else %>
+		<%= link_to book_sale_path(@book), method: :post, remote: true, class: "btn btn-default btn-circle", title: "Mark for sale", data: { toggle: "tooltip", disable_with: "<span class='fa fa-plus'></span>"} do %><span class="fa fa-dollar"></span><% end %>
+	<% end %>
+<% end %>

@@ -1,0 +1,4 @@
+You have <%= link_to "#", data: { toggle: "modal", target: "#mynotes" }, :title => "Add a new note" do %>
+	<%= @book.comments.where(:user_id => current_user.id).count %> <% if @book.comments.where(:user_id => current_user.id).count == 1 %>note<% else %>notes<% end %>
+<% end %>
+ for this book.

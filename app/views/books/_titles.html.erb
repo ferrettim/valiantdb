@@ -1,0 +1,135 @@
+<% if @book.rdate.to_s > "2012-05-01" %>
+	<% if @book.title == "Archer & Armstrong" %>
+		<%= link_to archerarmstrong_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Archer and Armstrong" %>
+		<%= link_to archerarmstrong_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Bloodshot" %>
+		<%= link_to bloodshot_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Bloodshot Reborn" %>
+		<%= link_to bloodshotreborn_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title.include?("Eternal Warrior") %>
+		<%= link_to eternalwarrior_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title.include?("Faith") %>
+		<%= link_to faith_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "Harbinger" %>
+		<%= link_to harbinger_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Imperium" %>
+		<%= link_to imperium_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Ivar, Timewalker" %>
+		<%= link_to ivar_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title.include?("Armor Hunters") %>
+		<%= link_to armorhunters_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title.include?("Book of Death") %>
+		<%= link_to bookofdeath_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "Dead Drop" %>
+		<%= link_to deaddrop_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "Divinity" %>
+		<%= link_to divinity_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Death Defying Dr. Mirage" %>
+		<%= link_to drmirage_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Harbinger Wars" %>
+		<%= link_to harbingerwars_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "Punk Mambo" %>
+		<%= link_to punkmambo_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "The Delinquents" %>
+		<%= link_to delinquents_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "The Valiant" %>
+		<%= link_to thevaliant_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Ninjak" %>
+		<%= link_to ninjak_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title.include?("Quantum & Woody") %>
+		<%= link_to quantumwoody_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Rai" %>
+		<%= link_to rai_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title.include?("Shadowman") %>
+		<%= link_to shadowman_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "Unity" %>
+		<%= link_to unity_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "X-O Manowar" %>
+		<%= link_to xomanowar_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% end %>
+<% elsif @book.rdate.to_s < "1996-09-30" %>
+	<% if @book.title == "Armorines" %>
+		<%= link_to classic_armorines_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Bloodshot" %>
+		<%= link_to classic_bloodshot_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title.include?("Chaos Effect") %>
+		<%= link_to classic_chaoseffect_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title.include?("Deathmate") %>
+		<%= link_to classic_deathmate_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "Eternal Warrior" %>
+		<%= link_to classic_eternalwarrior_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "Geomancer" %>
+		<%= link_to classic_geomancer_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Harbinger" %>
+		<%= link_to classic_harbinger_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "H.A.R.D. Corps" %>
+		<%= link_to classic_hardcorps_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "Magnus Robot Fighter" %>
+		<%= link_to classic_magnus_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Ninjak" %>
+		<%= link_to classic_ninjak_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Psi-Lords" %>
+		<%= link_to classic_psilords_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Rai" %>
+		<%= link_to classic_rai_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Second Life of Doctor Mirage" %>
+		<%= link_to classic_mirage_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Secret Weapons" %>
+		<%= link_to classic_secretweapons_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Shadowman" %>
+		<%= link_to classic_shadowman_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Solar, Man of the Atom" %>
+		<%= link_to classic_solar_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "The Visitor" %>
+		<%= link_to classic_visitor_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Timewalker" %>
+		<%= link_to classic_timewalker_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Turok: Dinosaur Hunter" %>
+		<%= link_to classic_turok_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Unity" %>
+		<%= link_to classic_unity_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "X-O Manowar" %>
+		<%= link_to classic_xomanowar_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% end %>
+<% else  %>
+	<% if @book.title == "Acclaim Adventure Zone" %>
+		<%= link_to acclaim_adventurezone_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "Armorines" %>
+		<%= link_to acclaim_armorines_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Bloodshot" %>
+		<%= link_to acclaim_bloodshot_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "Darque Passages" %>
+		<%= link_to acclaim_darquepassages_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "Deadside" %>
+		<%= link_to acclaim_deadside_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Doctor Tomorrow" %>
+		<%= link_to acclaim_doctortomorrow_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Eternal Warriors" %>
+		<%= link_to acclaim_eternalwarriors_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Magnus Robot Fighter" %>
+		<%= link_to acclaim_magnus_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "N.I.O." %>
+		<%= link_to acclaim_nio_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Solar: Hell On Earth" %>
+		<%= link_to acclaim_solar_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Unity 2000" %>
+		<%= link_to acclaim_unity2000_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Ninjak" %>
+		<%= link_to acclaim_ninjak_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Quantum & Woody" %>
+		<%= link_to acclaim_quantumwoody_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Shadowman Vol. 2" %>
+		<%= link_to acclaim_shadowman_vol2_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Shadowman Vol. 3" %>
+		<%= link_to acclaim_shadowman_vol3_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Trinity Angels" %>
+		<%= link_to acclaim_trinityangels_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %>
+	<% elsif @book.title == "Troublemakers" %>
+		<%= link_to acclaim_troublemakers_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "Turok" %>
+		<%= link_to acclaim_turok_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% elsif @book.title == "X-O Manowar" %>
+		<%= link_to acclaim_xomanowar_books_path, data: { toggle: "tooltip" }, :title => "View title" do %>See all in this series<% end %> 
+	<% end %>
+<% end %>

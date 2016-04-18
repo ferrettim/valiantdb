@@ -1,0 +1,7 @@
+$('#stream').append("<%=j render(partial: 'streamitem', format: 'html') %>");
+
+<% if @activities.current_page == @activities.total_pages %>
+  $('#view-more').remove();
+<% else %>
+  $('#view-more a').attr('href', '<%= url_for(page: @activities.current_page + 1) %>');
+<% end %>

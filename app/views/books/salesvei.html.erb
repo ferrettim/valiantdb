@@ -1,0 +1,11 @@
+<div class="wellclear">
+	<div id="books">
+	<% if params[:query].present? %>
+	<%= render "search" %>
+	<% else %>
+		<h2 class="text-center">Sales Rankings (2012+)</h2>
+	    <p>This page lists sales for current Valiant titles only and includes (A) covers only. Books are ranked in descending order by the number of copies sold. North American sales data from Diamond is used to generate this list so the numbers are not always exact representations of actual sales.</p>
+	<% end %>
+	<%= render "booksales" %>
+	</div>
+</div>

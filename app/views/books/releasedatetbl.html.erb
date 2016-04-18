@@ -1,0 +1,12 @@
+<% if params[:query].present? %>
+<%= render "search" %>
+<% else %>
+	<h2 class="white">Valiant Titles (2012-) by Release Date <div class="pull-right"><%= link_to releases_veibydate_path, :class => "btn btn-default btn-sm" do %>
+            <span class="fa fa-th"></span> <span class="gone">Grid View</span>
+        <% end %>
+    	<%= link_to releases_veibydate_path(format: "csv"), :class => "btn btn-success btn-sm" do %>
+            <span class="fa fa-download"></span> <span class="gone">Export Releases</span>
+        <% end %></div></h2>
+    <p class="white">This page lists all the titles for Valiant Entertainment since the relaunch of 2012 in chronological order by release date. This page will only show regular edition covers not variants or reprints for those of you just looking to see the books or catch up on your reading. If you'd like to see those, please browse the books by title which will show those covers as well.</p>
+<% end %>
+<%= render "booktbl" %>

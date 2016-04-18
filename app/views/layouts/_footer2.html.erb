@@ -1,0 +1,49 @@
+<!-- Footer -->
+<div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#footer">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse" id="footer">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <%= link_to root_url do %><i class="fa fa-home"></i> <span class="large-only">Home</span><% end %>
+                </li>
+                <li>
+                    <% unless current_page? root_url %>
+                        <%= link_to :back do %><i class="fa fa-undo"></i> <span class="large-only">Go back</span><% end %>
+                    <% end %>
+                </li>
+                <% if controller_name == "registrations" %>
+                <% elsif controller_name == "sessions" %>
+                <% else %>
+                <li>
+                    <%= link_to "#" do %>Viewing <%= @pgtitle %><% end %>
+                </li>
+                <% end %>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <%= link_to userguide_path do %><i class="fa fa-question"></i> <span class="large-only">Help</span><% end %>
+                </li>
+                <li>
+                    <%= link_to privacy_path do %><i class="fa fa-eye"></i> <span class="large-only">Privacy Policy</span><% end %>
+                </li>
+                <li>
+                    <%= link_to terms_path do %><i class="fa fa-warning"></i> <span class="large-only">Terms</span> <% end %>
+                </li>
+                <li>
+                    <%= link_to new_contact_path do %><i class="fa fa-envelope"></i> <span class="large-only">Contact</span><% end %>
+                </li>
+                <li>
+                    <%= link_to root_url do %><i class="fa fa-copyright"> 2014-<%= Date.today.strftime("%Y") %></i><% end %>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div> 

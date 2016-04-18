@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @preview.description %>
+</p>
+
+<p>
+  <strong>Book:</strong>
+  <%= @preview.book %>
+</p>
+
+<%= link_to 'Edit', edit_preview_path(@preview) %> |
+<%= link_to 'Back', previews_path %>

@@ -1,0 +1,167 @@
+
+<div id="books" class="wellclear">
+	<% if action_name == "sketchtbl" %>
+		<p>All these covers have been commissioned by Valiant fans at various shows and conventions, so if you have a cover you'd like to submit, feel free to submit your own. All submissions will be reviewed by the administrator. We will only accept sketch covers by professional or semi-professional artists.</p>
+	<% end %>
+<table class="table table-condensed table-responsive">
+	<thead>
+		<tr>
+			<td><strong>Image</strong></td>
+			<td><strong>Title</strong></td>
+			<td><strong>Issue</strong></td>
+			<td><strong>Release date</strong></td>
+			<% unless action_name == "sketchtbl" %>
+				<td><strong>Writer</strong></td>
+				<td><strong>Artist</strong></td>
+			<% end %>
+			<% unless action_name == "tradestbl" %>
+				<td><strong>Cover</strong></td>
+			<% end %>
+			<% if action_name == "sketchtbl" %>
+				<td><strong>Owner</strong></td>
+			<% else %>
+				<td><strong>Note</strong></td>
+			<% end %>
+			<% unless action_name == "sketchtbl" %>
+				<td class="text-center"><strong>Printing</strong></td>
+			<% end %>
+			<% if action_name == "tradestbl" %>
+			<% elsif action_name == "sketchtbl" %>
+			<% else %>
+				<td class="text-center"><strong>Value</strong></td>
+			<% end %>
+			<% if user_signed_in? %>
+				<td class="text-center"><strong>Owned?</strong></td>
+			<% end %>
+			<td class="text-center"><strong>Actions</strong></td>
+		</tr>
+	</thead>
+	<tbody>
+		<% @book.each do |title| %>
+
+		<tr id="row_<%= title.id %>">
+			<td class="text-center"><%= link_to title.image.url(:original), :title => "Click for larger image", data: { toggle: "modal", target: "##{title.id}_myModal" }, data: { toggle: "tooltip" } do %><%= image_tag title.image.url(:thumb), :alt => title.title.to_s + " cover by " + title.cover.to_s, :width => "24px", :height => "36px", class: "img-responsive" %>
+
+           <!-- Modal -->
+		    <div class="modal fade" id="<%= title.id %>_myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		      <div class="modal-dialog">
+		        <div class="modal-content">
+		          <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times; Close</span></button>
+		            <h4 class="modal-title" id="myModalLabel"><%= title.title.to_s + " #" + title.issue.to_s %></h4>
+		          </div>
+		          <div class="modal-body">
+		            <div clas="text-center"><%= image_tag title.image.url(:original), :alt => title.title.to_s + " cover by " + title.cover.to_s, class: "img-responsive text-center center" %></div>
+		          </div>
+		          <!-- <div class="modal-footer">
+		            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		          </div> -->
+		        </div>
+		      </div>
+		    </div>
+		    <!-- End Modal -->
+        <% end %></td>
+			<td>
+				<% if title.category == "Paperback" %>
+		            <%= link_to title, data: { toggle: "tooltip" }, title: "View title" do %><%= title.title + " Vol. " + title.issue.to_s + " TPB" %><% end %>
+		        <% elsif title.category == "Hardcover" %>
+		            <%= link_to title, data: { toggle: "tooltip" }, title: "View title" do %><%= title.title + " Vol. " + title.issue.to_s + " Deluxe HC" %><% end %>
+		        <% else %>
+		            <%= link_to title, data: { toggle: "tooltip" }, title: "View title" do %><%= title.title %><% end %>
+		        <% end %>
+			</td>
+			<td class="text-center"><%= link_to title, data: { toggle: "tooltip" }, :title => "View " + title.title + " #" + title.issue.to_s do %><%= title.issue %><% end %></td>
+			<td><%= title.rdate.strftime("%b %d, %y") %></td>
+			<% unless action_name == "sketchtbl" %>
+				<td><%= link_to search_path + "/?utf8=✓&query=" + title.writer.to_s, data: { toggle: "tooltip" }, :title => "View books by " + title.writer do %><%= title.writer %><% end %></td>
+				<td><%= link_to search_path + "/?utf8=✓&query=" + title.artist.to_s, data: { toggle: "tooltip" }, :title => "View books by " + title.artist do %><%= title.artist %><% end %></td>
+			<% end %>
+			<% unless action_name == "tradestbl" %>	
+				<td><%= link_to search_path + "/?utf8=✓&query=" + title.cover.to_s, data: { toggle: "tooltip" }, :title => "View books by " + title.cover.to_s do %><%= title.cover.to_s %><% end %></td>
+			<% end %>
+			<td><%= title.note.first(30) %>
+				<% if title.note.size > 30 %>...<%= link_to "(more)", title %><% end %></td>
+			<% unless action_name == "sketchtbl" %>
+				<td class="text-center">
+					<% if title.printing? %>
+						<%= title.printing.ordinalize %>
+					<% else %>
+						N/A
+					<% end %>
+				</td>
+			<% end %>
+			<% if action_name == "sketchtbl" %>
+			<% elsif action_name == "tradestbl" %>
+			<% else %>
+				<% if user_signed_in? %>
+					<% if current_user.patron? %>
+						<td class="text-center">
+							<% if title.pricenm? %>
+								$<%= '%.2f' % title.value_in_dollars.to_f %>
+							<% else %>
+								N/A
+							<% end %>
+						</td>
+					<% else %>
+						<td class="text-center"><%= link_to "http://www.patreon.com/valiantdb" do %>Patrons only<% end %></td>
+					<% end %>
+				<% else %>
+					<td class="text-center"><%= link_to "http://www.patreon.com/valiantdb" do %>Patrons only<% end %></td>
+				<% end %>
+			<% end %>
+
+	    	<td class="text-center">
+	    		<% if user_signed_in? && current_user.owns?(title) %>
+					<% Own.where(user_id: current_user.id, book_id: title.id).each do |own| %>
+						<%= form_for [own.book, own], input_html: { class: "form-inline" }, :method => 'put' do |f| %>
+							<span id="quantity"> <%= f.text_field :quantity, :placeholder => own.quantity, :size => "1", label: false, class: "text-center" %> </span> 
+							<%= f.submit "Save", :onclick => "submit()", :hidden => true %>
+						<% end %>
+					<% end %>
+				<br />
+			<% else %>
+				<span id="quantity" class="text-center">0</span>
+			<% end %>
+	    	</td>
+
+					<td class="pull-right">
+					  <ul class="list-inline">
+					  	<% if user_signed_in? %>
+				        <li id="<%= title.id %>_owns">
+				        <% unless title.rdate.future? %>
+				        	<% if user_signed_in? && current_user.owns?(title) %>
+								<%= link_to book_own_path(title), data: { toggle: "tooltip" }, method: :delete, remote: true, class: "btn btn-default btn-danger btn-circle", title: "Remove from collection", data: {disable_with: "<span class='fa fa-minus'></span>"} do %><span class="fa fa-heart-o"></span><% end %>
+							<% else %>
+								<%= link_to book_own_path(title), data: { toggle: "tooltip" }, method: :post, remote: true, class: "btn btn-default btn-circle", title: "Add to collection", data: {disable_with: "<span class='fa fa-plus'></span>"} do %><span class="fa fa-heart"></span><% end %>
+							<% end %>
+						<% end %>
+			  			</li>
+				     	<li id="<%= title.id %>_wishes">
+			        	<% if user_signed_in? && current_user.wishes?(title) %>
+							<%= link_to book_wish_path(title), data: { toggle: "tooltip" }, method: :delete, remote: true, class: "btn btn-default btn-danger btn-circle", title: "Remove from wishlist", data: {disable_with: "<span class='fa fa-minus'></span>"} do %><span class="fa fa-star-o"></span><% end %>
+						<% else %>
+							<%= link_to book_wish_path(title), data: { toggle: "tooltip" }, method: :post, remote: true, class: "btn btn-default btn-circle", title: "Add to wishlist", data: {disable_with: "<span class='fa fa-plus'></span>"} do %><span class="fa fa-star"></span> <% end %>
+						<% end %>
+			            </li>
+			            <li id="<%= title.id %>_sales">
+			        	<% if user_signed_in? && current_user.sales?(title) %>
+							<%= link_to book_sale_path(title), data: { toggle: "tooltip" }, method: :delete, remote: true, class: "btn btn-default btn-warning btn-circle", title: "Remove from sell list", data: {disable_with: "<span class='fa fa-minus'></span>"} do %><span class="fa fa-dollar"></span><% end %>
+						<% else %>
+							<%= link_to book_sale_path(title), data: { toggle: "tooltip" }, method: :post, remote: true, class: "btn btn-default btn-circle", title: "Mark for sale", data: {disable_with: "<span class='fa fa-plus'></span>"} do %><span class="fa fa-dollar"></span> <% end %>
+						<% end %>
+			            </li>
+			            <% end %>
+			            
+				      </ul>
+				    </td>
+		</tr>
+		
+		<% end %>
+	</tbody>
+</table>
+
+
+</div>
+
+<div class="text-center"><%= paginate @book %></div>
+<div class="clearfix"></div>

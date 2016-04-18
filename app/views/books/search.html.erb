@@ -1,0 +1,32 @@
+<% if params[:query].present? %>
+	<div>
+<% else %>
+	<div class="well">
+<% end %>
+<% unless params[:query].present? %>
+<% @tcount = Book.all.count %>
+<h2>Valiant Comic Database</h2>
+<p>Nothing to see here.</p>
+<% end %>
+
+<% if params[:query].present? %>
+	<% @search_count = Book.search(params[:query]).count %>
+	<% @title = Book.search(params[:query], page: params[:page], per_page: 20) %>
+<% end %>
+
+<% @tcount = Book.all.count %>
+<% if params[:query].present? %>
+<div class="pull-left">
+		<% if @title.count > 0 %>
+			<p class="btn btn-default btn-lg"> There <% if @search_count == 1 %>is<% else %>are<% end %> <span class="badge"><%= @search_count %></span> <% if @search_count == 1 %>result<% else %>results<% end %> for  <span class="badge"><%= params[:query] %></span></p>
+		<% else %>
+			<p class="btn btn-danger btn-lg"> There are <span class="badge"><%= @title.count %></span> results for  <span class="badge"><%= params[:query] %></span></p>
+		<% end %>
+	</div>
+	<div class="clearfix"></div>
+	<% unless @title.count > 0 %>
+		<p class="mark text-center"><br />Sorry, it looks like there are no results matching your query "<strong><%= params[:query] %></strong>".<br /><br /></p>
+	<% end %>
+	<%= render 'book' %>
+<% end %>
+</div>

@@ -1,0 +1,11 @@
+<div class="wellclear">
+	<div id="books">
+	<% if params[:query].present? %>
+	<%= render "search" %>
+	<% else %> 
+		<h2 class="text-center">Value Rankings</h2>
+	    <p class="text-center">This page ranks ALL Valiant titles from 1991 to present based on their current price guide value. Books from different eras may be intermixed based on their value. Values are updated on a monthly basis.</p>
+	<% end %>
+	<%= render "bookvalues" %>
+	</div>
+</div>

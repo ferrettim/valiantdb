@@ -1,0 +1,22 @@
+<div class="wellclear">
+<h3 class="text-center">Book of Death Reading Order (2015)</h3>
+<p class="text-center">Please note that the full story of this event unfolds in the Book of Death miniseries. The tie-in one-shots are only meant to give an extra glimpse of the event and not required to get understand the story.</p>
+<br />
+<div class="container">
+	<% @books.each do |e| %>
+		<div class="col-md-6 col-sm-6 col-xs-12">
+			<div class="col-md-3 col-sm-5 col-xs-6">
+				<%= link_to e, :title => e.title + " #" + e.issue.to_s do %><%= image_tag e.image.url(:thumb) %><% end %><br /><br />
+			</div>
+			<div class="col-md-9 col-sm-7 col-xs-6">
+				<%= link_to e, :title => e.title + " #" + e.issue.to_s do %><%= e.title %> #<%= e.issue.to_s %><% end %>
+				<p>Released on <%= e.rdate.strftime("%B %d, %Y") %></p>
+				<p>Written by <%= e.writer %> <% if e.writer2?%>and <%= e.writer2 %><% end %><br />
+				   Art by <%= e.artist %> <% if e.artist2? %>and <%= e.artist2 %><% end %></p>
+				   <strong><%= e.event %></strong> part <strong><%= e.eventpart %></strong></p>
+			</div>
+		</div>
+	<% end %>
+</div>
+<div class="clearfix"></div>
+</div>

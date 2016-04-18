@@ -1,0 +1,51 @@
+<div class="center-block">
+<div class="contact-div">
+  <h3 class="text-center">Contact Us</h3>
+  <p>If you're having an issue with your account, found a bug or error on the site, or just want to send some feedback, feel free to use the contact form below to get in touch with you. We'll do our best to reply as quickly as possible. If you'd like a faster response, find us <a href="https://www.facebook.com/ValiantCentral" data-toggle="tooltip" title="Find us on Facebook">on Facebook</a> or <a href="https://twitter.com/Valiant_Central/" data-toggle="tooltip" title="Find us on Twitter">on Twitter</a>.
+  <div>
+  <%= simple_form_for @contact, :html => {:class => 'form-inline' } do |f| %>
+  <div class="text-center">
+    <div class="form-group pull">
+      <label class="sr-only" for="contactName">Contact Name</label>
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-user"></i></div>
+          <% if user_signed_in? %>
+            <%= f.input :name, :required => true, :input_html => { :value => current_user.name }, placeholder: current_user.name, :id => "contactName", :label => false %>
+          <% else %>
+            <%= f.input :name, :required => true, placeholder: "What's your name?", :id => "contactEmail", :label => false %>
+          <% end %>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label class="sr-only" for="contactEmail">Contact Email</label>
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
+          <% if user_signed_in? %>
+            <%= f.input :email, :required => true, :input_html => { :value => current_user.email }, placeholder: current_user.email, :id => "contactEmail", :label => false %>
+          <% else %>
+            <%= f.input :email, :required => true, placeholder: "Enter your email", :id => "contactEmail", :label => false %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="clearfix"><br /></div>
+   
+  <div class="text-center"> 
+    <%= f.input :message, :as => :text, :required => true, :input_html => { class: "contact-textbox", :rows => 7, :cols => 61}, placeholder: "Enter your message here :-)", :label => false %>
+  </div>
+
+    <div class="hidden">
+      <%= f.input :nickname, :hint => 'Leave this field blank!' %>
+    </div>
+    <div class="clearfix"><br /></div>
+    <div class="text-center">
+      <%= f.button :submit, 'Send message', class: "contact-submit" %>
+    </div>
+  <% end %>
+  <div class="clearfix"><br /></div>
+</div>
+</div>
+</div>

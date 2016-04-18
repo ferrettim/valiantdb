@@ -1,0 +1,594 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta name="google-site-verification" content="qOD1tFyFsRxICbbFJ8f0EMC25VzGV2qMMMPZSQfmJG4" />
+  <link rel="icon" href="http://valiantcentral.com/wp-content/uploads/2014/06/favicon.ico" type="image/x-icon" />
+  <title>Valiant Database</title>
+  <link href="/assets/books.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/bootstrap-social.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/character.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/contacts.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/conversations.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/errors.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/flexslider.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/home.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/jasny.min.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/jquery.sidr.dark.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/mailbox.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/pages.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/users.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/chosen.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/font-awesome.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/jquery.jcrop.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/jquery-ui/theme.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/jquery-ui/core.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/jquery-ui/menu.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/jquery-ui/autocomplete.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/jquery-ui/datepicker.css?body=1" media="all" rel="stylesheet" />
+<link href="/assets/application.css?body=1" media="all" rel="stylesheet" />
+  <script cache="true" src="/assets/jsapi.js?body=1"></script>
+<script cache="true" src="/assets/chartkick.js?body=1"></script>
+<script cache="true" src="/assets/jquery.js?body=1"></script>
+<script cache="true" src="/assets/jquery.turbolinks.js?body=1"></script>
+<script cache="true" src="/assets/jquery_ujs.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/core.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/widget.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/accordion.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/position.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/menu.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/autocomplete.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/button.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/datepicker.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/mouse.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/draggable.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/resizable.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/dialog.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/droppable.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-blind.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-bounce.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-clip.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-drop.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-explode.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-fade.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-fold.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-highlight.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-size.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-scale.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-puff.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-pulsate.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-shake.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-slide.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/effect-transfer.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/progressbar.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/selectable.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/selectmenu.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/slider.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/sortable.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/spinner.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/tabs.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui/tooltip.js?body=1"></script>
+<script cache="true" src="/assets/jquery-ui.js?body=1"></script>
+<script cache="true" src="/assets/jquery.sidr.min.js?body=1"></script>
+<script cache="true" src="/assets/jquery.raty.js?body=1"></script>
+<script cache="true" src="/assets/jquery.jcrop.js?body=1"></script>
+<script cache="true" src="/assets/autocomplete-rails.js?body=1"></script>
+<script cache="true" src="/assets/papercrop.js?body=1"></script>
+<script cache="true" src="/assets/lib/abstract-chosen.js?body=1"></script>
+<script cache="true" src="/assets/lib/select-parser.js?body=1"></script>
+<script cache="true" src="/assets/chosen.jquery.js?body=1"></script>
+<script cache="true" src="/assets/chosen-jquery.js?body=1"></script>
+<script cache="true" src="/assets/ratyrate.js?body=1"></script>
+<script cache="true" src="/assets/jquery.flexslider-min.js?body=1"></script>
+<script cache="true" src="/assets/rest_in_place/rest_in_place.js?body=1"></script>
+<script cache="true" src="/assets/rest_in_place/index.js?body=1"></script>
+<script cache="true" src="/assets/local_time.js?body=1"></script>
+<script cache="true" src="/assets/bootstrap.js?body=1"></script>
+<script cache="true" src="/assets/books.js?body=1"></script>
+<script cache="true" src="/assets/character.js?body=1"></script>
+<script cache="true" src="/assets/conversations.js?body=1"></script>
+<script cache="true" src="/assets/google_analytics.js?body=1"></script>
+<script cache="true" src="/assets/jasny.min.js?body=1"></script>
+<script cache="true" src="/assets/pages.js?body=1"></script>
+<script cache="true" src="/assets/application.js?body=1"></script>
+  <meta content="authenticity_token" name="csrf-param" />
+<meta content="4/Xg9371xUgfdZ3odifJsRg+De8cqmJq/2MGM8EXAHk=" name="csrf-token" />
+
+</head>
+<body id="pad">
+
+  <div id="main">
+    
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+          <div class="container-fluid">
+            <div class="navbar-header">
+
+                <button type="button" class="navbar-toggle collapsed" href="#sidr6" id="menus">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a href="/" class="navbar-brand" id="brand" title="Home">Valiant Database</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul id="searchnav" class="nav navbar-nav">
+                <form accept-charset="UTF-8" action="/search" class="search-form" method="get" role="search"><div style="display:none"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+                    <li class="form-group has-feedback">
+                        <input autocomplete="off" class="form-control typeahead" id="book" name="query" placeholder="Search the database..." type="text" />           
+                        <i class="fa fa-search form-control-feedback"></i></span> 
+                    </li>
+</form>              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                  <li><a id="vei" href="#sidr1" title="Current Valiant titles"><img src="https://s3.amazonaws.com/valiantdb/images/valianticon.png" alt="Current" height="16px" class="icons" /></a></li>
+                  <li><a id="vh1" href="#sidr2" title="Classic Valiant titles"><img src="https://s3.amazonaws.com/valiantdb/images/vh1icon.png" alt="Classic" height="20px" class="icons" /> </a></li>
+                  <li><a id="vh2" href="#sidr3" title="Acclaim titles"><img src="https://s3.amazonaws.com/valiantdb/images/vh2icon.png" alt="Acclaim" height="18px" class="icons" /> </a></li>
+                  <li><a id="solicits" href="#sidr4" title="Valiant solicitations"><i class="fa fa-calendar"></i></a></li>
+                  <li><a id="links" href="#sidr5" title="Links and resources"><i class="fa fa-globe"></i> </a></li>
+                  <li><a href="/contacts/new" title="Contact"><i class="fa fa-envelope"></i></a></li>
+              </ul>
+            </div>
+          </div><!--/.nav-collapse -->
+        </nav>
+
+  <div id="sidr6">
+    <ul>
+      <li>&nbsp;</li>
+      <li><form accept-charset="UTF-8" action="/search" method="get" role="search"><div style="display:none"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+          <input autocomplete="off" class="form-control" id="book_search" name="query" placeholder=" Search the database..." type="text" />                               
+      </form></li>
+        <li><a href="http://127.0.0.1:3000/" title="Go home"> <i class="fa fa-home"> Home</i></a></li>
+        <li><a href="/login"><i class="fa fa-sign-in"></i> Register / Sign in</a></li>
+      <li><a id="vei2" href="#sidr7"><i class="fa fa-book"></i> Current Valiant</a></li>
+      <li><a id="vh12" href="#sidr8"><i class="fa fa-book"></i> Classic Valiant</a></li>
+      <li><a id="vh22" href="#sidr9"><i class="fa fa-book"></i> Acclaim Comics</a></li>
+      <li><a id="solicits2" href="#sidr10"><i class="fa fa-calendar"></i> Solicitations</a></li>
+      <li><a id="links2" href="#sidr11"><i class="fa fa-link"></i> Links</a></li>
+      <li>
+        <a href="/contacts/new"><i class="fa fa-envelope"></i> Contact</a>
+      </li>
+    </ul>
+  </div>
+  <div id="menu-list">
+      <div id="sidr1">
+  <!-- Your content -->
+  <ul>
+    <li>&nbsp;</li>
+    <li><form accept-charset="UTF-8" action="/search" method="get" role="search"><div style="display:none"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+        <input autocomplete="off" class="form-control" id="book_search" name="query" placeholder=" Search the database..." type="text" />                               
+    </form></li>
+    <li><a href="/books/keys">Key Issues (2012-)</a></li>
+    <li>
+        <a tabindex="-1" href="#" data-toggle="collapse" data-target="#veievents">Events</a>
+        <ul id="veievents" class="collapse">
+          <li><a href="/books/events/harbingerwars">Harbinger Wars (2013)</a></li>
+          <li><a href="/books/events/armorhunters">Armor Hunters (2014)</a></li>
+          <li><a href="/books/events/bookofdeath">Book of Death (2015)</a></li>
+        </ul>
+    </li>
+    <li class="divider"></li>
+    <li><a href="/books/all">All Books</a></li>
+    <li><a href="/books/archerarmstrong">Archer &amp; Armstrong</a></li>
+    <li><a href="/books/bloodshot">Bloodshot</a></li>
+    <li><a href="/books/bloodshotreborn">Bloodshot Reborn</a></li>
+    <li><a href="/books/eternalwarrior">Eternal Warrior</a></li>
+    <li><a href="/books/harbinger">Harbinger</a></li>
+    <li><a href="/books/imperium">Imperium</a></li>
+    <li><a href="/books/ivar">Ivar, Timewalker</a></li>
+    <li>
+      <a tabindex="-1" href="#" data-toggle="collapse" data-target="#veiminis">Miniseries & One-shots</a>
+      <ul id="veiminis" class="collapse">
+        <li><a href="/books/armorhunters">Armor Hunters</a></li>
+        <li><a href="/books/bookofdeath">Book of Death</a></li>
+        <li><a href="/books/deaddrop">Dead Drop</a></li>
+        <li><a href="/books/divinity">Divinity</a></li>
+        <li><a href="/books/drmirage">Dr Mirage</a></li>
+        <li><a href="/books/harbingerwars">Harbinger Wars</a></li>
+        <li><a href="/books/punkmambo">Punk Mambo</a></li>
+        <li><a href="/books/delinquents">The Delinquents</a></li>
+        <li><a href="/books/thevaliant">The Valiant</a></li>
+      </ul>
+    </li>
+    <li><a href="/books/ninjak">Ninjak</a></li>
+    <li><a href="/books/previews">Previews and Promos</a></li>
+    <li><a href="/books/quantumwoody">Quantum &amp; Woody</a></li>
+    <li><a href="/books/rai">Rai</a></li>
+    <li><a href="/books/shadowman">Shadowman</a></li>
+    <li><a href="/books/sketch">Sketch Covers</a></li>
+    <li><a href="/books/trades">Trades and Collections</a></li>
+    <li><a href="/books/unity">Unity</a></li>
+    <li><a href="/books/xomanowar">X-O Manowar</a></li>
+    <li>&nbsp;</li>
+  </ul>
+</div>
+
+<div id="sidr2">
+  <!-- Your content -->
+  <ul>
+    <li>&nbsp;</li>
+    <li><form accept-charset="UTF-8" action="/search" method="get" role="search"><div style="display:none"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+        <input autocomplete="off" class="form-control" id="book_search" name="query" placeholder=" Search the database..." type="text" />                               
+    </form></li>
+    <li><a href="/books/classic/keys">Key Issues (1991-1996)</a></li>
+    <li class="divider"></li>
+    <li><a href="/books/classic/all">All Classic books</a></li>
+    <li><a href="/books/classic/archerarmstrong">Archer &amp; Armstrong</a></li>
+    <li><a href="/books/classic/armorines">Armorines</a></li>
+    <li><a href="/books/classic/bloodshot">Bloodshot</a></li>
+    <li><a href="/books/classic/eternalwarrior">Eternal Warrior</a></li>
+    <li><a href="/books/classic/geomancer">Geomancer</a></li>
+    <li><a href="/books/classic/harbinger">Harbinger</a></li>
+    <li><a href="/books/classic/hardcorps">H.A.R.D. Corps</a></li>
+    <li><a href="/books/classic/magnus">Magnus Robot Fighter</a></li>
+    <li>
+      <a tabindex="-1" href="#" data-toggle="collapse" data-target="#vh1minis">Miniseries & One-shots</a>
+      <ul id="vh1minis" class="collapse">
+        <li><a href="/books/classic/chaoseffect">Chaos Effect</a></li>
+        <li><a href="/books/classic/deathmate">Deathmate</a></li>
+        <li><a href="/books/classic/misc">Miscellaneous</a></li>
+        <li><a href="/books/classic/unity">Unity</a></li>
+      </ul>
+    <li>
+    <li><a href="/books/classic/ninjak">Ninjak</a></li>
+    <li><a href="/books/classic/psilords">Psi-Lords</a></li>
+    <li><a href="/books/classic/rai">Rai</a></li>
+    <li><a href="/books/classic/mirage">Second Life of Doctor Mirage</a></li>
+    <li><a href="/books/classic/secretweapons">Secret Weapons</a></li>
+    <li><a href="/books/classic/shadowman">Shadowman</a></li>
+    <li><a href="/books/classic/solar">Solar, Man of the Atom</a></li>
+    <li><a href="/books/classic/visitor">The Visitor</a></li>
+    <li><a href="/books/classic/timewalker">Timewalker</a></li>
+    <li><a href="/books/classic/trades">Trades and Collections</a></li>
+    <li><a href="/books/classic/turok">Turok: Dinosaur Hunter</a></li>
+    <li><a href="/books/classic/xomanowar">X-O Manowar</a></li>
+    <li>&nbsp;</li>
+  </ul>
+</div>
+
+<div id="sidr3">
+  <!-- Your content -->
+  <ul>
+    <li>&nbsp;</li>
+    <li><form accept-charset="UTF-8" action="/search" method="get" role="search"><div style="display:none"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+        <input autocomplete="off" class="form-control" id="book_search" name="query" placeholder=" Search the database..." type="text" />                               
+    </form></li>
+    <li><a href="/books/acclaim/all">All Acclaim books</a></li>
+    <li><a href="/books/acclaim/bloodshot">Bloodshot</a></li>
+    <li><a href="/books/acclaim/doctortomorrow">Doctor Tomorrow</a></li>
+    <li><a href="/books/acclaim/eternalwarriors">Eternal Warriors</a></li>
+    <li><a href="/books/acclaim/magnus">Magnus Robot Fighter</a></li>
+    <li>
+      <a tabindex="-1" href="#" data-toggle="collapse" data-target="#vh2minis">Miniseries & One-shots</a>
+      <ul id="vh2minis" class="collapse">
+        <li><a href="/books/acclaim/adventurezone">Acclaim Adventure Zone</a></li>
+        <li><a href="/books/acclaim/armorines">Armorines</a></li>
+        <li><a href="/books/acclaim/darquepassages">Darque Passages</a></li>
+        <li><a href="/books/acclaim/deadside">Deadside</a></li>
+        <li><a href="/books/acclaim/nio">N.I.O.</a></li>
+        <li><a href="/books/acclaim/misc">Miscellaneous</a></li>
+        <li><a href="/books/acclaim/solar">Solar: Hell On Earth</a></li>
+        <li><a href="/books/acclaim/unity2000">Unity 2000</a></li>
+      </ul>
+    </li>
+    <li><a href="/books/acclaim/ninjak">Ninjak</a></li>
+    <li><a href="/books/acclaim/quantumwoody">Quantum &amp; Woody</a></li>
+    <li><a href="/books/acclaim/shadowman_vol2">Shadowman Vol. 2</a></li>
+    <li><a href="/books/acclaim/shadowman_vol3">Shadowman Vol. 3</a></li>
+    <li><a href="/books/acclaim/trinityangels">Trinity Angels</a></li>
+    <li><a href="/books/acclaim/troublemakers">Troublemakers</a></li>
+    <li><a href="/books/acclaim/turok">Turok</a></li>
+    <li><a href="/books/acclaim/xomanowar">X-O Manowar</a></li>
+    <li>&nbsp;</li>
+  </ul>
+</div>
+
+<div id="sidr4">
+  <ul>
+    <li>&nbsp;</li>
+    <li><form accept-charset="UTF-8" action="/search" method="get" role="search"><div style="display:none"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+        <input autocomplete="off" class="form-control" id="book_search" name="query" placeholder=" Search the database..." type="text" />                               
+    </form></li>
+    <li><a href="/releases/lastmonth">May 2015</a></li>
+    <li><a href="/releases/thismonth"><strong>June 2015</strong></a></li>
+    <li><a href="/releases/nextmonth">July 2015</a></li>
+    <li><a href="/releases/twomonths">August 2015</a></li>
+    <li><a href="/releases/latestsolicitations">September 2015</a></li>
+    <li>
+      <a tabindex="-1" href="#" data-toggle="collapse" data-target="#releases">Releases by date</a>
+      <ul id="releases" class="collapse">
+        <li><a href="/releases/vh1bydate">Classic Valiant (1991-1996)</a></li>
+        <li><a href="/releases/vh2bydate">Acclaim Comics (1996-1996)</a></li>
+        <li><a href="/releases/veibydate">Current Valiant (2012-)</a></li>
+      </ul>
+    </li>
+    <li>
+      <a tabindex="-1" "#" data-toggle="collapse" data-target="#salesfigures">Sales Figures</a>
+      <ul id="salesfigures" class="collapse">
+        <li><a href="/sales/vei">Current by issue</a></li>
+        <li><a href="/sales/veibytitle">Current by title</a></li>
+      </ul>
+    </li>
+    <li>
+      <a tabindex="-1" href="#" data-toggle="collapse" data-target="#timeline">Releases Timeline</a>
+      <ul id="timeline" class="collapse">
+        <li><a href="/releases/vh1timeline">Classic timeline (1991-1996)</a></li>
+        <li><a href="/releases/veitimeline">Current timeline (2012-)</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div id="sidr5">
+                  <ul>
+                    <li>&nbsp;</li>
+                    <li>
+                      <a tabindex="-1" href="#">Websites</a>
+                        <ul>
+                          <li><a href="http://the-book-of-geomancer.wikia.com/wiki/Main_Page" title="The Book of Geomancer">The Book of Geomancer Wiki</a></li>
+                          <li><a href="http://valiantcentral.com" title="Daily source of Valiant news and reviews">Valiant Central</a></li>
+                          <li><a href="http://www.valiantfan.com" title="Reference for Valiant comics">Valiant Fan</a></li>
+                          <li><a href="http://www.valiantfans.com/forum" title="Valiant Fans Message Board">Valiant Fans Message Board</a></li>
+                          <li><a href="http://www.valiantuniverse.com" title="Official Valiant Entertainment website">Valiant Universe</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                      <a tabindex="-1" href="#" data-toggle="collapse" data-target="#podcasts">Podcasts</a>
+                       <ul id="podcasts" class="collapse">
+                        <li><a href="http://valiantcentral.com/category/podcast/ivars-longbox/">Ivar&#39;s Longbox</a></li>
+                        <li><a href="http://www.onlythevaliant.com">Only The Valiant</a></li>
+                        <li><a href="http://talkingcomicbooks.com/category/podcast-2/talking-valiant/">Talking Valiant</a></li>
+                        <li><a href="http://valiantcentral.com/category/podcast">Valiant Central Podcast</a></li>
+                        <li><a href="http://vepodcast.wordpress.com">Valiant Effort</a></li>
+                        <li><a href="http://culturalwormhole.blogspot.com/">Valiant Future</a></li>
+                        <li><a href="http://thetaylornetworkofpodcasts.com/valiant-podcast/">Valiant Podcast</a></li>
+                      </ul>
+                    <li>
+                    <li>
+                      <a tabindex="-1" href="#" data-toggle="collapse" data-target="#socialmedia">Social Media</a>
+                      <ul id="socialmedia" class="collapse">
+                        <li><a href="https://www.facebook.com/groups/654491217916051/">Canadian Valiant Fan Group</a></li>
+                        <li><a href="https://www.facebook.com/groups/somethingvaliant/">Something Valiant</a></li>
+                        <li><a href="https://www.facebook.com/groups/292743160904563/">Valiant Collectors</a></li>
+                        <li><a href="https://www.facebook.com/groups/ValiantComicsFanGroup/">Valiant Comics Fan Group</a></li>
+                        <li><a href="http://valiantentertainment.tumblr.com/">Valiant Entertainment Tumblr</a></li>
+                        <li><a href="http://instagram.com/valiantuniverse">Valiant Universe Instagram</a> </li>
+                        <li><a href="http://valiant-voyeur.tumblr.com/">Valiant Voyeur</a></li>
+                        <li>&nbsp;</li>
+                      </ul>
+                    <li>
+                  </ul>
+</div>
+
+<div id="sidr7">
+  <!-- Your content -->
+  <ul>
+    <li>&nbsp;</li>
+    <li><form accept-charset="UTF-8" action="/search" method="get" role="search"><div style="display:none"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+        <input autocomplete="off" class="form-control" id="book_search" name="query" placeholder=" Search the database..." type="text" />                               
+    </form></li>
+    <li><a href="/books/keys">Key Issues (2012-)</a></li>
+    <li>
+        <a tabindex="-1" href="#" data-toggle="collapse" data-target="#veievents2">Events</a>
+        <ul id="veievents2" class="collapse">
+          <li><a href="/books/events/harbingerwars">Harbinger Wars (2013)</a></li>
+          <li><a href="/books/events/armorhunters">Armor Hunters (2014)</a></li>
+          <li><a href="/books/events/bookofdeath">Book of Death (2015)</a></li>
+        </ul>
+    </li>
+    <li class="divider"></li>
+    <li><a href="/books/all">All Books</a></li>
+    <li><a href="/books/archerarmstrong">Archer &amp; Armstrong</a></li>
+    <li><a href="/books/bloodshot">Bloodshot</a></li>
+    <li><a href="/books/bloodshotreborn">Bloodshot Reborn</a></li>
+    <li><a href="/books/divinity">Divinity</a></li>
+    <li><a href="/books/drmirage">Dr Mirage</a></li>
+    <li><a href="/books/eternalwarrior">Eternal Warrior</a></li>
+    <li><a href="/books/harbinger">Harbinger</a></li>
+    <li><a href="/books/imperium">Imperium</a></li>
+    <li><a href="/books/ivar">Ivar, Timewalker</a></li>
+    <li>
+       <a tabindex="-1" href="#" data-toggle="collapse" data-target="#veiminis2">Miniseries & One-shots</a>
+      <ul id="veiminis2" class="collapse">
+        <li><a href="/books/armorhunters">Armor Hunters</a></li>
+        <li><a href="/books/bookofdeath">Book of Death</a></li>
+        <li><a href="/books/deaddrop">Dead Drop</a></li>
+        <li><a href="/books/harbingerwars">Harbinger Wars</a></li>
+        <li><a href="/books/punkmambo">Punk Mambo</a></li>
+        <li><a href="/books/delinquents">The Delinquents</a></li>
+        <li><a href="/books/thevaliant">The Valiant</a></li>
+      </ul>
+    </li>
+    <li><a href="/books/ninjak">Ninjak</a></li>
+    <li><a href="/books/previews">Previews and Promos</a></li>
+    <li><a href="/books/quantumwoody">Quantum &amp; Woody</a></li>
+    <li><a href="/books/rai">Rai</a></li>
+    <li><a href="/books/shadowman">Shadowman</a></li>
+    <li><a href="/books/sketch">Sketch Covers</a></li>
+    <li><a href="/books/trades">Trades and Collections</a></li>
+    <li><a href="/books/unity">Unity</a></li>
+    <li><a href="/books/xomanowar">X-O Manowar</a></li>
+    <li>&nbsp;</li>
+  </ul>
+</div>
+
+<div id="sidr8">
+  <!-- Your content -->
+  <ul>
+    <li>&nbsp;</li>
+    <li><form accept-charset="UTF-8" action="/search" method="get" role="search"><div style="display:none"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+        <input autocomplete="off" class="form-control" id="book_search" name="query" placeholder=" Search the database..." type="text" />                               
+    </form></li>
+    <li><a href="/books/classic/keys">Key Issues (1991-1996)</a></li>
+    <li class="divider"></li>
+    <li><a href="/books/classic/all">All Classic books</a></li>
+    <li><a href="/books/classic/archerarmstrong">Archer &amp; Armstrong</a></li>
+    <li><a href="/books/classic/armorines">Armorines</a></li>
+    <li><a href="/books/classic/bloodshot">Bloodshot</a></li>
+    <li><a href="/books/classic/eternalwarrior">Eternal Warrior</a></li>
+    <li><a href="/books/classic/geomancer">Geomancer</a></li>
+    <li><a href="/books/classic/harbinger">Harbinger</a></li>
+    <li><a href="/books/classic/hardcorps">H.A.R.D. Corps</a></li>
+    <li><a href="/books/classic/magnus">Magnus Robot Fighter</a></li>
+    <li>
+      <a tabindex="-1" href="#" data-toggle="collapse" data-target="#vh1minis2">Miniseries & One-shots</a>
+      <ul id="vh1minis2" class="collapse">
+        <li><a href="/books/classic/chaoseffect">Chaos Effect</a></li>
+        <li><a href="/books/classic/deathmate">Deathmate</a></li>
+        <li><a href="/books/classic/misc">Miscellaneous</a></li>
+        <li><a href="/books/classic/unity">Unity</a></li>
+      </ul>
+    <li>
+    <li><a href="/books/classic/ninjak">Ninjak</a></li>
+    <li><a href="/books/classic/psilords">Psi-Lords</a></li>
+    <li><a href="/books/classic/rai">Rai</a></li>
+    <li><a href="/books/classic/mirage">Second Life of Doctor Mirage</a></li>
+    <li><a href="/books/classic/secretweapons">Secret Weapons</a></li>
+    <li><a href="/books/classic/shadowman">Shadowman</a></li>
+    <li><a href="/books/classic/solar">Solar, Man of the Atom</a></li>
+    <li><a href="/books/classic/visitor">The Visitor</a></li>
+    <li><a href="/books/classic/timewalker">Timewalker</a></li>
+    <li><a href="/books/classic/trades">Trades and Collections</a></li>
+    <li><a href="/books/classic/turok">Turok: Dinosaur Hunter</a></li>
+    <li><a href="/books/classic/xomanowar">X-O Manowar</a></li>
+    <li>&nbsp;</li>
+  </ul>
+</div>
+
+<div id="sidr9">
+  <!-- Your content -->
+  <ul>
+    <li>&nbsp;</li>
+    <li><form accept-charset="UTF-8" action="/search" method="get" role="search"><div style="display:none"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+        <input autocomplete="off" class="form-control" id="book_search" name="query" placeholder=" Search the database..." type="text" />                               
+    </form></li>
+    <li><a href="/books/acclaim/all">All Acclaim books</a></li>
+    <li><a href="/books/acclaim/bloodshot">Bloodshot</a></li>
+    <li><a href="/books/acclaim/doctortomorrow">Doctor Tomorrow</a></li>
+    <li><a href="/books/acclaim/eternalwarriors">Eternal Warriors</a></li>
+    <li><a href="/books/acclaim/magnus">Magnus Robot Fighter</a></li>
+    <li>
+      <a tabindex="-1" href="#" data-toggle="collapse" data-target="#vh2minis2">Miniseries & One-shots</a>
+      <ul id="vh2minis2" class="collapse">
+        <li><a href="/books/acclaim/adventurezone">Acclaim Adventure Zone</a></li>
+        <li><a href="/books/acclaim/armorines">Armorines</a></li>
+        <li><a href="/books/acclaim/darquepassages">Darque Passages</a></li>
+        <li><a href="/books/acclaim/deadside">Deadside</a></li>
+        <li><a href="/books/acclaim/nio">N.I.O.</a></li>
+        <li><a href="/books/acclaim/misc">Miscellaneous</a></li>
+        <li><a href="/books/acclaim/solar">Solar: Hell On Earth</a></li>
+        <li><a href="/books/acclaim/unity2000">Unity 2000</a></li>
+      </ul>
+    </li>
+    <li><a href="/books/acclaim/ninjak">Ninjak</a></li>
+    <li><a href="/books/acclaim/quantumwoody">Quantum &amp; Woody</a></li>
+    <li><a href="/books/acclaim/shadowman_vol2">Shadowman Vol. 2</a></li>
+    <li><a href="/books/acclaim/shadowman_vol3">Shadowman Vol. 3</a></li>
+    <li><a href="/books/acclaim/trinityangels">Trinity Angels</a></li>
+    <li><a href="/books/acclaim/troublemakers">Troublemakers</a></li>
+    <li><a href="/books/acclaim/turok">Turok</a></li>
+    <li><a href="/books/acclaim/xomanowar">X-O Manowar</a></li>
+    <li>&nbsp;</li>
+  </ul>
+</div>
+
+<div id="sidr10">
+  <ul>
+    <li>&nbsp;</li>
+    <li><form accept-charset="UTF-8" action="/search" method="get" role="search"><div style="display:none"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+        <input autocomplete="off" class="form-control" id="book_search" name="query" placeholder=" Search the database..." type="text" />                               
+    </form></li>
+    <li><a href="/releases/lastmonth">May 2015</a></li>
+    <li><a href="/releases/thismonth"><strong>June 2015</strong></a></li>
+    <li><a href="/releases/nextmonth">July 2015</a></li>
+    <li><a href="/releases/twomonths">August 2015</a></li>
+    <li><a href="/releases/latestsolicitations">September 2015</a></li>
+    <li>
+      <a tabindex="-1" href="#" data-toggle="collapse" data-target="#releases2">Releases by date</a>
+      <ul id="releases2" class="collapse">
+        <li><a href="/releases/vh1bydate">Classic Valiant (1991-1996)</a></li>
+        <li><a href="/releases/vh2bydate">Acclaim Comics (1996-1998)</a></li>
+        <li><a href="/releases/veibydate">Current Valiant (2012-)</a></li>
+      </ul>
+    </li>
+    <li>
+      <a tabindex="-1" href="#" data-toggle="collapse" data-target="#salesfigures2">Sales Figures</a>
+      <ul id="salesfigures2" class="collapse">
+        <li><a href="/sales/vei">Current Valiant (2012-)</a></li>
+        <li><a href="/sales/veibytitle">Current by title</a></li>
+      </ul>
+    </li>
+    <li>
+      <a tabindex="-1" href="#" data-toggle="collapse" data-target="#timeline2">Timeline</a>
+      <ul id="timeline2" class="collapse">
+        <li><a href="/releases/vh1timeline">Classic timeline (1991-1996)</a></li>
+        <li><a href="/releases/veitimeline">Current timeline (2012-)</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div id="sidr11">
+                  <ul>
+                    <li>&nbsp;</li>
+                    <li>
+                      <a tabindex="-1" href="#">Websites</a>
+                        <ul>
+                          <li><a href="http://the-book-of-geomancer.wikia.com/wiki/Main_Page" title="The Book of Geomancer">The Book of Geomancer Wiki</a></li>
+                          <li><a href="http://valiantcentral.com" title="Daily source of Valiant news and reviews">Valiant Central</a></li>
+                          <li><a href="http://www.valiantfan.com" title="Reference for Valiant comics">Valiant Fan</a></li>
+                          <li><a href="http://www.valiantfans.com/forum" title="Valiant Fans Message Board">Valiant Fans Message Board</a></li>
+                          <li><a href="http://www.valiantuniverse.com" title="Official Valiant Entertainment website">Valiant Universe</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                      <a tabindex="-1" href="#" data-toggle="collapse" data-target="#podcasts2">Podcasts</a>
+                       <ul id="podcasts2" class="collapse">
+                        <li><a href="http://valiantcentral.com/category/podcast/ivars-longbox/">Ivar&#39;s Longbox</a></li>
+                        <li><a href="http://www.onlythevaliant.com">Only The Valiant</a></li>
+                        <li><a href="http://talkingcomicbooks.com/category/podcast-2/talking-valiant/">Talking Valiant</a></li>
+                        <li><a href="http://valiantcentral.com/category/podcast">Valiant Central Podcast</a></li>
+                        <li><a href="http://vepodcast.wordpress.com">Valiant Effort</a></li>
+                        <li><a href="http://culturalwormhole.blogspot.com/">Valiant Future</a></li>
+                        <li><a href="http://thetaylornetworkofpodcasts.com/valiant-podcast/">Valiant Podcast</a></li>
+                      </ul>
+                    <li>
+                    <li>
+                      <a tabindex="-1" href="#" data-toggle="collapse" data-target="#socialmedia2">Social Media</a>
+                      <ul id="socialmedia2" class="collapse">
+                        <li><a href="https://www.facebook.com/groups/654491217916051/">Canadian Valiant Fan Group</a></li>
+                        <li><a href="https://www.facebook.com/groups/somethingvaliant/">Something Valiant</a></li>
+                        <li><a href="https://www.facebook.com/groups/292743160904563/">Valiant Collectors</a></li>
+                        <li><a href="https://www.facebook.com/groups/ValiantComicsFanGroup/">Valiant Comics Fan Group</a></li>
+                        <li><a href="http://valiantentertainment.tumblr.com/">Valiant Entertainment Tumblr</a></li>
+                        <li><a href="http://instagram.com/valiantuniverse">Valiant Universe Instagram</a> </li>
+                        <li><a href="http://valiant-voyeur.tumblr.com/">Valiant Voyeur</a></li>
+                        <li>&nbsp;</li>
+                      </ul>
+                    <li>
+                  </ul>
+</div>
+  </div>
+
+      
+
+      <div class="container">
+
+
+       <div id="content">
+        <div class="wellclear">
+          <h1 class="text-center">Oh, no! We couldn't find that!</h1>
+          <div class="text-center col-md-12 col-sm-12 col-xs-12"><img alt="Ninjak" class="img-responsive center" src="https://s3.amazonaws.com/valiantdb/images/ninjak404.jpg" /></div>
+          <div class="container">
+            <h3>Sorry you couldn't find what you needed, it makes Ninjak very sad. Maybe you should <a href="http://127.0.0.1:3000/">head back home</a> or try using the search box at the top of the page. If you think you got to this page in error, feel free to <a href="/contacts/new">contact us</a> and let us know!</h3>
+          </div>
+        </div>
+       </div>
+      
+  </div>
+        
+</div>
+</body>
+</html>

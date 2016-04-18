@@ -1,0 +1,41 @@
+<div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12">  
+  <div class="wellclear">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <h2 class="text-center">Sign up</h2>
+      <p>Signing up is <strong>free</strong> and gives you access to more detailed book information, collections, wishlists, sales figures, book ratings and more. All fields are required.</p>
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%= f.error_notification %>
+            <div class="form-inputs">
+              <%= f.input :avatar, label: "Upload profile image (Resizes to 350x200)" %>
+              <%= f.input :name, autofocus: true, placeholder: "Enter your name", label: false %>
+              <%= f.input :email, required: true, placeholder: "Enter your e-mail", label: false %>
+              <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @validatable), placeholder: "Enter your password", label: false %>
+              <%= f.input :password_confirmation, required: true, placeholder: "Confirm your password", label: false %>
+            </div>
+
+            <div class="form-actions pull-right">
+              <%= f.button :submit, "Sign up", class: "btn btn-primary" %>
+          	<%- if controller_name != 'sessions' %>
+          	  <%= link_to "Sign in", new_session_path(resource_name), class: "btn btn-default" %><br />
+          	<% end -%>
+              <div class="clearfix"><br /></div>
+            </div>
+        <% end %>
+
+
+    </div>
+    
+     <hr />
+      <div class="row">
+        <span class="col-md-6 col-sm-6 col-xs-6"><%= link_to user_omniauth_authorize_path(:facebook), class: "btn btn-block btn-social-icon btn-facebook" do %>
+            <i class="fa fa-facebook"><span class="gone"> Facebook</span></i><% end %>
+        </span>
+        <span class="col-md-6 col-sm-6 col-xs-6"><%= link_to user_omniauth_authorize_path(:google_oauth2), class: "btn btn-block btn-social-icon btn-google" do %>
+            <i class="fa fa-google"><span class="gone"> Google</span></i><% end %>
+        </span>
+      </div>
+    
+    <div class="clearfix"></div>
+  </div>
+</div>
+

@@ -1,0 +1,29 @@
+<div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+<% unless params[:query].present? %>
+<% @tcount = Book.all.count %>
+<h2>Valiant Comic Database</h2>
+<p>Nothing to see here.</p>
+<% end %>
+<% if params[:query].present? %>
+	<% @search_count = Book.search(params[:query]).count %>
+	<% @title = Book.search(params[:query], page: params[:page], per_page: 20) %>
+<% end %>
+<% @tcount = Book.all.count %>
+<% if params[:query].present? %>
+<div class="text-center">
+		<% if @title.count > 0 %>
+			<h5 class="white">Livewire found <span class="label label-success label-as-badge"><%= @search_count %></span> <% if @search_count == 1 %>result<% else %>results<% end %> for  <span class="label label-warning label-as-badge"><%= params[:query].upcase %></span></h5>
+		<% else %>
+			<h5 class="white"> Livewire found <span class="label label-danger label-as-badge"><%= @title.count %></span> results for  <span class="label label-warning label-as-badge"><%= params[:query].upcase %></span></h5>
+		<% end %>
+	</div>
+	<div class="clearfix"></div>
+	<%= render "books/bios" %>
+	<% unless @title.count > 0 %>
+		<p class="mark text-center"><br />Sorry, it looks like there are no search results matching your query "<strong><%= params[:query].upcase %></strong>".<br /><br /></p>
+	<% end %>
+	<div class="clearfix"><br /></div>
+	<%= render 'book' %>
+<% end %>
+<div class="clearfix"><br /></div>
+</div>

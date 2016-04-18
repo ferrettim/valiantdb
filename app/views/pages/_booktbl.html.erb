@@ -1,0 +1,100 @@
+
+<div id="books" class="wellclear">
+	<table class="table table-condensed table-responsive">
+		<tr>
+			<td><strong>Image</strong></td>
+			<td><strong>Title</strong></td>
+			<td><strong>Issue</strong></td>
+			<td><strong>Release date</strong></td>
+			<td><strong>Writer</strong></td>
+			<td><strong>Artist</strong></td>
+			<td><strong>Colorist</strong></td>
+			<td><strong>Cover</strong></td>
+			<td class="text-center"><strong>Avg. Rating</strong></td>
+			<% if user_signed_in? %>
+				<td class="text-center"><strong>Actions</strong></td>
+			<% end %>
+			<td></td>
+		</tr>
+		<% @book.each do |title| %>
+
+		<% if user_signed_in? && current_user.owns?(title) %>
+		<tr class="bg-success row_<%= title.id %>">
+		<% elsif user_signed_in? && current_user.wishes?(title) %>
+		<tr class="bg-warning row_<%= title.id %>">
+		<% else %>
+		<tr id="row_<%= title.id %>">
+		<% end %>
+			<td class="text-center"><%= link_to title.image.url(:original), :title => "Click for larger image", data: { toggle: "modal", target: "##{title.id}_myModal" }, data: { toggle: "tooltip" } do %><%= image_tag title.image.url(:thumb), :alt => title.title + " cover by " + title.cover, :width => "24px", :height => "36px", class: "img-responsive" %>
+
+           <!-- Modal -->
+    <div class="modal fade" id="<%= title.id %>_myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times; Close</span></button>
+            <h4 class="modal-title" id="myModalLabel"><%= title.title + " #" + title.issue.to_s %></h4>
+          </div>
+          <div class="modal-body">
+            <div clas="text-center"><%= image_tag title.image.url(:original), :alt => title.title + " cover by " + title.cover, class: "img-responsive text-center center" %></div>
+          </div>
+          <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <!-- End Modal -->
+        <% end %></td>
+			<td>
+				<% if title.note.include?("Trade paperback") %>
+		            <%= link_to title, data: { toggle: "tooltip" }, title: "View title" do %><%= title.title + " Vol. " + title.issue.to_s + " TPB" %><% end %>
+		        <% elsif title.note.include?("hardcover") %>
+		            <%= link_to title, data: { toggle: "tooltip" }, title: "View title" do %><%= title.title + " Vol. " + title.issue.to_s + " Deluxe HC" %><% end %>
+		        <% else %>
+		            <%= link_to title, data: { toggle: "tooltip" }, title: "View title" do %><%= title.title %><% end %>
+		        <% end %>
+			</td>
+			<td class="text-center"><%= link_to title, data: { toggle: "tooltip" }, :title => "View " + title.title + " #" + title.issue.to_s do %><%= title.issue %><% end %></td>
+			<td><%= title.rdate.strftime("%B %d, %Y") %></td>
+			<td><%= link_to search_path + "/?utf8=✓&query=" + title.writer.to_s, data: { toggle: "tooltip" }, :title => "View books by " + title.writer do %><%= title.writer %><% end %></td>
+			<td><%= link_to search_path + "/?utf8=✓&query=" + title.artist.to_s, data: { toggle: "tooltip" }, :title => "View books by " + title.artist do %><%= title.artist %><% end %></td>
+			<td><%= link_to search_path + "/?utf8=✓&query=" + title.colors.to_s, data: { toggle: "tooltip" }, :title => "View books by " + title.colors do %><%= title.colors %><% end %></td>
+			<td><%= link_to search_path + "/?utf8=✓&query=" + title.cover.to_s, data: { toggle: "tooltip" }, :title => "View books by " + title.cover do %><%= title.cover %><% end %></td>
+			<td class="text-center">
+				<% if title.rates('book').count > 0 %>
+	            	<span class="label label-warning"><%= title.average("book").avg %></span>
+		        <% else %>
+		        	Not yet rated
+		        <% end %>
+	    	</td>
+			<% if user_signed_in? %>
+					<td>
+					  <ul class="list-inline text-center">
+				        <li id="<%= title.id %>_owns">
+			        	<% if user_signed_in? && current_user.owns?(title) %>
+							<%= link_to book_own_path(title), data: { toggle: "tooltip" }, method: :delete, remote: true, class: "btn btn-default btn-danger btn-xs", title: "Remove from collection", data: {disable_with: "<i class='fa fa-minus'></i>"} do %><i class="fa fa-heart-o"></i><% end %>
+						<% else %>
+							<%= link_to book_own_path(title), data: { toggle: "tooltip" }, method: :post, remote: true, class: "btn btn-default btn-success btn-xs", title: "Add to collection", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-heart"></i><% end %>
+						<% end %>
+			  			</li>
+				     	<li id="<%= title.id %>_wishes">
+			        	<% if user_signed_in? && current_user.wishes?(title) %>
+							<%= link_to book_wish_path(title), data: { toggle: "tooltip" }, method: :delete, remote: true, class: "btn btn-default btn-danger btn-xs", title: "Remove from wishlist", data: {disable_with: "<i class='fa fa-minus'></i>"} do %><i class="fa fa-star-o"></i><% end %>
+						<% else %>
+							<%= link_to book_wish_path(title), data: { toggle: "tooltip" }, method: :post, remote: true, class: "btn btn-default btn-success btn-xs", title: "Add to wishlist", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-star"></i> <% end %>
+						<% end %>
+			            </li>
+				      </ul>
+				    </td>
+			<% end %>
+		</tr>
+		
+		<% end %>
+	</table>
+
+
+</div>
+
+<div class="text-center"><%= paginate @book %></div>
+<div class="clearfix"></div>

@@ -1,0 +1,7 @@
+<% if user_signed_in? && current_user.itemowns?(@collectible) %>	
+	<% if user_signed_in? && current_user.itemsales?(@collectible) %>
+		<%= link_to collectible_itemsale_path(@collectible), method: :delete, remote: true, class: "btn btn-warning btn-circle", title: "Remove from sales", data: { toggle: "tooltip", disable_with: "<span class='fa fa-minus'></span>"} do %><span class="fa fa-dollar"></span><% end %>
+	<% else %>
+		<%= link_to collectible_itemsale_path(@collectible), method: :post, remote: true, class: "btn btn-default btn-circle", title: "Mark for sale", data: { toggle: "tooltip", disable_with: "<span class='fa fa-plus'></span>"} do %><span class="fa fa-dollar"></span><% end %>
+	<% end %>
+<% end %>

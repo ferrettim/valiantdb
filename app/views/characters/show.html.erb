@@ -1,0 +1,55 @@
+
+<div class="container">
+
+	<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+		<%= image_tag @character.image.url, :alt => "#{@character.name}", class: "text-center img-responsive img-shadow", :id => "character-img", :width => "100%" %>
+		<div class="wellclear">
+
+			<div class="container">
+				
+				<h3 class="text-center"><%= @character.name %>
+				</h3>
+
+
+				<div class="col-md-8 col-sm-7 col-xs-12">
+					<p><%= @character.origin.html_safe %></p>
+					<p>
+						<ul class="list-inline">
+							 <li><strong>Abilities:</strong></li>
+							 <li><%= @character.power %></li> <li><%= @character.power2 %></li> <li><%= @character.power3 %></li> <li><%= @character.power4 %></li> 
+							 <li><%= @character.power5 %></li>
+						</ul>
+					</p>
+				</div>
+
+				<div class="col-md-4 col-sm-5 col-xs-12">
+					<p><strong>Creators:</strong><br /> <%= link_to search_path + "/?utf8=✓&query=" + @character.creator, data: { toggle: "tooltip" }, :title => "View books by " + @character.creator do %><%= @character.creator %><% end %><% if @character.creator2? %> and <%= link_to search_path + "/?utf8=✓&query=" + @character.creator2, data: { toggle: "tooltip" }, :title => "View books by " + @character.creator2 do %><%= @character.creator2 %><% end %><% end %><br /><br />
+					   <strong>First appearance:</strong><br />
+						<% if @character.appera == "Current" %>
+							<% Book.where(:title => @character.apptitle, :issue => @character.appissue.to_s).where(:category => "Default").where("rdate > ?", "2012-05-01").each do |b| %>
+								<%= link_to b do %><%= @character.apptitle %> #<%= @character.appissue.to_s %><% end %> (<%= @character.appera %>)
+							<% end %>
+						<% elsif @character.appera == "Classic" %>
+							<% Book.where(:title => @character.apptitle, :issue => @character.appissue.to_s).where(:category => "Default").where("rdate < ?", "1996-09-30").each do |b| %>
+								<%= link_to b do %><%= @character.apptitle %> #<%= @character.appissue.to_s %><% end %> (<%= @character.appera %>)
+							<% end %>
+						<% else %>
+							<% Book.where(:title => @character.apptitle, :issue => @character.appissue.to_s).where(:category => "Default").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").each do |b| %>
+								<%= link_to b do %><%= @character.apptitle %> #<%= @character.appissue.to_s %><% end %> (<%= @character.appera %>)
+							<% end %>
+						<% end %>
+						<br /><br />
+						<strong>Appearances:</strong> <% Tag.where(:name => @character.name).select("tags.*, count(taggings.tag_id) as count").joins(:taggings).group("tags.id").each do |t| %><%= t.count %> issues<% end %> </p>
+				</div>
+
+				<div class="pull-right">
+					<% if user_signed_in? && current_user.admin? %>
+						<%= link_to @character, method: :delete, data: { confirm: 'Are you sure?' } do %>
+							<i class="fa fa-trash"></i>
+						<% end %>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

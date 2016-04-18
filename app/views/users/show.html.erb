@@ -1,0 +1,270 @@
+<div class="container">
+    <div class="row profile">
+        <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="profile-sidebar">
+                <!-- SIDEBAR USERPIC -->
+                <div class="profile-userpic">
+                    <% if @user.avatar.blank? %>
+                        <img src="https://s3.amazonaws.com/valiantdb/images/noimage.png" class="img-responsive thumbnail">
+                    <% else %>
+                        <%= image_tag @user.avatar.url(:medium), :alt => "Profile image", class: "img-responsive" %>
+                    <% end %>
+                </div>
+                <!-- END SIDEBAR USERPIC -->
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">
+                        <span class="label label-white label-as-badge">
+                            <%= @user.name %>
+                            <% if @hardcats.include? @user.id %>
+                                <%= image_tag "https://s3.amazonaws.com/valiantdb/images/hardcorps.jpg", height: "12px", :title => "H.A.R.D. Cat" %>
+                            <% end %>
+                            <% if @user.patron? %>
+                                <%= link_to "http://www.patreon.com/valiantdb", :title => "I'm a patron, are you?", :target => "_blank" do %><%= image_tag "https://s3.amazonaws.com/valiantdb/images/patreonbadge.png", height: "12px" %><% end %>
+                            <% end %>
+                        </span>
+                    </div>
+                </div>
+                <!-- END SIDEBAR USER TITLE -->
+                <!-- SIDEBAR BUTTONS -->
+                <% if current_user == @user %>
+                <% else %>
+                    <div class="profile-userbuttons">
+                        <ul class="list-inline user-<%= @user.id %>">
+                            <li id="follow_form">
+                                <% if current_user.follows?(@user) %>
+                                    <%= render 'unfollow', user: @user %>
+                                <% else %>
+                                    <%= render 'follow', user: @user %>
+                                <% end %>
+                            </li>
+                            <% if user_signed_in? && @user != current_user %>
+                            <li>
+                                <%= link_to new_conversation_path(:user => @user.id), title: "Message", class: "btn btn-default btn-sm" do %>
+                                    <i class="fa fa-envelope"></i>
+                                <% end %>
+                            </li>
+                        <% end %>
+                            
+                        </ul>
+                    </div>
+                <% end %>
+                <!-- END SIDEBAR BUTTONS -->
+
+
+                <!-- SIDEBAR MENU -->
+                <div class="profile-usermenu">
+                    <ul class="nav">
+                        <li><%= link_to "https://valiantdb.slack.com", title: "Chat with others", :target => "_blank" do %>
+                            <i class="fa fa-slack grayicon"></i>
+                            Chat on Slack
+                            <% end %>
+                        </li>
+                        <li>
+                            <%= link_to collection_path, title: "View collection" do %>
+                            <i class="fa fa-heart grayicon"></i>
+                            Collection <span class="pull-right label label-primary label-as-badge"><%= @user.owned_books.sum :quantity %></span><% end %>
+                        </li>
+                        <li>
+                            <%= link_to wishlist_path, title: "View wishlist" do %>
+                            <i class="fa fa-star grayicon"></i>
+                            Wishlist <span class="pull-right label label-primary label-as-badge"><%= @user.wished_books.count %></span><% end %>
+                        </li>
+                        <li>
+                            <%= link_to forsale_path, title: "View for sale" do %>
+                            <i class="fa fa-dollar grayicon">&nbsp;</i>
+                            Selling <span class="pull-right label label-primary label-as-badge"><%= @user.forsale_books.count %></span><% end %>
+                        </li>
+                        <li>
+                            <%= link_to notes_path, title: "View my book notes" do %>
+                            <i class="fa fa-comment grayicon"></i>
+                            Notes <span class="pull-right label label-primary label-as-badge"><%= Comment.where(user_id: @user.id).count %></span><% end %>
+                        </li>
+                        <li>
+                            <a href="#">
+                            <i class="fa fa-comment grayicon"></i>
+                            Rated <span class="pull-right label label-primary label-as-badge"><%= @user.ratings_given.count %></span></a>
+                        </li>
+                        <% if user_signed_in? %>
+                            <li>
+                                <%= link_to followers_path, title: "Followers" do %>
+                                <i class="fa fa-user-plus grayicon"></i>
+                                Followers <span class="pull-right label label-primary label-as-badge"><%= @user.followers(User).count %></span>
+                                <% end %>
+                            </li>
+                            <li>
+                                <%= link_to following_path, title: "Following" do %>
+                                <i class="fa fa-user-plus grayicon"></i>
+                                Following <span class="pull-right label label-primary label-as-badge"><%= @user.followees(User).count %></span>
+                                <% end %>
+                            </li>
+                        <% end %>
+                        <% if user_signed_in? && @user == current_user %>
+                        
+                            <li>
+                                <%= link_to mailbox_inbox_path, title: "Message" do %>
+                                <i class="fa fa-envelope grayicon"></i>
+                                Messages <span class="pull-right label label-primary label-as-badge"><%= unread_messages_count %></span><% end %>
+                            </li>
+                            
+                            <li>
+                                <%= link_to edit_user_registration_path, title: "Settings" do %>
+                                <i class="fa fa-gears grayicon"></i>
+                                Settings <% end %>
+                            </li>
+                            <li>
+                                <%= link_to destroy_user_session_path, method: :delete, title: "Sign out" do %>
+                                <i class="fa fa-sign-out grayicon"></i>
+                                Sign out <% end %>
+                            </li>
+                        <% end %>
+                        
+                        <% if current_user.super_admin? && @user != current_user %>
+                            <li>
+                                <%= link_to root_url + "switch_user?scope_identifier=user_#{@user.id}", title: "Impersonate user" do %>
+                                <i class="fa fa-pencil grayicon"></i>
+                                Impersonate (<%= @user.id.to_s %>)<% end %>
+                            </li>
+                        <% end %>
+                    </ul>
+                </div>
+                <!-- END MENU -->
+                <% if current_user.super_admin? && @user == current_user %>
+                    <%= form_tag import_books_path, multipart: true do %>
+                        <div class="form-group">
+                            <%= file_field_tag :file %>
+                            <%= submit_tag "Import CSV", class: "form-control" %>
+                        </div>
+                    <% end %>
+                    <div class="clearfix"></div>
+                <% end %>
+
+            </div>
+
+            <% unless current_user.patron? %>
+                <br />
+                    <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-8 col-xs-offset-2">
+                        <%= link_to "https://www.valiantdatabase.com/supportus", :title => "Support us" do %><%= image_tag "https://s3.amazonaws.com/valiantdb/images/supportus.jpg", :alt => "Support us", class: "img-responsive" %><% end %>
+                    </div>
+            <% end %>
+
+        </div>
+        <p class="white">This site is brought to you by users like <a href="http://www.octobercountrycomics.com/" class="white"><strong>October County Comics</strong></a>, <a href="http://www.valiantdatabase.com/users/dbs/profile" class="white">DBS</a>, and our <a href="http://www.valiantdatabase.com/users/backers" class="white">amazing patrons</a>.</p>
+        <div class="col-md-9 col-sm-8 col-xs-12">
+            <div class="profile-content">
+                <h4 class="text-left">
+                    <%= link_to releases_currentweek_path, class: "white" do %>
+                        <% if (Date.today.beginning_of_week + 2.day) > Date.today %>
+                            New releases for 
+                        <% else %>
+                            Released on 
+                        <% end %>
+                        <%= (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y") %>
+                    <% end %>
+                </h4>
+                    <div class="flexslider2 col-md-12 col-sm-12 col-xs-12">
+                        <ul class="slides">
+                            <% if @newbooks.count > 0 %>
+                                <% @newbooks.each do |upcoming| %>
+                                        <% if upcoming.category == "Paperback" %>
+                                            <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover do %>
+                                                <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover, class: "img-responsive img-home" %>
+                                            <% end %></li>
+                                        <% elsif upcoming.category == "Hardcover" %>
+                                            <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover do %>
+                                                <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover, class: "img-responsive img-home" %>
+                                            <% end %></li>
+                                        <% else %>
+                                            <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover do %>
+                                                <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover, class: "img-responsive img-home" %>
+                                                <% end %></li>
+                                        <% end %>
+                                <% end %>
+                            <% else %>
+                                <p>No new releases for this week</p>
+                            <% end %>
+                        </ul>
+                    </div>
+                    <div class="clearfix"><br /></div>
+
+                <% if @user == current_user %>
+                    <h4 class="text-left">
+                        <%= link_to releases_nextweek_path, class: "white" do %>
+                            New releases for <%= (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y") %>
+                        <% end %>
+                    </h4>
+                        <div class="flexslider2 col-md-12 col-sm-12 col-xs-12">
+                            <ul class="slides">
+                                <% if @newbooks2.count > 0 %>
+                                    <% @newbooks2.each do |upcoming2| %>
+                                            <% if upcoming2.category == "Paperback" %>
+                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " Vol. " + upcoming2.issue.to_s + " TPB cover by " + upcoming2.cover do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover, class: "img-responsive img-home" %><% end %></li>
+                                            <% elsif upcoming2.category == "Hardcover" %>
+                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " Vol. " + upcoming2.issue.to_s + " Deluxe HC cover by " + upcoming2.cover do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover, class: "img-responsive img-home" %><% end %></li>
+                                            <% else %>
+                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " #" + upcoming2.issue.to_s + " cover by " + upcoming2.cover do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover, class: "img-responsive img-home" %><% end %></li>
+                                            <% end %>
+                                    <% end %>
+                                <% else %>
+                                    <p>No new releases for this week</p>
+                                <% end %>
+                            </ul>
+                        </div>
+                        <div class="clearfix"><br /></div>
+                <% end %>
+
+                <% unless @user.id == current_user.id %>
+                    <h4 class="text-left">Recent collection updates</h4>
+                      <% if @user.owned_books.count > 0 %>
+                        <div class="flexslider2 col-md-12 col-sm-12 col-xs-12">
+                            <ul class="slides">
+                            <% @user.owned_books.order("owns.created_at desc").limit(12).each do |o| %>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to o, :title => o.title.to_s + " #" + o.issue.to_s + " cover by " + o.cover do %><%= image_tag o.image.url(:thumb), :alt => o.title + " cover by " + o.cover, class: "img-responsive img-home" %><% end %></li>
+                            <% end %>
+                            </ul>
+                        </div>
+                      <% else %>
+                        <% if user_signed_in? && @user == current_user %>
+                            <p><strong>Oh, no! Your collection appears to be empty :-(</strong></p>
+                        <% else %>
+                            <p><strong><%= @user.name %>'s collection is currently empty.</strong></p>
+                        <% end %>
+                      <% end %>
+                    <div class="clearfix"><br /></div>
+                    <h4 class="text-left">Recent wishlist updates</h4>
+                      <% if @user.wished_books.count > 0 %>
+                        <div class="flexslider2 col-md-12 col-sm-12 col-xs-12">
+                            <ul class="slides">
+                            <% @user.wished_books.order("wishes.created_at desc").limit(12).each do |w| %>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to w, :title => w.title.to_s + " #" + w.issue.to_s + " cover by " + w.cover do %><%= image_tag w.image.url(:thumb), :alt => w.title + " cover by " + w.cover, class: "img-responsive img-home" %><% end %></li>
+                            <% end %>
+                            </ul>
+                        </div>
+                      <% else %>
+                        <% if user_signed_in? && @user == current_user %>
+                            <p><strong>It looks like your wishlist is empty!</strong></p>
+                        <% else %>
+                            <p><strong><%= @user.name %>'s wishlist is currently empty.</strong></p>
+                        <% end %>
+                      <% end %>
+                        <div class="clearfix"><br /></div>
+                <% end %>
+                
+                <% if @user == current_user %>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#friends" aria-controls="home" role="tab" data-toggle="tab">Friends</a></li>
+                        <li role="presentation"><a href="#latest" aria-controls="messages" role="tab" data-toggle="tab">Recently Added</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="friends">
+                            <%= render "stream" %></div>
+                        <div role="tabpanel" class="tab-pane" id="latest">
+                            <%= render "streambooks" %></div>
+                    </div>
+                <% end %>
+                
+            </div>
+        </div>
+    </div>
+</div>

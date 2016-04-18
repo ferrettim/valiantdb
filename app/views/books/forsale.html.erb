@@ -1,0 +1,46 @@
+<div class="content transitions-enabled container-fluid">
+    <h3>
+      <% if @user == current_user %>
+        <span class="col-md-6 col-sm-6 white">Books for sale</span>
+        <span class="pull-right">
+          <%= form_tag "/users/" + @user.id.to_s + "/forsale", :method => 'get', :role => "search", class: "form-group" do %>
+              <select name="query" class="chosen-select filter-dropdown" onchange="this.form.submit()">
+                <option value="">Filter by title</option>
+                <% @user.forsale_books.select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                  <option value="<%= f.title %>"><%= f.title %></option>
+                <% end %>
+              </select>              
+            <%= link_to root_url + "users/" + current_user.id.to_s + "/forsale.csv", :class => "btn btn-success btn-sm", :title => "Export sell list" do %>
+                <span class="fa fa-download"></span>
+            <% end %>
+            <%= link_to root_url + "users/" + current_user.id.to_s + "/forsale/table", :class => "btn btn-default btn-sm", :title => "Table View" do %>
+                <span class="fa fa-th"></span>
+            <% end %>
+          <% end %>
+        </span>
+      <% else %>
+        <span class="col-md-6 col-sm-6 white"><%= @user.name %>'s books for sale</span>
+      <% end %>
+    </h3>
+    <div class="clearfix"></div>
+    <% if @user == current_user %>
+      <% if current_user.sales.count < 1 %>
+      <p class="white">It looks like you are not selling any books yet. Browse the <%= link_to "list of books", all_books_path %> or select a title from the list above to add some!.</p>
+      <% else %> 
+      <div class="clearfix"></div>
+      <p class="white">You have <span class="badge"><%= current_user.sales.count %></span> <% if current_user.sales == 1 %>book<% else %>books<% end %> in your sell list.</p>
+      <%= render "booksell" %>
+      <% end %>
+    <% else %>
+      <% if @user.sales.count < 1 %>
+      <p class="white"><%= @user.name %> is not currently selling any books.</p>
+      <% else %> 
+      <div class="clearfix"></div>
+      <p class="white">This user has <span class="badge"><%= @user.sales.count %></span> <% if @user.wishes == 1 %>book<% else %>books<% end %> listed for sale.</p>
+      <%= render "booksell" %>
+      <% end %>
+    <% end %>
+  <div class="clearfix"></div>
+  <div class="text-center"><%= paginate @book %></div>
+  <div class="clearfix"></div>
+</div>

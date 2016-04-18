@@ -1,0 +1,8 @@
+<% if params[:query].present? %>
+<%= render "search" %>
+<% else %>
+	<h2 class="white">Eternal Warrior (Classic) <div class="pull-right"><%= link_to classic_eternalwarrior_books_path, :class => "btn btn-default btn-sm" do %>
+            <span class="fa fa-th"></span> <span class="gone">Grid View</span>
+        <% end %></div></h2>
+<% end %>
+<%= render "booktbl" %>

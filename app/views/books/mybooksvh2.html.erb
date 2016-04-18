@@ -1,0 +1,38 @@
+<div class="content transitions-enabled container-fluid wellclear">
+  <h3 class="text-center">
+      <% if @user == current_user %>
+        <% if params[:query].present? %>
+          Collection Results <span class="label label-default label-as-badge"><%= current_user.owned_books.where(:title => params[:query]).count %></span>
+        <% else %>
+          <span class="btn btn-success btn-xs">
+            <% if action_name == "mybooks" %>
+              <%= link_to root_url + "users/" + current_user.id.to_s + "/collection.csv", :title => "Export collection" do %>
+                  <span class="white fa fa-download"></span>
+                <% end %>
+            <% elsif action_name == "mybooksvei" %>
+              <%= link_to root_url + "users/" + current_user.id.to_s + "/current-collection.csv", :title => "Export Current Valiant collection" do %>
+                  <span class="white fa fa-download"></span>
+                <% end %>
+            <% elsif action_name == "mybooksvh1" %>
+              <%= link_to root_url + "users/" + current_user.id.to_s + "/classic-collection.csv", :title => "Export Classic Valiant collection" do %>
+                  <span class="white fa fa-download"></span>
+                <% end %>
+            <% elsif action_name == "mybooksvh2" %>
+              <%= link_to root_url + "users/" + current_user.id.to_s + "/acclaim-collection.csv", :title => "Export Acclaim collection" do %>
+                  <span class="white fa fa-download"></span>
+                <% end %>
+            <% end %>
+          </span>
+          My Acclaim Books <% if user_signed_in? && current_user.patron? %><small>$<%= '%.2f' % ((current_user.owned_books.where(:era => "VH2").sum :pricenm) / 100.00) %></small><% end %> <% if user_signed_in? && current_user.illuminati? %><small>$<%= '%.2f' % ((current_user.owned_books.sum :pricenm) / 100.00) %></small><% end %>
+        <% end %>
+      <% else %>
+        <%= @user.name %>'s VH2 Collection <span class="label label-default label-as-badge"><%= @bookvh2.count %></span>
+        <br />
+      <% end %>
+    </h3>
+    <div class="clearfix"></div>
+    
+    <%= render "bookown" %>
+  
+  <div class="clearfix"></div>
+</div>

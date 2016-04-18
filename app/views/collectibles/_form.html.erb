@@ -1,0 +1,38 @@
+  <div class="container">
+    <% if @collectible.image.blank? %>
+    <% else %>
+      <span><%= image_tag @collectible.image.url(:thumb), class: "img-responsive img-thumbnail", :height => "100px" %></span>
+    <% end %>
+    <%= simple_form_for(@collectible, html: { class: "form-horizontal" }) do |f| %>
+      <%= f.error_notification %>
+      <%= f.full_error :image_file_size, class: "alert alert-error" %>
+      <%= f.full_error :image_content_type, class: "alert alert-error" %>
+      <div class="row">
+        <div class="col-md-6">
+          <% if @collectible.image.blank? %>
+            <%= f.input :image, label: "Upload an image" %>
+          <% else %>
+            <%= f.input :image, label: "Change book image" %>
+          <% end %>
+            <ul class="list-unstyled">
+              <li><%= f.input :title, label: false, placeholder: "Collectible name" %></li>
+              <li><%= f.input :manufacturer, :label => false, placeholder: "Manufacturer", class: "form-control" %></li>
+              <li><%= f.input :category, label: false, collection: ["Lithograph", "Minimates", "Plush", "Poster", "Shot Glass", "Standee", "Statue", "Vinyl"], include_blank: true %></li>
+              <li><%= f.input :price_in_dollars, label: false, placeholder: "Price" %></li>
+              <li><%= f.input :printrun, label: false, placeholder: "Print Run" %></li>
+            </ul>
+            <ul class="list-inline">
+              <li><%= f.input :rdate, :label => "Release date", as: :date, start_year: Date.today.year - 30 %></li>
+            </ul>
+        </div>
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-12">
+          <%= f.input :link, as: :text, input_html: { rows: "1" } %>
+          <%= f.input :description, as: :text, input_html: { rows: "3" } %>
+          <%= f.button :submit, data: {disable_with: "Saving..."} %>
+        </div>
+      </div>
+    <% end %>
+    <div class="clearfix"><br /></div>
+    <%= link_to @collectible, method: :delete, data: { confirm: 'Are you sure?' } do %><i class="fa fa-remove"></i><% end %>
+  </div>

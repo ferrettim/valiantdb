@@ -1,0 +1,152 @@
+class User < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
+  TEMP_EMAIL_PREFIX = 'change@me'
+  TEMP_EMAIL_REGEX = /\Achange@me/
+
+  acts_as_voter
+  acts_as_messageable
+  acts_as_follower
+  acts_as_followable
+  ratyrate_rater
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :async
+  validates :name, presence: true
+
+  validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
+
+  before_create :add_to_list
+
+  has_attached_file :avatar, :styles => { :medium => "350x200#", 
+                                          :thumb => "260x150#" }, 
+                             :convert_options => { 
+                                          :medium => "-quality 75 -strip",
+                                          :thumb => "-quality 75 -strip" },
+                             :default_url => "https://s3.amazonaws.com/valiantdb/images/noimage.png"
+  has_attached_file :photo,  :styles => { :thumb => "100x100#" },
+  :convert_options => {
+    :thumb => "-quality 75 -strip" }
+  crop_attached_file :avatar, :aspect => "16:9"
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
+  has_many :wishes, :dependent => :destroy
+  has_many :wished_books, :through => :wishes, source: :book, :dependent => :destroy
+  has_many :owns, :dependent => :destroy
+  has_many :owned_books, :through => :owns, source: :book, :dependent => :destroy
+  has_many :sales, :dependent => :destroy
+  has_many :forsale_books, :through => :sales, source: :book, :dependent => :destroy
+  has_many :itemwishes, :dependent => :destroy
+  has_many :wished_collectibles, :through => :itemwishes, source: :collectible, :dependent => :destroy
+  has_many :itemowns, :dependent => :destroy
+  has_many :owned_collectibles, :through => :itemowns, source: :collectible, :dependent => :destroy
+  has_many :itemsales, :dependent => :destroy
+  has_many :forsale_collectibles, :through => :itemsales, source: :collectible, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
+
+  def add_to_list
+    list_id = ENV["MAILCHIMP_LIST"]
+    @gb = Gibbon::Request.new
+    subscribe = @gb.lists(list_id).members.create(body: {email_address: self.email, status: "subscribed", double_optin: false})
+    # Do something with subscription errors here
+  end
+
+  def online?
+  	updated_at > 10.minutes.ago
+  end
+
+  def should_generate_new_friendly_id?
+    slug.nil? || name_changed?
+  end
+
+  def wishes?(book)
+  	book.wishes.where(user_id: id).any?
+  end
+
+  def itemwishes?(collectible)
+    collectible.itemwishes.where(user_id: id).any?
+  end
+
+  def owns?(book)
+  	book.owns.where(user_id: id).any?
+  end
+
+  def itemowns?(collectible)
+    collectible.itemowns.where(user_id: id).any?
+  end
+
+  def sales?(book)
+    book.sales.where(user_id: id).any?
+  end
+
+  def itemsales?(collectible)
+    collectible.itemsales.where(user_id: id).any?
+  end
+
+  def mailboxer_name
+    self.name
+  end
+
+  def mailboxer_email(object)
+    self.email
+  end
+
+  def self.to_csv
+    attributes = %w{id name email created_at owned_books wished_books ratings_given}
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+      all.each do |user|
+        csv << user.attributes.values_at(*attributes)
+      end
+    end
+  end
+
+  def self.find_for_oauth(auth, signed_in_resource = nil)
+
+    # Get the identity and user if they exist
+    identity = Identity.find_for_oauth(auth)
+
+    # If a signed_in_resource is provided it always overrides the existing user
+    # to prevent the identity being locked with accidentally created accounts.
+    # Note that this may leave zombie accounts (with no associated identity) which
+    # can be cleaned up at a later date.
+    user = signed_in_resource ? signed_in_resource : identity.user
+
+    # Create the user if needed
+    if user.nil?
+
+      # Get the existing user by email if the provider gives us a verified email.
+      # If no verified email was provided we assign a temporary email and ask the
+      # user to verify it on the next step via UsersController.finish_signup
+      email_is_verified = auth.info.email && (auth.info.verified || auth.info.verified_email)
+      email = auth.info.email if email_is_verified
+      user = User.where(:email => email).first if email
+
+      # Create the user if it's a new registration
+      if user.nil?
+        user = User.new(
+          name: auth.extra.raw_info.name,
+          #username: auth.info.nickname || auth.uid,
+          avatar: auth.extra.info.image,
+          email: email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
+          password: Devise.friendly_token[0,20]
+        )
+        user.skip_confirmation!
+        user.save!
+      end
+    end
+
+    # Associate the identity with the user if needed
+    if identity.user != user
+      identity.user = user
+      identity.save!
+    end
+    user
+  end
+
+  def email_verified?
+    self.email && self.email !~ TEMP_EMAIL_REGEX
+  end
+end

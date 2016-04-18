@@ -1,0 +1,5 @@
+<% if user_signed_in? && current_user.owns?(@book) %>
+	<span id="user_rating">
+		<p>Your rating: <%= rating_for @book, "book", disable_after_rate: false, cancel_hint: 'Reset vote', enable_half: true  %></p>
+	</span>
+<% end %>

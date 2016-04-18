@@ -1,0 +1,46 @@
+<div class="content transitions-enabled container-fluid wellclear">
+  <h3 class="text-center">
+  	<% if user_signed_in? && @user == current_user %>
+  		My book notes
+  	<% else %>
+  		<%= @user.name %>'s book notes
+  	<% end %>
+  </h3>
+  <table class="table table-condensed table-hover table-responsive">
+  	<thead>
+	  	<tr>
+	  		<td><strong>Cover</strong></td>
+	  		<td><strong>Book</strong></td>
+	  		<td><strong>Note</strong></td>
+	  		<td class="text-right"><strong>Created on</strong></td>
+	  	<tr>
+  	</thead>
+  	<% @book.each do |n| %>
+  	<tbody>
+	  	<tr>
+	  		<td>
+	  			<% Book.where(:id => n.book_id).each do |c| %>
+	  				<%= image_tag c.image.url(:mini), :height => "36px", class: "img-shadow" %>
+	  			<% end %>
+	  		</td>
+	  		<td>
+	  			<% Book.where(:id => n.book_id).each do |b| %>
+	  				<% if b.category == "Paperback" %>
+			            <%= link_to b, data: { toggle: "tooltip" }, title: "View title" do %><%= b.title + " Vol. " + b.issue.to_s + " TPB" %><% end %>
+			        <% elsif b.category == "Hardcover" %>
+			            <%= link_to b, data: { toggle: "tooltip" }, title: "View title" do %><%= b.title + " Vol. " + b.issue.to_s + " Deluxe HC" %><% end %>
+			        <% else %>
+			            <%= link_to b, data: { toggle: "tooltip" }, title: "View title" do %><%= b.title + " #" + b.issue.to_s %><% end %>
+			        <% end %>
+	  			<% end %>
+	  		</td>
+	  		<td><%= n.content.to_s %></td>
+	  		<td class="text-right"><%= n.created_at.strftime("%b %d, %Y") %></td>
+	  	</tr>
+	  </tbody>
+  	<% end %>
+  </table>
+
+ <div class="clearfix"></div>
+ <div class="text-center"><%= paginate @book %></div>	
+ </div>

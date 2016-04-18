@@ -1,0 +1,26 @@
+<div class="center">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+  	<h4 class="white text-center">Valiant Collectibles <span class="label label-primary label-as-badge"><%= @collectible.count %></span></h4>
+	<% if user_signed_in? %>
+			<% @collectible.each do |c| %>
+				<div class="col-md-2 col-sm-4 col-xs-6 book-image">
+		            <div class="profile-sidebar2">
+		                <!-- SIDEBAR USERPIC -->
+		                <div class="profile-userpic">
+		                	<%= link_to c, :title => "View " + c.title do %>
+		                		<%= image_tag c.image.url(:medium), :alt => c.title, class: "img-shadow img-responsive" %>
+		                	<% end %>
+		                </div>
+		                <!-- END SIDEBAR USERPIC -->
+		            </div>
+		        </div>
+			<% end %>
+			<div class="clearfix"></div>
+			<div class="text-center"><%= paginate @collectible %></div>
+	<% else %>
+		<h2 class="text-center">Oh, oh, you're not supposed to be here!</h2>
+		<h3 class="text-center">Head <%= link_to "back home", root_path %>, I won't tell anyone you were here.</h3>
+	<% end %>
+  </div>
+  <div class="clearfix"></div>
+</div>

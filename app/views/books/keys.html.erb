@@ -1,0 +1,19 @@
+<div class="wellclear table-responsive">
+<h3 class="text-center">Keys and 1st Appearances (2012-)</h3>
+<br />
+<div class="container">
+	<% @books.each do |k| %>
+		<div class="col-md-6 col-sm-6 col-xs-12">
+			<div class="col-md-3 col-sm-5 col-xs-6">
+				<%= link_to k, :title => k.title + " #" + k.issue.to_s do %><%= image_tag k.image.url(:thumb) %><% end %><br /><br />
+			</div>
+			<div class="col-md-9 col-sm-7 col-xs-6">
+				<%= link_to k, :title => k.title + " #" + k.issue.to_s do %><%= k.title %> #<%= k.issue.to_s %><% end %>
+				<p>Released on <%= k.rdate.strftime("%B %d, %Y") %></p>
+				<p><%= k.keynote %></p>
+			</div>
+		</div>
+	<% end %>
+</div>
+<div class="clearfix"></div>
+</div>

@@ -1,0 +1,7 @@
+	<% if action_name == "sketch" %>
+		<p class="white">All these covers have been commissioned by Valiant fans at various shows and conventions, so if you have a cover you'd like to submit, feel free to <strong><%= link_to "submit your own", new_book_path, class: "white" %></strong>. All submissions will be reviewed by the administrator. We will only accept sketch covers by professional or semi-professional artists.</p>
+	<% end %>
+	<div class="clearfix"></div>
+	<% unless @book.count > 0 %>
+		<p class="mark text-center"><br />Sorry, it looks like there are no results matching your query "<strong><%= params[:query] %></strong>".<br /><br /></p>
+	<% end %>

@@ -1,0 +1,9 @@
+<div class="col-md-1 col-sm-2 col-xs-2">
+			<%= image_tag Collectible.find(a.recipient_id).image.url(:mini), :height => "36px", class: "img-shadow" %>
+		</div>
+		<div class="col-md-11 col-sm-10 col-xs-10">
+			<i class="fa fa-star"></i> <%= link_to root_url + "users/" + User.find(a.owner_id).slug + "/profile" do %><%= User.find(a.owner_id).name %><% end %> added <%= link_to Collectible.find(a.recipient_id) do %><%= Collectible.find(a.recipient_id).title %><% end %> to their wishlist
+			<br />
+			<span class="time"><%= local_time_ago(a.created_at) %></span>
+</div>
+<div class="clearfix"><br /></div>
