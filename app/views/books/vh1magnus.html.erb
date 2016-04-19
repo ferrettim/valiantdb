@@ -1,8 +1,4 @@
 <% if params[:query].present? %>
 <%= render "search" %>
-<% else %>
-	<h2 class="white">Magnus Robot Fighter (Classic) <div class="pull-right"><%= link_to classic_magnus_table_books_path, :class => "btn btn-default btn-sm" do %>
-            <span class="fa fa-list"></span> <span class="gone">Table View</span>
-        <% end %></div></h2>
 <% end %>
-<%= render "book" %>
+<%= render "book" %> 

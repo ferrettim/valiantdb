@@ -25,7 +25,7 @@
 //= require sweet-alert
 //= require sweet-alert-confirm
 //= require papercrop
-//= require chosen-jquery
+//= require select2
 //= require ratyrate
 //= require local_time
 //= require bootstrap

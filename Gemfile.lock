@@ -69,6 +69,8 @@ GEM
       tzinfo (~> 1.1)
     acts_as_votable (0.10.0)
     arel (6.0.3)
+    autoprefixer-rails (6.3.6)
+      execjs
     aws-sdk (2.2.34)
       aws-sdk-resources (= 2.2.34)
     aws-sdk-core (2.2.34)
@@ -93,8 +95,9 @@ GEM
       httparty (>= 0.7.6)
       multi_json (~> 1.3)
       oauth2 (>= 0.5.0, < 2.0)
-    bootstrap-sass (3.3.1.0)
-      sass (~> 3.2)
+    bootstrap-sass (3.3.5)
+      autoprefixer-rails (>= 5.0.0.1)
+      sass (>= 3.2.19)
     brakeman (3.2.1)
       erubis (~> 2.6)
       haml (>= 3.0, < 5.0)
@@ -117,11 +120,6 @@ GEM
     chartkick (1.4.2)
     childprocess (0.3.6)
       ffi (~> 1.0, >= 1.0.6)
-    chosen-rails (1.5.1)
-      coffee-rails (>= 3.2)
-      railties (>= 3.0)
-      sass-rails (>= 3.2)
-    chunky_png (1.3.5)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.8)
@@ -134,12 +132,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.10.0)
-    compass (0.12.2)
-      chunky_png (~> 1.2)
-      fssm (>= 0.2.7)
-      sass (~> 3.1)
-    compass-rails (2.0.0)
-      compass (>= 0.12.2)
     concurrent-ruby (1.0.1)
     connection_pool (2.2.0)
     dalli (2.7.6)
@@ -186,7 +178,6 @@ GEM
     formatador (0.2.5)
     friendly_id (5.1.0)
       activerecord (>= 4.0.0)
-    fssm (0.2.10)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     guard (2.13.0)
@@ -384,11 +375,11 @@ GEM
     ruby_parser (3.8.1)
       sexp_processor (~> 4.1)
     safe_yaml (1.0.4)
-    sass (3.2.0)
-    sass-rails (4.0.3)
+    sass (3.2.19)
+    sass-rails (4.0.5)
       railties (>= 4.0.0, < 5.0)
-      sass (~> 3.2.0)
-      sprockets (~> 2.8, <= 2.11.0)
+      sass (~> 3.2.2)
+      sprockets (~> 2.8, < 3.0)
       sprockets-rails (~> 2.0)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
@@ -397,6 +388,8 @@ GEM
       activemodel
       elasticsearch (>= 1)
       hashie
+    select2-rails (4.0.0)
+      thor (~> 0.14)
     sexp_processor (4.7.0)
     shellany (0.0.1)
     sidekiq (4.1.1)
@@ -417,7 +410,7 @@ GEM
     socialization (1.2.0)
       activerecord
     spork (0.9.2)
-    sprockets (2.11.0)
+    sprockets (2.12.4)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -427,7 +420,7 @@ GEM
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     sqlite3 (1.3.11-x86-mingw32)
-    sweet-alert (1.0)
+    sweet-alert (0.0.9)
     sweet-alert-confirm (0.4.1)
     switch_user (1.2.1)
     temple (0.7.6)
@@ -471,9 +464,7 @@ DEPENDENCIES
   bullet
   chartkick
   childprocess (= 0.3.6)
-  chosen-rails
   coffee-rails (~> 4.0.0)
-  compass-rails
   dalli
   dateslices
   delayed_paperclip
@@ -523,12 +514,13 @@ DEPENDENCIES
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   searchkick
+  select2-rails
   sidekiq
   simple_form
   sinatra
   socialization
   sqlite3
-  sweet-alert
+  sweet-alert (~> 0.0.9)
   sweet-alert-confirm
   switch_user
   tinymce-rails

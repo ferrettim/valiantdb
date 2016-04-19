@@ -2,7 +2,7 @@ var ready;
  
 ready = function(){
     // enable chosen js
-    $('.chosen-select').chosen({
+    $('.chosen-select').select2({
     	create_option: true,
         no_results_text: 'No results matched'
     });

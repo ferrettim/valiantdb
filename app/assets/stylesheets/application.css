@@ -11,7 +11,8 @@
  * file per style scope.
  *
  *= require_tree .
- *= require chosen
+ *= require select2
+ *= require select2-bootstrap
  *= require font-awesome
  *= require flexslider.css
  *= require jquery.jcrop
