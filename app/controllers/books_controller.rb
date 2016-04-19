@@ -6752,8 +6752,38 @@ end
   # Acclaim
   def vh2all
     @pgtitle = "All Acclaim"
-    @tcount = Book.all.where(:era => "VH2").count
-    @book = Book.all.where(:era => "VH2").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @search_count = Book.where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where(:era => "VH2").count
+      @book = Book.where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2all-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2alltbl
+    @pgtitle = "All Acclaim"
+    if params[:type].present?
+      @tcount = Book.where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where(:era => "VH2").count
+      @book = Book.where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -6761,10 +6791,40 @@ end
     end
   end
 
-  def vh2alltbl
-    @pgtitle = "All Acclaim"
-    @tcount = Book.all.where(:era => "VH2").count
-    @book = Book.all.where(:era => "VH2").order(rdate: :asc, issue: :asc).page(params[:page]).per(30)
+  def vh2allmissing
+    @pgtitle = "All Acclaim (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2all-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2alltblmissing
+    @pgtitle = "All Acclaim (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -6773,22 +6833,80 @@ end
   end
 
   def vh2az
-    @pgtitle = "Acclaim Adventure Zone"
-    @tcount = Book.where("title like ?", "%Adventure Zone%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Adventure Zone%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where("title like ?", "%Adventure Zone%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @pgtitle = "Adventure Zone"
+    @search_count = Book.where("title like ?", "%Adventure Zone%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Adventure Zone%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Adventure Zone%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Adventure Zone%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Adventure Zone%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Adventure Zone%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Adventure Zone%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Adventure Zone%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "adventurezone-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2adventurezone-#{DateTime.now}.csv" }
     end
   end
 
   def vh2aztbl
-    @pgtitle = "Acclaim Adventure Zone"
-    @tcount = Book.all.where("title like ?", "%Adventure Zone%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Adventure Zone%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    @pgtitle = "Adventure Zone"
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Adventure Zone%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Adventure Zone%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Adventure Zone%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Adventure Zone%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Adventure Zone%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Adventure Zone%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2azmissing
+    @pgtitle = "Adventure Zone (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Adventure Zone%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Adventure Zone%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Adventure Zone%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Adventure Zonee%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Adventure Zone%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Adventure Zonee%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Adventure Zone%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Adventure Zone%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2adventurezone-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2aztblmissing
+    @pgtitle = "Adventure Zone (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Adventure Zone%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Adventure Zone%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Adventure Zone%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Adventure Zone%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Adventure Zone%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Adventure Zone%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -6798,21 +6916,79 @@ end
 
   def vh2armorines
     @pgtitle = "Armorines"
-    @tcount = Book.where(:title => "Armorines").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:title => "Armorines").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where(:title => "Armorines").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%Armorines%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Armorines%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Armorines%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Armorines%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Armorines%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Armorines%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Armorines%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Armorines%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "armorines-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2armorines-#{DateTime.now}.csv" }
     end
   end
 
   def vh2armorinestbl
     @pgtitle = "Armorines"
-    @tcount = Book.all.where(:title => "Armorines").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:title => "Armorines").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Armorines%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Armorines%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Armorines%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Armorines%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Armorines%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Armorines%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2armorinesmissing
+    @pgtitle = "Armorines (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armorines%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armorines%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armorines%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armorinese%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armorines%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armorinese%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armorines%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armorines%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2armorines-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2armorinestblmissing
+    @pgtitle = "Armorines (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armorines%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armorines%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armorines%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armorines%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armorines%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armorines%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -6822,21 +6998,79 @@ end
 
   def vh2bs
     @pgtitle = "Bloodshot"
-    @tcount = Book.where("title like ?", "%Bloodshot%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Bloodshot%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where("title like ?", "%Bloodshot%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%Bloodshot%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Bloodshot%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Bloodshot%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Bloodshot%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Bloodshot%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Bloodshot%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Bloodshot%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Bloodshot%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "bloodshot-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2bloodshot-#{DateTime.now}.csv" }
     end
   end
 
   def vh2bstbl
     @pgtitle = "Bloodshot"
-    @tcount = Book.all.where("title like ?", "%Bloodshot%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Bloodshot%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Bloodshot%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Bloodshot%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Bloodshot%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Bloodshot%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Bloodshot%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Bloodshot%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2bsmissing
+    @pgtitle = "Bloodshot (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Bloodshot%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Bloodshot%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Bloodshot%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Bloodshote%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Bloodshot%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Bloodshote%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Bloodshot%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Bloodshot%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2bloodshot-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2bstblmissing
+    @pgtitle = "Bloodshot (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Bloodshot%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Bloodshot%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Bloodshot%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Bloodshot%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Bloodshot%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Bloodshot%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -6846,21 +7080,79 @@ end
 
   def vh2dp
     @pgtitle = "Darque Passages"
-    @tcount = Book.where(:title => "Darque Passages").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:title => "Darque Passages").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where(:title => "Darque Passages").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%Darque Passages%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Darque Passages%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Darque Passages%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Darque Passages%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Darque Passages%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Darque Passages%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Darque Passages%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Darque Passages%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "darquepassages-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2darquepassages-#{DateTime.now}.csv" }
     end
   end
 
   def vh2dptbl
     @pgtitle = "Darque Passages"
-    @tcount = Book.all.where(:title => "Darque Passages").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:title => "Darque Passages").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Darque Passages%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Darque Passages%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Darque Passages%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Darque Passages%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Darque Passages%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Darque Passages%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2dpmissing
+    @pgtitle = "Darque Passages (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Darque Passages%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Darque Passages%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Darque Passages%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Darque Passagese%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Darque Passages%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Darque Passagese%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Darque Passages%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Darque Passages%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2darquepassages-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2dptblmissing
+    @pgtitle = "Darque Passages (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Darque Passages%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Darque Passages%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Darque Passages%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Darque Passages%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Darque Passages%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Darque Passages%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -6870,21 +7162,79 @@ end
 
   def vh2ds
     @pgtitle = "Deadside"
-    @tcount = Book.where(:title => "Deadside").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:title => "Deadside").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where(:title => "Deadside").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%Deadside%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Deadside%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Deadside%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Deadside%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Deadside%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Deadside%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Deadside%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Deadside%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "deadside-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2deadside-#{DateTime.now}.csv" }
     end
   end
 
   def vh2dstbl
     @pgtitle = "Deadside"
-    @tcount = Book.all.where(:title => "Deadside").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:title => "Deadside").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Deadside%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Deadside%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Deadside%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Deadside%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Deadside%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Deadside%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2dsmissing
+    @pgtitle = "Deadside (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Deadside%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Deadside%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Deadside%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Deadsidee%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Deadside%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Deadsidee%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Deadside%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Deadside%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2deadside-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2dstblmissing
+    @pgtitle = "Deadside (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Deadside%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Deadside%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Deadside%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Deadside%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Deadside%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Deadside%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -6894,21 +7244,79 @@ end
 
   def vh2drt
     @pgtitle = "Doctor Tomorrow"
-    @tcount = Book.where(:title => "Doctor Tomorrow").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:title => "Doctor Tomorrow").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where(:title => "Doctor Tomorrow").where("rdate > ?", "1996-09-30").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%Doctor Tomorrow%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Doctor Tomorrow%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Doctor Tomorrow%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Doctor Tomorrow%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Doctor Tomorrow%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Doctor Tomorrow%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Doctor Tomorrow%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Doctor Tomorrow%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "doctortomorrow-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2doctortomorrow-#{DateTime.now}.csv" }
     end
   end
 
   def vh2drttbl
     @pgtitle = "Doctor Tomorrow"
-    @tcount = Book.all.where(:title => "Doctor Tomorrow").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:title => "Doctor Tomorrow").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Doctor Tomorrow%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Doctor Tomorrow%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Doctor Tomorrow%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Doctor Tomorrow%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Doctor Tomorrow%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Doctor Tomorrow%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2drtmissing
+    @pgtitle = "Doctor Tomorrow (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Doctor Tomorrow%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Doctor Tomorrow%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Doctor Tomorrow%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Doctor Tomorrowe%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Doctor Tomorrow%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Doctor Tomorrowe%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Doctor Tomorrow%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Doctor Tomorrow%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2doctortomorrow-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2drttblmissing
+    @pgtitle = "Doctor Tomorrow (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Doctor Tomorrow%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Doctor Tomorrow%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Doctor Tomorrow%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Doctor Tomorrow%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Doctor Tomorrow%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Doctor Tomorrow%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -6918,21 +7326,79 @@ end
 
   def vh2ews
     @pgtitle = "Eternal Warriors"
-    @tcount = Book.where("title like ?", "%Eternal Warriors%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Eternal Warriors%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where("title like ?", "%Eternal Warriors%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%Eternal Warriors%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Eternal Warriors%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Eternal Warriors%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Eternal Warriors%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Eternal Warriors%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Eternal Warriors%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Eternal Warriors%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Eternal Warriors%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "eternalwarriors-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2eternalwarriors-#{DateTime.now}.csv" }
     end
   end
 
   def vh2ewstbl
     @pgtitle = "Eternal Warriors"
-    @tcount = Book.all.where("title like ?", "%Eternal Warriors%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Eternal Warriors%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Eternal Warriors%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Eternal Warriors%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Eternal Warriors%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Eternal Warriors%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Eternal Warriors%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Eternal Warriors%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2ewsmissing
+    @pgtitle = "Eternal Warriors (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warriors%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warriors%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warriors%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warriorse%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warriors%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warriorse%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warriors%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warriors%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2eternalwarriors-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2ewstblmissing
+    @pgtitle = "Eternal Warriors (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warriors%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warriors%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warriors%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warriors%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warriors%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warriorss%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -6941,22 +7407,80 @@ end
   end
 
   def vh2magnus
-    @pgtitle = "Magnus Robor Fighter"
-    @tcount = Book.where("title like ?", "%Magnus Robot Fighter%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Magnus Robot Fighter%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where("title like ?", "%Magnus Robot Fighter%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @pgtitle = "Magnus Robot Fighter"
+    @search_count = Book.where("title like ?", "%Magnus Robot Fighter%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Magnus Robot Fighter%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Magnus Robot Fighter%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Magnus Robot Fighter%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Magnus Robot Fighter%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Magnus Robot Fighter%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Magnus Robot Fighter%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Magnus Robot Fighter%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "magnus-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2magnus-#{DateTime.now}.csv" }
     end
   end
 
   def vh2magnustbl
     @pgtitle = "Magnus Robot Fighter"
-    @tcount = Book.all.where("title like ?", "%Magnus Robot Fighter%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Magnus Robot Fighter%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Magnus Robot Fighter%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Magnus Robot Fighter%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Magnus Robot Fighter%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Magnus Robot Fighter%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Magnus Robot Fighter%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Magnus Robot Fighter%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2magnusmissing
+    @pgtitle = "Magnus (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Magnus Robot Fighter%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Magnus Robot Fighter%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Magnus Robot Fighter%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Magnus Robot Fightere%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Magnus Robot Fighter%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Magnus Robot Fightere%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Magnus Robot Fighter%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Magnus Robot Fighter%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2magnus-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2magnustblmissing
+    @pgtitle = "Magnus Robot Fighter (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Magnus Robot Fighter%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Magnus Robot Fighter%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Magnus Robot Fighter%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Magnus Robot Fighter%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Magnus Robot Fighter%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Magnus Robot Fighter%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -6966,21 +7490,79 @@ end
 
   def vh2ninjak
     @pgtitle = "Ninjak"
-    @tcount = Book.where("title like ?", "%Ninjak%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Ninjak%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where("title like ?", "%Ninjak%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%Ninjak%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Ninjak%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Ninjak%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Ninjak%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Ninjak%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Ninjak%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Ninjak%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Ninjak%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "ninjak-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2ninjak-#{DateTime.now}.csv" }
     end
   end
 
   def vh2ninjaktbl
     @pgtitle = "Ninjak"
-    @tcount = Book.all.where("title like ?", "%Ninjak%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Ninjak%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Ninjak%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Ninjak%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Ninjak%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Ninjak%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Ninjak%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Ninjak%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2ninjakmissing
+    @pgtitle = "Ninjak (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Ninjak%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Ninjak%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Ninjak%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Ninjake%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Ninjak%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Ninjake%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Ninjak%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Ninjak%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2ninjak-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2ninjaktblmissing
+    @pgtitle = "Ninjak (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Ninjak%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Ninjak%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Ninjak%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Ninjak%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Ninjak%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Ninjak%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -6990,21 +7572,79 @@ end
 
   def vh2nio
     @pgtitle = "N.I.O."
-    @tcount = Book.where(:title => "N.I.O.").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:title => "N.I.O.").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where(:title => "N.I.O.").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%N.I.O.%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%N.I.O.%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%N.I.O.%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%N.I.O.%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%N.I.O.%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%N.I.O.%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%N.I.O.%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%N.I.O.%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "bloodshot-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2nio-#{DateTime.now}.csv" }
     end
   end
 
-  def vh2niotbl
+  def vh2niostbl
     @pgtitle = "N.I.O."
-    @tcount = Book.all.where(:title => "N.I.O.").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:title => "N.I.O.").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%N.I.O.%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%N.I.O.%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%N.I.O.%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%N.I.O.%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%N.I.O.%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%N.I.O.%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2niomissing
+    @pgtitle = "N.I.O. (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%N.I.O.%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%N.I.O.%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%N.I.O.%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%N.I.O.e%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%N.I.O.%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%N.I.O.e%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%N.I.O.%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%N.I.O.%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2nio-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2niotblmissing
+    @pgtitle = "N.I.O. (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%N.I.O.%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%N.I.O.%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%N.I.O.%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%N.I.O.%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%N.I.O.%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%N.I.O.%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -7014,21 +7654,79 @@ end
 
   def vh2misc
     @pgtitle = "Miscellaneous"
-    @tcount = Book.where(:category => "Misc").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:category => "Misc").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(rdate: :asc, issue: :asc, title: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where(:category => "Misc").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(rdate: :asc, issue: :asc, title: :asc, created_at: :asc)
+    @search_count = Book.where(:category => "Misc").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where(:category => "Misc").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where(:category => "Misc").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where(:category => "Misc").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where(:category => "Misc").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where(:category => "Misc").where(:era => "VH2").count
+      @book = Book.where(:category => "Misc").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where(:category => "Misc").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "misc-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2misc-#{DateTime.now}.csv" }
     end
   end
 
   def vh2misctbl
     @pgtitle = "Miscellaneous"
-    @tcount = Book.all.where(:category => "Misc").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:category => "Misc").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(rdate: :asc, issue: :asc, title: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where(:category => "Misc").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where(:category => "Misc").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where(:category => "Misc").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where(:category => "Misc").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where(:category => "Misc").where(:era => "VH2").count
+      @book = Book.where(:category => "Misc").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2miscmissing
+    @pgtitle = "Miscellaneous (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where(:category => "Misc").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Misc").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Misc").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2e%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Misc").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2e%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Misc").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:category => "Misc").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2misc-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2misctblmissing
+    @pgtitle = "Miscellaneous (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Misc").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Misc").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Misc").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Misc").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Misc").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Misc").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -7038,21 +7736,79 @@ end
 
   def vh2qw
     @pgtitle = "Quantum & Woody"
-    @tcount = Book.where("title like ?", "%Quantum & Woody%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Quantum & Woody%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where("title like ?", "%Quantum & Woody%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%Quantum & Woody%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Quantum & Woody%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Quantum & Woody%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Quantum & Woody%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Quantum & Woody%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Quantum & Woody%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Quantum & Woody%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Quantum & Woody%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "quantumwoody-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2quantumwoody-#{DateTime.now}.csv" }
     end
   end
 
   def vh2qwtbl
     @pgtitle = "Quantum & Woody"
-    @tcount = Book.all.where("title like ?", "%Quantum & Woody%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Quantum & Woody%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Quantum & Woody%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Quantum & Woody%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Quantum & Woody%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Quantum & Woody%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Quantum & Woody%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Quantum & Woody%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2qwmissing
+    @pgtitle = "Quantum & Woody (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woodye%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woodye%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2quantumwoody-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2qwtblmissing
+    @pgtitle = "Quantum & Woody (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -7062,45 +7818,161 @@ end
 
   def vh2sha2
     @pgtitle = "Shadowman Vol. 2"
-    @tcount = Book.where("title like ?","%Shadowman Vol. 2%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Shadowman Vol. 2%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where("title like ?", "%Shadowman Vol. 2%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%Shadowman Vol. 2%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Shadowman Vol. 2%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Shadowman Vol. 2%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Shadowman Vol. 2%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Shadowman Vol. 2%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Shadowman Vol. 2%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Shadowman Vol. 2%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Shadowman Vol. 2%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "shadowman2-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2shadowmanvol2-#{DateTime.now}.csv" }
     end
   end
 
   def vh2sha2tbl
     @pgtitle = "Shadowman Vol. 2"
-    @tcount = Book.all.where("title like ?", "%Shadowman Vol. 2%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Shadowman Vol. 2%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Shadowman Vol. 2%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Shadowman Vol. 2%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Shadowman Vol. 2%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Shadowman Vol. 2%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Shadowman Vol. 2%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Shadowman Vol. 2%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
     end
-  end 
+  end
 
-  def vh2sha3
-    @pgtitle = "Shadowman Vol. 3"
-    @tcount = Book.where(:title => "Shadowman Vol. 3").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:title => "Shadowman Vol. 3").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where(:title => "Shadowman Vol. 3").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+  def vh2sha2missing
+    @pgtitle = "Shadowman Vol. 2 (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2e%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2e%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "shadowman3-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2shadowmanvol2-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2sha2tblmissing
+    @pgtitle = "Shadowman Vol. 2 (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 2%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2sha3
+    @pgtitle = "Shadowman Vol. 3"
+    @search_count = Book.where("title like ?", "%Shadowman Vol. 3%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Shadowman Vol. 3%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Shadowman Vol. 3%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Shadowman Vol. 3%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Shadowman Vol. 3%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Shadowman Vol. 3%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Shadowman Vol. 3%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Shadowman Vol. 3%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2shadowmanvol3-#{DateTime.now}.csv" }
     end
   end
 
   def vh2sha3tbl
     @pgtitle = "Shadowman Vol. 3"
-    @tcount = Book.all.where(:title => "Shadowman Vol. 3").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:title => "Shadowman Vol. 3").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Shadowman Vol. 3%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Shadowman Vol. 3%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Shadowman Vol. 3%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Shadowman Vol. 3%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Shadowman Vol. 3%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Shadowman Vol. 3%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2sha3missing
+    @pgtitle = "Shadowman Vol. 3 (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 3%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 3%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 3%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 3e%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 3%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 3e%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 3%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 3%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2shadowmanvol3-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2sha3tblmissing
+    @pgtitle = "Shadowman Vol. 3 (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 3%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 3%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 3%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 3%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 3%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman Vol. 3%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -7110,21 +7982,79 @@ end
 
   def vh2solar
     @pgtitle = "Solar: Hell On Earth"
-    @tcount = Book.where(:title => "Solar: Hell On Earth").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:title => "Solar: Hell On Earth").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where(:title => "Solar: Hell On Earth").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%Solar: Hell On Earth%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Solar: Hell On Earth%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Solar: Hell On Earth%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Solar: Hell On Earth%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Solar: Hell On Earth%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Solar: Hell On Earth%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Solar: Hell On Earth%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Solar: Hell On Earth%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "solar-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2solarhellonearth-#{DateTime.now}.csv" }
     end
   end
 
   def vh2solartbl
     @pgtitle = "Solar: Hell On Earth"
-    @tcount = Book.all.where(:title => "Solar: Hell On Earth").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where(:title => "Solar: Hell On Earth").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Solar: Hell On Earth%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Solar: Hell On Earth%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Solar: Hell On Earth%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Solar: Hell On Earth%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Solar: Hell On Earth%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Solar: Hell On Earth%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2solarmissing
+    @pgtitle = "Solar: Hell On Earth (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Solar: Hell On Earth%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Solar: Hell On Earth%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Solar: Hell On Earth%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Solar: Hell On Earthe%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Solar: Hell On Earth%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Solar: Hell On Earthe%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Solar: Hell On Earth%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Solar: Hell On Earth%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2solarhellonearth-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2solartblmissing
+    @pgtitle = "Solar: Hell On Earth (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Solar: Hell On Earth%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Solar: Hell On Earth%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Solar: Hell On Earth%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Solar: Hell On Earth%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Solar: Hell On Earth%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Solar: Hell On Earth%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -7134,21 +8064,79 @@ end
 
   def vh2ta
     @pgtitle = "Trinity Angels"
-    @tcount = Book.where("title like ?", "%Trinity Angels%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Trinity Angels%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where("title like ?", "%Trinity Angels%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%Trinity Angels%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Trinity Angels%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Trinity Angels%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Trinity Angels%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Trinity Angels%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Trinity Angels%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Trinity Angels%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Trinity Angels%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "trinityangels-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2trinityangels-#{DateTime.now}.csv" }
     end
   end
 
   def vh2tatbl
     @pgtitle = "Trinity Angels"
-    @tcount = Book.all.where("title like ?", "%Trinity Angels%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Trinity Angels%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Trinity Angels%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Trinity Angels%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Trinity Angels%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Trinity Angels%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Trinity Angels%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Trinity Angels%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2tamissing
+    @pgtitle = "Trinity Angels (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Trinity Angels%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Trinity Angels%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Trinity Angels%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Trinity Angelse%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Trinity Angels%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Trinity Angelse%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Trinity Angels%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Trinity Angels%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2trinityangels-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2tatblmissing
+    @pgtitle = "Trinity Angels (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Trinity Angels%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Trinity Angels%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Trinity Angels%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Trinity Angels%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Trinity Angels%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Trinity Angels%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -7158,21 +8146,79 @@ end
 
   def vh2tm
     @pgtitle = "Troublemakers"
-    @tcount = Book.where("title like ?", "%Troublemakers%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Troublemakers%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where("title like ?", "%Troublemakers%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%Troublemakers%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Troublemakers%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Troublemakers%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Troublemakers%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Troublemakers%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Troublemakers%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Troublemakers%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Troublemakers%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "troublemakers-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2troublemakers-#{DateTime.now}.csv" }
     end
   end
 
   def vh2tmtbl
     @pgtitle = "Troublemakers"
-    @tcount = Book.all.where("title like ?", "%Troublemakers%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Troublemakers%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Troublemakers%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Troublemakers%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Troublemakers%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Troublemakers%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Troublemakers%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Troublemakers%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2tmmissing
+    @pgtitle = "Troublemakers (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Troublemakers%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Troublemakers%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Troublemakers%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Troublemakerse%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Troublemakers%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Troublemakerse%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Troublemakers%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Troublemakers%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2troublemakers-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2tmtblmissing
+    @pgtitle = "Troublemakers (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Troublemakers%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Troublemakers%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Troublemakers%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Troublemakers%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Troublemakers%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Troublemakers%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -7182,21 +8228,79 @@ end
 
   def vh2turok
     @pgtitle = "Turok"
-    @tcount = Book.where("title like ?", "%Turok%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Turok%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where("title like ?", "%Turok%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%Turok%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Turok%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Turok%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Turok%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Turok%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Turok%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Turok%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Turok%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "turok-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2turok-#{DateTime.now}.csv" }
     end
   end
 
   def vh2turoktbl
     @pgtitle = "Turok"
-    @tcount = Book.where("title like ?", "%Turok%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Turok%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Turok%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Turok%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Turok%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Turok%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Turok%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Turok%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2turokmissing
+    @pgtitle = "Turok (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Turok%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Turok%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Turok%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Turoke%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Turok%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Turoke%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Turok%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Turok%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2turok-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2turoktblmissing
+    @pgtitle = "Turok (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Turok%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Turok%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Turok%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Turok%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Turok%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Turok%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -7206,21 +8310,79 @@ end
 
   def vh2unity
     @pgtitle = "Unity 2000"
-    @tcount = Book.where("title like ?", "%Unity 2000%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Unity 2000%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where("title like ?", "%Unity 2000%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%Unity 2000%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Unity 2000%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Unity 2000%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Unity 2000%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Unity 2000%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Unity 2000%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Unity 2000%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%Unity 2000%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "unity2000-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2unity2000-#{DateTime.now}.csv" }
     end
   end
 
   def vh2unitytbl
     @pgtitle = "Unity 2000"
-    @tcount = Book.all.where("title like ?", "%Unity 2000%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%Unity 2000%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%Unity 2000%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Unity 2000%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%Unity 2000%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Unity 2000%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%Unity 2000%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%Unity 2000%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2unitymissing
+    @pgtitle = "Unity 2000 (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Unity 2000%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Unity 2000%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Unity 2000%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Unity 2000e%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Unity 2000%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Unity 2000e%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Unity 2000%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Unity 2000%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2unity2000-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2unitytblmissing
+    @pgtitle = "Unity 2000 (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Unity 2000%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Unity 2000%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Unity 2000%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Unity 2000%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Unity 2000%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Unity 2000%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -7230,21 +8392,79 @@ end
 
   def vh2xomanowar
     @pgtitle = "X-O Manowar"
-    @tcount = Book.where("title like ?", "%X-O Manowar%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%X-O Manowar%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.where("title like ?", "%X-O Manowar%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc)
+    @search_count = Book.where("title like ?", "%X-O Manowar%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where("title like ?", "%X-O Manowar%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
       format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "xomanowar-#{DateTime.now}.csv" }
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2xomanowar-#{DateTime.now}.csv" }
     end
   end
 
   def vh2xomanowartbl
     @pgtitle = "X-O Manowar"
-    @tcount = Book.all.where("title like ?", "%X-O Manowar%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").count
-    @book = Book.where("title like ?", "%X-O Manowar%").where("rdate > ?", "1996-09-30").where("rdate < ?", "2004-12-31").where.not("note like ?", "%Sketch cover%").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    if params[:type].present?
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where(:era => "VH2").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def vh2xomanowarmissing
+    @pgtitle = "X-O Manowar (Missing)"
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where(:category => params[:query]).where(:era => "VH2").count
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manoware%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manoware%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "vh2xomanowar-missing-#{DateTime.now}.csv" }
+    end
+  end
+
+  def vh2xomanowartblmissing
+    @pgtitle = "X-O Manowar (Missing)"
+    if params[:type].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where(:category => params[:type]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where(:category => params[:type]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where(:issue => params[:number]).where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where(:issue => params[:number]).where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where(:era => "VH2").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where(:era => "VH2").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
     respond_to do |format|
       format.html
       format.json { render json: @book }
