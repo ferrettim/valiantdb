@@ -167,11 +167,23 @@
   <% elsif action_name == "mybooksvei" %>
     <div id="bannerall">
     </div>
+  <% elsif action_name == "mybooksvh1" %>
+    <div id="bannerclassic">
+    </div>
+  <% elsif action_name == "mybooksvh2" %>
+    <div id="banneracclaim">
+    </div>
   <% elsif action_name == "mywishlist" %>
     <div id="bannerall">
     </div>
   <% elsif action_name == "mywishlistvei" %>
     <div id="bannerall">
+    </div>
+  <% elsif action_name == "mywishlistvh1" %>
+    <div id="bannerclassic">
+    </div>
+  <% elsif action_name == "mywishlistvh2" %>
+    <div id="banneracclaim">
     </div>
   <% elsif action_name == "mynotes" %>
     <div id="bannerall">
@@ -15099,6 +15111,1446 @@
                     <select name="number" class="form-control" onchange="this.form.submit()">
                       <option>Issue</option>
                       <% Book.where.not(id: current_user.owned_book_ids).where(:era => "VH2").where("title like ?", "%X-O Manowar%").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "brazil" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to brazil_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to brazil_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to brazil_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "Brazil").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "braziltbl" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to brazil_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to brazil_table_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to brazil_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "Brazil").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "brazilmissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to brazil_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to brazil_all_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to brazil_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "Brazil").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "braziltblmissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to brazil_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to brazil_table_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to brazil_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "Brazil").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "canada" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to canada_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to canada_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to canada_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "Canada").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "canadatbl" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to canada_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to canada_table_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to canada_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "Canada").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "canadamissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to canada_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to canada_all_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to canada_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "Canada").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "canadatblmissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to canada_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to canada_table_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to canada_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "Canada").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "china" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to china_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to china_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to china_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "China").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "chinatbl" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to china_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to china_table_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to china_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "China").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "chinamissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to china_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to china_all_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to china_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "China").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "chinatblmissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to china_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to china_table_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to china_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "China").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "france" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to france_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to france_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to france_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "France").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "francetbl" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to france_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to france_table_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to france_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "China").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "francemissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to france_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to france_all_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to france_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "France").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "francetblmissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to france_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to france_table_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to france_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "France").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "italy" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to italy_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to italy_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to italy_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "Italy").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "italytbl" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to italy_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to italy_table_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to italy_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "Italy").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "italymissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to italy_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to italy_all_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to italy_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "Italy").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "italytblmissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to italy_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to italy_table_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to italy_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "Italy").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "japan" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to japan_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to japan_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to japan_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "Japan").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "japantbl" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to japan_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to japan_table_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to japan_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "Japan").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "japanmissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to japan_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to japan_all_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to japan_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "Japan").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "japantblmissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to japan_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to japan_table_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to japan_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "Japan").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "mexico" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to mexico_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to mexico_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to mexico_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "Mexico").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "mexicotbl" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to mexico_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to mexico_table_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to mexico_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "Mexico").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "mexicomissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to mexico_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to mexico_all_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to mexico_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "Mexico").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "mexicotblmissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to mexico_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to mexico_table_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to mexico_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "Mexico").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "russia" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to russia_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to russia_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to russia_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "Russia").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "russiatbl" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to russia_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to russia_table_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to russia_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "Russia").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "russiamissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to russia_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to russia_all_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to russia_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "Russia").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "russiatblmissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to russia_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to russia_table_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to russia_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "Russia").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "turkey" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to turkey_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to turkey_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to turkey_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "Turkey").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "turkeytbl" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to turkey_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <% if user_signed_in? %>
+                <li class="btn btn-default btn-sm"><%= link_to turkey_table_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                      <span class="fa fa-heart-o"></span>
+                    <% end %></li>
+              <% end %>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to turkey_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where(:country => "Turkey").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "turkeymissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to turkey_table_books_path, class: "btn btn-default", :title => "Table View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to turkey_all_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to turkey_all_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "Turkey").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
+                        <option value="<%= n.issue %>"><%= n.issue %></option>
+                      <% end %>
+                    </select>
+                <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif action_name == "turkeytblmissing" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-danger label-as-badge"><%= @tcount %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to turkey_all_books_path, class: "btn btn-default", :title => "Grid View" do %>
+                    <span class="fa fa-th"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to turkey_table_books_path, class: "btn btn-default", :title => "All Books View" do %>
+                    <span class="fa fa-book"></span>
+                  <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                  <select name="type" class="form-control" onchange="this.form.submit()">
+                    <option>Type</option>
+                    <option value=""><%= link_to turkey_table_books_path do %>All<% end %></option>
+                    <option value="Default">Regular</option>
+                    <option value="Variant">Variants</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Promo">Promo</option>
+                    <option value="Misc">Misc.</option>
+                  </select>
+              <% end %></li>
+              <li class="btn btn-default btn-sm"><%= form_tag "", :method => 'get', :role => "search" do %>
+                    <select name="number" class="form-control" onchange="this.form.submit()">
+                      <option>Issue</option>
+                      <% Book.where.not(id: current_user.owned_book_ids).where(:country => "Turkey").select("DISTINCT(issue)").group("issue").order("issue").each do |n| %>
                         <option value="<%= n.issue %>"><%= n.issue %></option>
                       <% end %>
                     </select>

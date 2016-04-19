@@ -61,7 +61,7 @@ class BooksController < ApplicationController
       else
         @book = @user.wished_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
         @notowned = Book.where.not(Wish.where("wishes.book_id = books.id", "wishes.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
-        @bookvei = @user.wished_books.where(:era => "VEI")
+        @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:era => "VH1")
         @bookvh2 = @user.wished_books.where(:era => "VH2")
       end
@@ -89,7 +89,7 @@ class BooksController < ApplicationController
         @book = @user.wished_books.where(:title => params[:query]).page(params[:page]).per(24)
       else
         @book = @user.wished_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
-        @bookvei = @user.wished_books.where(:era => "VEI")
+        @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:era => "VH1")
         @bookvh2 = @user.wished_books.where(:era => "VH2")
       end
@@ -114,14 +114,14 @@ class BooksController < ApplicationController
       @pgtitle = "#{User.friendly.find(params[:id]).name}'s Wishlist"
     end
       if params[:query].present?
-        @book = @user.wished_books.where(:title => params[:query]).where(:era => "VEI").page(params[:page]).per(24)
+        @book = @user.wished_books.where(:title => params[:query]).where(:publisher => "Valiant Entertainment").page(params[:page]).per(24)
       else
-        @book = @user.wished_books.where(:era => "VEI").order(title: :asc, rdate: :asc).page(params[:page]).per(24)
-        @bookvei = @user.wished_books.where(:era => "VEI")
+        @book = @user.wished_books.where(:publisher => "Valiant Entertainment").order(title: :asc, rdate: :asc).page(params[:page]).per(24)
+        @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:era => "VH1")
         @bookvh2 = @user.wished_books.where(:era => "VH2")
       end
-      @bookcsv = @user.wished_books.where(:era => "VEI").order(title: :asc, rdate: :asc)
+      @bookcsv = @user.wished_books.where(:publisher => "Valiant Entertainment").order(title: :asc, rdate: :asc)
       respond_to do |format|
         format.html
         format.json { render json: @book }
@@ -145,7 +145,7 @@ class BooksController < ApplicationController
         @book = @user.wished_books.where(:title => params[:query]).where(:era => "VH1").page(params[:page]).per(24)
       else
         @book = @user.wished_books.where(:era => "VH1").order(title: :asc, rdate: :asc).page(params[:page]).per(24)
-        @bookvei = @user.wished_books.where(:era => "VEI")
+        @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:era => "VH1")
         @bookvh2 = @user.wished_books.where(:era => "VH2")
       end
@@ -173,7 +173,7 @@ class BooksController < ApplicationController
         @book = @user.wished_books.where(:title => params[:query]).where(:era => "VH2").page(params[:page]).per(24)
       else
         @book = @user.wished_books.where(:era => "VH2").order(title: :asc, rdate: :asc).page(params[:page]).per(24)
-        @bookvei = @user.wished_books.where(:era => "VEI")
+        @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:era => "VH1")
         @bookvh2 = @user.wished_books.where(:era => "VH2")
       end
@@ -224,8 +224,8 @@ class BooksController < ApplicationController
 
   def salesvei
     @pgtitle = "Valiant Comics Sales by issue"
-    @book = Book.all.where(:era => "VEI").where("printrun > ?", "1").order(printrun: :desc).page(params[:page]).per(24)
-    @bookcsv = Book.all.where(:era => "VEI").where("printrun > ?", "1").order(printrun: :desc).limit(100)
+    @book = Book.all.where(:publisher => "Valiant Entertainment").where("printrun > ?", "1").order(printrun: :desc).page(params[:page]).per(24)
+    @bookcsv = Book.all.where(:publisher => "Valiant Entertainment").where("printrun > ?", "1").order(printrun: :desc).limit(100)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -403,8 +403,8 @@ class BooksController < ApplicationController
 
   def releasedate
     @pgtitle = "Current Valiant by release date"
-    @book = Book.where.not(:category => "Sketch").where("note like ?", "%Regular edition").where("rdate > ?", "2012-05-01").order(rdate: :asc, title: :desc).page(params[:page]).per(24)
-    @bookcsv = Book.where.not(:category => "Sketch").where("note like ?", "%Regular edition").where("rdate > ?", "2012-05-01").order(rdate: :asc, title: :desc)
+    @book = Book.where.not(:category => "Sketch").where("note like ?", "%Regular edition").where(:publisher => "Valiant Entertainment").order(rdate: :asc, title: :desc).page(params[:page]).per(24)
+    @bookcsv = Book.where.not(:category => "Sketch").where("note like ?", "%Regular edition").where(:publisher => "Valiant Entertainment").order(rdate: :asc, title: :desc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -415,7 +415,7 @@ class BooksController < ApplicationController
 
   def releasedatetbl
     @pgtitle = "Current Valiant by release date"
-    @book = Book.where.not(:category => "Sketch").where("note like ?", "%Regular edition%").where("rdate > ?", "2012-05-01").order(rdate: :asc, title: :desc).page(params[:page]).per(30)
+    @book = Book.where.not(:category => "Sketch").where("note like ?", "%Regular edition%").where(:publisher => "Valiant Entertainment").order(rdate: :asc, title: :desc).page(params[:page]).per(30)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -553,7 +553,7 @@ class BooksController < ApplicationController
       else
         @book = @user.owned_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
         @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
-        @bookvei = @user.owned_books.where(:era => "VEI")
+        @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:era => "VH1")
         @bookvh2 = @user.owned_books.where(:era => "VH2")
       end
@@ -573,7 +573,7 @@ class BooksController < ApplicationController
         @book = Book.where.not(Own.where("owns.book_id = books.id").limit(1).arel.exists).page(params[:page]).per(24)
       else
         @book = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
-        @bookvei = Book.where.not(Own.where("owns.book_id = books.id").limit(1).arel.exists).where(:era => "VEI")
+        @bookvei = Book.where.not(Own.where("owns.book_id = books.id").limit(1).arel.exists).where(:publisher => "Valiant Entertainment")
         @bookvh1 = Book.where.not(Own.where("owns.book_id = books.id").limit(1).arel.exists).where(:era => "VH1")
         @bookvh2 = Book.where.not(Own.where("owns.book_id = books.id").limit(1).arel.exists).where(:era => "VH2")
       end
@@ -601,7 +601,7 @@ class BooksController < ApplicationController
         @book = @user.owned_books.where(:title => params[:query]).page(params[:page]).per(24)
       else
         @book = @user.owned_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
-        @bookvei = @user.owned_books.where(:era => "VEI")
+        @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:era => "VH1")
         @bookvh2 = @user.owned_books.where(:era => "VH2")
       end
@@ -626,14 +626,14 @@ class BooksController < ApplicationController
       @pgtitle = "#{User.friendly.find(params[:id]).name}'s Collection"
     end
       if params[:query].present?
-        @book = @user.owned_books.where(:title => params[:query]).where(:era => "VEI").page(params[:page]).per(24)
+        @book = @user.owned_books.where(:title => params[:query]).where(:publisher => "Valiant Entertainment").page(params[:page]).per(24)
       else
-        @book = @user.owned_books.where(:era => "VEI").order(title: :asc, rdate: :asc).page(params[:page]).per(24)
-        @bookvei = @user.owned_books.where(:era => "VEI")
+        @book = @user.owned_books.where(:publisher => "Valiant Entertainment").order(title: :asc, rdate: :asc).page(params[:page]).per(24)
+        @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:era => "VH1")
         @bookvh2 = @user.owned_books.where(:era => "VH2")
       end
-      @bookcsv = @user.owned_books.where(:era => "VEI").order(title: :asc, rdate: :asc)
+      @bookcsv = @user.owned_books.where(:publisher => "Valiant Entertainment").order(title: :asc, rdate: :asc)
       respond_to do |format|
         format.html
         format.json { render json: @book }
@@ -657,7 +657,7 @@ class BooksController < ApplicationController
         @book = @user.owned_books.where(:title => params[:query]).where(:era => "VH1").page(params[:page]).per(24)
       else
         @book = @user.owned_books.where(:era => "VH1").order(title: :asc, rdate: :asc).page(params[:page]).per(24)
-        @bookvei = @user.owned_books.where(:era => "VEI")
+        @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:era => "VH1")
         @bookvh2 = @user.owned_books.where(:era => "VH2")
       end
@@ -685,7 +685,7 @@ class BooksController < ApplicationController
         @book = @user.owned_books.where(:title => params[:query]).where(:era => "VH2").page(params[:page]).per(24)
       else
         @book = @user.owned_books.where(:era => "VH2").order(title: :asc, rdate: :asc).page(params[:page]).per(24)
-        @bookvei = @user.owned_books.where(:era => "VEI")
+        @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:era => "VH1")
         @bookvh2 = @user.owned_books.where(:era => "VH2")
       end
@@ -766,21 +766,768 @@ class BooksController < ApplicationController
     end
   end
 
-  def all
-    @pgtitle = "All"
-    @search_count = Book.all.where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+  def brazil
+    @pgtitle = "Brazil"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "Brazil").count
     if params[:type].present?
-      @book = Book.all.where(:era => "VEI").where(:category => params[:type]).where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-      @tcount = Book.all.where(:era => "VEI").where(:category => params[:type]).where.not(:category => "Sketch").count
+      @book = Book.all.where(:country => "Brazil").where(:category => params[:type]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Brazil").where(:category => params[:type]).count
     elsif params[:number].present?
-      @book = Book.all.where(:era => "VEI").where(:issue => params[:number]).where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-      @tcount = Book.all.where(:era => "VEI").where(:issue => params[:number]).where.not(:category => "Sketch").count
+      @book = Book.all.where(:country => "Brazil").where(:issue => params[:number]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Brazil").where(:issue => params[:number]).count
     else
-      @tcount = Book.all.where(:era => "VEI").count
-      @book = Book.all.where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Brazil").count
+      @book = Book.all.where(:country => "Brazil").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     end
     @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Brazil").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allbrazil-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def braziltbl
+    @pgtitle = "Brazil"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "Brazil").count
+      @book = Book.all.where(:category => params[:type]).where(:country => "Brazil").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "Brazil").count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Brazil").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "Brazil").count
+      @book = Book.all.where(:country => "Brazil").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def brazilmissing
+    @pgtitle = "Brazil (Missing)"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).count
+    if params[:type].present?
+      @book = Book.all.where(:country => "Brazil").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Brazil").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "Brazil").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Brazil").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
+    else
+      @tcount = Book.all.where(:country => "Brazil").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "Brazil").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allbrazil-missing-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def braziltblmissing
+    @pgtitle = "Brazil (Missing)"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:category => params[:type]).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "Brazil").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "Brazil").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def canada
+    @pgtitle = "Canada"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "Canada").count
+    if params[:type].present?
+      @book = Book.all.where(:country => "Canada").where(:category => params[:type]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Canada").where(:category => params[:type]).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "Canada").where(:issue => params[:number]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Canada").where(:issue => params[:number]).count
+    else
+      @tcount = Book.all.where(:country => "Canada").count
+      @book = Book.all.where(:country => "Canada").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Canada").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allcanada-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def canadatbl
+    @pgtitle = "Canada"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "Canada").count
+      @book = Book.all.where(:category => params[:type]).where(:country => "Canada").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "Canada").count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Canada").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "Canada").count
+      @book = Book.all.where(:country => "Canada").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def canadamissing
+    @pgtitle = "Canada (Missing)"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "Canada").where.not(id: current_user.owned_book_ids).count
+    if params[:type].present?
+      @book = Book.all.where(:country => "Canada").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Canada").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "Canada").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Canada").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
+    else
+      @tcount = Book.all.where(:country => "Canada").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "Canada").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Canada").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allcanada-missing-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def canadatblmissing
+    @pgtitle = "Canada (Missing)"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "Canada").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:category => params[:type]).where(:country => "Canada").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "Canada").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Canada").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "Canada").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "Canada").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def china
+    @pgtitle = "China"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "China").count
+    if params[:type].present?
+      @book = Book.all.where(:country => "China").where(:category => params[:type]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "China").where(:category => params[:type]).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "China").where(:issue => params[:number]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "China").where(:issue => params[:number]).count
+    else
+      @tcount = Book.all.where(:country => "China").count
+      @book = Book.all.where(:country => "China").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "China").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allcurrent-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def chinatbl
+    @pgtitle = "China"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "China").count
+      @book = Book.all.where(:category => params[:type]).where(:country => "China").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "China").count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "China").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "China").count
+      @book = Book.all.where(:country => "China").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def chinamissing
+    @pgtitle = "China (Missing)"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "China").where.not(id: current_user.owned_book_ids).count
+    if params[:type].present?
+      @book = Book.all.where(:country => "China").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "China").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "China").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "China").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
+    else
+      @tcount = Book.all.where(:country => "China").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "China").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "China").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allchina-missing-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def chinatblmissing
+    @pgtitle = "China (Missing)"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "China").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:category => params[:type]).where(:country => "China").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "China").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "China").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "China").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "China").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def france
+    @pgtitle = "France"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "France").count
+    if params[:type].present?
+      @book = Book.all.where(:country => "France").where(:category => params[:type]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "France").where(:category => params[:type]).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "France").where(:issue => params[:number]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "France").where(:issue => params[:number]).count
+    else
+      @tcount = Book.all.where(:country => "France").count
+      @book = Book.all.where(:country => "France").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "France").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allfrance-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def francetbl
+    @pgtitle = "France"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "France").count
+      @book = Book.all.where(:category => params[:type]).where(:country => "France").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "France").count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "France").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "France").count
+      @book = Book.all.where(:country => "France").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def francemissing
+    @pgtitle = "France (Missing)"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "France").where.not(id: current_user.owned_book_ids).count
+    if params[:type].present?
+      @book = Book.all.where(:country => "France").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "France").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "France").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "France").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
+    else
+      @tcount = Book.all.where(:country => "France").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "France").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "France").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allfrance-missing-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def francetblmissing
+    @pgtitle = "France (Missing)"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "France").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:category => params[:type]).where(:country => "France").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "France").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "France").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "France").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "France").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def italy
+    @pgtitle = "Italy"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "Italy").count
+    if params[:type].present?
+      @book = Book.all.where(:country => "Italy").where(:category => params[:type]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Italy").where(:category => params[:type]).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "Italy").where(:issue => params[:number]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Italy").where(:issue => params[:number]).count
+    else
+      @tcount = Book.all.where(:country => "Italy").count
+      @book = Book.all.where(:country => "Italy").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Italy").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allitaly-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def italytbl
+    @pgtitle = "Italy"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "Italy").count
+      @book = Book.all.where(:category => params[:type]).where(:country => "Italy").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "Italy").count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Italy").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "Italy").count
+      @book = Book.all.where(:country => "Italy").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def italymissing
+    @pgtitle = "Italy (Missing)"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "Italy").where.not(id: current_user.owned_book_ids).count
+    if params[:type].present?
+      @book = Book.all.where(:country => "Italy").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Italy").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "Italy").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Italy").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
+    else
+      @tcount = Book.all.where(:country => "Italy").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "Italy").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Italy").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allitaly-missing-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def italytblmissing
+    @pgtitle = "Italy (Missing)"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "Italy").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:category => params[:type]).where(:country => "Italy").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "Italy").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Italy").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "Italy").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "Italy").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def japan
+    @pgtitle = "Japan"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "Japan").count
+    if params[:type].present?
+      @book = Book.all.where(:country => "Japan").where(:category => params[:type]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Japan").where(:category => params[:type]).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "Japan").where(:issue => params[:number]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Japan").where(:issue => params[:number]).count
+    else
+      @tcount = Book.all.where(:country => "Japan").count
+      @book = Book.all.where(:country => "Japan").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Japan").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "alljapan-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def japantbl
+    @pgtitle = "Japan"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "Japan").count
+      @book = Book.all.where(:category => params[:type]).where(:country => "Japan").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "Japan").count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Japan").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "Japan").count
+      @book = Book.all.where(:country => "Japan").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def japanmissing
+    @pgtitle = "Japan (Missing)"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "Japan").where.not(id: current_user.owned_book_ids).count
+    if params[:type].present?
+      @book = Book.all.where(:country => "Japan").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Japan").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "Japan").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Japan").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
+    else
+      @tcount = Book.all.where(:country => "Japan").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "Japan").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Japan").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "alljapan-missing-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def japantblmissing
+    @pgtitle = "Japan (Missing)"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "Japan").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:category => params[:type]).where(:country => "Japan").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "Japan").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Japan").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "Japan").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "Japan").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def mexico
+    @pgtitle = "Mexico"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "Mexico").count
+    if params[:type].present?
+      @book = Book.all.where(:country => "Mexico").where(:category => params[:type]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Mexico").where(:category => params[:type]).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "Mexico").where(:issue => params[:number]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Mexico").where(:issue => params[:number]).count
+    else
+      @tcount = Book.all.where(:country => "Mexico").count
+      @book = Book.all.where(:country => "Mexico").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Mexico").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allmexico-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def mexicotbl
+    @pgtitle = "Mexico"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "Mexico").count
+      @book = Book.all.where(:category => params[:type]).where(:country => "Mexico").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "Mexico").count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Mexico").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "Mexico").count
+      @book = Book.all.where(:country => "Mexico").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def mexicomissing
+    @pgtitle = "Mexico (Missing)"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).count
+    if params[:type].present?
+      @book = Book.all.where(:country => "Mexico").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Mexico").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "Mexico").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Mexico").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
+    else
+      @tcount = Book.all.where(:country => "Mexico").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "Mexico").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allmexico-missing-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def mexicotblmissing
+    @pgtitle = "Mexico (Missing)"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:category => params[:type]).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "Mexico").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "Mexico").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def russia
+    @pgtitle = "Russia"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "Russia").count
+    if params[:type].present?
+      @book = Book.all.where(:country => "Russia").where(:category => params[:type]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Russia").where(:category => params[:type]).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "Russia").where(:issue => params[:number]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Russia").where(:issue => params[:number]).count
+    else
+      @tcount = Book.all.where(:country => "Russia").count
+      @book = Book.all.where(:country => "Russia").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Russia").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allrussia-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def russiatbl
+    @pgtitle = "Russia"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "Russia").count
+      @book = Book.all.where(:category => params[:type]).where(:country => "Russia").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "Russia").count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Russia").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "Russia").count
+      @book = Book.all.where(:country => "Russia").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def russiamissing
+    @pgtitle = "Russia (Missing)"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "Russia").where.not(id: current_user.owned_book_ids).count
+    if params[:type].present?
+      @book = Book.all.where(:country => "Russia").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Russia").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "Russia").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Russia").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
+    else
+      @tcount = Book.all.where(:country => "Russia").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "Russia").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Russia").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allrussia-missing-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def russiatblmissing
+    @pgtitle = "Russia (Missing)"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "Russia").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:category => params[:type]).where(:country => "Russia").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "Russia").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Russia").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "Russia").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "Russia").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def turkey
+    @pgtitle = "Turkey"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "Turkey").count
+    if params[:type].present?
+      @book = Book.all.where(:country => "Turkey").where(:category => params[:type]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Turkey").where(:category => params[:type]).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "Turkey").where(:issue => params[:number]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Turkey").where(:issue => params[:number]).count
+    else
+      @tcount = Book.all.where(:country => "Turkey").count
+      @book = Book.all.where(:country => "Turkey").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Turkey").order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allturkey-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def turkeytbl
+    @pgtitle = "Turkey"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "Turkey").count
+      @book = Book.all.where(:category => params[:type]).where(:country => "Turkey").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "Turkey").count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Turkey").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "Turkey").count
+      @book = Book.all.where(:country => "Turkey").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def turkeymissing
+    @pgtitle = "Turkey (Missing)"
+    @search_count = Book.all.where(:category => params[:query]).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).count
+    if params[:type].present?
+      @book = Book.all.where(:country => "Turkey").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Turkey").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
+    elsif params[:number].present?
+      @book = Book.all.where(:country => "Turkey").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:country => "Turkey").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
+    else
+      @tcount = Book.all.where(:country => "Turkey").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "Turkey").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.xml { send_data @bookcsv.super_csv, filename: "allturkey-missing-valiant-#{DateTime.now}.csv" }
+    end
+  end
+
+  def turkeytblmissing
+    @pgtitle = "Turkey (Missing)"
+    if params[:type].present?
+      @tcount = Book.all.where(:category => params[:type]).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:category => params[:type]).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    elsif params[:number].present?
+      @tcount = Book.all.where(:issue => params[:number]).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    else
+      @tcount = Book.all.where(:country => "Turkey").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:country => "Turkey").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def all
+    @pgtitle = "All"
+    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
+    if params[:type].present?
+      @book = Book.all.where(:publisher => "Valiant Entertainment").where(:category => params[:type]).where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:publisher => "Valiant Entertainment").where(:category => params[:type]).where.not(:category => "Sketch").count
+    elsif params[:number].present?
+      @book = Book.all.where(:publisher => "Valiant Entertainment").where(:issue => params[:number]).where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:publisher => "Valiant Entertainment").where(:issue => params[:number]).where.not(:category => "Sketch").count
+    else
+      @tcount = Book.all.where(:publisher => "Valiant Entertainment").count
+      @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    end
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -792,14 +1539,14 @@ class BooksController < ApplicationController
   def alltbl
     @pgtitle = "All"
     if params[:type].present?
-      @tcount = Book.all.where(:era => "VEI").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.all.where(:era => "VEI").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.all.where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.all.where(:era => "VEI").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.all.where(:era => "VEI").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.all.where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.all.where(:era => "VEI").where.not(:category => "Sketch").count
-      @book = Book.all.where(:era => "VEI").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -810,18 +1557,18 @@ class BooksController < ApplicationController
 
   def allmissing
     @pgtitle = "All (Missing)"
-    @search_count = Book.all.where(:category => params[:query]).where("rdate > ?", "2012-05-01").where.not(id: current_user.owned_book_ids).count
+    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Valiant Entertainment").where.not(id: current_user.owned_book_ids).count
     if params[:type].present?
-      @book = Book.all.where(:era => "VEI").where(:category => params[:type]).where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-      @tcount = Book.all.where(:era => "VEI").where(:category => params[:type]).where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:publisher => "Valiant Entertainment").where(:category => params[:type]).where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:publisher => "Valiant Entertainment").where(:category => params[:type]).where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
     elsif params[:number].present?
-      @book = Book.all.where(:era => "VEI").where(:issue => params[:number]).where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-      @tcount = Book.all.where(:era => "VEI").where(:issue => params[:number]).where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:publisher => "Valiant Entertainment").where(:issue => params[:number]).where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:publisher => "Valiant Entertainment").where(:issue => params[:number]).where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
     else
-      @tcount = Book.all.where(:era => "VEI").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:era => "VEI").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:publisher => "Valiant Entertainment").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -833,14 +1580,14 @@ class BooksController < ApplicationController
   def alltblmissing
     @pgtitle = "All (Missing)"
     if params[:type].present?
-      @tcount = Book.all.where(:era => "VEI").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:era => "VEI").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.all.where(:era => "VEI").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:era => "VEI").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.all.where(:era => "VEI").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:era => "VEI").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
+      @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -869,19 +1616,19 @@ class BooksController < ApplicationController
 
   def ad4001
     @pgtitle = "4001 A.D."
-    @search_count = Book.where("title like ?", "%4001 A.D.%").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where("title like ?", "%4001 A.D.%").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%4001 A.D.%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%4001 A.D.").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%4001 A.D.%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%4001 A.D.").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%4001 A.D.%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%4001 A.D.%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%4001 A.D.%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%4001 A.D.%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @tcount = Book.all.where("title like ?", "%4001 A.D.%").where.not(:category => "Sketch").where("rdate > ?", "2012-05-01").count
-    @bookcsv = Book.where("title like ?", "%4001 A.D.%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @tcount = Book.all.where("title like ?", "%4001 A.D.%").where.not(:category => "Sketch").where(:publisher => "Valiant Entertainment").count
+    @bookcsv = Book.where("title like ?", "%4001 A.D.%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -893,14 +1640,14 @@ class BooksController < ApplicationController
   def ad4001tbl
     @pgtitle = "4001 A.D."
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%4001 A.D.%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%4001 A.D.%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%4001 A.D.%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%4001 A.D.%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%4001 A.D.%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%4001 A.D.%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%4001 A.D.%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%4001 A.D.%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -911,19 +1658,19 @@ class BooksController < ApplicationController
 
   def ad4001missing
     @pgtitle = "4001 A.D. (Missing)"
-    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @tcount = Book.where.not(id: current_user.owned_book_ids).all.where("title like ?", "%4001 A.D.%").where.not(:category => "Sketch").where("rdate > ?", "2012-05-01").count
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @tcount = Book.where.not(id: current_user.owned_book_ids).all.where("title like ?", "%4001 A.D.%").where.not(:category => "Sketch").where(:publisher => "Valiant Entertainment").count
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -935,14 +1682,14 @@ class BooksController < ApplicationController
   def ad4001tblmissing
     @pgtitle = "4001 A.D. (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%4001 A.D.%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -954,19 +1701,19 @@ class BooksController < ApplicationController
 
   def aa
     @pgtitle = "A&A"
-    @search_count = Book.where("title like ?", "%A&A%").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where("title like ?", "%A&A%").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @tcount = Book.all.where("title like ?", "%A&A%").where.not(:category => "Sketch").where("rdate > ?", "2012-05-01").count
-    @bookcsv = Book.where("title like ?", "%A&A%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @tcount = Book.all.where("title like ?", "%A&A%").where.not(:category => "Sketch").where(:publisher => "Valiant Entertainment").count
+    @bookcsv = Book.where("title like ?", "%A&A%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -978,14 +1725,14 @@ class BooksController < ApplicationController
   def aatbl
     @pgtitle = "A&A"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -996,19 +1743,19 @@ class BooksController < ApplicationController
 
   def aamissing
     @pgtitle = "A&A (Missing)"
-    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @tcount = Book.where.not(id: current_user.owned_book_ids).all.where("title like ?", "%A&A%").where.not(:category => "Sketch").where("rdate > ?", "2012-05-01").count
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @tcount = Book.where.not(id: current_user.owned_book_ids).all.where("title like ?", "%A&A%").where.not(:category => "Sketch").where(:publisher => "Valiant Entertainment").count
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1020,14 +1767,14 @@ class BooksController < ApplicationController
   def aatblmissing
     @pgtitle = "A&A (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1038,19 +1785,19 @@ class BooksController < ApplicationController
 
   def archerarmstrong
     @pgtitle = "Archer and Armstrong"
-    @search_count = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @tcount = Book.all.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where.not(:category => "Sketch").where("rdate > ?", "2012-05-01").count
-    @bookcsv = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @tcount = Book.all.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where.not(:category => "Sketch").where(:publisher => "Valiant Entertainment").count
+    @bookcsv = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1062,14 +1809,14 @@ class BooksController < ApplicationController
   def archerarmstrongtbl
     @pgtitle = "Archer and Armstrong"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1080,19 +1827,19 @@ class BooksController < ApplicationController
 
   def archerarmstrongmissing
     @pgtitle = "Archer and Armstrong (Missing)"
-    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @tcount = Book.where.not(id: current_user.owned_book_ids).all.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where.not(:category => "Sketch").where("rdate > ?", "2012-05-01").count
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @tcount = Book.where.not(id: current_user.owned_book_ids).all.where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where.not(:category => "Sketch").where(:publisher => "Valiant Entertainment").count
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1104,14 +1851,14 @@ class BooksController < ApplicationController
   def archerarmstrongtblmissing
     @pgtitle = "Archer and Armstrong (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Archer%").where.not("title like ?", "%A&A%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1123,16 +1870,16 @@ class BooksController < ApplicationController
   def armorhunters
     @pgtitle = "Armor Hunters"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Armor Hunter%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Armor Hunter%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1144,14 +1891,14 @@ class BooksController < ApplicationController
   def armorhunterstbl
     @pgtitle = "Armor Hunters"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Armor Hunter%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Armor Hunter%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1163,16 +1910,16 @@ class BooksController < ApplicationController
   def armorhuntersmissing
     @pgtitle = "Armor Hunters (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunter%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunter%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1184,14 +1931,14 @@ class BooksController < ApplicationController
   def armorhunterstblmissing
     @pgtitle = "Armor Hunters (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunter%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunter%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Armor Hunters%").where.not(:title => "Armor Hunters Special FCBD").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1203,16 +1950,16 @@ class BooksController < ApplicationController
   def armorhuntersbloodshot
     @pgtitle = "Armor Hunters Bloodshot"
     if params[:type].present?
-      @tcount = Book.where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Armor Hunters: Bloodshot").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Armor Hunters: Bloodshot").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1224,14 +1971,14 @@ class BooksController < ApplicationController
   def armorhuntersbloodshottbl
     @pgtitle = "Armor Hunters Bloodshot"
     if params[:type].present?
-      @tcount = Book.where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1243,16 +1990,16 @@ class BooksController < ApplicationController
   def armorhuntersbloodshotmissing
     @pgtitle = "Armor Hunters Bloodshot (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1264,14 +2011,14 @@ class BooksController < ApplicationController
   def armorhuntersbloodshottblmissing
     @pgtitle = "Armor Hunters Bloodshot (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1283,16 +2030,16 @@ class BooksController < ApplicationController
   def bloodshot
     @pgtitle = "Bloodshot"
     if params[:type].present?
-      @tcount = Book.where(:title => "Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Bloodshot").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Bloodshot").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1304,14 +2051,14 @@ class BooksController < ApplicationController
   def bloodshottbl
     @pgtitle = "Bloodshot"
     if params[:type].present?
-      @tcount = Book.where(:title => "Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1323,16 +2070,16 @@ class BooksController < ApplicationController
   def bloodshotmissing
     @pgtitle = "Bloodshot (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1344,14 +2091,14 @@ class BooksController < ApplicationController
   def bloodshottblmissing
     @pgtitle = "Bloodshot (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1363,16 +2110,16 @@ class BooksController < ApplicationController
  def bloodshotreborn
     @pgtitle = "Bloodshot Reborn"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Bloodshot Reborn%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("title like ?", "%Bloodshot Reborn%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("title like ?", "%Bloodshot Reborn%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1384,16 +2131,16 @@ end
 def bloodshotrebornmissing
     @pgtitle = "Bloodshot Reborn (Missing)"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
-      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
+      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
-      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
+      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
-      @book = Book.where("title like ?", "%Bloodshot Reborn%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
+      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("title like ?", "%Bloodshot Reborn%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("title like ?", "%Bloodshot Reborn%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1405,14 +2152,14 @@ end
   def bloodshotreborntbl
     @pgtitle = "Bloodshot Reborn"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Bloodshot Reborn%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1424,14 +2171,14 @@ end
   def bloodshotreborntblmissing
     @pgtitle = "Bloodshot Reborn (Missing)"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
-      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
+      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
-      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
+      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
-      @book = Book.where("title like ?", "%Bloodshot Reborn%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Bloodshot Reborn%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).count
+      @book = Book.where("title like ?", "%Bloodshot Reborn%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1442,18 +2189,18 @@ end
 
   def fallofbloodshot
     @pgtitle = "The Fall of Bloodshot"
-    @search_count = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Book of Death: The Fall of Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Book of Death: The Fall of Bloodshot").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Book of Death: The Fall of Bloodshot").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1465,14 +2212,14 @@ end
   def fallofbloodshottbl
     @pgtitle = "The Fall of Bloodshot"
     if params[:type].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Book of Death: The Fall of Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1483,18 +2230,18 @@ end
 
   def fallofbloodshotmissing
     @pgtitle = "The Fall of Bloodshot (Missing)"
-    @search_count = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1506,14 +2253,14 @@ end
   def fallofbloodshottblmissing
     @pgtitle = "The Fall of Bloodshot (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1526,16 +2273,16 @@ end
   def bookofdeath
     @pgtitle = "Book of Death"
     if params[:type].present?
-      @tcount = Book.where(:title => "Book of Death").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Book of Death").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Book of Death").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Book of Death").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Book of Death").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1547,14 +2294,14 @@ end
   def bookofdeathtbl
     @pgtitle = "Book of Death"
     if params[:type].present?
-      @tcount = Book.where(:title => "Book of Death").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Book of Death").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Book of Death%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Book of Death%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Book of Death").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1566,16 +2313,16 @@ end
   def bookofdeathmissing
     @pgtitle = "Book of Death (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1587,14 +2334,14 @@ end
   def bookofdeathtblmissing
     @pgtitle = "Book of Death (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Book of Death%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Book of Death%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1606,16 +2353,16 @@ end
   def legendsofthegeomancer
     @pgtitle = "Legend of the Geomancer"
     if params[:type].present?
-      @tcount = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Book of Death: Legends of the Geomancer").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: Legends of the Geomancer").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Book of Death: Legends of the Geomancer").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Book of Death: Legends of the Geomancer").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1627,14 +2374,14 @@ end
   def legendsofthegeomancertbl
     @pgtitle = "Legend of the Geomancer"
     if params[:type].present?
-      @tcount = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Book of Death: Legends of the Geomancer").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: Legends of the Geomancer").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: Legends of the Geomancer").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1646,16 +2393,16 @@ end
   def legendsofthegeomancermissing
     @pgtitle = "Legend of the Geomancer (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1667,14 +2414,14 @@ end
   def legendsofthegeomancertblmissing
     @pgtitle = "Legend of the Geomancer (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: Legends of the Geomancer").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1686,16 +2433,16 @@ end
   def delinquents
     @pgtitle = "The Delinquents"
     if params[:type].present?
-      @tcount = Book.where(:title => "The Delinquents").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "The Delinquents").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "The Delinquents").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "The Delinquents").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "The Delinquents").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "The Delinquents").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "The Delinquents").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "The Delinquents").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "The Delinquents").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "The Delinquents").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "The Delinquents").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "The Delinquents").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "The Delinquents").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "The Delinquents").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1707,14 +2454,14 @@ end
   def delinquentstbl
     @pgtitle = "The Delinquents"
     if params[:type].present?
-      @tcount = Book.where(:title => "The Delinquents").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "The Delinquents").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "The Delinquents").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "The Delinquents").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "The Delinquents").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "The Delinquents").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "The Delinquents").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "The Delinquents").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "The Delinquents").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "The Delinquents").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "The Delinquents").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "The Delinquents").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1726,16 +2473,16 @@ end
   def delinquentsmissing
     @pgtitle = "The Delinquents (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1747,14 +2494,14 @@ end
   def delinquentstblmissing
     @pgtitle = "The Delinquents (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Delinquents").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1766,16 +2513,16 @@ end
   def divinity
     @pgtitle = "Divinity"
     if params[:type].present?
-      @tcount = Book.where(:title => "Divinity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Divinity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Divinity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Divinity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Divinity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Divinity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Divinity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Divinity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Divinity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Divinity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Divinity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Divinity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Divinity").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Divinity").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1787,14 +2534,14 @@ end
   def divinitytbl
     @pgtitle = "Divinity"
     if params[:type].present?
-      @tcount = Book.where(:title => "Divinity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Divinity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Divinity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Divinity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Divinity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Divinity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Divinity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Divinity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Divinity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Divinity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Divinity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Divinity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1806,16 +2553,16 @@ end
   def divinitymissing
     @pgtitle = "Divinity (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1827,14 +2574,14 @@ end
   def divinitytblmissing
     @pgtitle = "Divinity (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1846,16 +2593,16 @@ end
   def divinity2
     @pgtitle = "Divinity II"
     if params[:type].present?
-      @tcount = Book.where(:title => "Divinity II").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Divinity II").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Divinity II").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Divinity II").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Divinity II").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Divinity II").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Divinity II").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Divinity II").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Divinity II").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Divinity II").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Divinity II").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Divinity II").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Divinity II").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Divinity II").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1867,14 +2614,14 @@ end
   def divinity2tbl
     @pgtitle = "Divinity II"
     if params[:type].present?
-      @tcount = Book.where(:title => "Divinity II").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Divinity II").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Divinity II").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Divinity II").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Divinity II").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Divinity II").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Divinity II").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Divinity II").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Divinity II").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Divinity II").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Divinity II").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Divinity II").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1886,16 +2633,16 @@ end
   def divinity2missing
     @pgtitle = "Divinity II (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1907,14 +2654,14 @@ end
   def divinity2tblmissing
     @pgtitle = "Divinity II (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Divinity II").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1926,16 +2673,16 @@ end
  def deaddrop
     @pgtitle = "Dead Drop"
     if params[:type].present?
-      @tcount = Book.where(:title => "Dead Drop").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Dead Drop").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Dead Drop").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Dead Drop").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Dead Drop").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Dead Drop").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Dead Drop").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Dead Drop").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Dead Drop").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Dead Drop").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Dead Drop").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Dead Drop").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Dead Drop").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Dead Drop").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1947,14 +2694,14 @@ end
  def deaddroptbl
     @pgtitle = "Dead Drop"
     if params[:type].present?
-      @tcount = Book.where(:title => "Dead Drop").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Dead Drop").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Dead Drop").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Dead Drop").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Dead Drop").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Dead Drop").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Dead Drop").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Dead Drop").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Dead Drop").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Dead Drop").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Dead Drop").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Dead Drop").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1966,16 +2713,16 @@ end
  def deaddropmissing
     @pgtitle = "Dead Drop (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1987,14 +2734,14 @@ end
  def deaddroptblmissing
     @pgtitle = "Dead Drop (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Dead Drop").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2006,16 +2753,16 @@ end
  def drmirage
     @pgtitle = "Death Defying Doctor Mirage"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("title like ?", "%DDeath Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("title like ?", "%DDeath Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2027,14 +2774,14 @@ end
   def drmiragetbl
     @pgtitle = "Death Defying Doctor Mirage"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2046,16 +2793,16 @@ end
   def drmiragemissing
     @pgtitle = "Death Defying Doctor Mirage (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%DDeath Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%DDeath Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2067,14 +2814,14 @@ end
   def drmiragetblmissing
     @pgtitle = "Death Defying Doctor Mirage (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Death Defying Dr. Mirage%").where.not("title like ?", "%Dr. Mirage: Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2086,16 +2833,16 @@ end
   def drmirage2
     @pgtitle = "Doctor Mirage Second Lives"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("title like ?", "%Second Lives%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("title like ?", "%Second Lives%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2107,14 +2854,14 @@ end
   def drmirage2tbl
     @pgtitle = "Doctor Mirage Second Lives"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2126,16 +2873,16 @@ end
   def drmirage2missing
     @pgtitle = "Doctor Mirage Second Lives (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2147,14 +2894,14 @@ end
   def drmirage2tblmissing
     @pgtitle = "Doctor Mirage Second Lives (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Second Lives%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2166,16 +2913,16 @@ end
   def eternalwarrior
     @pgtitle = "Eternal Warrior"
     if params[:type].present?
-      @tcount = Book.where(:title => "Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Eternal Warrior").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Eternal Warrior").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2187,14 +2934,14 @@ end
   def eternalwarriortbl
     @pgtitle = "Eternal Warrior"
     if params[:type].present?
-      @tcount = Book.where(:title => "Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2206,16 +2953,16 @@ end
   def eternalwarriormissing
     @pgtitle = "Eternal Warrior (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2227,14 +2974,14 @@ end
   def eternalwarriortblmissing
     @pgtitle = "Eternal Warrior (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2246,16 +2993,16 @@ end
   def eternalwarriordaysofsteel
     @pgtitle = "Eternal Warrior Days of Steel"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2267,14 +3014,14 @@ end
   def eternalwarriordaysofsteeltbl
     @pgtitle = "Eternal Warrior Days of Steel"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Eternal Warrior: Days of Steel%").where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2286,16 +3033,16 @@ end
   def eternalwarriordaysofsteelmissing
     @pgtitle = "Eternal Warrior Days of Steel (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2307,14 +3054,14 @@ end
   def eternalwarriordaysofsteeltblmissing
     @pgtitle = "Eternal Warrior Days of Steel (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where("rdate > ?", "2012-05-01").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Eternal Warrior: Days of Steel%").where(:publisher => "Valiant Entertainment").where.not(:title => "Wrath of the Eternal Warrior").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2326,16 +3073,16 @@ end
   def faith
     @pgtitle = "Faith"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Faith%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Faith%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Faith%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Faith%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Faith%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Faith%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Faith%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Faith%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Faith%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Faith%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Faith%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Faith%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("title like ?", "%Faith%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("title like ?", "%Faith%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2347,14 +3094,14 @@ end
   def faithtbl
     @pgtitle = "Faith"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Faith%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Faith%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Faith%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Faith%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Faith%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Faith%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Faith%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Faith%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Faith%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Faith%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Faith%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Faith%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2366,16 +3113,16 @@ end
   def faithmissing
     @pgtitle = "Faith (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2387,14 +3134,14 @@ end
   def faithtblmissing
     @pgtitle = "Faith (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Faith%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2406,16 +3153,16 @@ end
   def harbinger
     @pgtitle = "Harbinger"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2427,14 +3174,14 @@ end
   def harbingertbl
     @pgtitle = "Harbinger"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2446,16 +3193,16 @@ end
   def harbingermissing
     @pgtitle = "Harbinger (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2467,14 +3214,14 @@ end
   def harbingertblmissing
     @pgtitle = "Harbinger (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger%").where.not("title like ?", "%Harbinger Wars%").where.not(:title => "Book of Death: The Fall of Harbinger").where.not(:title => "Armor Hunters: Harbinger").where.not(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2486,16 +3233,16 @@ end
   def harbingeromegas
     @pgtitle = "Harbinger: Omegas"
     if params[:type].present?
-      @tcount = Book.where(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Harbinger: Omegas").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Harbinger: Omegas").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2507,14 +3254,14 @@ end
   def harbingeromegastbl
     @pgtitle = "Harbinger: Omegas"
     if params[:type].present?
-      @tcount = Book.where(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2526,16 +3273,16 @@ end
   def harbingeromegasmissing
     @pgtitle = "Harbinger: Omegas (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2547,14 +3294,14 @@ end
   def harbingeromegastblmissing
     @pgtitle = "Harbinger: Omegas (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Harbinger: Omegas").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2566,16 +3313,16 @@ end
   def harbingerwars
     @pgtitle = "Harbinger Wars"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Harbinger Wars%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Harbinger Wars%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Harbinger Wars%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Harbinger Wars%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("title like ?", "%Harbinger Wars%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("title like ?", "%Harbinger Wars%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2587,14 +3334,14 @@ end
   def harbingerwarstbl
     @pgtitle = "Harbinger Wars"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Harbinger Wars%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Harbinger Wars%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Harbinger Wars%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Harbinger Wars%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2606,16 +3353,16 @@ end
   def harbingerwarsmissing
     @pgtitle = "Harbinger Wars (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2627,14 +3374,14 @@ end
   def harbingerwarstblmissing
     @pgtitle = "Harbinger Wars (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Harbinger Wars%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2646,16 +3393,16 @@ end
   def armorhuntersharbinger
     @pgtitle = "Armor Hunters Harbinger"
     if params[:type].present?
-      @tcount = Book.where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Armor Hunters: Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Armor Hunters: Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Armor Hunters: Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Armor Hunters: Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Armor Hunters: Harbinger").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Armor Hunters: Harbinger").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2667,14 +3414,14 @@ end
   def armorhuntersharbingertbl
     @pgtitle = "Armor Hunters Harbinger"
     if params[:type].present?
-      @tcount = Book.where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Armor Hunters: Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Armor Hunters: Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Armor Hunters: Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Armor Hunters: Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2686,16 +3433,16 @@ end
   def armorhuntersharbingermissing
     @pgtitle = "Armor Hunters Harbinger (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2707,14 +3454,14 @@ end
   def armorhuntersharbingertblmissing
     @pgtitle = "Armor Hunters Harbinger (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Armor Hunters: Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2726,16 +3473,16 @@ end
   def fallofharbinger
     @pgtitle = "Fall of Harbinger"
     if params[:type].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Book of Death: The Fall of Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Book of Death: The Fall of Harbinger").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Book of Death: The Fall of Harbinger").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2747,14 +3494,14 @@ end
   def fallofharbingertbl
     @pgtitle = "Fall of Harbinger"
     if params[:type].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Book of Death: The Fall of Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2766,16 +3513,16 @@ end
   def fallofharbingermissing
     @pgtitle = "Fall of Harbinger (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2787,14 +3534,14 @@ end
   def fallofharbingertblmissing
     @pgtitle = "Fall of Harbinger (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Harbinger").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2806,16 +3553,16 @@ end
   def imperium
     @pgtitle = "Imperium"
     if params[:type].present?
-      @tcount = Book.where(:title => "Imperium").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Imperium").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Imperium").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Imperium").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Imperium").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Imperium").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Imperium").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Imperium").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Imperium").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Imperium").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Imperium").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Imperium").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Imperium").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Imperium").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2827,14 +3574,14 @@ end
   def imperiumtbl
     @pgtitle = "Imperium"
     if params[:type].present?
-      @tcount = Book.where(:title => "Imperium").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Imperium").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Imperium").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Imperium").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Imperium").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Imperium").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Imperium").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Imperium").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Imperium").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Imperium").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Imperium").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Imperium").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2846,16 +3593,16 @@ end
   def imperiummissing
     @pgtitle = "Imperium (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2867,14 +3614,14 @@ end
   def imperiumtblmissing
     @pgtitle = "Imperium (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Imperium").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2886,16 +3633,16 @@ end
   def ivar
     @pgtitle = "Ivar, Timewalker"
     if params[:type].present?
-      @tcount = Book.where(:title => "Ivar, Timewalker").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Ivar, Timewalker").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Ivar, Timewalker").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Ivar, Timewalker").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Ivar, Timewalker").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Ivar, Timewalker").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Ivar, Timewalker").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Ivar, Timewalker").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Ivar, Timewalker").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Ivar, Timewalker").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2907,14 +3654,14 @@ end
   def ivartbl
     @pgtitle = "Ivar, Timewalker"
     if params[:type].present?
-      @tcount = Book.where(:title => "Ivar, Timewalker").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Ivar, Timewalker").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Ivar, Timewalker").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Ivar, Timewalker").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Ivar, Timewalker").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Ivar, Timewalker").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Ivar, Timewalker").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Ivar, Timewalker").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2926,16 +3673,16 @@ end
   def ivarmissing
     @pgtitle = "Ivar, Timewalker (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2947,14 +3694,14 @@ end
   def ivartblmissing
     @pgtitle = "Ivar, Timewalker (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ivar, Timewalker").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -2965,7 +3712,7 @@ end
 
   def keys
     @pgtitle = "Key Issues (2012-)"
-    @books = Book.where(:iskey => true).where("rdate > ?", "2012-05-01").order(rdate: :asc, issue: :asc)
+    @books = Book.where(:iskey => true).where(:publisher => "Valiant Entertainment").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.js
@@ -2975,16 +3722,16 @@ end
   def ninjak
     @pgtitle = "Ninjak"
     if params[:type].present?
-      @tcount = Book.where(:title => "Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Ninjak").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Ninjak").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -2996,14 +3743,14 @@ end
   def ninjaktbl
     @pgtitle = "Ninjak"
     if params[:type].present?
-      @tcount = Book.where(:title => "Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3015,16 +3762,16 @@ end
   def ninjakmissing
     @pgtitle = "Ninjak (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3036,14 +3783,14 @@ end
   def ninjaktblmissing
     @pgtitle = "Ninjak (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3055,16 +3802,16 @@ end
   def fallofninjak
     @pgtitle = "The Fall of Ninjak"
     if params[:type].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Book of Death: The Fall of Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Book of Death: The Fall of Ninjak").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Book of Death: The Fall of Ninjak").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3076,14 +3823,14 @@ end
   def fallofninjaktbl
     @pgtitle = "The Fall of Ninjak"
     if params[:type].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Book of Death: The Fall of Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3095,16 +3842,16 @@ end
   def fallofninjakmissing
     @pgtitle = "The Fall of Ninjak (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3116,14 +3863,14 @@ end
   def fallofninjaktblmissing
     @pgtitle = "The Fall of Ninjak (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of Ninjak").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3135,16 +3882,16 @@ end
   def previews
     @pgtitle = "Promos"
     if params[:type].present?
-      @tcount = Book.where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:category => "Promo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:category => "Promo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:category => "Promo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:category => "Promo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:category => "Promo").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:category => "Promo").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3156,14 +3903,14 @@ end
   def previewstbl
     @pgtitle = "Promos"
     if params[:type].present?
-      @tcount = Book.where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:category => "Promo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:category => "Promo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:category => "Promo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:category => "Promo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3175,16 +3922,16 @@ end
   def previewsmissing
     @pgtitle = "Promos (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3196,14 +3943,14 @@ end
   def previewstblmissing
     @pgtitle = "Promos (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:category => "Promo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3215,16 +3962,16 @@ end
   def punkmambo
     @pgtitle = "Punk Mambo"
     if params[:type].present?
-      @tcount = Book.where(:title => "Punk Mambo").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Punk Mambo").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Punk Mambo").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Punk Mambo").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Punk Mambo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Punk Mambo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Punk Mambo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Punk Mambo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Punk Mambo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Punk Mambo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Punk Mambo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Punk Mambo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Punk Mambo").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Punk Mambo").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3236,14 +3983,14 @@ end
   def punkmambotbl
     @pgtitle = "Punk Mambo"
     if params[:type].present?
-      @tcount = Book.where(:title => "Punk Mambo").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Punk Mambo").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Punk Mambo").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Punk Mambo").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Punk Mambo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Punk Mambo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Punk Mambo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Punk Mambo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Punk Mambo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Punk Mambo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Punk Mambo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Punk Mambo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3255,16 +4002,16 @@ end
   def punkmambomissing
     @pgtitle = "Punk Mambo (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3276,14 +4023,14 @@ end
   def punkmambotblmissing
     @pgtitle = "Punk Mambo (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Punk Mambo").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3295,16 +4042,16 @@ end
   def quantumwoody
     @pgtitle = "Quantum and Woody"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("title like ?", "%Quantum % Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("title like ?", "%Quantum % Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3316,14 +4063,14 @@ end
   def quantumwoodytbl
     @pgtitle = "Quantum and Woody"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3335,16 +4082,16 @@ end
   def quantumwoodymissing
     @pgtitle = "Quantum and Woody (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum % Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum % Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3356,14 +4103,14 @@ end
   def quantumwoodytblmissing
     @pgtitle = "Quantum and Woody (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody%").where.not("writer like ?", "%Christopher Priest%").where.not("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3375,16 +4122,16 @@ end
   def quantumwoodymustdie
     @pgtitle = "Quantum and Woody Must Die"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("title like ?", "%Quantum & Woody Must Die%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("title like ?", "%Quantum & Woody Must Die%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3396,14 +4143,14 @@ end
   def quantumwoodymustdietbl
     @pgtitle = "Quantum and Woody Must Die"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3415,16 +4162,16 @@ end
   def quantumwoodymustdiemissing
     @pgtitle = "Quantum and Woody Must Die (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3436,14 +4183,14 @@ end
   def quantumwoodymustdietblmissing
     @pgtitle = "Quantum and Woody Must Die (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Quantum & Woody Must Die%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3455,16 +4202,16 @@ end
   def q2
     @pgtitle = "Q2"
     if params[:type].present?
-      @tcount = Book.where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("writer like ?", "%Christopher Priest%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("writer like ?", "%Christopher Priest%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("writer like ?", "%Christopher Priest%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("writer like ?", "%Christopher Priest%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("writer like ?", "%Christopher Priest%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("writer like ?", "%Christopher Priest%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3476,14 +4223,14 @@ end
   def q2tbl
     @pgtitle = "Q2"
     if params[:type].present?
-      @tcount = Book.where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("writer like ?", "%Christopher Priest%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("writer like ?", "%Christopher Priest%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("writer like ?", "%Christopher Priest%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("writer like ?", "%Christopher Priest%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3495,16 +4242,16 @@ end
   def q2missing
     @pgtitle = "Q2 (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3516,14 +4263,14 @@ end
   def q2tblmissing
     @pgtitle = "Q2 (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("writer like ?", "%Christopher Priest%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3535,16 +4282,16 @@ end
   def rai
     @pgtitle = "Rai"
     if params[:type].present?
-      @tcount = Book.where(:title => "Rai").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Rai").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Rai").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Rai").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Rai").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Rai").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Rai").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Rai").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Rai").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Rai").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Rai").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Rai").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Rai").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Rai").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3556,14 +4303,14 @@ end
   def raitbl
     @pgtitle = "Rai"
     if params[:type].present?
-      @tcount = Book.where(:title => "Rai").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Rai").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Rai").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Rai").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Rai").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Rai").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Rai").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Rai").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Rai").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Rai").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Rai").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Rai").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3575,16 +4322,16 @@ end
   def raimissing
     @pgtitle = "Rai (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3596,14 +4343,14 @@ end
   def raitblmissing
     @pgtitle = "Rai (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Rai").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3615,16 +4362,16 @@ end
   def shadowman
     @pgtitle = "Shadowman"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3636,14 +4383,14 @@ end
   def shadowmantbl
     @pgtitle = "Shadowman"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3655,16 +4402,16 @@ end
   def shadowmanmissing
     @pgtitle = "Shadowman (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3676,14 +4423,14 @@ end
   def shadowmantblmissing
     @pgtitle = "Shadowman (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%Shadowman%").where.not(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3695,16 +4442,16 @@ end
   def shadowmanendtimes
     @pgtitle = "Shadowman End Times"
     if params[:type].present?
-      @tcount = Book.where(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Shadowman: End Times").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Shadowman: End Times").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3716,14 +4463,14 @@ end
   def shadowmanendtimestbl
     @pgtitle = "Shadowman End Times"
     if params[:type].present?
-      @tcount = Book.where(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3735,16 +4482,16 @@ end
   def shadowmanendtimesmissing
     @pgtitle = "Shadowman End Times (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3756,14 +4503,14 @@ end
   def shadowmanendtimestblmissing
     @pgtitle = "Shadowman End Times (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Shadowman: End Times").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3774,12 +4521,12 @@ end
 
   def sketch
     @pgtitle = "Sketch Covers"
-    @search_count = Book.where(:category => "Sketch").where(:cover => params[:query]).where("rdate > ?", "2012-05-01").count
-    @tcount = Book.all.where(:category => "Sketch").where("rdate > ?", "2012-05-01").where(status: "Active").count
+    @search_count = Book.where(:category => "Sketch").where(:cover => params[:query]).where(:publisher => "Valiant Entertainment").count
+    @tcount = Book.all.where(:category => "Sketch").where(:publisher => "Valiant Entertainment").where(status: "Active").count
     if params[:query].present?
       @book = Book.where(:category => "Sketch", status: "Active", :cover => params[:query]).order(created_at: :desc).page(params[:page]).per(24)
     else
-      @book = Book.where(:category => "Sketch").where("rdate > ?", "2012-05-01").where(status: "Active").order(created_at: :desc).page(params[:page]).per(24)
+      @book = Book.where(:category => "Sketch").where(:publisher => "Valiant Entertainment").where(status: "Active").order(created_at: :desc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3790,8 +4537,8 @@ end
 
   def sketchtbl
     @pgtitle = "Sketch Covers"
-    @tcount = Book.all.where(:category => "Sketch").where("rdate > ?", "2012-05-01").where(status: "Active").count
-    @book = Book.where(:category => "Sketch").where("rdate > ?", "2012-05-01").where(status: "Active").order(created_at: :desc).page(params[:page]).per(24)
+    @tcount = Book.all.where(:category => "Sketch").where(:publisher => "Valiant Entertainment").where(status: "Active").count
+    @book = Book.where(:category => "Sketch").where(:publisher => "Valiant Entertainment").where(status: "Active").order(created_at: :desc).page(params[:page]).per(24)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3802,16 +4549,16 @@ end
   def thevaliant
     @pgtitle = "The Valiant"
     if params[:type].present?
-      @tcount = Book.where(:title => "The Valiant").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "The Valiant").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "The Valiant").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "The Valiant").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "The Valiant").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "The Valiant").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "The Valiant").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "The Valiant").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "The Valiant").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "The Valiant").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "The Valiant").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "The Valiant").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "The Valiant").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "The Valiant").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3823,14 +4570,14 @@ end
   def thevalianttbl
     @pgtitle = "The Valiant"
     if params[:type].present?
-      @tcount = Book.where(:title => "The Valiant").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "The Valiant").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "The Valiant").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "The Valiant").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "The Valiant").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "The Valiant").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "The Valiant").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "The Valiant").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "The Valiant").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "The Valiant").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "The Valiant").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "The Valiant").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3842,16 +4589,16 @@ end
   def thevaliantmissing
     @pgtitle = "The Valiant (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3863,14 +4610,14 @@ end
   def thevalianttblmissing
     @pgtitle = "The Valiant (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "The Valiant").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3882,14 +4629,14 @@ end
   def trades
     @pgtitle = "Trades"
     if params[:tradetitle].present?
-      @tcount = Book.where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("note like ?", "%Trade%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("note like ?", "%Trade%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("note like ?", "%Trade%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("note like ?", "%Trade%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("note like ?", "%Trade%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("note like ?", "%Trade%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("note like ?", "%Trade%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("note like ?", "%Trade%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3901,14 +4648,14 @@ end
   def tradestbl
     @pgtitle = "Trades"
     if params[:tradetitle].present?
-      @tcount = Book.where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("note like ?", "%Trade%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("note like ?", "%Trade%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("note like ?", "%Trade%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("note like ?", "%Trade%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("note like ?", "%Trade%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("note like ?", "%Trade%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("note like ?", "%Trade%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("note like ?", "%Trade%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3920,14 +4667,14 @@ end
   def tradesmissing
     @pgtitle = "Trades (Missing)"
     if params[:tradetitle].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3939,14 +4686,14 @@ end
   def tradestblmissing
     @pgtitle = "Trades (Missing)"
     if params[:tradetitle].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:title => params[:tradetitle]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("note like ?", "%Trade%").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3958,16 +4705,16 @@ end
   def unity
     @pgtitle = "Unity"
     if params[:type].present?
-      @tcount = Book.where(:title => "Unity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Unity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Unity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Unity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Unity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Unity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Unity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Unity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Unity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Unity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Unity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Unity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Unity").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Unity").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3979,14 +4726,14 @@ end
   def unitytbl
     @pgtitle = "Unity"
     if params[:type].present?
-      @tcount = Book.where(:title => "Unity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Unity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Unity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Unity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Unity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Unity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Unity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Unity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Unity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Unity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Unity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Unity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -3998,16 +4745,16 @@ end
   def unitymissing
     @pgtitle = "Unity (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4019,14 +4766,14 @@ end
   def unitytblmissing
     @pgtitle = "Unity (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Unity").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -4038,16 +4785,16 @@ end
   def wratheternalwarrior
     @pgtitle = "Wrath of the Eternal Warrior"
     if params[:type].present?
-      @tcount = Book.where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Wrath of the Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Wrath of the Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Wrath of the Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Wrath of the Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Wrath of the Eternal Warrior").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Wrath of the Eternal Warrior").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4059,14 +4806,14 @@ end
   def wratheternalwarriortbl
     @pgtitle = "Wrath of the Eternal Warrior"
     if params[:type].present?
-      @tcount = Book.where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Wrath of the Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Wrath of the Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Wrath of the Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Wrath of the Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -4078,16 +4825,16 @@ end
   def wratheternalwarriormissing
     @pgtitle = "Wrath of the Eternal Warrior (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4099,14 +4846,14 @@ end
   def wratheternalwarriortblmissing
     @pgtitle = "Wrath of the Eternal Warrior (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Wrath of the Eternal Warrior").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -4117,18 +4864,18 @@ end
 
   def xomanowar
     @pgtitle = "X-O Manowar"
-    @search_count = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4140,14 +4887,14 @@ end
   def xomanowartbl
     @pgtitle = "X-O Manowar"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -4158,18 +4905,18 @@ end
 
   def xomanowarmissing
     @pgtitle = "X-O Manowar (Missing)"
-    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4181,14 +4928,14 @@ end
   def xomanowartblmissing
     @pgtitle = "X-O Manowar (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar 25th Anniversary Special").where.not(:title => "X-O Manowar Annual").where.not(:title => "X-O Manowar: Commander Trill").where.not(:title => "4001 A.D.: X-O Manowar").where.not(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -4199,18 +4946,18 @@ end
 
   def xomanowarspecials
     @pgtitle = "X-O Manowar Specials"
-    @search_count = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4222,14 +4969,14 @@ end
   def xomanowarspecialstbl
     @pgtitle = "X-O Manowar Specials"
     if params[:type].present?
-      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -4240,18 +4987,18 @@ end
 
   def xomanowarspecialsmissing
     @pgtitle = "X-O Manowar Specials (Missing)"
-    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4263,14 +5010,14 @@ end
   def xomanowarspecialstblmissing
     @pgtitle = "X-O Manowar Specials (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where("title like ?", "%X-O Manowar%").where.not(:title => "X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -4281,18 +5028,18 @@ end
 
   def ad4001bloodshot
     @pgtitle = "4001 A.D. Bloodshot"
-    @search_count = Book.where(:title => "4001 A.D.: Bloodshot").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where(:title => "4001 A.D.: Bloodshot").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "4001 A.D.: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "4001 A.D.: Bloodshot").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "4001 A.D.: Bloodshot").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4304,14 +5051,14 @@ end
   def ad4001bloodshottbl
     @pgtitle = "4001 A.D. Bloodshot"
     if params[:type].present?
-      @tcount = Book.where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "4001 A.D.: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -4322,18 +5069,18 @@ end
 
   def ad4001bloodshotmissing
     @pgtitle = "4001 A.D. Bloodshot (Missing)"
-    @search_count = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4345,14 +5092,14 @@ end
   def ad4001bloodshottblmissing
     @pgtitle = "4001 A.D. Bloodshot (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Bloodshot").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -4363,18 +5110,18 @@ end
 
   def ad4001shadowman
     @pgtitle = "4001 A.D. Shadowman"
-    @search_count = Book.where(:title => "4001 A.D.: Shadowman").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where(:title => "4001 A.D.: Shadowman").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "4001 A.D.: Shadowman").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: Shadowman").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: Shadowman").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: Shadowman").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "4001 A.D.: Shadowman").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "4001 A.D.: Shadowman").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4386,14 +5133,14 @@ end
   def ad4001shadowmantbl
     @pgtitle = "4001 A.D. Shadowman"
     if params[:type].present?
-      @tcount = Book.where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "4001 A.D.: Shadowman").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: Shadowman").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: Shadowman").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: Shadowman").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -4404,18 +5151,18 @@ end
 
   def ad4001shadowmanmissing
     @pgtitle = "4001 A.D. Shadowman (Missing)"
-    @search_count = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4427,14 +5174,14 @@ end
   def ad4001shadowmantblmissing
     @pgtitle = "4001 A.D. Shadowman (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: Shadowman").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -4445,18 +5192,18 @@ end
 
   def ad4001xomanowar
     @pgtitle = "4001 A.D. X-O Manowar"
-    @search_count = Book.where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "4001 A.D.: X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "4001 A.D.: X-O Manowar").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "4001 A.D.: X-O Manowar").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4468,14 +5215,14 @@ end
   def ad4001xomanowartbl
     @pgtitle = "4001 A.D. X-O Manowar"
     if params[:type].present?
-      @tcount = Book.where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "4001 A.D.: X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "4001 A.D.: X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "4001 A.D.: X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "4001 A.D.: X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -4486,18 +5233,18 @@ end
 
   def ad4001xomanowarmissing
     @pgtitle = "4001 A.D. X-O Manowar (Missing)"
-    @search_count = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4509,14 +5256,14 @@ end
   def ad4001xomanowartblmissing
     @pgtitle = "4001 A.D. X-O Manowar (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "4001 A.D.: X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -4527,18 +5274,18 @@ end
 
   def fallofxomanowar
     @pgtitle = "The Fall of X-O Manowar"
-    @search_count = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4550,14 +5297,14 @@ end
   def fallofxomanowartbl
     @pgtitle = "The Fall of X-O Manowar"
     if params[:type].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -4568,18 +5315,18 @@ end
 
   def fallofxomanowarmissing
     @pgtitle = "The Fall of X-O Manowar (Missing)"
-    @search_count = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:query]).where("rdate > ?", "2012-05-01").count
+    @search_count = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where("rdate < ?", Date.today).where(:era => "VEI").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -4591,14 +5338,14 @@ end
   def fallofxomanowartblmissing
     @pgtitle = "The Fall of X-O Manowar (Missing)"
     if params[:type].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:category => params[:type]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     elsif params[:number].present?
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:issue => params[:number]).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     else
-      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").count
-      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where("rdate > ?", "2012-05-01").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @tcount = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").count
+      @book = Book.where.not(id: current_user.owned_book_ids).where(:title => "Book of Death: The Fall of X-O Manowar").where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
