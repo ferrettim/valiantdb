@@ -21,6 +21,10 @@
               <%= link_to root_url + "users/" + current_user.id.to_s + "/acclaim-collection.csv", :title => "Export Acclaim collection" do %>
                   <span class="white fa fa-download"></span>
                 <% end %>
+            <% elsif action_name == "mybooksint" %>
+              <%= link_to root_url + "users/" + current_user.id.to_s + "/international-collection.csv", :title => "Export International collection" do %>
+                  <span class="white fa fa-download"></span>
+                <% end %>
             <% end %>
           </span>
           My Acclaim Books <% if user_signed_in? && current_user.patron? %><small>$<%= '%.2f' % ((current_user.owned_books.where(:era => "VH2").sum :pricenm) / 100.00) %></small><% end %> <% if user_signed_in? && current_user.illuminati? %><small>$<%= '%.2f' % ((current_user.owned_books.sum :pricenm) / 100.00) %></small><% end %>

@@ -36,7 +36,7 @@ class UsersController < ApplicationController
 
   def top25
     @pgtitle = "Top 25 Users"
-    @users = User.order("(SELECT COUNT(owns.id) FROM owns WHERE user_id = users.id) DESC").limit(25)
+    @users = User.all.order('owns_count desc').limit(25)
     @counter = 0
     @hardcats = [1,5,9,18,26,28,29,36,71,121,132,148,152,170,198,230,310,492,472]
     respond_to do |format|

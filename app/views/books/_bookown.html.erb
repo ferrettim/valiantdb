@@ -21,7 +21,10 @@
             <% end %>
             <% if @bookvh2.count > 0 %>
               <li class="options"><%= link_to collectionvh2_path do %>Acclaim (<%= @bookvh2.count %>)<% end %></li>
-            <% end %>           
+            <% end %>
+            <% if @bookint.count > 0 %>
+              <li class="options"><%= link_to collectionint_path do %>International (<%= @bookint.count %>)<% end %></li>
+            <% end %>            
           </ul>
           <% else %>
           <ul class="dropdown-menu" aria-labelledby="collectionDropdown">
@@ -34,7 +37,10 @@
             <% end %>
             <% if @bookvh2.count > 0 %>
               <li class="options"><%= link_to collectionvh2_path do %>Acclaim (<%= @bookvh2.count %>)<% end %></li>
-            <% end %>           
+            <% end %>   
+            <% if @bookint.count > 0 %>
+              <li class="options"><%= link_to collectionint_path do %>International (<%= @bookint.count %>)<% end %></li>
+            <% end %>         
           </ul>
           <% end %>
         </div>
@@ -57,6 +63,10 @@
                       <% end %>
                     <% elsif action_name == "mybooksvh2" %>
                       <% @user.owned_books.where(:era => "VH2").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                        <option value="<%= f.title %>"><%= f.title %></option>
+                      <% end %>
+                    <% elsif action_name == "mybooksint" %>
+                      <% @user.owned_books.where.not(:country => "United States").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
                         <option value="<%= f.title %>"><%= f.title %></option>
                       <% end %>
                     <% end %>

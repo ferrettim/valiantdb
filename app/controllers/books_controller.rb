@@ -64,6 +64,7 @@ class BooksController < ApplicationController
         @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:era => "VH1")
         @bookvh2 = @user.wished_books.where(:era => "VH2")
+        @bookint = @user.wished_books.where.not(:country => "United States")
       end
       @bookcsv = @user.wished_books.order(title: :asc, rdate: :asc)
       respond_to do |format|
@@ -92,6 +93,7 @@ class BooksController < ApplicationController
         @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:era => "VH1")
         @bookvh2 = @user.wished_books.where(:era => "VH2")
+        @bookint = @user.wished_books.where.not(:country => "United States")
       end
     @bookcsv = @user.wished_books.order(title: :asc, rdate: :asc)
     respond_to do |format|
@@ -120,6 +122,7 @@ class BooksController < ApplicationController
         @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:era => "VH1")
         @bookvh2 = @user.wished_books.where(:era => "VH2")
+        @bookint = @user.wished_books.where.not(:country => "United States")
       end
       @bookcsv = @user.wished_books.where(:publisher => "Valiant Entertainment").order(title: :asc, rdate: :asc)
       respond_to do |format|
@@ -148,6 +151,7 @@ class BooksController < ApplicationController
         @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:era => "VH1")
         @bookvh2 = @user.wished_books.where(:era => "VH2")
+        @bookint = @user.wished_books.where.not(:country => "United States")
       end
       @bookcsv = @user.wished_books.where(:era => "VH1").order(title: :asc, rdate: :asc)
       respond_to do |format|
@@ -176,6 +180,36 @@ class BooksController < ApplicationController
         @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:era => "VH1")
         @bookvh2 = @user.wished_books.where(:era => "VH2")
+        @bookint = @user.wished_books.where.not(:country => "United States")
+      end
+      @bookcsv = @user.wished_books.where(:era => "VH2").order(title: :asc, rdate: :asc)
+      respond_to do |format|
+        format.html
+        format.json { render json: @book }
+        format.js
+        format.csv { send_data @bookcsv.to_csv, filename: "acclaim-wishlist-#{Date.today}.csv" }
+      end
+  end 
+
+  def mywishlistint
+    @user = User.friendly.find(params[:id])
+    if user_signed_in?
+      if @user == current_user
+        @pgtitle = "My Wishlist"
+      else 
+        @pgtitle = "#{User.friendly.find(params[:id]).name} 's Wishlist"
+      end
+    else
+      @pgtitle = "#{User.friendly.find(params[:id]).name}'s Wishlist"
+    end
+      if params[:query].present?
+        @book = @user.wished_books.where(:title => params[:query]).where(:era => "VH2").page(params[:page]).per(24)
+      else
+        @book = @user.wished_books.where.not(:country => "United States").order(title: :asc, rdate: :asc).page(params[:page]).per(24)
+        @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
+        @bookvh1 = @user.wished_books.where(:era => "VH1")
+        @bookvh2 = @user.wished_books.where(:era => "VH2")
+        @bookint = @user.wished_books.where.not(:country => "United States")
       end
       @bookcsv = @user.wished_books.where(:era => "VH2").order(title: :asc, rdate: :asc)
       respond_to do |format|
@@ -556,6 +590,7 @@ class BooksController < ApplicationController
         @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:era => "VH1")
         @bookvh2 = @user.owned_books.where(:era => "VH2")
+        @bookint = @user.owned_books.where.not(:country => "United States")
       end
       @bookcsv = @user.owned_books.order(title: :asc, rdate: :asc)
       respond_to do |format|
@@ -576,6 +611,7 @@ class BooksController < ApplicationController
         @bookvei = Book.where.not(Own.where("owns.book_id = books.id").limit(1).arel.exists).where(:publisher => "Valiant Entertainment")
         @bookvh1 = Book.where.not(Own.where("owns.book_id = books.id").limit(1).arel.exists).where(:era => "VH1")
         @bookvh2 = Book.where.not(Own.where("owns.book_id = books.id").limit(1).arel.exists).where(:era => "VH2")
+        @bookint = @user.owned_books.where.not(:country => "United States")
       end
       @bookcsv = Book.where.not(Own.where("owns.book_id = books.id").limit(1).arel.exists).order(title: :asc, rdate: :asc)
       respond_to do |format|
@@ -604,6 +640,7 @@ class BooksController < ApplicationController
         @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:era => "VH1")
         @bookvh2 = @user.owned_books.where(:era => "VH2")
+        @bookint = @user.owned_books.where.not(:country => "United States")
       end
     @bookcsv = @user.owned_books.order(title: :asc, rdate: :asc)
     respond_to do |format|
@@ -632,6 +669,7 @@ class BooksController < ApplicationController
         @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:era => "VH1")
         @bookvh2 = @user.owned_books.where(:era => "VH2")
+        @bookint = @user.owned_books.where.not(:country => "United States")
       end
       @bookcsv = @user.owned_books.where(:publisher => "Valiant Entertainment").order(title: :asc, rdate: :asc)
       respond_to do |format|
@@ -660,6 +698,7 @@ class BooksController < ApplicationController
         @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:era => "VH1")
         @bookvh2 = @user.owned_books.where(:era => "VH2")
+        @bookint = @user.owned_books.where.not(:country => "United States")
       end
       @bookcsv = @user.owned_books.where(:era => "VH1").order(title: :asc, rdate: :asc)
       respond_to do |format|
@@ -688,6 +727,36 @@ class BooksController < ApplicationController
         @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:era => "VH1")
         @bookvh2 = @user.owned_books.where(:era => "VH2")
+        @bookint = @user.owned_books.where.not(:country => "United States")
+      end
+      @bookcsv = @user.owned_books.where(:era => "VH2").order(title: :asc, rdate: :asc)
+      respond_to do |format|
+        format.html
+        format.json { render json: @book }
+        format.js
+        format.csv { send_data @bookcsv.to_csv, filename: "acclaim-collection-#{Date.today}.csv" }
+      end
+  end  
+
+  def mybooksint
+    @user = User.friendly.find(params[:id])
+    if user_signed_in?
+      if @user == current_user
+        @pgtitle = "My Collection"
+      else 
+        @pgtitle = "#{User.friendly.find(params[:id]).name} 's Collection"
+      end
+    else
+      @pgtitle = "#{User.friendly.find(params[:id]).name}'s Collection"
+    end
+      if params[:query].present?
+        @book = @user.owned_books.where(:title => params[:query]).where.not(:country => "United States").page(params[:page]).per(24)
+      else
+        @book = @user.owned_books.where.not(:country => "United States").order(title: :asc, rdate: :asc).page(params[:page]).per(24)
+        @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
+        @bookvh1 = @user.owned_books.where(:era => "VH1")
+        @bookvh2 = @user.owned_books.where(:era => "VH2")
+        @bookint = @user.owned_books.where.not(:country => "United States")
       end
       @bookcsv = @user.owned_books.where(:era => "VH2").order(title: :asc, rdate: :asc)
       respond_to do |format|

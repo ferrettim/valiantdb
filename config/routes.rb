@@ -516,11 +516,13 @@ Rails.application.routes.draw do
   get 'users/:id/current-collection' => 'books#mybooksvei', :as => 'collectionvei'
   get 'users/:id/classic-collection' => 'books#mybooksvh1', :as => 'collectionvh1'
   get 'users/:id/acclaim-collection' => 'books#mybooksvh2', :as => 'collectionvh2'
+  get 'users/:id/international-collection' => 'books#mybooksint', :as => 'collectionint'
   get 'users/:id/wishlist' => 'books#mywishlist', :as => 'wishlist'
   get 'users/:id/wishlist/table' => 'books#mywishlisttbl', :as => 'wishlist_table'
   get 'users/:id/current-wishlist' => 'books#mywishlistvei', :as => 'wishlistvei'
   get 'users/:id/classic-wishlist' => 'books#mywishlistvh1', :as => 'wishlistvh1'
   get 'users/:id/acclaim-wishlist' => 'books#mywishlistvh2', :as => 'wishlistvh2'
+  get 'users/:id/international-wishlist' => 'books#mywishlistint', :as => 'wishlistint'
   get 'users/:id/forsale' => 'books#forsale', :as => 'forsale'
   get 'users/:id/forsale/table' => 'books#forsaletbl', :as => 'forsale_table'
   get 'users/emails' => 'users#emails', via: [:get]

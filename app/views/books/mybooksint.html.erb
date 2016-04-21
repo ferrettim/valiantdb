@@ -27,11 +27,10 @@
                 <% end %>
             <% end %>
           </span>
-          My Collection <% if user_signed_in? && current_user.patron? %><small>$<%= '%.2f' % ((current_user.owned_books.sum :pricenm) / 100.00) %></small><% end %> <% if user_signed_in? && current_user.illuminati? %><small>$<%= '%.2f' % ((current_user.owned_books.sum :pricenm) / 100.00) %></small><% end %>
-          <br />
+          My International Books 
         <% end %>
       <% else %>
-        <%= @user.name %>'s Collection <span class="label label-default label-as-badge"><%= @user.owned_books.count %></span>
+        <%= @user.name %>'s International Books <span class="label label-default label-as-badge"><%= @bookint.count %></span>
         <br />
       <% end %>
     </h3>
