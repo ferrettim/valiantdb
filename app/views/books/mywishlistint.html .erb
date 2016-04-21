@@ -1,0 +1,42 @@
+<div class="content transitions-enabled container-fluid wellclear">
+  <h3 class="text-center">
+      <% if @user == current_user %>
+        <% if params[:query].present? %>
+          Wishlist Results <span class="label label-default label-as-badge"><%= current_user.wished_books.where(:title => params[:query]).count %></span>
+        <% else %>
+          <span class="btn btn-success btn-xs">
+            <% if action_name == "mywishlist" %>
+              <%= link_to root_url + "users/" + current_user.id.to_s + "/wishlist.csv", :title => "Export wishlist" do %>
+                  <span class="white fa fa-download"></span>
+                <% end %>
+            <% elsif action_name == "mywishlistvei" %>
+              <%= link_to root_url + "users/" + current_user.id.to_s + "/current-wishlist.csv", :title => "Export Current Valiant wishlist" do %>
+                  <span class="white fa fa-download"></span>
+                <% end %>
+            <% elsif action_name == "mywishlistvh1" %>
+              <%= link_to root_url + "users/" + current_user.id.to_s + "/classic-wishlist.csv", :title => "Export Classic Valiant wishlist" do %>
+                  <span class="white fa fa-download"></span>
+                <% end %>
+            <% elsif action_name == "mywishlistvh2" %>
+              <%= link_to root_url + "users/" + current_user.id.to_s + "/acclaim-wishlist.csv", :title => "Export Acclaim wishlist" do %>
+                  <span class="white fa fa-download"></span>
+                <% end %>
+            <% elsif action_name == "mywishlistint" %>
+              <%= link_to root_url + "users/" + current_user.id.to_s + "/international-wishlist.csv", :title => "Export International wishlist" do %>
+                  <span class="white fa fa-download"></span>
+                <% end %>
+            <% end %>
+          </span>
+          My International Wishlist
+        <% end %>
+      <% else %>
+        <%= @user.name %>'s International Wishlist <span class="label label-default label-as-badge"><%= @bookint.count %></span>
+        <br />
+      <% end %>
+    </h3>
+    <div class="clearfix"></div>
+    
+    <%= render "bookwishes" %>
+  
+  <div class="clearfix"></div>
+</div>

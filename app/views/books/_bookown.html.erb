@@ -86,6 +86,7 @@
 		 		<div class="site-actions">
 					<ul class="list-unstyled">
 						<% if user_signed_in? %>
+              <% unless title.rdate.future? %>
 					        <li id="<%= title.id %>_owns" class="magic">
 					        	<% if user_signed_in? && current_user.owns?(title) %>
 									<%= link_to book_own_path(title), method: :delete, remote: true, class: "btn btn-default btn-danger btn-circle", title: "Remove from collection", data: {disable_with: "<i class='fa fa-minus'></i>"} do %><i class="fa fa-heart"></i><% end %>
@@ -93,7 +94,7 @@
 									<%= link_to book_own_path(title), method: :post, remote: true, class: "btn btn-success btn-circle", title: "Add to collection", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-heart"></i> <% end %>
 								<% end %>
 					        </li>
-					        
+					    <% end %>
 						<% end %>
 					</ul>
 		 		</div>
