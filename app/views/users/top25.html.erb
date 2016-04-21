@@ -11,13 +11,13 @@
 			                	<% if current_user == u %>
 			                	  
 			                			<span class="label label-primary label-as-badge">
-			                				<strong><%= @counter += 1 %></strong>
+			                				<strong><%= u.rank %></strong>
 			                			</span>
 			                	<% else %>
 						            <ul class="list-inline user-<%= u.id %>">
 						            	<li class="pull-left">
 						            		<span class="label label-primary label-as-badge">
-						                		<strong><%= @counter += 1 %></strong>
+						                		<strong><%= u.rank %></strong>
 						                	</span>
 						                </li>
 						                <li id="follow_form" class="pull-right">

@@ -85,6 +85,10 @@ class User < ActiveRecord::Base
     collectible.itemsales.where(user_id: id).any?
   end
 
+  def rank
+    User.where("owns_count > ?", owns_count).count + 1
+  end
+
   def mailboxer_name
     self.name
   end

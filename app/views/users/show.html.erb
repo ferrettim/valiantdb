@@ -55,10 +55,10 @@
                 <!-- SIDEBAR MENU -->
                 <div class="profile-usermenu">
                     <ul class="nav">
-                        <li><%= link_to "https://valiantdb.slack.com", title: "Chat with others", :target => "_blank" do %>
-                            <i class="fa fa-slack grayicon"></i>
-                            Chat on Slack
-                            <% end %>
+                        <li>
+                            <%= link_to users_top25_path, title: "Top 25 Users" do %>
+                            <i class="fa fa-trophy grayicon"></i>
+                            Ranking <span class="pull-right label label-primary label-as-badge"><%= @user.rank %></span><% end %>
                         </li>
                         <li>
                             <%= link_to collection_path, title: "View collection" do %>
