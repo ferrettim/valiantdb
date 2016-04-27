@@ -44,11 +44,6 @@
 <% else %>
 <body id="pad">
 <% end %>
-<% if user_signed_in? %>
-  <div id="page_loading">
-    <img src="https://s3.amazonaws.com/valiantdb/images/spinner.gif" style="position: absolute; left: 43.75%; top: 35%;" />
-  </div>
-<% end %>
   <div id="main">
     <%= render "layouts/header" unless @skip_footer %>
 

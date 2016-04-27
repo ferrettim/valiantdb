@@ -47,7 +47,7 @@
       </li>
       <li class="btn btn-default">
         <%= form_tag "/users/" + @user.id.to_s + "/wishlist", :method => 'get', :role => "search" do %>
-                <select name="query" class="btn" onchange="this.form.submit()">
+                <select name="query" class="btn chosen-select" onchange="this.form.submit()">
                   <option value="">Filter by title</option>
                     <% if action_name == "mywishlist" %>
                       <% @user.wished_books.select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>

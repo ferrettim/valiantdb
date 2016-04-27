@@ -24,6 +24,8 @@ gem 'fancybox-rails'
 gem 'flexslider'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
+# Progress bar for turbolinks
+gem 'nprogress-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -90,6 +92,9 @@ gem 'bitly'
 gem 'dalli'
 # Papertrail
 gem 'paper_trail', '~> 4.0.0'
+# Currency conversion
+gem 'money'
+gem 'google_currency'
 
 group :development do
 # Use sqlite3 as the database for Active Record

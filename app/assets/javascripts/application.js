@@ -22,6 +22,8 @@
 //= require jquery-ui/tooltip
 //= require jquery.raty
 //= require jquery.jcrop
+//= require nprogress
+//= require nprogress-turbolinks
 //= require sweet-alert
 //= require sweet-alert-confirm
 //= require papercrop

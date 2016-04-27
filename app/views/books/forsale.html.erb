@@ -4,8 +4,8 @@
         <span class="col-md-6 col-sm-6 white">Books for sale</span>
         <span class="pull-right">
           <%= form_tag "/users/" + @user.id.to_s + "/forsale", :method => 'get', :role => "search", class: "form-group" do %>
-              <select name="query" class="chosen-select filter-dropdown" onchange="this.form.submit()">
-                <option value="">Filter by title</option>
+              <select name="query" class="btn chosen-select" onchange="this.form.submit()">
+                <option value="">Filter by title</option> 
                 <% @user.forsale_books.select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
                   <option value="<%= f.title %>"><%= f.title %></option>
                 <% end %>

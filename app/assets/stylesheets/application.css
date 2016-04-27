@@ -20,6 +20,8 @@
  *= require jquery-ui/theme
  *= require jquery-ui/autocomplete
  *= require jquery-ui/datepicker
+ *= require nprogress
+ *= require nprogress-bootstrap
  *= require sweet-alert
  *= require fancybox
  *= require_self

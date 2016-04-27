@@ -296,7 +296,31 @@
 									   Editor-in-Chief: <%= link_to search_path + "/?utf8=✓&query=" + @book.eic, data: { toggle: "tooltip" }, :title => "View books by " + @book.eic do %><%= @book.eic %><% end %><br />
 									<% end %>
 									<% unless @book.price.blank? %>
-										Cover Price: <strong>US $<%= '%.2f' % @book.price_in_dollars.to_s %></strong> 
+										<% Money.default_bank = Money::Bank::GoogleCurrency.new %>
+										Cover Price:
+											<strong>
+											<% if @book.country == "United States" %>
+												US $<%= '%.2f' % @book.price_in_dollars.to_s %>
+											<% elsif @book.country == "Brazil" %>
+												R$<%= '%.2f' % @book.price_in_dollars.to_s %> / US $<%= Money.new((@book.price_in_dollars.to_f * 100), "BRL").exchange_to(:USD) %>
+											<% elsif @book.country == "Canada" %>
+												CAD $<%= '%.2f' % @book.price_in_dollars.to_s %> / US $<%= Money.new((@book.price_in_dollars.to_f * 100), "CAD").exchange_to(:USD) %>
+											<% elsif @book.country == "China" %>
+												¥<%= '%.2f' % @book.price_in_dollars.to_s %> / US $<%= Money.new((@book.price_in_dollars.to_f * 100), "CNY").exchange_to(:USD) %>
+											<% elsif @book.country == "France" %>
+												€ <%= '%.2f' % @book.price_in_dollars.to_s %> / US $<%= Money.new((@book.price_in_dollars.to_f * 100), "EUR").exchange_to(:USD) %>
+											<% elsif @book.country == "Italy" %>
+												€ <%= '%.2f' % @book.price_in_dollars.to_s %> / US $<%= Money.new((@book.price_in_dollars.to_f * 100), "EUR").exchange_to(:USD) %>
+											<% elsif @book.country == "Japan" %>
+												¥<%= '%.2f' % @book.price_in_dollars.to_s %> / US $<%= Money.new((@book.price_in_dollars.to_f * 100), "JPY").exchange_to(:USD) %>
+											<% elsif @book.country == "Mexico" %>
+												MXN $<%= '%.2f' % @book.price_in_dollars.to_s %> / US $<%= Money.new((@book.price_in_dollars.to_f * 100), "MXN").exchange_to(:USD) %>
+											<% elsif @book.country == "Russia" %>
+												₽<%= '%.2f' % @book.price_in_dollars.to_s %> / US $<%= Money.new((@book.price_in_dollars.to_f * 100), "RUB").exchange_to(:USD) %>
+											<% elsif @book.country == "Turkey" %>
+												₺<%= '%.2f' % @book.price_in_dollars.to_s %> / US $<%= Money.new((@book.price_in_dollars.to_f * 100), "TRY").exchange_to(:USD) %>
+											<% end %>
+											</strong>
 										<% unless @book.category == "Sketch" %>
 											<% unless @book.printing.blank? %>
 												(<%= @book.printing.ordinalize %> printing)
