@@ -91,6 +91,10 @@ class User < ActiveRecord::Base
     User.where("owns_count > ?", owns_count).count + 1
   end
 
+  def points_rank
+    User.where("score > ?", score).count + 1
+  end
+
   def mailboxer_name
     self.name
   end

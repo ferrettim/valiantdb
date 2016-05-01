@@ -34,6 +34,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def leaderboard
+    @pgtitle = "leaderboard"
+    @users = User.all.order('score desc').limit(100)
+    @counter = 0
+    @hardcats = [1,5,9,18,26,28,29,36,71,121,132,148,152,170,198,230,310,492,472]
+    respond_to do |format|
+      format.html
+    end
+  end
+
   def top25
     @pgtitle = "Top 25 Users"
     @users = User.all.order('owns_count desc').limit(25)
