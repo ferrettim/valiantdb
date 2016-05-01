@@ -109,9 +109,6 @@ GEM
       slim (>= 1.3.6, < 4.0)
       terminal-table (~> 1.4)
     builder (3.2.2)
-    bullet (5.0.0)
-      activesupport (>= 3.0.0)
-      uniform_notifier (~> 1.9.0)
     carrierwave (0.11.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -445,7 +442,6 @@ GEM
       tzinfo (>= 1.0.0)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
-    uniform_notifier (1.9.0)
     warden (1.2.6)
       rack (>= 1.0)
     wdm (0.1.1)
@@ -468,7 +464,6 @@ DEPENDENCIES
   bitly
   bootstrap-sass
   brakeman
-  bullet
   chartkick
   childprocess (= 0.3.6)
   coffee-rails (~> 4.0.0)
