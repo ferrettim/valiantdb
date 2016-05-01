@@ -66,7 +66,7 @@
                             <span class="text-center"><%= @user.level.display_name %></span><% end %>
                         </li>
                         <li>
-                            <%= link_to userlevels_path, title: "Top 25 Users" do %>
+                            <%= link_to users_leaderboard_path, title: "Points Leaderboard" do %>
                             <i class="fa fa-gamepad grayicon"></i>
                             Points <span class="pull-right label label-primary label-as-badge"><%= @user.score %></span>
                             <% end %>
