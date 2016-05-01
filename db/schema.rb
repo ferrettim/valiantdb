@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160421054429) do
+ActiveRecord::Schema.define(version: 20160501032515) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -133,6 +133,14 @@ ActiveRecord::Schema.define(version: 20160421054429) do
   add_index "comments", ["book_id"], name: "index_comments_on_book_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
+  create_table "events", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "text"
+    t.integer  "points"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "follows", force: :cascade do |t|
     t.string   "follower_type",   limit: 255
     t.integer  "follower_id"
@@ -177,6 +185,14 @@ ActiveRecord::Schema.define(version: 20160421054429) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "collectible_id"
+  end
+
+  create_table "levels", force: :cascade do |t|
+    t.integer  "number"
+    t.string   "display_name"
+    t.integer  "required_score", default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "mailboxer_conversation_opt_outs", force: :cascade do |t|
@@ -351,6 +367,11 @@ ActiveRecord::Schema.define(version: 20160421054429) do
     t.boolean  "voice",                              default: false
     t.boolean  "level50"
     t.integer  "owns_count",                         default: 0,     null: false
+    t.integer  "score",                              default: 0
+    t.integer  "level_id"
+    t.integer  "wishes_count",                       default: 0,     null: false
+    t.integer  "sales_count",                        default: 0,     null: false
+    t.integer  "comments_count",                     default: 0,     null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

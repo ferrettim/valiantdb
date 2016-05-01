@@ -261,4 +261,9 @@ Devise.setup do |config|
   # When using omniauth, Devise cannot automatically set Omniauth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
+  Warden::Manager.after_authentication do |user,auth,opts|
+    unless user.current_sign_in_at && user.current_sign_in_at > 1.day.ago.utc
+      user.add_points(LOGIN_BONUS, "Daily login bonus!")
+    end
+  end
 end

@@ -38,4 +38,8 @@ class PagesController < ApplicationController
     @pgtitle = "Support the Valiant Database"
   end
 
+  def levels
+    @pgtitle = "User Levels"
+  end
+
 end

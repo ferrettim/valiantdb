@@ -567,6 +567,7 @@ Rails.application.routes.draw do
   get 'privacy' => 'pages#privacy'
   get 'terms' => 'pages#terms'
   get 'search' => 'pages#search'
+  get 'userlevels' => 'pages#levels'
 
   match 'sitemap', :to => 'sitemap#index', :via => [:get]
 

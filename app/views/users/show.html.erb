@@ -54,11 +54,22 @@
 
                 <!-- SIDEBAR MENU -->
                 <div class="profile-usermenu">
+                    <% unless current_user.patron? %>
+                        <div class="text-center">
+                            <%= link_to "https://www.valiantdatabase.com/supportus", :title => "Support us", class: "label label-as-badge label-primary" do %>Upgrade to patron!<% end %>
+                        </div>
+                    <% end %>
                     <ul class="nav">
                         <li>
-                            <%= link_to users_top25_path, title: "Top 25 Users" do %>
+                            <%= link_to userlevels_path, title: "User Levels" do %>
                             <i class="fa fa-trophy grayicon"></i>
-                            Ranking <span class="pull-right label label-primary label-as-badge"><%= @user.rank %></span><% end %>
+                            <span class="text-center"><%= @user.level.display_name %></span><% end %>
+                        </li>
+                        <li>
+                            <%= link_to userlevels_path, title: "Top 25 Users" do %>
+                            <i class="fa fa-gamepad grayicon"></i>
+                            Points <span class="pull-right label label-primary label-as-badge"><%= @user.score %></span>
+                            <% end %>
                         </li>
                         <li>
                             <%= link_to collection_path, title: "View collection" do %>
@@ -140,13 +151,6 @@
                 <% end %>
 
             </div>
-
-            <% unless current_user.patron? %>
-                <br />
-                    <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-8 col-xs-offset-2">
-                        <%= link_to "https://www.valiantdatabase.com/supportus", :title => "Support us" do %><%= image_tag "https://s3.amazonaws.com/valiantdb/images/supportus.jpg", :alt => "Support us", class: "img-responsive" %><% end %>
-                    </div>
-            <% end %>
 
         </div>
         <p class="white">This site is brought to you by users like <a href="http://www.octobercountrycomics.com/" class="white"><strong>October County Comics</strong></a>, <a href="http://www.valiantdatabase.com/users/dbs/profile" class="white">DBS</a>, and our <a href="http://www.valiantdatabase.com/users/backers" class="white">amazing patrons</a>.</p>

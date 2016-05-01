@@ -1,0 +1,76 @@
+<div class="col-md-12 col-sm-12 col-xs-12 white-bg">
+	<h2 class="text-center">User Levels</h2>
+	<p>Below you will find the various levels users can achieve on the site. Points are awarded for various activities such as adding books to your various collections or wishlists, being a regular site visitor, becoming a patron, adding notes or ratings to books, etc. Most of the level titles come from the structure set up at the Harbinger Foundation by Toyo Harada. You can read a little more about these levels in Harbinger #3.</p>
+	<table class="table table-responsive">
+		<thead>
+			<tr>
+				<td><strong>Level</strong></td>
+				<td><strong>Name</strong></td>
+				<td><strong>Points Required</strong></td>
+				<td class="text-right"><strong>No. of Users</strong></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>1</td>
+				<td>Potential Psiot</td>
+				<td>0 points</td>
+				<td class="text-right"><%= User.where(:level_id => 1).count %></td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>Ichinensei</td>
+				<td>50 points</td>
+				<td class="text-right"><%= User.where(:level_id => 2).count %></td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>Nensei</td>
+				<td>100 points</td>
+				<td class="text-right"><%= User.where(:level_id => 3).count %></td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>Shinia</td>
+				<td>200 points</td>
+				<td class="text-right"><%= User.where(:level_id => 4).count %></td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>Aonisaibushi</td>
+				<td>350 points</td>
+				<td class="text-right"><%= User.where(:level_id => 5).count %></td>
+			</tr>
+			<tr>
+				<td>6</td>
+				<td>Seieibushi</td>
+				<td>600 points</td>
+				<td class="text-right"><%= User.where(:level_id => 6).count %></td>
+			</tr>
+			<tr>
+				<td>7</td>
+				<td>Kodenbushi</td>
+				<td>1000 points</td>
+				<td class="text-right"><%= User.where(:level_id => 7).count %></td>
+			</tr>
+			<tr>
+				<td>8</td>
+				<td>Feel My Powah!</td>
+				<td>2000 points</td>
+				<td class="text-right"><%= User.where(:level_id => 8).count %></td>
+			</tr>
+			<tr>
+				<td>9</td>
+				<td>Omega Level</td>
+				<td>3500 points</td>
+				<td class="text-right"><%= User.where(:level_id => 9).count %></td>
+			</tr>
+			<tr>
+				<td>10</td>
+				<td>Divinity</td>
+				<td>5000 points</td>
+				<td class="text-right"><%= User.where(:level_id => 10).count %></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

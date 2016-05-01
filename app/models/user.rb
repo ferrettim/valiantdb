@@ -32,6 +32,8 @@ class User < ActiveRecord::Base
   crop_attached_file :avatar, :aspect => "16:9"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
+  belongs_to :level
+  has_many :events, :dependent => :destroy
   has_many :wishes, :dependent => :destroy
   has_many :wished_books, :through => :wishes, source: :book, :dependent => :destroy
   has_many :owns, :dependent => :destroy
@@ -153,4 +155,28 @@ class User < ActiveRecord::Base
   def email_verified?
     self.email && self.email !~ TEMP_EMAIL_REGEX
   end
+
+  def add_points(new_points, event_string)
+    update_score_and_level(new_points)
+    log_event(new_points, event_string)
+  end
+
+  def deduct_points(points_to_deduct, event_string)
+    add_points(-points_to_deduct, event_string)
+  end
+
+  private
+    def update_score_and_level(new_points)
+      new_score = self.score += new_points
+      self.update_attribute(:score, new_score)
+
+      new_level = Level.find_level_for_score(new_score)
+      if new_level && (!self.level || new_level.number > self.level.number)
+        self.update_attribute(:level_id, new_level.id)
+      end
+    end
+
+    def log_event(points, text)
+      events.create(:points => points, :text => text)
+    end
 end
