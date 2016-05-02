@@ -11,6 +11,7 @@
               <%= f.input :email, required: true, placeholder: "Enter your e-mail", label: false %>
               <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @validatable), placeholder: "Enter your password", label: false %>
               <%= f.input :password_confirmation, required: true, placeholder: "Confirm your password", label: false %>
+              <%= f.input :level_id, :as => :hidden, :input_html => { :value => "1" } %>
             </div>
 
             <div class="form-actions pull-right">

@@ -49,10 +49,12 @@ class User < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
 
   def add_to_list
-    list_id = ENV["MAILCHIMP_LIST"]
-    @gb = Gibbon::Request.new
-    subscribe = @gb.lists(list_id).members.create(body: {email_address: self.email, status: "subscribed", double_optin: false})
-    # Do something with subscription errors here
+    if Rails.env.production?
+      list_id = ENV["MAILCHIMP_LIST"]
+      @gb = Gibbon::Request.new
+      subscribe = @gb.lists(list_id).members.create(body: {email_address: self.email, status: "subscribed", double_optin: false})
+      # Do something with subscription errors here
+    end
   end
 
   def online?

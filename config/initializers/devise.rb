@@ -267,7 +267,7 @@ Devise.setup do |config|
     end
   end
   Warden::Manager.after_authentication do |user,auth,opts|
-    if user.sign_in_count < 2
+    if user.sign_in_count < 1
       user.add_points(SIGNUP_BONUS, "Sign up bonus!")
     end
   end
