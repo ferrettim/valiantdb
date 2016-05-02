@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   end
 
   def leaderboard
-    @pgtitle = "leaderboard"
+    @pgtitle = "Leaderboard"
     @users = User.all.order('score desc').limit(75)
     @counter = 0
     @hardcats = [1,5,9,18,26,28,29,36,71,121,132,148,152,170,198,230,310,492,472]

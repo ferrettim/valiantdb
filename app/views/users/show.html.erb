@@ -60,11 +60,13 @@
                         </div>
                     <% end %>
                     <ul class="nav">
-                        <li>
-                            <%= link_to userlevels_path, title: "User Levels" do %>
-                            <i class="fa fa-trophy grayicon"></i>
-                            <span class="text-center"><%= @user.level.display_name %></span><% end %>
-                        </li>
+                        <% if @user.level.display_name? %>
+                            <li>
+                                <%= link_to userlevels_path, title: "User Levels" do %>
+                                <i class="fa fa-trophy grayicon"></i>
+                                <span class="text-center"><%= @user.level.display_name %></span><% end %>
+                            </li>
+                        <% end %>
                         <li>
                             <%= link_to users_leaderboard_path, title: "Points Leaderboard" do %>
                             <i class="fa fa-gamepad grayicon"></i>
