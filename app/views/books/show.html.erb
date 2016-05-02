@@ -126,11 +126,11 @@
 	                                <div class="tab-pane fade" id="tab4">
 											<ul class="list-inline">
 												<% if @book.category == "Default" %>
-													<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Variant").where.not(:id => @book.id).each do |related| %>
+													<% @variants.each do |related| %>
 														<li class="col-md-4	col-sm-3 col-xs-4"><%= link_to related, data: { toggle: "tooltip" }, :title => related.title + " #" + related.issue.to_s + " cover by " + related.cover do %><%= image_tag related.image.url(:medium), class: "img-responsive img-rel2 img-shadow",:alt => related.title + " cover by " + related.cover %><% end %><br /></li>
 													<% end %>
 												<% elsif @book.category == "Variant" %>
-													<% (Book.where(:title => @book.title).where(:issue => @book.issue).where(:category => "Default").where(rdate: (@book.rdate - 5.month)..(@book.rdate + 1.month)).where.not(:id => @book.id)).each do |regular| %>
+													<% @defaults.each do |regular| %>
 								    						<%= link_to regular do %>
 								    							<%= image_tag regular.image.url(:original), class: "img-responsive img-shadow text-center" %>
 								    						<% end %>
@@ -297,7 +297,6 @@
 									   Editor-in-Chief: <%= link_to search_path + "/?utf8=✓&query=" + @book.eic, data: { toggle: "tooltip" }, :title => "View books by " + @book.eic do %><%= @book.eic %><% end %><br />
 									<% end %>
 									<% unless @book.price.blank? %>
-										<% Money.default_bank = Money::Bank::GoogleCurrency.new %>
 										Cover Price:
 											<strong>
 											<% if @book.country == "United States" %>
@@ -530,8 +529,8 @@
 										<% elsif @book.category == "Hardcover" %>
 										<% else %>
 											<% if @book.rdate.to_s > "2012-05-01" %>
-												<% if Book.where(:title => @book.title, :arc => @book.arc, :category => "Paperback").exists? %>
-													<% Book.where(:title => @book.title, :arc => @book.arc, :category => "Paperback").limit(1).each do |z| %>
+												<% if @intrade.exists? %>
+													<% @intrade.limit(1).each do |z| %>
 														This issue was collected in <%= link_to z do %><%= z.title + " Vol. " + z.issue.to_s + " TPB" %><% end %>.
 													<% end %>
 												<% end %>
@@ -796,7 +795,7 @@
 			                          <!-- tab content goes here -->
 			                          <% if @book.category == "Default" %>
 				                           <ul>
-					                           	<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Variant").where.not(:id => @book.id).each do |related| %>
+					                           	<% @variants.each do |related| %>
 													<li>
 														<%= link_to related, data: { toggle: "tooltip" }, :title => related.title + " #" + related.issue.to_s + " cover by " + related.cover do %>Cover by <%= related.cover %><% if related.note? %>, <%= related.note %><% end %>
 														<% end %>
@@ -805,7 +804,7 @@
 				                           </ul>
 				                       <% elsif @book.category == "Variant" %>
 				                       	   <ul>
-				                       	   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |related| %>
+				                       	   		<% @defaults.each do |related| %>
 													<li>
 														<%= link_to related, data: { toggle: "tooltip" }, :title => related.title + " #" + related.issue.to_s + " cover by " + related.cover do %>Cover by <%= related.cover %><% if related.note? %>, <%= related.note %><% end %>
 														<% end %>

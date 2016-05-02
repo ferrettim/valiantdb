@@ -491,6 +491,10 @@ class BooksController < ApplicationController
     else
       @pgtitle = @book.title.to_s + " #" + @book.issue.to_s + ", cover by " + @book.cover
     end
+    Money.default_bank = Money::Bank::GoogleCurrency.new
+    @variants = Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Variant").where.not(:id => @book.id)
+    @defaults = (Book.where(:title => @book.title).where(:issue => @book.issue).where(:category => "Default").where(rdate: (@book.rdate - 5.month)..(@book.rdate + 1.month)).where.not(:id => @book.id))
+    @intrade = Book.where(:title => @book.title, :arc => @book.arc, :category => "Paperback")
     @sellers2 = Sale.where(:book_id => @book.id).pluck(:user_id).flatten.join(',')
     @sales_count = Sale.where(:book_id => @book.id).count
     @ownusers = User.joins(:owns).where("owns.book_id = ?", @book.id).order(last_sign_in_at: :desc)

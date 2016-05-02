@@ -81,17 +81,17 @@
                         <li>
                             <%= link_to wishlist_path, title: "View wishlist" do %>
                             <i class="fa fa-star grayicon"></i>
-                            Wishlist <span class="pull-right label label-primary label-as-badge"><%= @user.wished_books.count %></span><% end %>
+                            Wishlist <span class="pull-right label label-primary label-as-badge"><%= @user.wishes_count %></span><% end %>
                         </li>
                         <li>
                             <%= link_to forsale_path, title: "View for sale" do %>
                             <i class="fa fa-dollar grayicon">&nbsp;</i>
-                            Selling <span class="pull-right label label-primary label-as-badge"><%= @user.forsale_books.count %></span><% end %>
+                            Selling <span class="pull-right label label-primary label-as-badge"><%= @user.sales_count %></span><% end %>
                         </li>
                         <li>
                             <%= link_to notes_path, title: "View my book notes" do %>
                             <i class="fa fa-comment grayicon"></i>
-                            Notes <span class="pull-right label label-primary label-as-badge"><%= Comment.where(user_id: @user.id).count %></span><% end %>
+                            Notes <span class="pull-right label label-primary label-as-badge"><%= @user.comments_count %></span><% end %>
                         </li>
                         <li>
                             <a href="#">
@@ -174,16 +174,16 @@
                             <% if @newbooks.count > 0 %>
                                 <% @newbooks.each do |upcoming| %>
                                         <% if upcoming.category == "Paperback" %>
-                                            <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover do %>
-                                                <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover, class: "img-responsive img-home" %>
+                                            <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover.to_s do %>
+                                                <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover.to_s, class: "img-responsive img-home" %>
                                             <% end %></li>
                                         <% elsif upcoming.category == "Hardcover" %>
-                                            <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover do %>
-                                                <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover, class: "img-responsive img-home" %>
+                                            <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover.to_s do %>
+                                                <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover.to_s, class: "img-responsive img-home" %>
                                             <% end %></li>
                                         <% else %>
-                                            <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover do %>
-                                                <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover, class: "img-responsive img-home" %>
+                                            <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover.to_s do %>
+                                                <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover.to_s, class: "img-responsive img-home" %>
                                                 <% end %></li>
                                         <% end %>
                                 <% end %>
@@ -205,11 +205,11 @@
                                 <% if @newbooks2.count > 0 %>
                                     <% @newbooks2.each do |upcoming2| %>
                                             <% if upcoming2.category == "Paperback" %>
-                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " Vol. " + upcoming2.issue.to_s + " TPB cover by " + upcoming2.cover do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover, class: "img-responsive img-home" %><% end %></li>
+                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " Vol. " + upcoming2.issue.to_s + " TPB cover by " + upcoming2.cover.to_s do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover.to_s, class: "img-responsive img-home" %><% end %></li>
                                             <% elsif upcoming2.category == "Hardcover" %>
-                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " Vol. " + upcoming2.issue.to_s + " Deluxe HC cover by " + upcoming2.cover do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover, class: "img-responsive img-home" %><% end %></li>
+                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " Vol. " + upcoming2.issue.to_s + " Deluxe HC cover by " + upcoming2.cover.to_s do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover.to_s, class: "img-responsive img-home" %><% end %></li>
                                             <% else %>
-                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " #" + upcoming2.issue.to_s + " cover by " + upcoming2.cover do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover, class: "img-responsive img-home" %><% end %></li>
+                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " #" + upcoming2.issue.to_s + " cover by " + upcoming2.cover.to_s do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover.to_s, class: "img-responsive img-home" %><% end %></li>
                                             <% end %>
                                     <% end %>
                                 <% else %>
@@ -226,7 +226,7 @@
                         <div class="flexslider2 col-md-12 col-sm-12 col-xs-12">
                             <ul class="slides">
                             <% @user.owned_books.order("owns.created_at desc").limit(12).each do |o| %>
-                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to o, :title => o.title.to_s + " #" + o.issue.to_s + " cover by " + o.cover do %><%= image_tag o.image.url(:thumb), :alt => o.title + " cover by " + o.cover, class: "img-responsive img-home" %><% end %></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to o, :title => o.title.to_s + " #" + o.issue.to_s + " cover by " + o.cover.to_s do %><%= image_tag o.image.url(:thumb), :alt => o.title.to_s + " cover by " + o.cover.to_s, class: "img-responsive img-home" %><% end %></li>
                             <% end %>
                             </ul>
                         </div>
@@ -243,7 +243,7 @@
                         <div class="flexslider2 col-md-12 col-sm-12 col-xs-12">
                             <ul class="slides">
                             <% @user.wished_books.order("wishes.created_at desc").limit(12).each do |w| %>
-                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to w, :title => w.title.to_s + " #" + w.issue.to_s + " cover by " + w.cover do %><%= image_tag w.image.url(:thumb), :alt => w.title + " cover by " + w.cover, class: "img-responsive img-home" %><% end %></li>
+                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to w, :title => w.title.to_s + " #" + w.issue.to_s + " cover by " + w.cover.to_s do %><%= image_tag w.image.url(:thumb), :alt => w.title + " cover by " + w.cover.to_s, class: "img-responsive img-home" %><% end %></li>
                             <% end %>
                             </ul>
                         </div>
