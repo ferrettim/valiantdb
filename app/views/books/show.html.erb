@@ -355,10 +355,12 @@
 								   <% end %>
 
 								   <% unless user_signed_in? %>
-								   		Value: <%= link_to supportus_path do %>Support us to access this data and more!<% end %>
+								   		Value: <%= link_to supportus_path do %>Support us to access this data and more!
+								   		<br /><% end %>
 								   <% end %>
-
+								   <% unless @book.category == "Sketch" %>
 								   Accounted for: <strong><%= @rescues.sum :quantity %></strong> <% if (@rescues.sum :quantity) == 1 %>copy<% else %>copies<% end %>
+								   <% end %>
 								   <br />
 									
 								   <% if user_signed_in? && @book.printrun? %>

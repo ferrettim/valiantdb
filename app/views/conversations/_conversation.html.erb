@@ -8,7 +8,7 @@
     <h4 class="media-heading">
       <%= conversation.subject %>
     </h4>
-    Sent by <%= link_to conversation.originator.name, root_url + "users/" + conversation.originator.slug.to_s + "/profile" %> on <strong><%= conversation.messages.last.created_at.strftime("%A, %b %d, %Y") %></strong> at <strong><%= conversation.messages.last.created_at.strftime("%I:%M%p") %></strong>
+    Sent by <%= link_to conversation.originator.slug.to_s, root_url + "users/" + conversation.originator.slug.to_s + "/profile" %> on <strong><%= conversation.messages.last.created_at.strftime("%A, %b %d, %Y") %></strong> at <strong><%= conversation.messages.last.created_at.strftime("%I:%M%p") %></strong>
     <br />
     <p><%= truncate conversation.messages.last.body, length: 145 %></p>
   </div>
