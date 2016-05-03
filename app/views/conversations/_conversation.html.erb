@@ -1,14 +1,14 @@
 <div class="media">
   <div class="media-left">
     <a href="#">
-      <%= image_tag current_user.avatar.url(:thumb), :width => "64px" %>
+      <%= image_tag conversation.originator.avatar.url(:thumb), :width => "64px" %>
     </a>
   </div>
   <div class="media-body">
     <h4 class="media-heading">
       <%= conversation.subject %>
     </h4>
-    Sent by <%= link_to root_url + "users/" + conversation.originator.slug.to_s + "/profile" do %><%= conversation.originator.name.to_s %><% end %> on <strong><%= conversation.messages.last.created_at.strftime("%A, %b %d, %Y") %></strong> at <strong><%= conversation.messages.last.created_at.strftime("%I:%M%p") %></strong>
+    Sent by <strong><%= conversation.originator.name.to_s %></strong> on <strong><%= conversation.messages.last.created_at.strftime("%A, %b %d, %Y") %></strong> at <strong><%= conversation.messages.last.created_at.strftime("%I:%M%p") %></strong>
     <br />
     <p><%= truncate conversation.messages.last.body, length: 145 %></p>
   </div>
