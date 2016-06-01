@@ -41,28 +41,28 @@
 						<% end %>
 					<% end %>
 					<p>
-						Written by <%= upcoming.writer.upcase %>
-							<% if upcoming.writer2? %> and <%= upcoming.writer2.upcase %><% end %><br />
-						Art by <%= upcoming.artist.upcase %>
-							<% if upcoming.artist2? %> and <%= upcoming.artist2.upcase %><% end %><br />
+						Written by <%= upcoming.writer.to_s %>
+							<% if upcoming.writer2? %> and <%= upcoming.writer2.to_s %><% end %><br />
+						Art by <%= upcoming.artist.to_s %>
+							<% if upcoming.artist2? %> and <%= upcoming.artist2.to_s %><% end %><br />
 						<% if upcoming.colors? %>
-							Colors by <%= upcoming.colors.upcase %><br />
+							Colors by <%= upcoming.colors.to_s %><br />
 						<% end %>
 						<% if upcoming.category == "Paperback" %>
-							Cover by <%= upcoming.cover.upcase %><br />
+							Cover by <%= upcoming.cover.to_s %><br />
 						<% elsif upcoming.category == "Hardcover" %>
-							Cover by <%= upcoming.cover.upcase %><br />
+							Cover by <%= upcoming.cover.to_s %><br />
 						<% elsif upcoming.category == "Promo" %>
-							Cover by <%= upcoming.cover.upcase %><br />
+							Cover by <%= upcoming.cover.to_s %><br />
 						<% else %>
-							Covers by <%= upcoming.cover.upcase %>
+							Covers by <%= upcoming.cover.to_s %>
 							<% if upcoming.category == "Default" %>
-								<% Book.where(:title => upcoming.title).where(:issue => upcoming.issue).where(rdate: (upcoming.rdate - 1.month)..(upcoming.rdate + 1.month)).where(:category => "Variant").where.not(:id => upcoming.id).each do |related| %>, <%= related.cover.upcase %>
+								<% Book.where(:title => upcoming.title).where(:issue => upcoming.issue).where(rdate: (upcoming.rdate - 1.month)..(upcoming.rdate + 1.month)).where(:category => "Variant").where.not(:id => upcoming.id).each do |related| %>, <%= related.cover.to_s %>
 							<% end %><br />
 						<% end %>
 						<% end %>
 						<% if upcoming.letters? %>
-							Letters by <%= upcoming.letters.upcase %><br />
+							Letters by <%= upcoming.letters.to_s %><br />
 						<% end %>
 						Price: US $<%= upcoming.price_in_dollars %><br />
 						<% if upcoming.rdate.future? %>
