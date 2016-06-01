@@ -10,17 +10,18 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jsapi
-//= require chartkick
 //= require jquery
+//= require bootstrap
 //= require jquery_ujs
+//= require menu
 //= require jquery-ui/autocomplete
+//= require autocomplete-rails
 //= require jquery-ui/accordion
 //= require jquery-ui/tooltip
 //= require jquery.raty
-//= require autocomplete-rails
+//= require search
+//= require sameheights
 //= require nprogress
-//= require nprogress-turbolinks
 //= require sweet-alert
 //= require sweet-alert-confirm
 //= require select2
@@ -28,7 +29,6 @@
 //= require local_time
 //= require tinymce-jquery
 //= require fancybox
-//= require bootstrap-sprockets
 //= require_tree .
 
 if ('addEventListener' in window) {
