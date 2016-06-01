@@ -9,23 +9,23 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-message">
-                        <h1>Valiant Database</h1>
-                        <h4>Every title from A to X-O</h4>
+                        <h1>ComicArk</h1>
+                        <% if Date.today == Date.today.beginning_of_week + 2.day %>
+                            <h2>It's new comic book day!</h2>
+                        <% else %>
+                            <p class="timer"><strong>Only <span id="countdowntimer"></span> until new comic book day!</strong></p>
+                        <% end %>
                         <hr class="intro-divider gone">
-                        <ul class="list-inline intro-social-buttons">
-							<li><%= link_to new_user_registration_path, :class => "btn btn-default", :method => :get do %>
-								<i class="fa fa-user-plus fa-fw"></i>
-								<span class="network-name">Register</span><% end %>
-							</li>
-							<li><%= link_to new_user_session_path, :class => "btn btn-primary", :method => :get do %>
-								<i class="fa fa-sign-in fa-fw"></i>
-								<span class="network-name"> Sign in! </span><% end %>
-							</li>
-                            <li><%= link_to "http://www.valiantdatabase.com/supportus", :target => "_blank", :class => "btn btn-danger" do %>
-                                <i class="fa fa-money fa-fw"></i>
-                                <span class="network-name"> Support Us </span><% end %>
-                            </li>
-                        </ul>
+                        <div class="btn-group">
+                            <%= link_to new_user_registration_path, :class => "btn btn-default", :method => :get do %>
+                                <i class="fa fa-user-plus fa-fw"></i>
+                                <span class="network-name">Register</span><% end %>
+                            <%= link_to new_user_session_path, :class => "btn btn-primary", :method => :get do %>
+                                <i class="fa fa-sign-in fa-fw"></i>
+                                <span class="network-name"> Login Now!</span><% end %>
+                        </div>
+
+                        
                     </div>
                 </div>
             </div>
@@ -37,113 +37,20 @@
     <!-- /.intro-header -->
 
     <!-- Page Content -->
-
-	<a  name="services"></a>
-    <div class="content-section-a">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5 col-sm-6">
-                    <h2 class="section-heading">Information at a glance</h2>
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <p class="lead">Get detailed information on every issue including creative teams, sales numbers, pricing data, variant and reprint cover information, upcoming solicitations, and more, all in one central place.</p>
-                    <p class="lead">
-                        <%= link_to new_user_registration_path, :method => :get, class: "black" do %>
-                            Register today to access to extra information!</p>
-                        <% end %>
-                    </p>
-                </div>
-                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                    <img class="img-responsive img-thumbnail" src="https://s3.amazonaws.com/valiantdb/images/landing/infoscreen.jpg" alt="Info">
-                </div>
-            </div>
-
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <br />
+    	<div class="col-md-4 col-sm-4 col-xs-12">
+            <%= image_tag "https://s3.amazonaws.com/valiantdb/images/landing/info.jpg", class: "img-responsive", :alt => "Info" %>
+            <p class="lead">Get information including creative teams, sales numbers, pricing data (soon!), variant and reprint information, solicitations, and more!</p>
         </div>
-        <!-- /.container -->
-
-    </div>
-    <!-- /.content-section-a -->
-
-    <div class="content-section-b">
-
-        <div class="container">
-
-            <div class="row">
-                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6 col-sm-6">
-                    <h2 class="section-heading white">Track your collection and wishlist</h2>
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <p class="lead white">Create a free account to start tracking your Valiant collection and wishlist. We have every Valiant book, variant, preview, trade and collection spanning from 1991 to the present, including a list of commissioned sketch covers for you to browse, then easily export your lists if you wish.</p>
-                    <p class="lead">
-                        <%= link_to new_user_registration_path, :method => :get, class: "white" do %>
-                        Sign up now to access to this feature!</p>
-                    <% end %>
-                    </p>
-                </div>
-                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-                    <img class="img-responsive img-thumbnail" src="https://s3.amazonaws.com/valiantdb/images/landing/collection.jpg" alt="Collection">
-                </div>
-            </div>
-
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <%= image_tag "https://s3.amazonaws.com/valiantdb/images/landing/collection.jpg", class: "img-responsive", :alt => "Collection" %>
+            <p class="lead">Create a free account to start tracking your collection and wishlist from many popular publishers and more coming soon.</p>
         </div>
-        <!-- /.container -->
-
-    </div>
-    <!-- /.content-section-b -->
-
-    <div class="content-section-a">
-
-        <div class="container">
-
-            <div class="row">
-                <div class="col-lg-5 col-sm-6">
-                    <h2 class="section-heading">We go wherever you go</h2>
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <p class="lead">The site is optimized for all your devices, from mobile phones, to tablets, to laptops and desktops so you can get the information you need, no matter where you are.</p>
-                </div>
-                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                    <img class="img-responsive img-thumbnail" src="https://s3.amazonaws.com/valiantdb/images/landing/devices.jpg" alt="Devices">
-                </div>
-            </div>
-
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <%= image_tag "https://s3.amazonaws.com/valiantdb/images/landing/devices.jpg", class: "img-responsive", :alt => "Mobile" %>
+            <p class="lead">The site is optimized for all your devices so you can get the information you need, no matter where you need to access it.</p>
         </div>
-        <!-- /.container -->
-
-    </div>
-    <!-- /.content-section-a -->
-
-	<a  name="contact"></a>
-    <div class="banner">
-
-        <div class="container">
-
-            <div class="row">
-                <div class="col-lg-6 col-sm-12 text-center">
-                    <h2>Connect with us!</h2>
-                </div>
-                <div class="col-lg-6 col-sm-12 text-center">
-                    <ul class="list-inline banner-social-buttons">
-                        <li>
-                            <a href="https://twitter.com/Valiant_Central" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name gone">Twitter</span></a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/ValiantCentral" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i> <span class="network-name gone">Facebook</span></a>
-                        </li>
-                        <li>
-                        	<%= link_to new_contact_path, class: "btn btn-default btn-lg" do %>
-								<i class="fa fa-envelope fa-fw"></i> 
-								<span class="network-name gone">Email</span>
-							<% end %>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-        <!-- /.container -->
-
     </div>
     <!-- /.banner -->
 </div>

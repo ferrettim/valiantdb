@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby "2.1.5"
+ruby "2.2.4"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
@@ -95,6 +95,11 @@ gem 'paper_trail', '~> 4.0.0'
 # Currency conversion
 gem 'money'
 gem 'google_currency'
+# News
+gem 'feedjira'
+# Security
+gem 'secure_headers', '~> 3.3', '>= 3.3.1'
+gem 'rack-attack'
 
 group :development do
 # Use sqlite3 as the database for Active Record

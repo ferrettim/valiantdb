@@ -14,10 +14,16 @@ body{
  margin: 0 auto !important;
  font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
  font-weight: 400;
- background-color: #7f8c8d;
+ background-color: #66686b;
  padding-bottom: 60px;
 }
-
+.adj {
+  padding-top: 2px;
+}
+p.timer {
+  font-size: 12pt;
+  text-shadow: 1px 1px #333333;
+}
 .btn-group .btn-default {
   border-color: #fff !important;
 }
@@ -88,7 +94,7 @@ button a {
   -webkit-box-shadow: 0 4px 7px rgba(0,0,0,0.12), 0 2px 3px rgba(0,0,0,0.24);
 }
 .black {
-  color: black;
+  color: black !important;
   opacity: 1 !important;
   font-weight: bold;
 }
@@ -129,6 +135,9 @@ button a {
 .nav i {
   color: white;
 }
+.fix {
+  padding-top: 5px;
+}
 .mobi-search {
   padding-bottom: 20px;
 }
@@ -142,7 +151,7 @@ td.barby-cell.on { background: #000; }
 
 #coverwell {
   margin-top: -10px;
-  background: url('https://s3.amazonaws.com/valiantdb/images/coverwell2.jpg');
+  background: url('https://s3.amazonaws.com/valiantdb/images/coverwell3.jpg');
   background-position: fixed;
   backgroun-repeat: no-repeat;
   -webkit-background-size: 100% 100%;
@@ -274,7 +283,7 @@ td.barby-cell.on { background: #000; }
   background: white;
 }
 #pad {
-  padding-top: 55px;
+  padding-top: 0px;
 }
 #padneg {
   padding-top: -55px !important;
@@ -294,6 +303,16 @@ footer{
 	a{
 		color: #a9a9a9;
 	}
+  margin: 0 auto;
+}
+.clear {
+  margin-top: -2px !important;
+  margin-bottom: 0px !important;
+  background-color: none !important;
+  color: #ffffff;
+  a{
+    color: #ffffff;
+  }
   margin: 0 auto;
 }
 
@@ -565,7 +584,7 @@ h4 {
 }
 
 .site-actions {
-  z-index: 5;
+  z-index: 2;
   position: absolute;
   left: 70%;
   top: 30%;
@@ -615,12 +634,13 @@ hr.message-inner-separator
   border-radius: 25px;
 }
 .btn-circle.btn-xl {
+  background: white;
   width: 70px;
   height: 70px;
-  padding: 10px 16px;
+  padding: 5px 5px;
   font-size: 24px;
   line-height: 1.33;
-  border-radius: 35px;
+  border-radius: 50%;
 }
 
 /* SEARCH BOX */
@@ -716,8 +736,10 @@ i.fa {
 }
 }
 
-.dropdown-menu {
-  background-color: black;
+@media (min-width: 1024px) {
+.gone2 {
+  display: none;
+}
 }
 
 .menus {
@@ -764,4 +786,131 @@ i.fa {
 }
 .dropdown-submenu a:hover {
   color: black !important;
+}
+
+.fill {
+    height: 325px; 
+    background-color: white;
+    padding: 5px 0px 5px 0px !important;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.fill img {
+    flex-shrink: 0;
+    min-width: 100%;
+    height: 200px;
+    margin-bottom: 5px;
+    -webkit-transition: all 0.75s ease;
+     -moz-transition: all 0.75s ease;
+       -o-transition: all 0.75s ease;
+      -ms-transition: all 0.75s ease;
+          transition: all 0.75s ease;
+}
+.fill img:hover {
+  -webkit-filter: blur(5px);
+}
+.fill_item {
+  padding: 5px 10px 10px 10px;
+  margin-bottom: 10px;
+}
+.fill_font {
+  font-size: 12pt;
+}
+.divfill {
+  width: 100%;
+  background: white url("https://s3.amazonaws.com/valiantdb/images/cabanner.jpg") no-repeat;
+  background-size: 100%;
+  border-radius: 10px 10px 0px 0px;
+  -moz-border-radius: 10px 10px 0px 0px;
+  -webkit-border-radius: 10px 10px 0px 0px;
+  border: 0px solid #000000;
+}
+
+.bottomcorners {
+  border-radius: 0px 0px 10px 10px;
+  -moz-border-radius: 0px 0px 10px 10px;
+  -webkit-border-radius: 0px 0px 10px 10px;
+  border: 0px solid #000000;
+}
+
+.topcorners {
+  padding-top: 5px;
+  border-radius: 10px 10px 0px 0px;
+  -moz-border-radius: 10px 10px 0px 0px;
+  -webkit-border-radius: 10px 10px 0px 0px;
+  border: 0px solid #000000;
+}
+
+.social {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  z-index: 99999;
+}
+.social ul {
+  padding: 10px;
+  -webkit-transform: translate(-270px, 0);
+  -moz-transform: translate(-270px, 0);
+  -ms-transform: translate(-270px, 0);
+  -o-transform: translate(-270px, 0);
+  transform: translate(-270px, 0);
+}
+.social ul li {
+  display: block;
+  margin: 5px;
+  background: rgba(0, 0, 0, 0.36);
+  width: 300px;
+  text-align: right;
+  padding: 15px;
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -ms-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
+  -webkit-border-radius: 0 15px 15px 0;
+  -moz-border-radius: 0 15px 15px 0;
+  border-radius: 0 15px 15px 0;
+}
+.social ul li:hover {
+  -webkit-transform: translate(130px, 0);
+  -moz-transform: translate(130px, 0);
+  -ms-transform: translate(130px, 0);
+  -o-transform: translate(130px, 0);
+  transform: translate(130px, 0);
+  background: #3498db;
+}
+.social ul li:hover a {
+  color: #000;
+}
+.social ul li:hover i {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.36);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  transform: rotate(360deg);
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -ms-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
+}
+.social ul li i {
+  margin-left: 10px;
+  margin-right: 20px;
+  background: transparent;
+  padding: 0px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  width: 0px;
+  height: 0px;
+  font-size: 18px;
+  background: #ffffff;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
 }

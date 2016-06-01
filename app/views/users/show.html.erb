@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row profile">
         <div class="col-md-3 col-sm-4 col-xs-12">
-            <div class="profile-sidebar">
+            <div class="profile-sidebar bottomcorners">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
                     <% if @user.avatar.blank? %>
@@ -126,9 +126,9 @@
                                 Settings <% end %>
                             </li>
                             <li>
-                                <%= link_to destroy_user_session_path, method: :delete, title: "Sign out" do %>
+                                <%= link_to destroy_user_session_path, method: :delete, title: "Logout" do %>
                                 <i class="fa fa-sign-out grayicon"></i>
-                                Sign out <% end %>
+                                Logout <% end %>
                             </li>
                         <% end %>
                         
@@ -155,12 +155,11 @@
             </div>
 
         </div>
-        <p class="white">This site is brought to you by users like <a href="http://www.octobercountrycomics.com/" class="white"><strong>October County Comics</strong></a>, <a href="http://www.valiantdatabase.com/users/dbs/profile" class="white">DBS</a>, and our <a href="http://www.valiantdatabase.com/users/backers" class="white">amazing patrons</a>.</p>
-        
-        <div class="col-md-9 col-sm-8 col-xs-12">
+        <div class="col-md-9 col-sm-8 col-xs-12 wellclear bottomcorners">
+            <p>This site is brought to you by users like <a href="http://www.octobercountrycomics.com/"><strong>October County Comics</strong></a>, <a href="http://www.comicark.com/users/dbs/profile">DBS</a>, and our <a href="http://www.comicark.com/users/backers">amazing patrons</a>.</p>
             <div class="profile-content">
                 <h4 class="text-left">
-                    <%= link_to releases_currentweek_path, class: "white" do %>
+                    <%= link_to releases_currentweek_path do %>
                         <% if (Date.today.beginning_of_week + 2.day) > Date.today %>
                             New releases for 
                         <% else %>
@@ -196,7 +195,7 @@
 
                 <% if @user == current_user %>
                     <h4 class="text-left">
-                        <%= link_to releases_nextweek_path, class: "white" do %>
+                        <%= link_to releases_nextweek_path do %>
                             New releases for <%= (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y") %>
                         <% end %>
                     </h4>

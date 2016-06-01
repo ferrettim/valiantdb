@@ -1,6 +1,0 @@
-$('#books').append('<%= j render(@book) %>');
-<% if @book.next_page %>
-  $('.pagination').replaceWith('<%= j paginate(@book) %>');
-<% else %>
-  $('.pagination').remove();
-<% end %>

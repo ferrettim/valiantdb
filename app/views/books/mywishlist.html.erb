@@ -5,22 +5,8 @@
           Wishlist Results <span class="label label-default label-as-badge"><%= current_user.wished_books.where(:title => params[:query]).count %></span>
         <% else %>
           <span class="btn btn-success btn-xs">
-            <% if action_name == "mywishlist" %>
-              <%= link_to root_url + "users/" + current_user.id.to_s + "/wishlist.csv", :title => "Export collection" do %>
-                  <span class="white fa fa-download"></span>
-                <% end %>
-            <% elsif action_name == "mywishlistvei" %>
-              <%= link_to root_url + "users/" + current_user.id.to_s + "/current-wishlist.csv", :title => "Export Current Valiant wishlist" do %>
-                  <span class="white fa fa-download"></span>
-                <% end %>
-            <% elsif action_name == "mywishlistvh1" %>
-              <%= link_to root_url + "users/" + current_user.id.to_s + "/classic-wishlist.csv", :title => "Export Classic Valiant wishlist" do %>
-                  <span class="white fa fa-download"></span>
-                <% end %>
-            <% elsif action_name == "mywishlistvh2" %>
-              <%= link_to root_url + "users/" + current_user.id.to_s + "/acclaim-wishlist.csv", :title => "Export Acclaim wishlist" do %>
-                  <span class="white fa fa-download"></span>
-                <% end %>
+            <%= link_to root_url + "users/" + current_user.id.to_s + "/wishlist.csv", :title => "Export collection" do %>
+              <span class="white fa fa-download"></span>
             <% end %>
           </span>
           My Wishlist <% if user_signed_in? && current_user.patron? %><small>$<%= '%.2f' % ((current_user.wished_books.sum :pricenm) / 100.00) %></small><% end %> <% if user_signed_in? && current_user.illuminati? %><small>$<%= '%.2f' % ((current_user.wished_books.sum :pricenm) / 100.00) %></small><% end %>

@@ -45,43 +45,55 @@
 	                                    <% end %>
 	                                <% end %>
 	                                <% if @book.category == "Default" %>
-		                                <div style="margin-top: -60px;" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2">
-			                                <% if @book.previous_book %>
-			                                	<%= link_to @book.previous_book, class: "btn btn-default btn-sm", :title => "Previous (A) cover" do %><i class="fa fa-backward"></i> Prev<% end %>
-			                                <% end %>
-			                                <% if @book.next_book %>
-			                                	<%= link_to @book.next_book, class: "btn btn-default btn-sm", :title => "Next (A) cover" do %><i class="fa fa-forward"></i> Next<% end %>
-			                                <% end %>
+		                                <div style="margin-top: -60px; position: relative; opacity: 0.75" class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2">
+		                                	<div class="btn-group">
+				                                <% if @book.previous_book %>
+				                                	<%= link_to @book.previous_book, class: "btn btn-default btn-sm", :title => "Previous (A) cover" do %><i class="fa fa-mail-reply"></i> Prev<% end %>
+				                                <% end %>
+				                                <%= link_to :back, class: "btn btn-primary btn-sm" do %> Go Back<% end %>
+				                                <% if @book.next_book %>
+				                                	<%= link_to @book.next_book, class: "btn btn-default btn-sm", :title => "Next (A) cover" do %><i class="fa fa-mail-forward"></i> Next<% end %>
+				                                <% end %>
+			                            	</div>
 			                            </div>
 			                        <% elsif @book.category == "Variant" %>
 			                        	<div style="margin-top: -60px;" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2">
-			                                <% if @book.previous_book %>
-			                                	<%= link_to @book.previous_book, class: "btn btn-default btn-sm", :title => "Previous (A) cover" do %><i class="fa fa-backward"></i> Prev<% end %>
-			                                <% end %>
-			                                <% if @book.next_book %>
-			                                	<%= link_to @book.next_book, class: "btn btn-default btn-sm", :title => "Next (A) cover" do %><i class="fa fa-forward"></i> Next<% end %>
-			                                <% end %>
+			                        		<div class="btn-group">
+				                                <% if @book.previous_book %>
+				                                	<%= link_to @book.previous_book, class: "btn btn-default btn-sm", :title => "Previous (A) cover" do %><i class="fa fa-mail-reply"></i> Prev<% end %>
+				                                <% end %>
+				                                <%= link_to :back, class: "btn btn-primary btn-sm" do %> Go Back<% end %>
+				                                <% if @book.next_book %>
+				                                	<%= link_to @book.next_book, class: "btn btn-default btn-sm", :title => "Next (A) cover" do %><i class="fa fa-mail-forward"></i> Next<% end %>
+				                                <% end %>
+				                            </div>
 			                            </div>
 			                        <% elsif @book.category == "Paperback" %>
 			                        	<div style="margin-top: -60px;" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2">
-			                                <% if @book.previous_tpb %>
-			                                	<%= link_to @book.previous_tpb, class: "btn btn-default btn-sm", :title => "Previous trade in series" do %><i class="fa fa-backward"></i> Prev<% end %>
-			                                <% end %>
-			                                <% if @book.next_tpb %>
-			                                	<%= link_to @book.next_tpb, class: "btn btn-default btn-sm", :title => "Next trade in series" do %><i class="fa fa-forward"></i> Next<% end %>
-			                                <% end %>
+			                        		<div class="btn-group">
+				                                <% if @book.previous_tpb %>
+				                                	<%= link_to @book.previous_tpb, class: "btn btn-default btn-sm", :title => "Previous trade in series" do %><i class="fa fa-mail-reply"></i> Prev<% end %>
+				                                <% end %>
+				                                <%= link_to :back, class: "btn btn-primary btn-sm" do %> Go Back<% end %>
+				                                <% if @book.next_tpb %>
+				                                	<%= link_to @book.next_tpb, class: "btn btn-default btn-sm", :title => "Next trade in series" do %><i class="fa fa-mail-forward"></i> Next<% end %>
+				                                <% end %>
+				                            </div>
 			                            </div>
 			                        <% elsif @book.category == "Hardcover" %>
 			                        	<div style="margin-top: -60px;" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2">
-			                                <% if @book.previous_hc %>
-			                                	<%= link_to @book.previous_hc, class: "btn btn-default btn-sm", :title => "Previous hardcover in series" do %><i class="fa fa-backward"></i> Prev<% end %>
-			                                <% end %>
-			                                <% if @book.next_hc %>
-			                                	<%= link_to @book.next_hc, class: "btn btn-default btn-sm", :title => "Next hardcover in series" do %><i class="fa fa-forward"></i> Next<% end %>
-			                                <% end %>
+			                        		<div class="btn-group">
+				                                <% if @book.previous_hc %>
+				                                	<%= link_to @book.previous_hc, class: "btn btn-default btn-sm", :title => "Previous hardcover in series" do %><i class="fa fa-mail-reply"></i> Prev<% end %>
+				                                <% end %>
+				                                <%= link_to :back, class: "btn btn-primary btn-sm" do %> Go Back<% end %>
+				                                <% if @book.next_hc %>
+				                                	<%= link_to @book.next_hc, class: "btn btn-default btn-sm", :title => "Next hardcover in series" do %><i class="fa fa-mail-forward"></i> Next<% end %>
+				                                <% end %>
+				                            </div>
 			                            </div>
 			                        <% end %>
-	                                
+	                   
                                 </div>
                                 <div class="tab-pane " id="tab2">
                                     <% if @book.category == "Paperback" %>
@@ -97,7 +109,7 @@
 	                                    	<%= image_tag @book.image.url(:original), :alt => @book.title + " cover by " + @book.cover, class: "img-responsive img-shadow" %>
 	                                    <% end %>
 	                                <% end %>
-
+	                                
                                 </div>
 
                                 <div class="tab-pane " id="tab3">
@@ -147,7 +159,7 @@
 											</ul>
 	                                </div>
 	                            <% end %>
-
+	                            <div id="flash_notice"></div>
 	                            <!-- PANEL 4 CONTENT -->
 
                             </div>
@@ -188,15 +200,17 @@
 								<% end %>
 								
 							</h4>
+							
                         </div>
                     </span>
                     
                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 	                    <div class="panel-body">
+
 	                        	<!-- Tab content goes here -->
 	                        		<% unless user_signed_in? %>
-									    For access to more info including variants, access to collections, wishlists, sales, book notes and tons more, <%= link_to new_user_session_path do %>please sign in!<% end %>
-									    <br />
+									    <p>For access to more info including variants, access to collections, wishlists, sales, book notes and tons more, <%= link_to new_user_session_path do %>please sign in!<% end %>
+									    </p>
 									<% end %>
 	                        		<% if @book.rdate.future? %>
 										Will be released <%= @book.rdate.strftime("%B %d, %Y") %>
@@ -207,9 +221,21 @@
 									<ul class="list-unstyled pull-right">
 										<% if user_signed_in? %>
 											<% unless @book.rdate.future? %>
-												<li id="<%= @book.id %>_owns">
-													<%= render partial: "owns" %>
-												</li>
+												<% if current_user.patron? %>
+													<li id="<%= @book.id %>_owns">
+														<%= render partial: "owns" %>
+													</li>
+												<% else %>
+													<% if current_user.owns_count < 1000 %>
+														<li id="<%= @book.id %>_owns">
+															<%= render partial: "owns" %>
+														</li>
+													<% else %>
+														<li id="<%= @book.id %>_owns">
+															<span class="fa fa-heart"></span>
+														</li>
+													<% end %>
+												<% end %>
 											<% end %>
 											<li id="<%= @book.id %>_wishes">
 												<%= render partial: "wishes" %>
@@ -233,7 +259,15 @@
 															<div class="modal-content">
 																<div class="modal-header">
 																	<button type="button" class="close" data-dismiss="modal">&times;</button>
-																	<h4 class="modal-title">My book notes</h4>
+																	<h4 class="modal-title">
+																		<% if @book.category == "Paperback" %>
+																			Notes for <%= @book.title.to_s + " Vol. " + @book.issue + " TPB" %>
+																		<% elsif @book.category == "Hardcover" %>
+																			Notes for <%= @book.title.to_s + " Vol. " + @book.issue + " Deluxe HC" %>
+																		<% else %>
+																			Notes for <%= @book.title.to_s + " #" + @book.issue.to_s %>
+																		<% end %>
+																	</h4>
 																</div>
 																<div class="modal-body">
 																		<%= form_for [@book, @book.comments.build], remote: true do |f| %>
@@ -327,6 +361,18 @@
 											<% end %>
 										<% end %>
 										<br />
+										<% unless @book.isb.blank? %>
+											<% if @book.category == "Paperback" %>
+												ISBN: <strong><%= @book.isb.to_s %></strong><br />
+											<% elsif @book.category == "Hardcover" %>
+												ISBN: <strong><%= @book.isb.to_s %></strong><br />
+											<% else %>
+												UPC: <strong><%= @book.isb.to_s %></strong><br />
+											<% end %>
+										<% end %>
+										<% unless @book.code.blank? %>
+									   		Diamond Code: <strong><%= @book.code.to_s.upcase %></strong><br />
+									   	<% end %>
 									<% end %>
 									
 									<% if user_signed_in? && current_user.patron? && @book.pricenm? %>
@@ -354,10 +400,6 @@
 								   		<br />
 								   <% end %>
 
-								   <% unless user_signed_in? %>
-								   		Value: <%= link_to supportus_path do %>Support us to access this data and more!
-								   		<br /><% end %>
-								   <% end %>
 								   <% unless @book.category == "Sketch" %>
 								   Accounted for: <strong><%= @rescues.sum :quantity %></strong> <% if (@rescues.sum :quantity) == 1 %>copy<% else %>copies<% end %>
 								   <% end %>
@@ -370,6 +412,7 @@
 										<% end %><br />
 								   <% end %>
 
+								<% if @book.note? %>
 								   <% if user_signed_in? && @book.note.include?("1:10 ") %>
 								   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
 								   				<% if s.printrun? %>
@@ -471,12 +514,14 @@
 								   			 	<% end %>
 								   			<% end %>
 								   <% end %>
-
+								<% end %>
+								   
 								   <% if @book.publisher? %>
 								   		Published by <strong><%= @book.publisher %></strong>
 								   	<% end %>
 								   	<% if @book.country? %>
 								   		<% if @book.country == "United States" %>
+								   		    <%= "(" + @book.imprint + ")" if @book.imprint? %>
 								   		<% else %>
 								   			(<%= @book.country %>)
 								   		<% end %>
@@ -490,12 +535,12 @@
 								<% end %>
 								
 								<div class="col-md-12 col-sm-12 col-xs-12" style="margin-left: -30px;">
-									<div class="col-md-6 col-sm-7 col-xs-12">
+									<div class="col-md-5 col-sm-6 col-xs-12">
 										<span id="user_rating">
 										  <%= render "ownsrating" %>
 										</span>
 									</div>
-									<div class="col-md-6 col-sm-5 col-xs-12">
+									<div class="col-md-7 col-sm-6 col-xs-12 adj">
 									<!-- Set rating -->
 										<% if @book.rates('book').count > 0 %>
 										  Avg. Rating
@@ -506,6 +551,9 @@
 								<div class="clearfix"></div>
 								<p>
 									<strong>NOTES:</strong>
+									<% unless @book.comicrating.blank? %>
+										Rated <strong><%= @book.comicrating %></strong>.
+									<% end %>
 									<% if @book.note.blank? %>No notes for this book. <% end %>
 									<% unless @book.note.blank? %>
 										<% if @book.category == "Sketch" %>
@@ -540,7 +588,7 @@
 										<% end %>
 									<% if @book.category == "Default" %>
 										<% if @book.tags.count > 0 %>
-											Includes appearances by <%= raw @book.tags.map(&:name).map { |c| link_to c, root_url + "characters/" + c.parameterize }.join(', ') %>.
+											Includes appearances by <%= h raw @book.tags.map(&:name).map { |c| link_to c, root_url + "characters/" + c.parameterize }.join(', ') %>.
 										<% end %>
 									<% end %>
 									<% unless @book.arc.blank? || @book.category == "Paperback" || @book.category == "Hardcover" %>Part of <%= link_to search_path + "/?utf8=✓&query=" + @book.arc, data: { toggle: "tooltip" }, :title => "View books in this arc" do %><%= @book.arc %><% end %> arc.
@@ -549,6 +597,7 @@
 										<span id="own_notes"><%= render 'ownsnotes' %></span>
 									<% end %>
 									<span id="own_wish_stats"><%= render 'ownwish' %></span>
+									
 
 									
 								</p>
@@ -569,7 +618,7 @@
 										                <h4 class="modal-title" id="image-gallery-title">Book Summary</h4>
 										            </div>
 										            <div class="modal-body">
-													    <%= @book.summary.html_safe %>
+													    <%= h @book.summary.html_safe %>
 										            </div>
 										        </div>
 										    </div>
@@ -577,15 +626,10 @@
 								<% end %>
 
 
-								<% if @book.category == "Paperback" %>
-								   	<%= link_to @book.link, data: { toggle: "tooltip" }, :title => "Click to purchase this trade", class: "btn btn-default btn-sm", :target => "_blank" do %><span class="fa fa-amazon"></span> <span class="gone">Purchase</span> <% end %>
-								<% elsif @book.category == "Hardcover" %>
-								   	<%= link_to @book.link, data: { toggle: "tooltip" }, :title => "Click to purchase this trade", class: "btn btn-default btn-sm", :target => "_blank" do %><span class="fa fa-amazon"></span> <span class="gone">Purchase</span> <% end %>
-								<% elsif @book.category == "Variant" %>
+							
 									<% if @book.link? %>
-								   		<%= link_to @book.link, data: { toggle: "tooltip" }, :title => "Click to purchase this trade", class: "btn btn-default btn-sm", :target => "_blank" do %><span class="fa fa-shopping-cart"></span> <span class="gone">Purchase</span> <% end %>
+								   		<%= link_to @book.link, data: { toggle: "tooltip" }, :title => "Click to purchase", class: "btn btn-default btn-sm", :target => "_blank" do %><span class="fa fa-shopping-cart"></span> <span class="gone">Purchase</span> <% end %>
 								   	<% end %>
-								<% end %>
 
 
 								<!-- PREVIEW IMAGES BEGIN HERE -->
@@ -662,12 +706,42 @@
 												</span>
 											</a>
 								<% end %>
+
+								<span class="dropup">
+								  <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="sharelist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    <i class="fa fa-share"></i> Share
+								    <span class="caret"></span>
+								  </button>
+								  <ul class="dropdown-menu" aria-labelledby="sharelist">
+								    <li><a href="https://www.facebook.com/sharer/sharer.php?u=<%= root_url + "books/" + @book.slug.to_s %>&t=<%= @book.title.to_s + " " + @book.issue.to_s %>" title="Share on Facebook" target="_blank"><i class="fa fa-facebook"></i> &nbsp;&nbsp;Share on Facebook</a></li>
+								    <li><a href="https://twitter.com/intent/tweet?source=<%= root_url + "books/" + @book.slug.to_s %>&text=<%= @book.title.to_s + " " + @book.issue.to_s %>:%20<%= root_url + "books/" + @book.slug.to_s %>&via=comicark" target="_blank" title="Tweet"><i class="fa fa-twitter"></i> &nbsp;Tweet This</a></li>
+								    <li><a href="https://plus.google.com/share?url=<%= root_url + "books/" + @book.slug.to_s %>" target="_blank" title="Share on Google+"><i class="fa fa-google-plus"></i> Share on Google+</a></li>
+								    <li><a href="http://pinterest.com/pin/create/button/?url=<%= root_url + "books/" + @book.slug.to_s %>&media=<%= @book.image.url(:thumb) %>&description=<%= @book.title.to_s + " " + @book.issue.to_s %>" target="_blank" title="Pin it"><i class="fa fa-pinterest"></i> &nbsp;Pin it</a></li>
+								  </ul>
+								</span>
+
 								<% if user_signed_in? && current_user.patron? %>
 								<% else %>
 									<%= link_to supportus_path, :title => "Support us", class: "btn btn-success btn-sm", :target => "_blank" do %>
 										<span class="fa fa-dollar"></span> <span class="gone">Support Us</span>
 									<% end %>
 								<% end %>
+
+								<div class="clearfix"><br /></div>
+
+								<% if user_signed_in? && current_user.patron? %>
+								<% else %>
+									<div class="col-md-10 col-md-1 col-sm-10 col-sm-1 col-xs-12">
+										<script type="text/javascript" src='http://adn.ebay.com/files/js/min/ebay_activeContent-min.js'></script>
+										<script charset="utf-8" type="text/javascript">
+											if (window.matchMedia('(min-device-width: 1028px)').matches) { 
+												document.write('\x3Cscript type="text/javascript" charset="utf-8" src="http://adn.ebay.com/cb?programId=1&campId=5337827480&toolId=10026&keyword=%28<%= @book.title %>%2C<%= @book.publisher %>%29&width=510&height=90&font=1&textColor=000000&linkColor=0000AA&arrowColor=56aaff&color1=709AEE&color2=[COLORTWO]&format=ImageLink&contentType=TEXT_AND_IMAGE&enableSearch=y&usePopularSearches=n&freeShipping=n&topRatedSeller=n&itemsWithPayPal=n&descriptionSearch=n&showKwCatLink=n&excludeCatId=&excludeKeyword=&catId=&disWithin=200&ctx=n&autoscroll=y&flashEnabled=' + isFlashEnabled + '&pageTitle=' + _epn__pageTitle + '&cachebuster=' + (Math.floor(Math.random() * 10000000 )) + '">\x3C/script>' ); } 
+											else { 
+												document.write('\x3Cscript type="text/javascript" charset="utf-8" src="http://adn.ebay.com/cb?programId=1&campId=5337827480&toolId=10026&keyword=%28<%= @book.title %>%2C<%= @book.publisher %>%29&width=300&height=90&font=1&textColor=000000&linkColor=0000AA&arrowColor=56aaff&color1=709AEE&color2=[COLORTWO]&format=ImageLink&contentType=TEXT_AND_IMAGE&enableSearch=y&usePopularSearches=n&freeShipping=n&topRatedSeller=n&itemsWithPayPal=n&descriptionSearch=n&showKwCatLink=n&excludeCatId=&excludeKeyword=&catId=&disWithin=200&ctx=n&autoscroll=y&flashEnabled=' + isFlashEnabled + '&pageTitle=' + _epn__pageTitle + '&cachebuster=' + (Math.floor(Math.random() * 10000000 )) + '">\x3C/script>' ); }
+										</script>
+									</div>
+								<% end %>
+
 	                    </div>
                     </div>
                 </div> 
@@ -828,10 +902,9 @@
 			            </div> <!-- / panel-group -->
 	            	<% end %>
 	            <% end %>
-	            <div class="clearfix"><br /></div>
-	            <p class="white">This site is brought to you by users like <a href="http://www.octobercountrycomics.com/" class="white"><strong>October County Comics</strong></a>, <a href="http://www.valiantdatabase.com/users/dbs/profile" class="white">DBS</a>, and our <a href="http://www.valiantdatabase.com/users/backers" class="white">amazing patrons</a>.</p>
 
         </div> <!-- /col-md-6 -->
+
     </div> <!--/ .row -->
 </div> <!-- end sidetab container -->
 
@@ -858,5 +931,4 @@
 			<!-- End Modal -->
 			<% end %>
 </div>
-<div class="clearfix"><br /></div>
 <% end %>

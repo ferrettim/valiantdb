@@ -1,5 +1,1 @@
-:verbose: false
-:concurrency: 47
-:queues:
-  - default
-  - mailers 
+:concurrency: 16

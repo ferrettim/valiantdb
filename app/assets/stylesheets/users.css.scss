@@ -144,21 +144,13 @@
 /* Profile Content */
 .profile-content {
   margin-top: 0;
-  padding: 5px 20px 20px 20px;
-  color: white;
+  padding: 5px 20px 20px 20px; 
   min-height: 460px;
-}
-.profile-content a {
-  color: white;
-}
-.profile-content a:hover {
-  color: white;
-  text-decoration: underline;
 }
 
 @media (max-width: 1023px) {
   #view-more {
-    border: 1px white solid; 
+    border: 1px #ccc solid; 
     width: 100%;
     border-radius: 15px;
   }
@@ -166,20 +158,20 @@
 
 @media (min-width: 1024px) {
   #view-more {
-    border: 1px white solid; 
+    border: 1px #ccc solid; 
     width: 50%;
     border-radius: 15px;
   }
 }
 
 #view-more a {
-  color: white;
-  font-weight: bold;
+  color: #6C7A89;
+  font-weight: bolder;
   font-size: 1.25em;
 }
 
 #view-more a:hover {
-  color: white;
+  color: #6C7A89;
   font-style: italic;
   font-weight: bolder;
   font-size: 1.25em;

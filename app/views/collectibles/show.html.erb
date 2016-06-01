@@ -107,7 +107,7 @@
 									<% if @collectible.description.blank? %>
 										No notes for this item. 
 									<% else %>
-										<%= @collectible.description.html_safe %>
+										<%= h @collectible.description.html_safe %>
 									<% end %>				
 								</p>
 

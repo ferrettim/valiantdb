@@ -1,42 +1,279 @@
 <div id="books">
-	<% @book.each do |title| %>
- 	<div class="col-md-2 col-sm-4 col-xs-6 book-image">
- 		<div class="site-actions">
-			<ul class="list-unstyled">
-				<% if user_signed_in? %>
-					<% if @user == current_user %>		        
-				        <li id="<%= title.id %>_sales" class="magic">
-				        	<% if user_signed_in? && current_user.sales?(title) %>
-								<%= link_to book_sale_path(title), method: :delete, remote: true, class: "btn btn-default btn-warning btn-circle", title: "Remove from sell list", data: {disable_with: "<span class='fa fa-minus'></span>"} do %><i class="fa fa-dollar"></i><% end %>
-							<% else %>
-								<%= link_to book_sale_path(title), method: :post, remote: true, class: "btn btn-default btn-circle", title: "Mark for sale", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-dollar"></i> <% end %>
-							<% end %>
-				        </li>
-				    <% else %>
-				    	 <li id="<%= title.id %>_wishes" class="magic">
-				        	<% if user_signed_in? && current_user.wishes?(title) %>
-								<%= link_to book_wish_path(title), method: :delete, remote: true, class: "btn btn-default btn-danger btn-circle", title: "Remove from wishlist", data: {disable_with: "<span class='fa fa-minus'></span>"} do %><i class="fa fa-star-o"></i><% end %>
-							<% else %>
-								<%= link_to book_wish_path(title), method: :post, remote: true, class: "btn btn-success btn-circle", title: "Add to wishlist", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-star"></i> <% end %>
-							<% end %>
-				        </li>
-				    <% end %>
-				<% end %>
-			</ul>
- 		</div>
- 		<% if title.category == "Paperback" %>
- 			<%= link_to title, :title => title.title + " Vol. " + title.issue.to_s + " TPB" do %>
- 				<%= image_tag title.image.url(:medium), class: "img-responsive img-shadow", :alt => title.title + " Vol. " + title.issue.to_s %>
- 			<% end %>
- 		<% elsif title.category == "Hardcover" %>
- 			<%= link_to title, :title => title.title + " Vol. " + title.issue.to_s + " Deluxe HC" do %>
- 				<%= image_tag title.image.url(:medium), class: "img-responsive img-shadow", :alt => title.title + " Vol. " + title.issue.to_s %>
- 			<% end %>
- 		<% else %>
- 			<%= link_to title, :title => title.title + " #" + title.issue.to_s do %>
- 				<%= image_tag title.image.url(:medium), class: "img-responsive img-shadow", :alt => title.title + title.issue.to_s %>
- 			<% end %>
- 		<% end %>
- 	</div>
- 	<% end %>
+
+<% unless params[:query].present? %>
+	<!-- Nav tabs -->
+  <div>
+    <ul class="list-inline btn-group collectionDropdowns">
+      <li class="btn btn-default">
+        <div class="dropdown dropdown-large">
+          <button class="btn btn-default dropdown-toggle" type="button" id="collectionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Publishers
+            <span class="caret"></span>
+          </button>
+          <% if user_signed_in? %>
+          <ul class="dropdown-menu" aria-labelledby="collectionDropdown">
+            <li class="options"><%= link_to forsale_path do %><strong>All</strong> (<%= @user.forsale_books.count %>)<% end %></li>
+            <% if @bookfourfiveone.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=451" do %>451 (<%= @bookfourfiveone.count %>)<% end %></li>
+            <% end %>
+            <% if @bookaftershock.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Aftershock+Comics" do %>Aftershock (<%= @bookaftershock.count %>)<% end %></li>
+            <% end %>
+            <% if @bookarchie.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Archie+Comics" do %>Archie (<%= @bookarchie.count %>)<% end %></li>
+            <% end %>
+            <% if @bookblackmask.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Black+Mask" do %>Black Mask (<%= @bookblackmask.count %>)<% end %></li>
+            <% end %>
+            <% if @bookboom.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Boom+Studios" do %>Boom (<%= @bookboom.count %>)<% end %></li>
+            <% end %>
+            <% if @bookdarkhorse.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Dark+Horse+Comics" do %>Dark Horse (<%= @bookdarkhorse.count %>)<% end %></li>
+            <% end %>
+            <% if @bookdc.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=DC+Comics" do %>DC (<%= @bookdc.count %>)<% end %></li>
+            <% end %>
+            <% if @bookdynamite.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Dynamite+Entertainment" do %>Dynamite (<%= @bookdynamite.count %>)<% end %></li>
+            <% end %>
+            <% if @bookidw.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=IDW+Comics" do %>IDW (<%= @bookidw.count %>)<% end %></li>
+            <% end %>
+            <% if @bookimage.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Image+Comics" do %>Image (<%= @bookimage.count %>)<% end %></li>
+            <% end %>
+            <% if @bookmarvel.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Marvel+Comics" do %>Marvel (<%= @bookmarvel.count %>)<% end %></li>
+            <% end %>
+            <% if @booktopshelf.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Top+Shelf+Productions" do %>Top Shelf (<%= @booktopshelf.count %>)<% end %></li>
+            <% end %>
+            <% if @bookvei.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Valiant+Entertainment" do %>Valiant (<%= @bookvei.count %>)<% end %></li>
+            <% end %>
+            <% if @bookvh2.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Acclaim+Entertainment" do %>Valiant (Acclaim) (<%= @bookvh2.count %>)<% end %></li>
+            <% end %>
+            <% if @bookvh1.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Voyager+Communications" do %>Valiant (Classic) (<%= @bookvh1.count %>)<% end %></li>
+            <% end %>  
+            <% if @bookint.count > 0 %>
+              <li class="options"><%= link_to collectionint_path do %>Valiant (International) (<%= @bookint.count %>)<% end %></li>
+            <% end %>      
+            <% if @bookvertigo.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Vertigo+Comics" do %>Vertigo (<%= @bookvertigo.count %>)<% end %></li>
+            <% end %>      
+            <% if @bookzenescope.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Zenescope+Entertainment" do %>Zenescope (<%= @bookaftershock.count %>)<% end %></li>
+            <% end %>
+          </ul>
+          <% else %>
+          <ul class="dropdown-menu" aria-labelledby="collectionDropdown">
+            <li class="options"><%= link_to forsale_path do %><strong>All</strong> (<%= @user.forsale_books.count %>)<% end %></li>
+            <% if @bookfourfiveone.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=451" do %>451 (<%= @bookfourfiveone.count %>)<% end %></li>
+            <% end %>
+            <% if @bookaftershock.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Aftershock+Comics" do %>Aftershock (<%= @bookaftershock.count %>)<% end %></li>
+            <% end %>
+            <% if @bookarchie.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Archie+Comics" do %>Archie (<%= @bookarchie.count %>)<% end %></li>
+            <% end %>
+            <% if @bookblackmask.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Black+Mask" do %>Black Mask (<%= @bookblackmask.count %>)<% end %></li>
+            <% end %>
+            <% if @bookboom.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Boom+Studios" do %>Boom (<%= @bookboom.count %>)<% end %></li>
+            <% end %>
+            <% if @bookdarkhorse.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Dark+Horse+Comics" do %>Dark Horse (<%= @bookdarkhorse.count %>)<% end %></li>
+            <% end %>
+            <% if @bookdc.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=DC+Comics" do %>DC (<%= @bookdc.count %>)<% end %></li>
+            <% end %>
+            <% if @bookdynamite.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Dynamite+Entertainment" do %>Dynamite (<%= @bookdynamite.count %>)<% end %></li>
+            <% end %>
+            <% if @bookidw.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=IDW+Comics" do %>IDW (<%= @bookidw.count %>)<% end %></li>
+            <% end %>
+            <% if @bookimage.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Image+Comics" do %>Image (<%= @bookimage.count %>)<% end %></li>
+            <% end %>
+            <% if @bookmarvel.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Marvel+Comics" do %>Marvel (<%= @bookmarvel.count %>)<% end %></li>
+            <% end %>
+            <% if @booktopshelf.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Top+Shelf+Productions" do %>Top Shelf (<%= @booktopshelf.count %>)<% end %></li>
+            <% end %>
+            <% if @bookvei.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Valiant+Entertainment" do %>Valiant (<%= @bookvei.count %>)<% end %></li>
+            <% end %>
+            <% if @bookvh2.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Acclaim+Entertainment" do %>Valiant (Acclaim) (<%= @bookvh2.count %>)<% end %></li>
+            <% end %>
+            <% if @bookvh1.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Voyager+Communications" do %>Valiant (Classic) (<%= @bookvh1.count %>)<% end %></li>
+            <% end %>  
+            <% if @bookint.count > 0 %>
+              <li class="options"><%= link_to collectionint_path do %>Valiant (International) (<%= @bookint.count %>)<% end %></li>
+            <% end %>      
+            <% if @bookvertigo.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Vertigo+Comics" do %>Vertigo (<%= @bookvertigo.count %>)<% end %></li>
+            <% end %>      
+            <% if @bookzenescope.count > 0 %>
+              <li class="options"><%= link_to forsale_path + "?utf8=✓&publisher=Zenescope+Entertainment" do %>Zenescope (<%= @bookaftershock.count %>)<% end %></li>
+            <% end %>     
+          </ul>
+          <% end %>
+        </div>
+      </li>
+      <li class="btn btn-default">
+        <%= form_tag "/users/" + @user.id.to_s + "/collection", :method => 'get', :role => "search" do %>
+                <select name="query" class="btn chosen-select" onchange="this.form.submit()"> 
+                  <option value="">Series</option>
+
+                    <% if params[:publisher].present? %>
+                      <% if params[:publisher] == "451" %>
+                        <% @user.forsale_books.where(:publisher => "451").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Aftershock Comics" %>
+                        <% @user.forsale_books.where(:publisher => "Aftershock Comics").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Archie Comics" %>
+                        <% @user.forsale_books.where(:publisher => "Archie Comics").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Aspen Comics" %>
+                        <% @user.forsale_books.where(:publisher => "Aspen Comics").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Avatar Press" %>
+                        <% @user.forsale_books.where(:publisher => "Avatar Press").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Black Mask" %>
+                        <% @user.forsale_books.where(:publisher => "Black Mask Studios").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Boom Studios" %>
+                        <% @user.forsale_books.where(:publisher => "Boom Studios").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Dark Horse Comics" %>
+                        <% @user.forsale_books.where(:publisher => "Dark Horse Comics").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "DC Comics" %>
+                        <% @user.forsale_books.where(:publisher => "DC Comics").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Dynamite Entertainment" %>
+                        <% @user.forsale_books.where(:publisher => "Dynamite Entertainment").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "IDW Publishing" %>
+                        <% @user.forsale_books.where(:publisher => "IDW Publishing").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Image Comics" %>
+                        <% @user.forsale_books.where(:publisher => "Image Comics").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Marvel Comics" %>
+                        <% @user.forsale_books.where(:publisher => "Marvel Comics").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Top Shelf Productions" %>
+                        <% @user.forsale_books.where(:publisher => "Top Shelf Productions").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Vertigo Comics" %>
+                        <% @user.forsale_books.where(:publisher => "Vertigo Comics").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Zenescope Entertainment" %>
+                        <% @user.forsale_books.where(:publisher => "Zenescope Entertainment").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Valiant Entertainment" %>
+                        <% @user.forsale_books.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Voyager Communications" %>
+                        <% @user.forsale_books.where(:publisher => "Voyager Communications").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% elsif params[:publisher] == "Acclaim Entertainment" %>
+                        <% @user.forsale_books.where(:publisher => "Acclaim Entertainment").select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% else %>
+                        <% @user.forsale_books.select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                      <% end %>
+                    <% else %>
+                      <% @user.forsale_books.select("DISTINCT(title)").group("title").order("title ASC").each do |f| %>
+                          <option value="<%= f.title %>"><%= f.title %></option>
+                        <% end %>
+                    <% end %>
+                </select>         
+        <% end %>
+      </li>
+      
+    </ul>
+
+
+	</div>
+<div class="clearfix"></div>
+<% end %>
+
+		<% @book.each do |title| %>
+		 	<div class="col-md-2 col-sm-4 col-xs-6 book-image">
+		 		<div class="site-actions">
+					<ul class="list-unstyled">
+						<% if user_signed_in? %>
+              <% unless title.rdate.future? %>
+					        <li id="<%= title.id %>_owns" class="magic">
+					        	<% if user_signed_in? && current_user.owns?(title) %>
+									<%= link_to book_own_path(title), method: :delete, remote: true, class: "btn btn-default btn-danger btn-circle", title: "Remove from collection", data: {disable_with: "<i class='fa fa-minus'></i>"} do %><i class="fa fa-heart"></i><% end %>
+								<% else %>
+									<%= link_to book_own_path(title), method: :post, remote: true, class: "btn btn-success btn-circle", title: "Add to collection", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-heart"></i> <% end %>
+								<% end %>
+					        </li>
+					    <% end %>
+						<% end %>
+					</ul>
+		 		</div>
+        <% if user_signed_in? && current_user.patron? %>
+            <% if title.pricenm? %>
+              <div class="ribbon"><span>$<%= '%.2f' % title.value_in_dollars %></span></div>
+            <% end %>
+        <% end %>
+		 		<% if title.category == "Paperback" %>
+		 			<%= link_to title, :title => title.title + " Vol. " + title.issue.to_s + " TPB" do %>
+		 				<%= image_tag title.image.url(:medium), class: "img-responsive img-shadow", :alt => title.title + " Vol. " + title.issue.to_s %>
+		 			<% end %>
+		 		<% elsif title.category == "Hardcover" %>
+		 			<%= link_to title, :title => title.title + " Vol. " + title.issue.to_s + " Deluxe HC" do %>
+		 				<%= image_tag title.image.url(:medium), class: "img-responsive img-shadow", :alt => title.title + " Vol. " + title.issue.to_s %>
+		 			<% end %>
+		 		<% else %>
+		 			<%= link_to title, :title => title.title + " #" + title.issue.to_s do %>
+		 				<%= image_tag title.image.url(:medium), class: "img-responsive img-shadow", :alt => title.title + title.issue.to_s %>
+		 			<% end %>
+		 		<% end %>
+		 	</div>
+	 	<% end %>
+	 	<div class="clearfix"></div>
+  		<div class="text-center"><%= paginate @book %></div>	
+	 
+
+  </div>
+
+
 </div>

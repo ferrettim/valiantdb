@@ -17,7 +17,16 @@
   z-index: 1;
   margin: 0 -20px;
 }
-
+.optionstitle {
+  width: 163px;
+}
+.optionsissue {
+  width: 40px;
+}
+.btn-centered {
+  width: 150px;
+  text-align: center;
+}
 .ribbon {
   position: absolute;
   left: 10px; top: -5px;
@@ -69,7 +78,6 @@
 .amzn-native-search-bar {
   display: none;
 }
-
 .keys {
   table-layout: fixed !important;
   width: 100% !important;
@@ -94,7 +102,7 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
   #banner25 {
     background: url('https://s3.amazonaws.com/valiantdb/images/banners/banner25.jpg');
@@ -105,7 +113,7 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
   #bannerelse {
     background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerelse.jpg');
@@ -116,7 +124,18 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
+  }
+  #bannermine {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannermine.jpg');
+    background-position:fixed;
+    background-repeat:no-repeat;
+    height:150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
   }
   #bannerall {
     background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerall.jpg');
@@ -127,10 +146,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #banneraa {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/banneraa.jpg');
+  #banner451 {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/banner451.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     height:150px;
@@ -138,10 +157,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerah {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerah.jpg');
+  #aftershock {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/aftershock.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     height:150px;
@@ -149,260 +168,150 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerbod {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerbod.jpg');
+  #bannerarchie {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerarchie.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height: 150px;
+    height:150px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerbs {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerbs.jpg');
+  #banneraspen {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/banneraspen.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:150px;
+    height:150px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerbsr {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerbsr.jpg');
+  #banneravatar {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/banneravatar.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:150px;
+    height:150px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerdd {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdd.jpg');
+  #bannerboom {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerboom.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:150px;
+    height:150px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerdeli {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdeli.jpg');
+  #bannerblackmask {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerblackmask.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:150px;
+    height:150px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerdiv {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdiv.jpg');
+  #bannerdarkhorse {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdarkhorse.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:150px;
+    height:150px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerdrm {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdrm.jpg');
+  #bannerdc {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdc.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:150px;
+    height:150px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerew {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerew.jpg');
+  #bannerdynamite {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdynamite.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:150px;
+    height:150px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerfaith {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerfaith.jpg');
+  #banneridw {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/banneridw.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:150px;
+    height:150px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerharb {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerharb.jpg');
+  #bannerimage {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerimage.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:150px;
+    height:150px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerhw {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerhw.jpg');
+  #bannermarvel {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannermarvel.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:150px;
+    height:150px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerimp {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerimp.jpg');
+  #bannervertigo {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannervertigo.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:150px;
+    height:150px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerivar {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerivar.jpg');
+  #bannerzenescope {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerzenescope.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:150px;
+    height:150px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannernin {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannernin.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:150px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerqw {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerqw.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:150px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerpm {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerpm.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:150px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerpreviews {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerall.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:150px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerrai {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerrai.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:150px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannersha {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannersha.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:150px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannertrades {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerall.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:150px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannervali {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannervali.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:150px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerunity {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerunity.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:150px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerxo {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerxo.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:150px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
   #bannerclassic {
     background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerclassic.jpg');
@@ -413,7 +322,7 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
 }
 
@@ -430,7 +339,7 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
   #banner25 {
     background: url('https://s3.amazonaws.com/valiantdb/images/banners/banner25.jpg');
@@ -441,7 +350,7 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
   #bannerelse {
     background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerall.jpg');
@@ -452,7 +361,18 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
+  }
+  #bannermine {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannermine.jpg');
+    background-position:fixed;
+    background-repeat:no-repeat;
+    height:200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
   }
   #bannerall {
     background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerall.jpg');
@@ -463,282 +383,183 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #banneraa {
-  background: url('https://s3.amazonaws.com/valiantdb/images/banners/banneraa.jpg');
-  background-position:fixed;
+  #banner451 {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/banner451.jpg');
+    background-position:fixed;
     background-repeat:no-repeat;
     height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerah {
-  background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerah.jpg');
-  background-position:fixed;
+  #aftershock {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/aftershock.jpg');
+    background-position:fixed;
     background-repeat:no-repeat;
     height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerbod {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerbod.jpg');
+  #bannerarchie {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerarchie.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:200px;
+    height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerbs {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerbs.jpg');
+  #banneraspen {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/banneraspen.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:200px;
+    height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerbsr {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerbsr.jpg');
+  #banneravatar {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/banneravatar.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:200px;
+    height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerdd {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdd.jpg');
+  #bannerblackmask {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerblackmask.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:200px;
+    height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerdeli {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdeli.jpg');
+  #bannerboom {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerboom.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:200px;
+    height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerdiv {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdiv.jpg');
+  #bannerdarkhorse {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdarkhorse.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:200px;
+    height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerdrm {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdrm.jpg');
+  #bannerdc {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdc.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:200px;
+    height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerew {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerew.jpg');
+  #bannerdynamite {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdynamite.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:200px;
+    height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerfaith {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerfaith.jpg');
+  #banneridw {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/banneridw.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:200px;
+    height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerharb {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerharb.jpg');
+  #bannerimage {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerimage.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:200px;
+    height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerhw {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerhw.jpg');
+  #bannermarvel {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannermarvel.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:200px;
+    height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerimp {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerimp.jpg');
+  #bannertopshelf {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannertopshelf.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:200px;
+    height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerivar {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerivar.jpg');
+  #bannervertigo {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannervertigo.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:200px;
+    height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannernin {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannernin.jpg');
+  #bannerzenescope {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerzenescope.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
-    min-height:200px;
+    height:200px;
     -webkit-background-size: 100% 100%;
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerqw {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerqw.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:200px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerpm {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerpm.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:200px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerpreviews {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerall.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:200px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerrai {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerrai.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:200px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannersha {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannersha.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:200px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannertrades {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerall.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:200px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannervali {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannervali.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:200px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerunity {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerunity.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:200px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerxo {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerxo.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:200px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
   #bannerclassic {
     background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerclassic.jpg');
@@ -749,7 +570,7 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
 }
 
@@ -766,7 +587,7 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
   #banner25 {
     background: url('https://s3.amazonaws.com/valiantdb/images/banners/banner25.jpg');
@@ -777,7 +598,7 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
   #bannerelse {
     background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerelse.jpg');
@@ -788,7 +609,18 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
+  }
+  #bannermine {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannermine.jpg');
+    background-position:fixed;
+    background-repeat:no-repeat;
+    min-height:250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
   }
   #bannerall {
     background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerall.jpg');
@@ -799,10 +631,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #banneraa {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/banneraa.jpg');
+  #banner451 {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/banner451.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -810,10 +642,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerah {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerah.jpg');
+  #aftershock {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/aftershock.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -821,10 +653,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerbod {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerbod.jpg');
+  #bannerarchie {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerarchie.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -832,10 +664,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerbs {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerbs.jpg');
+  #banneraspen {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/banneraspen.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -843,10 +675,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerbsr {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerbsr.jpg');
+  #banneravatar {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/banneravatar.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -854,10 +686,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerdd {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdd.jpg');
+  #bannerblackmask {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerblackmask.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -865,10 +697,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerdeli {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdeli.jpg');
+  #bannerboom {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerboom.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -876,10 +708,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerdiv {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdiv.jpg');
+  #bannerdarkhorse {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdarkhorse.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -887,10 +719,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerdrm {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdrm.jpg');
+  #bannerdc {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdc.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -898,10 +730,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerew {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerew.jpg');
+  #bannerdynamite {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerdynamite.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -909,10 +741,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerfaith {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerfaith.jpg');
+  #banneridw {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/banneridw.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -920,10 +752,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerharb {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerharb.jpg');
+  #bannerimage {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerimage.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -931,10 +763,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerhw {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerhw.jpg');
+  #bannermarvel {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannermarvel.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -942,10 +774,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerimp {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerimp.jpg');
+  #bannertopshelf {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannertopshelf.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -953,10 +785,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannerivar {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerivar.jpg');
+  #bannervertigo {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannervertigo.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -964,10 +796,10 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
-  #bannernin {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannernin.jpg');
+  #bannerzenescope {
+    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerzenescope.jpg');
     background-position:fixed;
     background-repeat:no-repeat;
     min-height:250px;
@@ -975,106 +807,7 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerqw {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerqw.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:250px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerpm {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerpm.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:250px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerpreviews {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerall.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:250px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerrai {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerrai.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:250px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannersha {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannersha.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:250px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannertrades {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerall.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:250px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannervali {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannervali.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:250px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerunity {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerunity.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:250px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
-  }
-  #bannerxo {
-    background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerxo.jpg');
-    background-position:fixed;
-    background-repeat:no-repeat;
-    min-height:250px;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
   #bannerclassic {
     background: url('https://s3.amazonaws.com/valiantdb/images/banners/bannerclassic.jpg');
@@ -1085,16 +818,12 @@
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;
-    margin-top: -22px;
+    margin-top: -25px;
   }
 }
 
 .collectionDropdowns {
   margin-top: -150px;
-}
-
-li.options a {
-  color: white !important;
 }
 
 li.options a:hover {

@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :async
+         :recoverable, :rememberable, :lockable, :trackable, :validatable, :omniauthable, :async
   validates :name, presence: true
 
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
@@ -21,14 +21,13 @@ class User < ActiveRecord::Base
   before_create :add_to_list
 
   has_attached_file :avatar, :styles => { :medium => "350x200#", 
-                                          :thumb => "260x150#" }, 
+                                          :thumb => "260x150#",
+                                          :mini => "52x30#" }, 
                              :convert_options => { 
                                           :medium => "-quality 75 -strip",
-                                          :thumb => "-quality 75 -strip" },
+                                          :thumb => "-quality 75 -strip",
+                                          :mini => "-quality 75 -strip" },
                              :default_url => "https://s3.amazonaws.com/valiantdb/images/noimage.png"
-  has_attached_file :photo,  :styles => { :thumb => "100x100#" },
-  :convert_options => {
-    :thumb => "-quality 75 -strip" }
   crop_attached_file :avatar, :aspect => "16:9"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 

@@ -1,29 +1,31 @@
-<div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
-<% unless params[:query].present? %>
-<% @tcount = Book.all.count %>
-<h2>Valiant Comic Database</h2>
-<p>Nothing to see here.</p>
-<% end %>
-<% if params[:query].present? %>
-	<% @search_count = Book.search(params[:query]).count %>
-	<% @title = Book.search(params[:query], page: params[:page], per_page: 20) %>
-<% end %>
-<% @tcount = Book.all.count %>
-<% if params[:query].present? %>
-<div class="text-center">
+<div class="col-md-12 col-sm-12 col-xs-12">
+	<% if params[:query].present? %>
 		<% if @title.count > 0 %>
-			<h5 class="white">Livewire found <span class="label label-success label-as-badge"><%= @search_count %></span> <% if @search_count == 1 %>result<% else %>results<% end %> for  <span class="label label-warning label-as-badge"><%= params[:query].upcase %></span></h5>
+			<%= render 'book' %>
 		<% else %>
-			<h5 class="white"> Livewire found <span class="label label-danger label-as-badge"><%= @title.count %></span> results for  <span class="label label-warning label-as-badge"><%= params[:query].upcase %></span></h5>
+			<div class="wellclear bottomcorners" style="margin-top: -10px !important;">
+				<h3 class="text-center">Search ComicArk</h3>
+				<p class="text-center">Nothing matched your search term. Please try again!</p>
+				<%= form_tag "/search", :method => 'get', :role => "search", class: "form-inline text-center" do %>
+			        <div class="form-group">
+				        <%= text_field_tag :query, params[:query], autocomplete: "off", :placeholder => "Search the database...", type: "search", class: "form-control" %>
+				        <button type="submit" class="btn btn-primary">Search</button>
+				    </div>
+				    <div class="clearfix"><br /></div>
+			    <% end %>
+			</div>
 		<% end %>
-	</div>
-	<div class="clearfix"></div>
-	<%= render "books/bios" %>
-	<% unless @title.count > 0 %>
-		<p class="mark text-center"><br />Sorry, it looks like there are no search results matching your query "<strong><%= params[:query].upcase %></strong>".<br /><br /></p>
+	<% else %>
+		<div class="wellclear">
+			<h3 class="text-center">Search ComicArk</h3>
+			<%= form_tag "/search", :method => 'get', :role => "search", class: "form-inline text-center" do %>
+		        <div class="form-group">
+			        <%= text_field_tag :query, params[:query], autocomplete: "off", :placeholder => "Search the database...", type: "search", class: "form-control" %>
+			        <button type="submit" class="btn btn-primary">Search</button>
+			    </div>
+			    <div class="clearfix"><br /></div>
+		    <% end %>
+		</div>
 	<% end %>
 	<div class="clearfix"><br /></div>
-	<%= render 'book' %>
-<% end %>
-<div class="clearfix"><br /></div>
 </div>

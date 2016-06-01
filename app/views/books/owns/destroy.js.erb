@@ -1,3 +1,4 @@
-$("#<%= @book.id %>_owns").html("<%=j render partial: "books/owns" %>");
-$("#<%= @book.id %>_quantity").html("<%=j render partial: "books/ownsquantity" %>");
-$("#<%= @book.id %>_sales").html("<%=j render partial: "books/sales" %>");
+	$("#<%= @book.id %>_owns").html("<%=j render partial: "books/owns" %>");
+	$("#<%= @book.id %>_quantity").html("<%=j render partial: "books/ownsquantity" %>");
+	$("#<%= @book.id %>_sales").html("<%=j render partial: "books/sales" %>");
+	$("#flash_notice").html("<%=j render partial: "books/notices/owndestroy" %>");

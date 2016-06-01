@@ -38,4 +38,5 @@ Rails.application.configure do
   Paperclip.options[:command_path] = 'C:\Program Files (x86)\GnuWin32\bin'
   Paperclip.options[:command_path] = 'C:\Program Files\ImageMagick-6.9.1-Q8'
   # Paperclip.options[:command_path] = 'C:\ImageMagick'
+
 end

@@ -1,0 +1,9 @@
+<% if user_signed_in? && current_user.super_admin? %>
+	<h1>New Feed</h1>
+
+	<%= render 'form' %>
+
+	<%= link_to 'Back', feeds_path %>
+<% else %>
+	<h1>Nothing to see here</h1>
+<% end %>

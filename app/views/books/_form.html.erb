@@ -5,7 +5,7 @@
     <% else %>
       <span><%= image_tag @book.image.url(:thumb), class: "img-responsive img-thumbnail", :height => "100px" %></span>
     <% end %>
-    <%= simple_form_for(@book, html: { class: "form-horizontal" }) do |f| %>
+    <%= simple_form_for(@book, html: { multipart: true, class: "form-horizontal" }) do |f| %>
       <%= f.error_notification %>
       <%= f.full_error :image_file_size, class: "alert alert-error" %>
       <%= f.full_error :image_content_type, class: "alert alert-error" %>
@@ -16,12 +16,14 @@
           <% else %>
             <%= f.input :image, label: "Change book image" %>
           <% end %>
+          <%= f.input :image_remote_url, label: "Enter a URL" %>
             <ul class="list-inline">
               <li><%= f.input :title, :url => autocomplete_book_title_books_path, :as => :autocomplete, label: false, placeholder: "Select a title" %></li>
               <li>&nbsp;&nbsp;</li>
               <li><%= f.input :issue, :label => "#" %></li>
               <li><%= f.input :price_in_dollars, :label => "Cover Price" %></li>
               <li><%= f.input :category, collection: ["Default", "Variant", "Paperback", "Hardcover", "Sketch", "Promo", "Misc"], include_blank: true %></li>
+              <li><%= f.input :comicrating, :label => "Age Rating" %></li>
             </ul>
             <ul class="list-inline">
               <li><%= f.input :rdate, :label => "Release date", as: :date, start_year: Date.today.year - 30 %></li>
@@ -30,9 +32,9 @@
               <li><%= f.input :arc %></li>
               <li><%= f.input :note %></li>
               <% if @book.era? %>
-                <li><%= f.input :era, collection: ["VEI", "VH1", "VH2","Armada","Crime","Nintendo","Windjammer","Wrestling"], include_blank: true, selected: @book.era %></li>
+                <li><%= f.input :era, collection: ["", "VEI", "VH1", "VH2","Armada","Crime","Nintendo","Windjammer","Wrestling"], include_blank: true, selected: @book.era %></li>
               <% else %>
-                <li><%= f.input :era, collection: ["VEI", "VH1", "VH2","Armada","Crime","Nintendo","Windjammer","Wrestling"], include_blank: true, selected: "VEI" %></li>
+                <li><%= f.input :era, collection: ["", "VEI", "VH1", "VH2","Armada","Crime","Nintendo","Windjammer","Wrestling"], include_blank: true, selected: "" %></li>
               <% end %>
               <li>&nbsp;</li>
               <li><%= f.input :printing, collection: 1..10, selected: 1 %></li>
@@ -65,6 +67,7 @@
             <li><%= f.input :eic, :url => autocomplete_book_eic_books_path, :as => :autocomplete, label: false, placeholder: "Enter EIC" %></li>
             <li><%= f.input :publisher, :url => autocomplete_book_publisher_books_path, :as => :autocomplete, label: false, placeholder: "Enter Publisher" %></li>
             <li><%= f.input :country, :url => autocomplete_book_country_books_path, :as => :autocomplete, label: false, placeholder: "Enter Country" %></li>
+            <li><%= f.input :code, label: false, placeholder: "Diamond Code" %></li>
           </ul>
           <% if current_user.super_admin? %>
             <ul class="list-inline">

@@ -36,6 +36,9 @@ class Books::OwnsController < ApplicationController
 
 	def destroy
 		@book.owns.where(user_id: current_user.id).destroy_all
+		if user_signed_in? && current_user.sales?(@book)
+			@book.sales.where(user_id: current_user.id).destroy_all
+		end
 		respond_to do |format|
 			format.html { redirect_to @book}
 			format.js
@@ -44,7 +47,7 @@ class Books::OwnsController < ApplicationController
 
 	private
 		def set_book
-			@book = Book.find(params[:book_id])
+			@book = Book.friendly.find(params[:book_id])
 		end
 
 		def own_params

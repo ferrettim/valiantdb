@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :mailbox, :conversation
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  protect_from_forgery except: :sign_in
+  protect_from_forgery except: :sign_in, with: :exception
   # before_action :authenticate_user!
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_filter :ensure_signup_complete, only: [:new, :create, :update, :destroy]
@@ -40,12 +40,12 @@ class ApplicationController < ActionController::Base
   def store_location
   # store last url - this is needed for post-login redirect to whatever the user last visited.
   return unless request.get? 
-    if (request.path != "http://valiantdatabase.com/login" &&
-        request.path != "http://valiantdatabase.com/register" &&
-        request.path != "http://valiantdatabase.com/logout" &&
-        request.path != "http://www.valiantdatabase.com/login" &&
-        request.path != "http://www.valiantdatabase.com/register" &&
-        request.path != "http://www.valiantdatabase.com/logout" &&
+    if (request.path != "http://comicark.com/login" &&
+        request.path != "http://comicark.com/register" &&
+        request.path != "http://comicark.com/logout" &&
+        request.path != "http://www.comicark.com/login" &&
+        request.path != "http://www.comicark.com/register" &&
+        request.path != "http://www.comicark.com/logout" &&
         !request.xhr?) # don't store ajax calls
       session[:previous_url] = request.fullpath 
     end

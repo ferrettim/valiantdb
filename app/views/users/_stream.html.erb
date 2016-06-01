@@ -1,7 +1,7 @@
 <br />
 <ul class="list-unstyled" id="stream">
 	<% if @user.followees(User).count == 0 %>
-		<li class="white">No recent friend activity. Try <%= link_to users_all_path do %>following other users<% end %> to see their activity.</li>
+		<li>No recent friend activity. Try <%= link_to users_all_path do %>following other users<% end %> to see their activity.</li>
 	<% else %>
 		<%= render "streamitem", collection: @activities %>
 	<% end %>

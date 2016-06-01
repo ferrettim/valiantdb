@@ -1,0 +1,11 @@
+<% if user_signed_in? && current_user.super_admin? %>
+	<div class="container">
+	  <h3><%= link_to @entry.title, @entry.url %></h3>
+	  <i>published on <%= @entry.published %> by <%= @entry.author %></i>
+	  <p>
+	    <%= h @entry.content.html_safe %>
+	  </p>
+	</div>
+<% else %>
+	<h1>Nothing to see here</h1>
+<% end %>

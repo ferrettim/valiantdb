@@ -1,7 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  OmniAuth.config.full_host = "http://www.valiantdatabase.com"
+  OmniAuth.config.full_host = "http://www.comicark.com"
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -56,9 +56,9 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use a different cache store in production.
-  #if ENV["MEMCACHEDCLOUD_SERVERS"]
-  #  config.cache_store = :dalli_store, ENV["MEMCACHEDCLOUD_SERVERS"].split(','), { :username => ENV["MEMCACHEDCLOUD_USERNAME"], :password => ENV["MEMCACHEDCLOUD_PASSWORD"] }
-  #end
+  if ENV["MEMCACHEDCLOUD_SERVERS"]
+    config.cache_store = :dalli_store, ENV["MEMCACHEDCLOUD_SERVERS"].split(','), { :username => ENV["MEMCACHEDCLOUD_USERNAME"], :password => ENV["MEMCACHEDCLOUD_PASSWORD"] }
+  end
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = "http://assets.example.com"
@@ -66,20 +66,20 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { :host => 'www.valiantdatabase.com' }
+  config.action_mailer.default_url_options = { :host => 'www.comicark.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"
 
   config.action_mailer.smtp_settings = {
-  address: "smtp.1and1.com",
+  address: "marvelcomicsdatabase.domain.com",
   port: 25,
-  domain: ENV["VDB_DOMAIN"],
+  domain: ENV["CA_DOMAIN"],
   authentication: "plain",
   enable_starttls_auto: true,
-  user_name: ENV["VDB_USERNAME"],
-  password: ENV["VDB_PASSWORD"]
+  user_name: ENV["CA_USERNAME"],
+  password: ENV["CA_PASSWORD"]
   }
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

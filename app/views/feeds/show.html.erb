@@ -1,0 +1,28 @@
+<% if user_signed_in? && current_user.super_admin? %>
+	<p id="notice"><%= notice %></p>
+
+	<p>
+	  <strong>Name:</strong>
+	  <%= @feed.name %>
+	</p>
+
+	<p>
+	  <strong>Url:</strong>
+	  <%= @feed.url %>
+	</p>
+
+	<p>
+	  <strong>Summary:</strong>
+	  <%= @feed.summary %>
+	</p>
+
+	<p>
+	  <strong>Image url:</strong>
+	  <%= @feed.image_url %>
+	</p>
+
+	<%= link_to 'Edit', edit_feed_path(@feed) %> |
+	<%= link_to 'Back', feeds_path %>
+<% else %>
+	<h1>Nothing to see here</h1>
+<% end %>

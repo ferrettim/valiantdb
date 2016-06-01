@@ -1,6 +1,6 @@
 class SitemapController < ApplicationController
   def index
-  	@pgtitle = "Sitemap"
+  	@pgtitle = "Comicark Sitemap"
     @books = Book.order("created_at DESC") 
 
     respond_to do |format|

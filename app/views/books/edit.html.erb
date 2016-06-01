@@ -11,7 +11,7 @@
 	<%= render 'form' %>
 
 	<%= link_to 'Show', @book %> |
-	<%= link_to 'Back', all_books_path %>
+	<%= link_to 'Back', :back %>
 	<% else %>
 	<h1 class="text-center">You're not supposed to be here!</h1>
 	<h2 class="text-center">Head back to <%= link_to "the database", all_books_path %>, I won't say anything.</h2>

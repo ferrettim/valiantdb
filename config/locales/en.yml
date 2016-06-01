@@ -203,3 +203,16 @@ en:
       long: "%B %d, %Y %H:%M"
       short: "%d %b %H:%M"
     pm: pm
+  books:
+    writer: "Written by "
+    artist: "Art by "
+    colors: "Colors by "
+    letters: "Letters by "
+    cover: "Cover by "
+    eic: "Editor-in-Chief "
+    price: "Cover price "
+    rdate: "Released on "
+    rdatefuture: "Will be released on "
+    publisher: "Published by "
+    summary: "Summary"
+    support: "Support Us"

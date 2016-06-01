@@ -169,6 +169,6 @@ class Books::SalesController < ApplicationController
 
 	private
 		def set_book
-			@book = Book.find(params[:book_id])
+			@book = Book.friendly.find(params[:book_id])
 		end
 end

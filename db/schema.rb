@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160501032515) do
+ActiveRecord::Schema.define(version: 20160523194649) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -80,7 +80,14 @@ ActiveRecord::Schema.define(version: 20160501032515) do
     t.integer  "printing"
     t.string   "country"
     t.string   "publisher"
+    t.string   "comicrating"
+    t.string   "code"
+    t.string   "image_remote_url"
+    t.string   "imprint"
+    t.string   "slug"
   end
+
+  add_index "books", ["slug"], name: "index_books_on_slug", unique: true
 
   create_table "characters", force: :cascade do |t|
     t.string   "name",               limit: 255
@@ -133,12 +140,33 @@ ActiveRecord::Schema.define(version: 20160501032515) do
   add_index "comments", ["book_id"], name: "index_comments_on_book_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
+  create_table "entries", force: :cascade do |t|
+    t.string   "title"
+    t.datetime "published"
+    t.text     "content"
+    t.string   "url"
+    t.string   "author"
+    t.integer  "feed_id"
+    t.string   "image_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "events", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "text"
     t.integer  "points"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "feeds", force: :cascade do |t|
+    t.string   "name"
+    t.string   "url"
+    t.text     "summary"
+    t.string   "image_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "follows", force: :cascade do |t|
@@ -151,6 +179,19 @@ ActiveRecord::Schema.define(version: 20160501032515) do
 
   add_index "follows", ["followable_id", "followable_type"], name: "fk_followables"
   add_index "follows", ["follower_id", "follower_type"], name: "fk_follows"
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
 
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id"
@@ -372,11 +413,31 @@ ActiveRecord::Schema.define(version: 20160501032515) do
     t.integer  "wishes_count",                       default: 0,     null: false
     t.integer  "sales_count",                        default: 0,     null: false
     t.integer  "comments_count",                     default: 0,     null: false
+    t.boolean  "pubaftershock",                      default: true,  null: false
+    t.boolean  "pubaspen",                           default: true,  null: false
+    t.boolean  "pubavatar",                          default: true,  null: false
+    t.boolean  "pubblackmask",                       default: true,  null: false
+    t.boolean  "pubboom",                            default: true,  null: false
+    t.boolean  "pubdarkhorse",                       default: true,  null: false
+    t.boolean  "pubdc",                              default: true,  null: false
+    t.boolean  "pubdynamite",                        default: true,  null: false
+    t.boolean  "pubidw",                             default: true,  null: false
+    t.boolean  "pubimage",                           default: true,  null: false
+    t.boolean  "pubmarvel",                          default: true,  null: false
+    t.boolean  "pubvaliant",                         default: true,  null: false
+    t.boolean  "pubvertigo",                         default: true,  null: false
+    t.boolean  "pubzenescope",                       default: true,  null: false
+    t.boolean  "pubfourfiveone",                     default: true,  null: false
+    t.integer  "failed_attempts",                    default: 0
+    t.string   "unlock_token"
+    t.datetime "locked_at"
+    t.boolean  "pubarchie",                          default: true,  null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["slug"], name: "index_users_on_slug"
+  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true
 
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",                     null: false

@@ -1,3 +1,5 @@
+require 'feedjira'
+
 class PagesController < ApplicationController
 
   def home
@@ -12,34 +14,33 @@ class PagesController < ApplicationController
 
   def search
   	@pgtitle = "Search"
+    @search_count = Book.search(params[:query]).count
+    @title = Book.search(params[:query], page: params[:page], per_page: 24)
+    @tcount = Book.all.count
   end
 
   def privacy
-    @pgtitle = "Privacy Policy"
+    @pgtitle = "Comicark Privacy Policy"
   end 
 
   def terms
-    @pgtitle = "Terms of Use"
-  end
-
-  def userguide
-    @pgtitle = "User Guide"
+    @pgtitle = "Comicark Terms of Use"
   end
 
   def changelog
-    @pgtitle = "Changelog"
+    @pgtitle = "Comicark Changelog"
   end
 
   def top25
-    @pgtitle = "Top 25 User Collections"
+    @pgtitle = "Comicark Top 25 User Collections"
   end
 
   def supportus
-    @pgtitle = "Support the Valiant Database"
+    @pgtitle = "Support the Comicark"
   end
 
   def levels
-    @pgtitle = "User Levels"
+    @pgtitle = "Comicark User Levels"
   end
 
 end

@@ -1,5 +1,5 @@
 	<% if user_signed_in? && current_user.wishes?(@book) %>
 		<%= link_to book_wish_path(@book), method: :delete, remote: true, class: "btn btn btn-danger btn-circle", title: "Remove from wishlist", data: { toggle: "tooltip", disable_with: "<span class='fa fa-minus'></span>"} do %><span class="fa fa-star-o"></span><% end %>
 	<% else %>
-		<%= link_to book_wish_path(@book), method: :post, remote: true, class: "btn btn-success btn-circle", title: "Add to wishlist", data: { toggle: "tooltip", disable_with: "<span class='fa fa-plus'></span>"} do %><span class="fa fa-star"></span><% end %>
+		<%= link_to book_wish_path(@book), method: :post, remote: true, class: "btn btn-default btn-circle", title: "Add to wishlist", data: { toggle: "tooltip", disable_with: "<span class='fa fa-plus'></span>"} do %><span class="fa fa-star"></span><% end %>
 	<% end %>

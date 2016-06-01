@@ -24,5 +24,6 @@
  *= require nprogress-bootstrap
  *= require sweet-alert
  *= require fancybox
+ *= require search
  *= require_self
  */

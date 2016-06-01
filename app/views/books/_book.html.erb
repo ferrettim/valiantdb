@@ -1,5 +1,4 @@
 <div id="books">
-	
  	<div class="clearfix"></div>
 	<% @book.each do |title| %>
 	 	<div class="col-md-2 col-sm-4 col-xs-6 book-image">
@@ -11,10 +10,24 @@
 					<% if user_signed_in? %>
 				        <li id="<%= title.id %>_owns" class="magic"> 
 				        	<% unless title.rdate.future? %>
-					        	<% if user_signed_in? && current_user.owns?(title) %>
-									<%= link_to book_own_path(title), method: :delete, remote: true, class: "btn btn-default btn-danger btn-circle", title: "Remove from collection", data: {disable_with: "<i class='fa fa-minus'></i>"} do %><i class="fa fa-heart"></i><% end %>
+				        		<% if current_user.patron? %>
+						        	<% if user_signed_in? && current_user.owns?(title) %>
+										<%= link_to book_own_path(title), method: :delete, remote: true, class: "btn btn-default btn-danger btn-circle", title: "Remove from collection", data: {disable_with: "<i class='fa fa-minus'></i>"} do %><i class="fa fa-heart"></i><% end %>
+									<% else %>
+										<%= link_to book_own_path(title), method: :post, remote: true, class: "btn btn-default btn-circle", title: "Add to collection", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-heart"></i> <% end %>
+									<% end %>
 								<% else %>
-									<%= link_to book_own_path(title), method: :post, remote: true, class: "btn btn-success btn-circle", title: "Add to collection", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-heart"></i> <% end %>
+									<% if current_user.owns_count < 1000 %>
+										<% if user_signed_in? && current_user.owns?(title) %>
+											<%= link_to book_own_path(title), method: :delete, remote: true, class: "btn btn-default btn-danger btn-circle", title: "Remove from collection", data: {disable_with: "<i class='fa fa-minus'></i>"} do %><i class="fa fa-heart"></i><% end %>
+										<% else %>
+											<%= link_to book_own_path(title), method: :post, remote: true, class: "btn btn-default btn-circle", title: "Add to collection", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-heart"></i> <% end %>
+										<% end %>
+									<% else %>
+										<li id="<%= @book.id %>_owns">
+											<span class="fa fa-heart"></span>
+										</li>
+									<% end %>
 								<% end %>
 							<% end %>
 				        </li>
@@ -23,7 +36,7 @@
 				        	<% if user_signed_in? && current_user.wishes?(title) %>
 								<%= link_to book_wish_path(title), method: :delete, remote: true, class: "btn btn-default btn-danger btn-circle", title: "Remove from wishlist", data: {disable_with: "<span class='fa fa-minus'></span>"} do %><i class="fa fa-star"></i><% end %>
 							<% else %>
-								<%= link_to book_wish_path(title), method: :post, remote: true, class: "btn btn-success btn-circle", title: "Add to wishlist", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-star"></i> <% end %>
+								<%= link_to book_wish_path(title), method: :post, remote: true, class: "btn btn-default btn-circle", title: "Add to wishlist", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-star"></i> <% end %>
 							<% end %>
 				        </li>
 				        <% if user_signed_in? && current_user.owns?(title) && current_user.patron? %>

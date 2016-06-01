@@ -22,6 +22,9 @@
 //= require jquery-ui/tooltip
 //= require jquery.raty
 //= require jquery.jcrop
+//= require menu
+//= require search
+//= require sameheights
 //= require nprogress
 //= require nprogress-turbolinks
 //= require sweet-alert
@@ -37,6 +40,15 @@
 //= require best_in_place.jquery-ui
 //= require turbolinks
 //= require_tree .
+
+if ('addEventListener' in window) {
+      window.addEventListener('resize', function(){
+          sameHeights();
+      });
+      window.addEventListener('load', function(){
+          sameHeights();
+      });
+  }
 
 $(window).ready(function() {
   $('.flexslider').flexslider({

@@ -1,10 +1,11 @@
 <div id="books" align="center">
-<h3 class="text-center white page">New releases for <%= (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y") %>
+<h3 class="text-center white page">
 </h3>
 <div class="clearfix"></div>
 
 <div class="container wellclear">
 		<div class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+			<h3><%= @pgtitle %></h3>
 			<p>Breakdown of books releasing <strong><%= (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y") %></strong> - 
 				<strong><%= @newbooks.where(:category => "Default").count %></strong> titles, <strong><%= @newbooks.where(:category => "Variant").count %></strong> variant covers, <strong><%= @newbooks.where(:category => "Paperback").count %></strong> trades, and <strong><%= @newbooks.where(:category => "Hardcover").count %></strong> deluxe hardcovers.
 			</p>

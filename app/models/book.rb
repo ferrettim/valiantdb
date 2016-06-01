@@ -1,8 +1,13 @@
 class Book < ActiveRecord::Base
 	include PublicActivity::Model
+	include Filterable
 	tracked only: [:create]
+	extend FriendlyId
+  	friendly_id :slug_candidates, use: :slugged
+
 	acts_as_votable
 	ratyrate_rateable 'book'
+	validates_uniqueness_of :image_remote_url, scope: :id
 	validates :issue, presence: true
 	validates :title, presence: true
 	validates :rdate, presence: true
@@ -14,12 +19,12 @@ class Book < ActiveRecord::Base
                                            :thumb => "-quality 75 -strip",
                                            :mini => "-quality 75 -strip" },
 							  :default_url => "https://s3.amazonaws.com/valiantdb/books/images/medium/missing.png"
+	process_in_background :image, queue: "paperclip"
 	validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
-	
-	searchkick suggest: ["title", "writer", "writer2" "artist", "colors", "cover", "letters", "editors", "eic"], 
+	searchkick suggest: ["title", "writer", "writer2" "artist", "colors", "cover", "letters", "eic", "isb"], 
 			   unsearchable: ["id", "created_at", "updated_at", "notes", "summary"],
 			   autocomplete: ["title"],
-			   text_start: ["title"]
+			   word_start: ["title", "isb^10"]
 	has_many :wishes, :dependent => :destroy
 	has_many :owns, :dependent => :destroy
 	has_many :sales, :dependent => :destroy
@@ -29,9 +34,13 @@ class Book < ActiveRecord::Base
 	has_many :comments, :dependent => :destroy
 	has_paper_trail
 
-	def to_param
-		"#{id}-#{title.to_s.parameterize}-#{issue.to_i}-#{cover.to_s.parameterize}"
+	def slug_candidates
+	   [ "#{title}-#{issue}-#{cover}-#{category}-#{printing}" ]
 	end
+
+	def should_generate_new_friendly_id?
+	    slug.nil? || updated_at_changed? || title_changed? || issue_changed? || cover_changed? || category_changed? || printing_changed?
+	 end
 
 	def price_in_dollars
 		price.to_d/100 if price
@@ -47,6 +56,11 @@ class Book < ActiveRecord::Base
 
 	def value_in_dollars=(dollars)
 		self.pricenm = dollars.to_d*100 if dollars.present?
+	end
+
+	def image_remote_url=(url_value)
+	  self.image = URI.parse(url_value) unless url_value.blank?
+	  super
 	end
 
 	def negative
@@ -83,21 +97,21 @@ class Book < ActiveRecord::Base
   	end
 
   	def self.import(file)
-	    CSV.foreach(file.path, headers: true) do |row|
+	    CSV.foreach(file.path, headers: true, :encoding => 'utf-8') do |row|
 
-	      product_hash = row.to_hash # exclude the price field
+	      product_hash = row.to_hash 
 	      product = Book.where(id: product_hash["id"])
 
-	      if product.count == 1
-	        product.first.update_attributes(product_hash)
-	      else
+	      #if product.count == 1
+	        #product.first.update_attributes(product_hash)
+	      #else
 	        Book.create!(product_hash)
-	      end # end if !product.nil?
+	      #end # end if !product.nil?
 	    end # end CSV.foreach
 	  end # end self.import(file)
 
   	def self.super_csv
-    attributes = %w{id title issue cover category pricenm publisher note}
+    attributes = %w{id title issue rdate writer writer2 artist artist2 cover letters colors editor eic category price printrun publisher country note summary}
 	    CSV.generate(headers: true) do |csv|
 	      csv << attributes
 	      all.each do |book|

@@ -50,7 +50,7 @@
 									<% end %>
 								</div>
 		                        <%= link_to root_url + "users/" + u.slug + "/profile", :title => "See profile" do %>
-		                        	<%= u.name %> 
+		                        	<small><%= u.name %></small>
 				                <% end %>
 				                <% if @hardcats.include? u.id %>
 			                        <%= image_tag "https://s3.amazonaws.com/valiantdb/images/hardcorps.jpg", height: "12px", :title => "H.A.R.D. Cat" %>

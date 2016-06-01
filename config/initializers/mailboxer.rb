@@ -5,7 +5,7 @@ Mailboxer.setup do |config|
   config.uses_emails = false
 
   #Configures the default from for emails sent for Messages and Notifications
-  config.default_from = "admin@valiantdatabase.com"
+  config.default_from = "admin@comicark.com"
 
   #Configures the methods needed by mailboxer
   config.email_method = :mailboxer_email
