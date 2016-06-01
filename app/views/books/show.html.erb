@@ -740,19 +740,6 @@
 
 								<div class="clearfix"><br /></div>
 
-								<% if user_signed_in? && current_user.patron? %>
-								<% else %>
-									<div class="col-md-10 col-md-1 col-sm-10 col-sm-1 col-xs-12">
-										<script type="text/javascript" src='http://adn.ebay.com/files/js/min/ebay_activeContent-min.js'></script>
-										<script charset="utf-8" type="text/javascript">
-											if (window.matchMedia('(min-device-width: 1028px)').matches) { 
-												document.write('\x3Cscript type="text/javascript" charset="utf-8" src="http://adn.ebay.com/cb?programId=1&campId=5337827480&toolId=10026&keyword=%28<%= @book.title %>%2C<%= @book.publisher %>%29&width=510&height=90&font=1&textColor=000000&linkColor=0000AA&arrowColor=56aaff&color1=709AEE&color2=[COLORTWO]&format=ImageLink&contentType=TEXT_AND_IMAGE&enableSearch=y&usePopularSearches=n&freeShipping=n&topRatedSeller=n&itemsWithPayPal=n&descriptionSearch=n&showKwCatLink=n&excludeCatId=&excludeKeyword=&catId=&disWithin=200&ctx=n&autoscroll=y&flashEnabled=' + isFlashEnabled + '&pageTitle=' + _epn__pageTitle + '&cachebuster=' + (Math.floor(Math.random() * 10000000 )) + '">\x3C/script>' ); } 
-											else { 
-												document.write('\x3Cscript type="text/javascript" charset="utf-8" src="http://adn.ebay.com/cb?programId=1&campId=5337827480&toolId=10026&keyword=%28<%= @book.title %>%2C<%= @book.publisher %>%29&width=300&height=90&font=1&textColor=000000&linkColor=0000AA&arrowColor=56aaff&color1=709AEE&color2=[COLORTWO]&format=ImageLink&contentType=TEXT_AND_IMAGE&enableSearch=y&usePopularSearches=n&freeShipping=n&topRatedSeller=n&itemsWithPayPal=n&descriptionSearch=n&showKwCatLink=n&excludeCatId=&excludeKeyword=&catId=&disWithin=200&ctx=n&autoscroll=y&flashEnabled=' + isFlashEnabled + '&pageTitle=' + _epn__pageTitle + '&cachebuster=' + (Math.floor(Math.random() * 10000000 )) + '">\x3C/script>' ); }
-										</script>
-									</div>
-								<% end %>
-
 	                    </div>
                     </div>
                 </div> 
