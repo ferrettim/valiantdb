@@ -16,4 +16,5 @@ class EntriesController < ApplicationController
 
   def set_entry
     @set_entry = Entry.find(params[:id])
+  end
 end
