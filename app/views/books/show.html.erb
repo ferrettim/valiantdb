@@ -261,9 +261,9 @@
 																	<button type="button" class="close" data-dismiss="modal">&times;</button>
 																	<h4 class="modal-title">
 																		<% if @book.category == "Paperback" %>
-																			Notes for <%= @book.title.to_s + " Vol. " + @book.issue + " TPB" %>
+																			Notes for <%= @book.title.to_s + " Vol. " + @book.issue.to_s + " TPB" %>
 																		<% elsif @book.category == "Hardcover" %>
-																			Notes for <%= @book.title.to_s + " Vol. " + @book.issue + " Deluxe HC" %>
+																			Notes for <%= @book.title.to_s + " Vol. " + @book.issue.to_s + " Deluxe HC" %>
 																		<% else %>
 																			Notes for <%= @book.title.to_s + " #" + @book.issue.to_s %>
 																		<% end %>
