@@ -28,7 +28,6 @@ class User < ActiveRecord::Base
                                           :thumb => "-quality 75 -strip",
                                           :mini => "-quality 75 -strip" },
                              :default_url => "https://s3.amazonaws.com/valiantdb/images/noimage.png"
-  crop_attached_file :avatar, :aspect => "16:9"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   belongs_to :level

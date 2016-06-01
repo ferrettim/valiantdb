@@ -22,8 +22,6 @@ gem 'fancybox-rails'
 # gem 'execjs'
 # gem 'therubyracer',  platforms: :ruby
 gem 'flexslider'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 # Progress bar for turbolinks
 gem 'nprogress-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -49,8 +47,6 @@ gem 'mail_form'
 # Autocomplete
 #gem 'rails4-autocomplete'
 gem 'rails-jquery-autocomplete'
-# In place editing
-gem 'best_in_place', '~> 3.0.1'
 # Rich text formatting
 gem 'tinymce-rails'
 # Messaging system
@@ -59,7 +55,6 @@ gem 'select2-rails'
 # Use Paperclip for image uploads
 gem 'paperclip', github: 'thoughtbot/paperclip'
 gem 'delayed_paperclip'
-gem 'papercrop'
 # Amazon SDK
 gem 'aws-sdk-v1'
 gem 'aws-sdk', '~> 2'

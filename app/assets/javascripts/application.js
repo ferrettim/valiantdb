@@ -15,14 +15,13 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require jquery.flexslider
 //= require jquery.turbolinks
 //= require jquery-ui/autocomplete
-//= require autocomplete-rails
-//= require jquery.purr
 //= require jquery-ui/accordion
 //= require jquery-ui/tooltip
 //= require jquery.raty
-//= require jquery.jcrop
+//= require autocomplete-rails
 //= require menu
 //= require search
 //= require sameheights
@@ -30,15 +29,11 @@
 //= require nprogress-turbolinks
 //= require sweet-alert
 //= require sweet-alert-confirm
-//= require papercrop
 //= require select2
 //= require ratyrate
 //= require local_time
 //= require tinymce-jquery
 //= require fancybox
-//= require best_in_place
-//= require best_in_place.jquery-ui
-//= require turbolinks
 //= require_tree .
 
 if ('addEventListener' in window) {
