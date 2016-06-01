@@ -14,7 +14,6 @@
 //= require chartkick
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
 //= require jquery.flexslider
 //= require jquery.turbolinks
 //= require jquery-ui/autocomplete
@@ -34,6 +33,7 @@
 //= require local_time
 //= require tinymce-jquery
 //= require fancybox
+//= require bootstrap
 //= require_tree .
 
 if ('addEventListener' in window) {
