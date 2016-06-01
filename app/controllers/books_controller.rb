@@ -596,52 +596,52 @@ class BooksController < ApplicationController
     if params[:publisher].present?
       if params[:publisher] == "Aftershock Comics"
         @pgtitle = "Aftershock Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Aftershock Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "Aftershock Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "451"
         @pgtitle = "451 Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "451").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "451").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "Archie Comics"
         @pgtitle = "Archie Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Archie Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "Archie Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "Aspen Comics"
         @pgtitle = "Aspen Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Aspen COmics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "Aspen COmics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "Avatar Press"
         @pgtitle = "Avatar Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Avatar Press").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "Avatar Press").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "Boom Studios"
         @pgtitle = "Boom Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Boom Studios").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "Boom Studios").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "Black Mask Studios"
         @pgtitle = "Black Mask Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Black Mask Studios").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "Black Mask Studios").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "Dark Horse Comics"
         @pgtitle = "Dark Horse Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Dark Horse Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "Dark Horse Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "DC Comics"
         @pgtitle = "DC Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "DC Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "DC Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "Dynamite Entertainment"
         @pgtitle = "Dynamite Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Dynamite Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "Dynamite Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "IDW Publishing"
         @pgtitle = "IDW Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "IDW Publishing").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "IDW Publishing").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "Marvel Comics"
         @pgtitle = "Marvel Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Marvel Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "Marvel Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "Image Comics"
         @pgtitle = "Image Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Image Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "Image Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "Valiant Entertainment"
         @pgtitle = "Valiant Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Valiant Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "Valiant Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "Vertigo Comics"
         @pgtitle = "Vertigo Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Vertigo Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "Vertigo Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       elsif params[:publisher] == "Zenescope Entertainment"
         @pgtitle = "Zenescope Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Zenescope Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+        @newbooks = Book.where(:publisher => "Zenescope Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       end
     else
       @pgtitle = "Comics Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
