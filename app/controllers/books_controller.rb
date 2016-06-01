@@ -3456,6 +3456,6 @@ class BooksController < ApplicationController
     end
 
     def book_params
-      params.require(:book).permit(:issue, :title, :rdate, :note, :image, :image_remote_url, :writer, :writer2, :artist, :artist2, :colors, :letters, :editor, :eic, :cover, :isb, :link, :arc, :summary, :bookcode, :qr, :price, :price_in_dollars, :pricenm, :value_in_dollars, :price98, :printrun, :category, :status, :comicrating, :code, :event, :eventpart, :iskey, :keynote, :previews, :era, :country, :publisher, :printing, :tag_list, :slug)
+      params.require(:book).permit(:issue, :title, :rdate, :note, :image, :image_remote_link, :writer, :writer2, :artist, :artist2, :colors, :letters, :editor, :eic, :cover, :isb, :link, :arc, :summary, :bookcode, :qr, :price, :price_in_dollars, :pricenm, :value_in_dollars, :price98, :printrun, :category, :status, :comicrating, :code, :event, :eventpart, :iskey, :keynote, :previews, :era, :country, :publisher, :printing, :tag_list, :slug)
     end
 end
