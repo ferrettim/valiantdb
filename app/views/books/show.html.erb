@@ -2,9 +2,9 @@
     <div itemscope itemtype="http://schema.org/Book" class="hidden">
       <meta itemprop="description" content="<%= @book.summary %>">
         <meta itemprop="datePublished" content="<%= @book.rdate.strftime("%B %d, %Y") %>">
-        <link itemprop="url" href="http://www.valiantdatabase.com/books/<%= @book.id.to_s %>" rel="author"/>
+        <link itemprop="url" href="http://www.comicark.com/books/<%= @book.id.to_s %>" rel="author"/>
   		<img itemprop="image" src="<%= @book.image.url(:thumb) %>" alt="<%= @book.id.to_s %>" />
-        <a itemprop="url" href="http://www.valiantdatabase.com/books/<%= @book.id.to_s %>"><span itemprop="name" style="display:block;"><strong><%= @book.title + " #" + @book.issue.to_s %></strong></span></a>
+        <a itemprop="url" href="http://www.comicark.com/books/<%= @book.id.to_s %>"><span itemprop="name" style="display:block;"><strong><%= @book.title + " #" + @book.issue.to_s %></strong></span></a>
         <span itemprop="author" itemscope itemtype="http://schema.org/Person" style="display:block;"><span itemprop="name"><%= @book.writer %></span></span>
     <span itemprop="isbn"><%= @book.isb %></span>
   </div>
@@ -490,12 +490,12 @@
 								   			 	<% end %>
 								   			<% end %>
 								   <% end %>
-								   <% if user_signed_in? && @book.note.include?("For every 100 copies of Valiant titles placed, stores may order one of this linewide variant") %>
+								   <% if user_signed_in? && @book.note.include?("For every 100 copies of all titles placed, stores may order one of this linewide variant") %>
 								   		<% if Book.where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).where(:category => "Default").sum(:printrun) > 0 %>
 								   			Sales: <strong><%= Book.where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).where(:category => "Default").sum(:printrun) / 100 %></strong> copies (estimated based on total sales)<br />
 								   		<% end %>
 								   <% end %>
-								   <% if user_signed_in? && @book.note.include?("For every 125 copies of Valiant titles placed, stores may order one of this linewide variant") %>
+								   <% if user_signed_in? && @book.note.include?("For every 125 copies of all titles placed, stores may order one of this linewide variant") %>
 								   		<% if Book.where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).where(:category => "Default").sum(:printrun) > 0 %>
 								   			Sales: <strong><%= Book.where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).where(:category => "Default").sum(:printrun) / 125 %></strong> copies (estimated based on total sales)<br />
 								   		<% end %>

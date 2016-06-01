@@ -98,7 +98,6 @@ gem 'google_currency'
 # News
 gem 'feedjira'
 # Security
-# gem 'secure_headers', '~> 3.3', '>= 3.3.1'
 gem 'rack-attack'
 
 group :development do
