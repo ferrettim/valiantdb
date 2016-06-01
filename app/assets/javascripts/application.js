@@ -13,8 +13,9 @@
 //= require jsapi
 //= require chartkick
 //= require jquery
-//= require jquery.turbolinks
 //= require jquery_ujs
+//= require bootstrap
+//= require jquery.turbolinks
 //= require jquery-ui/autocomplete
 //= require autocomplete-rails
 //= require jquery.purr
@@ -33,7 +34,6 @@
 //= require select2
 //= require ratyrate
 //= require local_time
-//= require bootstrap
 //= require tinymce-jquery
 //= require fancybox
 //= require best_in_place
