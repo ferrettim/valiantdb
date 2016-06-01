@@ -720,6 +720,17 @@
 								  </ul>
 								</span>
 
+								<% if user_signed_in? && current_user.super_admin? %>
+									<li><%= link_to edit_book_path, class: "btn btn-default btn-sm" do %><i class="fa fa-pencil"></i> Edit<% end %></li>
+                      				<li><%= link_to @book, method: :delete, data: { 
+                                                                          confirm: 'Are you sure?',
+                                                                          :'confirm-button-text' => "Yes",
+                                                                          :'cancel-button-text' => "No",
+                                                                          :'confirm-button-color' => "#66CD00",
+                                                                          :'sweet-alert-type' => 'info' },
+                                                                          remote: false, class: "btn btn-danger btn-sm" do %><i class="fa fa-remove"></i> Delete<% end %></li>
+								<% end %>
+
 								<% if user_signed_in? && current_user.patron? %>
 								<% else %>
 									<%= link_to supportus_path, :title => "Support us", class: "btn btn-success btn-sm", :target => "_blank" do %>
