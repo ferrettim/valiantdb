@@ -1,6 +1,6 @@
 <div class="center">
   <div class="col-md-12 col-sm-12 col-xs-12">
-  	<h2 class="text-center">User directory <% if user_signed_in? && current_user.super_admin? %><span class="pull-right white label label-primary label-as-box"><%= User.count %> <span class="gone">members</span></span><% end %></h2>
+  	<h2 class="text-center white">User directory <% if user_signed_in? && current_user.super_admin? %><span class="pull-right white label label-primary label-as-box"><%= User.count %> <span class="gone">members</span></span><% end %></h2>
 	<% if user_signed_in? %>
 			<% @users.each do |u| %>
 				<div class="col-md-3 col-sm-4 col-xs-12">

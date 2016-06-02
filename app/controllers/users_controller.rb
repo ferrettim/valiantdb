@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!
   before_filter :ensure_signup_complete, only: [:new, :create, :update, :destroy]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  respond_to :html, :json, :js
 
 
   def admin
@@ -96,6 +97,7 @@ class UsersController < ApplicationController
     else 
       @pgtitle = "#{@user.name}'s Dashboard"
     end
+    @hotbooks = Book.where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week)
     @hardcats = [1,5,9,18,26,28,29,36,71,121,132,148,152,170,198,230,310,492,472]
     @activities = PublicActivity::Activity.order("created_at desc").where(owner_id: current_user.followees(User), owner_type: "User").page(params[:page]).per(10)
     @activities_site = PublicActivity::Activity.order("created_at desc").where(trackable_type: "Book").limit(10)

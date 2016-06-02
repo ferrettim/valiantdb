@@ -92,7 +92,7 @@ gem 'google_currency'
 # News
 gem 'feedjira'
 # Security
-# gem 'rack-attack'
+gem 'secure_headers'
 
 group :development do
 # Use sqlite3 as the database for Active Record
@@ -110,6 +110,8 @@ group :development do
 	gem 'binding_of_caller'
 	gem 'brakeman', :require => false
 	gem 'quiet_assets'
+	gem 'derailed'
+	gem 'sys-proctable'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -10,15 +10,16 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jsapi
+//= require chartkick
 //= require jquery
-//= require bootstrap
 //= require jquery_ujs
-//= require menu
 //= require jquery-ui/autocomplete
 //= require autocomplete-rails
 //= require jquery-ui/accordion
 //= require jquery-ui/tooltip
 //= require jquery.raty
+//= require menu
 //= require search
 //= require sameheights
 //= require nprogress
@@ -27,6 +28,7 @@
 //= require select2
 //= require ratyrate
 //= require local_time
+//= require bootstrap
 //= require tinymce-jquery
 //= require fancybox
 //= require_tree .

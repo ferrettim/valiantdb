@@ -13,6 +13,41 @@ class ApplicationController < ActionController::Base
   after_filter :user_activity
   after_filter :store_location
   hide_action :current_user
+
+  SecureHeaders::Configuration.default do |config|
+    config.secure_cookies = false # mark all cookies as "secure"
+    config.hsts = "max-age=#{20.years.to_i}; includeSubdomains; preload"
+    config.x_frame_options = "DENY"
+    config.x_content_type_options = "nosniff"
+    config.x_xss_protection = "1; mode=block"
+    config.x_download_options = "noopen"
+    config.x_permitted_cross_domain_policies = "none"
+    config.csp = {
+      # "meta" values. these will shaped the header, but the values are not included in the header.
+      report_only:  true,     # default: false
+      preserve_schemes: true, # default: false. Schemes are removed from host sources to save bytes and discourage mixed content.
+
+      # directive values: these values will directly translate into source directives
+      default_src: %w(https: 'self'),
+      # frame_src: %w('self' *.twimg.com itunes.apple.com),
+      # connect_src: %w(wws:),
+      font_src: %w('self' http://fonts.gstatic.com/s/montserrat/v7/zhcz-_WihjSQC0oHJ9TCYPk_vArhqVIZ0nv9q090hN8.woff2 http://fonts.gstatic.com/s/montserrat/v7/IQHow_FEYlDC4Gzy_m8fcoWiMMZ7xLd792ULpGE4W_Y.woff2 ),
+      img_src: %w('self' https://s3.amazonaws.com https://*.youtube.com https://www.google.com https://www.google-analytics.com https://cdnjs.cloudflare.com/ajax/libs/font-awesome data: ),
+      media_src: %w('self' https://s3.amazonaws.com https://img.youtube.com ),
+      object_src: %w('self'),
+      script_src: %w('self' 'unsafe-inline' https://js-agent.newrelic.com https://www.google-analytics.com/ga.js http://www.google-analytics.com/ga.js https://www.google.com https://www.google-analytics.com),
+      style_src: %w('self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css https://fonts.googleapis.com https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css http://fonts.googleapis.com https://fonts.googleapis.com/css?family=Raleway:400,700 https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css https://fonts.googleapis.com/css?family=Roboto:400,700 http://fonts.googleapis.com/css?family=Roboto:400,700),
+      base_uri: %w('self'),
+      child_src: %w('self'),
+      # form_action: %w('self' ),
+      frame_ancestors: %w('none'),
+      plugin_types: %w(application/x-shockwave-flash),
+      # block_all_mixed_content: true, # see [http://www.w3.org/TR/mixed-content/](http://www.w3.org/TR/mixed-content/)
+      # upgrade_insecure_requests: true, # see https://www.w3.org/TR/upgrade-insecure-requests/
+      report_uri: %w(https://report-uri.io/example-csp)
+    }
+
+  end
   
   protected
 
