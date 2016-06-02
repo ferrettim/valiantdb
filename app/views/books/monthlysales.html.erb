@@ -1,6 +1,7 @@
 <div class="wellclear">
 	<h3 class="text-center"><%= @pgtitle %></h3>
 	<p>Latest sales numbers available are for <a href="http://www.comicark.com/sales/monthly?utf8=%E2%9C%93&date=04-2016">April 2016</a></p>
+	<% if Date.today > Date.today.beginning_of_month + 14.day %>
 		<table class="table table-responsive table-striped">
 			<thead>
 				<tr>
@@ -25,4 +26,5 @@
 				<% end %>
 			</tbody>
 		</table>
+	<% end %>
 </div>

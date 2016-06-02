@@ -13,11 +13,11 @@ class ApplicationController < ActionController::Base
   after_filter :user_activity
   after_filter :store_location
   hide_action :current_user
-
+ 
   SecureHeaders::Configuration.default do |config|
     config.secure_cookies = false # mark all cookies as "secure"
     config.hsts = "max-age=#{20.years.to_i}; includeSubdomains; preload"
-    config.x_frame_options = "DENY"
+    config.x_frame_options = "ALLOWALL"
     config.x_content_type_options = "nosniff"
     config.x_xss_protection = "1; mode=block"
     config.x_download_options = "noopen"
@@ -28,15 +28,15 @@ class ApplicationController < ActionController::Base
       preserve_schemes: true, # default: false. Schemes are removed from host sources to save bytes and discourage mixed content.
 
       # directive values: these values will directly translate into source directives
-      default_src: %w(https: 'self'),
+      default_src: %w(http: https: 'self' http://fonts.googleapis.com/css?family=Montserrat:400,700),
       # frame_src: %w('self' *.twimg.com itunes.apple.com),
       # connect_src: %w(wws:),
-      font_src: %w('self' http://fonts.gstatic.com/s/montserrat/v7/zhcz-_WihjSQC0oHJ9TCYPk_vArhqVIZ0nv9q090hN8.woff2 http://fonts.gstatic.com/s/montserrat/v7/IQHow_FEYlDC4Gzy_m8fcoWiMMZ7xLd792ULpGE4W_Y.woff2 ),
+      font_src: %w('self' https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.woff2?v=4.6.3 https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.woff https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.ttf https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.woff2 https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.ttf?v=4.6.3 https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.woff?v=4.6.3 http://fonts.gstatic.com/s/montserrat/v7/zhcz-_WihjSQC0oHJ9TCYPk_vArhqVIZ0nv9q090hN8.woff2 http://fonts.gstatic.com/s/montserrat/v7/IQHow_FEYlDC4Gzy_m8fcoWiMMZ7xLd792ULpGE4W_Y.woff2 ),
       img_src: %w('self' https://s3.amazonaws.com https://*.youtube.com https://www.google.com https://www.google-analytics.com https://cdnjs.cloudflare.com/ajax/libs/font-awesome data: ),
       media_src: %w('self' https://s3.amazonaws.com https://img.youtube.com ),
       object_src: %w('self'),
-      script_src: %w('self' 'unsafe-inline' https://js-agent.newrelic.com https://www.google-analytics.com/ga.js http://www.google-analytics.com/ga.js https://www.google.com https://www.google-analytics.com),
-      style_src: %w('self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css https://fonts.googleapis.com https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css http://fonts.googleapis.com https://fonts.googleapis.com/css?family=Raleway:400,700 https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css https://fonts.googleapis.com/css?family=Roboto:400,700 http://fonts.googleapis.com/css?family=Roboto:400,700),
+      script_src: %w('self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/jquery-ujs/1.2.1/rails.min.js https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js http://code.jquery.com/jquery-2.2.4.min.js http://code.jquery.com/ui/1.11.4/jquery-ui.min.js https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js http://js-agent.newrelic.com/nr-943.min.js http://bam.nr-data.net/1/fd1a36e0d1?a=4605085&v=943.9bd99bf&to=cV9ZEkMLWFlVRx8EXl1bRElTC1tYUVlc&rst=12784&ref=http://www.comicark.com/books/boom/all&qt=1909&ap=8426&be=10574&fe=2190&dc=241&perf=%7B%22timing%22:%7B%22of%22:1464879803707,%22n%22:0,%22u%22:10392,%22ue%22:10392,%22dl%22:10404,%22di%22:10815,%22ds%22:10815,%22de%22:10896,%22dc%22:12764,%22l%22:12764,%22le%22:12766,%22f%22:0,%22dn%22:0,%22dne%22:0,%22c%22:0,%22ce%22:0,%22rq%22:7,%22rp%22:10388,%22rpe%22:10393%7D,%22navigation%22:%7B%7D%7D&jsonp=NREUM.setToken https://js-agent.newrelic.com https://www.google-analytics.com/ga.js http://www.google-analytics.com/ga.js https://www.google.com https://www.google-analytics.com),
+      style_src: %w('self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css  https://fonts.googleapis.com http://fonts.googleapis.com https://fonts.googleapis.com/css?family=Raleway:400,700 https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css https://fonts.googleapis.com/css?family=Roboto:400,700 http://fonts.googleapis.com/css?family=Roboto:400,700),
       base_uri: %w('self'),
       child_src: %w('self'),
       # form_action: %w('self' ),

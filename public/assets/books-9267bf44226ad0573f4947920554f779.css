@@ -1,0 +1,996 @@
+/* line 1, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.shelf {
+  border-bottom: 30px solid #bdc3c7;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  z-index: -1000 !important;
+}
+
+/*Example adding pseudo element to give shelf depth*/
+/* line 8, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.shelf:after {
+  content: '';
+  background: #95a5a6;
+  height: 25px;
+  width: calc(100% + 40px);
+  /*IE9+*/
+  position: absolute;
+  top: 430px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  margin: 0 -20px;
+}
+
+/* line 20, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.optionstitle {
+  width: 163px;
+}
+
+/* line 23, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.optionsissue {
+  width: 40px;
+}
+
+/* line 26, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.btn-centered {
+  width: 150px;
+  text-align: center;
+}
+
+/* line 30, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.ribbon {
+  position: absolute;
+  left: 10px;
+  top: -5px;
+  z-index: 1;
+  overflow: hidden;
+  width: 75px;
+  height: 75px;
+  text-align: right;
+}
+
+/* line 38, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.ribbon span {
+  font-size: 10px;
+  font-weight: bold;
+  color: #FFF;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  width: 100px;
+  display: block;
+  background: #79A70A;
+  background: linear-gradient(#f70505 0%, #8f0808 100%);
+  box-shadow: 0 3px 10px -5px black;
+  position: absolute;
+  top: 19px;
+  left: -21px;
+}
+
+/* line 55, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.ribbon span::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 100%;
+  z-index: -1;
+  border-left: 3px solid #8F0808;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #8F0808;
+}
+
+/* line 64, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.ribbon span::after {
+  content: "";
+  position: absolute;
+  right: 0px;
+  top: 100%;
+  z-index: -1;
+  border-left: 3px solid transparent;
+  border-right: 3px solid #8F0808;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #8F0808;
+}
+
+/* line 74, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.amzn-native-header-text {
+  display: none;
+}
+
+/* line 78, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.amzn-native-search-bar {
+  display: none;
+}
+
+/* line 81, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.keys {
+  table-layout: fixed !important;
+  width: 100% !important;
+}
+
+/* line 85, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.keys tr {
+  width: 100% !important;
+}
+
+/* line 88, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.align-center {
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 480px) {
+  /* line 93, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  .pageinfo {
+    padding-top: 100px;
+  }
+
+  /* line 96, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banneracclaim {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banneracclaim.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 107, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banner25 {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banner25.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 118, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerelse {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerelse.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 129, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannermine {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannermine.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 140, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerall {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerall.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 151, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banner451 {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banner451.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 162, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #aftershock {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/aftershock.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 173, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerarchie {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerarchie.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 184, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banneraspen {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banneraspen.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 195, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banneravatar {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banneravatar.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 206, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerboom {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerboom.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 217, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerblackmask {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerblackmask.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 228, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerdarkhorse {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerdarkhorse.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 239, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerdc {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerdc.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 250, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerdynamite {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerdynamite.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 261, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banneridw {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banneridw.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 272, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerimage {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerimage.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 283, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannermarvel {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannermarvel.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 294, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannervertigo {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannervertigo.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 305, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerzenescope {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerzenescope.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 316, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerclassic {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerclassic.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 150px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+}
+@media only screen and (min-width: 481px) and (max-width: 767px) {
+  /* line 330, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  .pageinfo {
+    padding-top: 150px;
+  }
+
+  /* line 333, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banneracclaim {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banneracclaim.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 344, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banner25 {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banner25.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 355, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerelse {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerall.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 366, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannermine {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannermine.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 377, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerall {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerall.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 388, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banner451 {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banner451.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 399, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #aftershock {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/aftershock.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 410, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerarchie {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerarchie.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 421, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banneraspen {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banneraspen.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 432, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banneravatar {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banneravatar.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 443, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerblackmask {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerblackmask.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 454, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerboom {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerboom.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 465, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerdarkhorse {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerdarkhorse.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 476, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerdc {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerdc.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 487, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerdynamite {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerdynamite.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 498, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banneridw {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banneridw.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 509, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerimage {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerimage.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 520, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannermarvel {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannermarvel.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 531, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannertopshelf {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannertopshelf.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 542, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannervertigo {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannervertigo.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 553, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerzenescope {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerzenescope.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 564, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerclassic {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerclassic.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 200px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+}
+@media only screen and (min-width: 768px) {
+  /* line 578, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  .pageinfo {
+    padding-top: 200px;
+  }
+
+  /* line 581, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banneracclaim {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banneracclaim.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 592, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banner25 {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banner25.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 603, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerelse {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerelse.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 614, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannermine {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannermine.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 625, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerall {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerall.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 636, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banner451 {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banner451.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 647, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #aftershock {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/aftershock.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 658, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerarchie {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerarchie.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 669, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banneraspen {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banneraspen.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 680, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banneravatar {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banneravatar.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 691, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerblackmask {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerblackmask.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 702, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerboom {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerboom.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 713, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerdarkhorse {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerdarkhorse.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 724, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerdc {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerdc.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 735, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerdynamite {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerdynamite.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 746, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #banneridw {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/banneridw.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 757, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerimage {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerimage.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 768, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannermarvel {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannermarvel.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 779, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannertopshelf {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannertopshelf.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 790, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannervertigo {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannervertigo.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 801, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerzenescope {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerzenescope.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+
+  /* line 812, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+  #bannerclassic {
+    background: url("https://s3.amazonaws.com/valiantdb/images/banners/bannerclassic.jpg");
+    background-position: fixed;
+    background-repeat: no-repeat;
+    min-height: 250px;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    margin-top: -25px;
+  }
+}
+/* line 825, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+.collectionDropdowns {
+  margin-top: -150px;
+}
+
+/* line 829, E:/Sites/valiantdb/app/assets/stylesheets/books.css.scss */
+li.options a:hover {
+  color: black !important;
+}

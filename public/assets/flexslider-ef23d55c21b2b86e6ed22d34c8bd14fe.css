@@ -1,0 +1,360 @@
+/*
+ * jQuery FlexSlider v2.4.0
+ * http://www.woothemes.com/flexslider/
+ *
+ * Copyright 2012 WooThemes
+ * Free to use under the GPLv2 and later license.
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * Contributing author: Tyler Smith (@mbmufffin)
+ * 
+ */
+/* ====================================================================================================================
+ * FONT-FACE
+ * ====================================================================================================================*/
+@font-face {
+  font-family: 'flexslider-icon';
+  src: url("fonts/flexslider-icon.eot");
+  src: url("fonts/flexslider-icon.eot?#iefix") format("embedded-opentype"), url("fonts/flexslider-icon.woff") format("woff"), url("fonts/flexslider-icon.ttf") format("truetype"), url("fonts/flexslider-icon.svg#flexslider-icon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ====================================================================================================================
+ * RESETS
+ * ====================================================================================================================*/
+/* line 29, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-container a:hover,
+.flex-slider a:hover,
+.flex-container a:focus,
+.flex-slider a:focus {
+  outline: none;
+}
+
+/* line 35, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.slides,
+.slides > li,
+.flex-control-nav,
+.flex-direction-nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* line 40, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-pauseplay span {
+  text-transform: capitalize;
+}
+
+/* ====================================================================================================================
+ * BASE STYLES
+ * ====================================================================================================================*/
+/* line 46, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flexslider {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 50, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flexslider .slides > li {
+  display: none;
+  -webkit-backface-visibility: hidden;
+}
+
+/* line 54, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flexslider .slides img {
+  width: 100%;
+  display: block;
+}
+
+/* line 58, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flexslider .slides:after {
+  content: "\0020";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+
+/* line 66, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+html[xmlns] .flexslider .slides {
+  display: block;
+}
+
+/* line 69, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+* html .flexslider .slides {
+  height: 1%;
+}
+
+/* line 72, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.no-js .flexslider .slides > li:first-child {
+  display: block;
+}
+
+/* ====================================================================================================================
+ * DEFAULT THEME
+ * ====================================================================================================================*/
+/* line 78, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flexslider {
+  margin: 0 0 60px;
+  background: #ffffff;
+  border: 4px solid #ffffff;
+  position: relative;
+  zoom: 1;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: "" 0 1px 4px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: "" 0 1px 4px rgba(0, 0, 0, 0.2);
+  -o-box-shadow: "" 0 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: "" 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* line 92, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flexslider .slides {
+  zoom: 1;
+}
+
+/* line 95, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flexslider .slides img {
+  height: auto;
+}
+
+/* line 98, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-viewport {
+  max-height: 2000px;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+/* line 106, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.loading .flex-viewport {
+  max-height: 300px;
+}
+
+/* line 109, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.carousel li {
+  margin-right: 5px;
+}
+
+/* line 112, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-direction-nav {
+  *height: 0;
+}
+
+/* line 115, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-direction-nav a {
+  text-decoration: none;
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0;
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  overflow: hidden;
+  opacity: 0;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+/* line 135, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-direction-nav a:before {
+  font-family: "flexslider-icon";
+  font-size: 40px;
+  display: inline-block;
+  content: '\f001';
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* line 143, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-direction-nav a.flex-next:before {
+  content: '\f002';
+}
+
+/* line 146, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-direction-nav .flex-prev {
+  left: -50px;
+}
+
+/* line 149, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-direction-nav .flex-next {
+  right: -50px;
+  text-align: right;
+}
+
+/* line 153, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flexslider:hover .flex-direction-nav .flex-prev {
+  opacity: 0.7;
+  left: 10px;
+}
+
+/* line 157, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flexslider:hover .flex-direction-nav .flex-prev:hover {
+  opacity: 1;
+}
+
+/* line 160, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flexslider:hover .flex-direction-nav .flex-next {
+  opacity: 0.7;
+  right: 10px;
+}
+
+/* line 164, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flexslider:hover .flex-direction-nav .flex-next:hover {
+  opacity: 1;
+}
+
+/* line 167, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-direction-nav .flex-disabled {
+  opacity: 0 !important;
+  filter: alpha(opacity=0);
+  cursor: default;
+}
+
+/* line 172, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-pauseplay a {
+  display: block;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+  opacity: 0.8;
+  z-index: 10;
+  overflow: hidden;
+  cursor: pointer;
+  color: #000;
+}
+
+/* line 185, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-pauseplay a:before {
+  font-family: "flexslider-icon";
+  font-size: 20px;
+  display: inline-block;
+  content: '\f004';
+}
+
+/* line 191, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-pauseplay a:hover {
+  opacity: 1;
+}
+
+/* line 194, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-pauseplay a .flex-play:before {
+  content: '\f003';
+}
+
+/* line 197, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-control-nav {
+  width: 100%;
+  position: absolute;
+  bottom: -11px;
+  text-align: center;
+}
+
+/* line 203, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-control-nav li {
+  margin: 0 6px;
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+}
+
+/* line 209, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-control-paging li a {
+  width: 11px;
+  height: 11px;
+  display: block;
+  background: #666;
+  background: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  text-indent: -9999px;
+  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  -o-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+
+/* line 225, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-control-paging li a:hover {
+  background: #333;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* line 229, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-control-paging li a.flex-active {
+  background: #000;
+  background: rgba(0, 0, 0, 0.9);
+  cursor: default;
+}
+
+/* line 234, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-control-thumbs {
+  margin: 5px 0 0;
+  position: static;
+  overflow: hidden;
+}
+
+/* line 239, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-control-thumbs li {
+  width: 25%;
+  float: left;
+  margin: 0;
+}
+
+/* line 244, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-control-thumbs img {
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: .7;
+  cursor: pointer;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+/* line 256, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-control-thumbs img:hover {
+  opacity: 1;
+}
+
+/* line 259, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+.flex-control-thumbs .flex-active {
+  opacity: 1;
+  cursor: default;
+}
+
+/* ====================================================================================================================
+ * RESPONSIVE
+ * ====================================================================================================================*/
+@media screen and (max-width: 860px) {
+  /* line 267, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+  .flex-direction-nav .flex-prev {
+    opacity: 1;
+    left: 10px;
+  }
+
+  /* line 271, E:/Sites/valiantdb/app/assets/stylesheets/flexslider.css.scss */
+  .flex-direction-nav .flex-next {
+    opacity: 1;
+    right: 10px;
+  }
+}

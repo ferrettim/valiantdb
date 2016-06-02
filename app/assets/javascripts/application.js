@@ -1,46 +1,19 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
-// listed below.
-//
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
-// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
-//
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// compiled file.
-//
-// Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
-// about supported directives.
-//
+
 //= require jsapi
 //= require chartkick
-//= require jquery
-//= require jquery_ujs
-//= require jquery-ui/autocomplete
-//= require autocomplete-rails
-//= require jquery-ui/accordion
-//= require jquery-ui/tooltip
+//= require jquery.flexslider-min
 //= require jquery.raty
+//= require tinymce-jquery
 //= require menu
 //= require search
-//= require sameheights
 //= require nprogress
-//= require sweet-alert
-//= require sweet-alert-confirm
 //= require select2
 //= require ratyrate
 //= require local_time
-//= require bootstrap
-//= require tinymce-jquery
 //= require fancybox
-//= require_tree .
+//= require conversations
+//= require infinite-scroll
 
-if ('addEventListener' in window) {
-      window.addEventListener('resize', function(){
-          sameHeights();
-      });
-      window.addEventListener('load', function(){
-          sameHeights();
-      });
-  }
 
 $(window).ready(function() {
   $('.flexslider').flexslider({

@@ -1,0 +1,190 @@
+/*!
+ * Start Bootstrap - Landing Page Bootstrap Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+/* line 7, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+#landingpg {
+  margin-top: -4px;
+}
+
+/* line 10, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.topnav {
+  font-size: 14px;
+}
+
+/* line 14, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.lead {
+  font-size: 13px;
+  font-weight: 200;
+}
+
+/* line 19, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.intro-header {
+  padding-top: 75px !important;
+  /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+  padding-bottom: 25px;
+  text-align: center;
+  color: #f8f8f8;
+  background: url(https://s3.amazonaws.com/valiantdb/images/coverwell3.jpg) no-repeat center center;
+  background-size: cover;
+}
+
+@media (max-width: 480px) {
+  /* line 29, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+  .intro-message {
+    position: relative;
+    padding-top: 50%;
+    padding-bottom: 5%;
+  }
+}
+@media (min-width: 481px) and (max-width: 767px) {
+  /* line 36, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+  .intro-message {
+    position: relative;
+    padding-top: 40%;
+    padding-bottom: 5%;
+  }
+}
+@media (min-width: 768px) {
+  /* line 43, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+  .intro-message {
+    position: relative;
+    padding-top: 25%;
+    padding-bottom: 15%;
+  }
+}
+/* line 49, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.intro-message > h1 {
+  margin: 0;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+  font-size: 5em;
+}
+
+/* line 55, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.intro-divider {
+  width: 400px;
+  border-top: 1px solid #f8f8f8;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* line 61, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.intro-message > h3 {
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 767px) {
+  /* line 66, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+  .intro-message {
+    padding-bottom: 15%;
+  }
+
+  /* line 70, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+  .intro-message > h1 {
+    font-size: 3em;
+  }
+
+  /* line 74, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+  ul.intro-social-buttons > li {
+    display: block;
+    margin-bottom: 20px;
+    padding: 0;
+  }
+
+  /* line 80, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+  ul.intro-social-buttons > li:last-child {
+    margin-bottom: 0;
+  }
+
+  /* line 84, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+  .intro-divider {
+    width: 100%;
+  }
+}
+/* line 89, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.network-name {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+
+/* line 96, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.content-section-a {
+  padding: 50px 0;
+  background-color: #f8f8f8;
+}
+
+/* line 101, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.content-section-b {
+  padding: 50px 0;
+  border-top: 1px solid #e7e7e7;
+  border-bottom: 1px solid #e7e7e7;
+  background-color: #f8f8f8;
+  color: black !important;
+}
+
+/* line 109, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.section-heading {
+  margin-bottom: 30px;
+}
+
+/* line 113, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.section-heading-spacer {
+  float: left;
+  width: 200px;
+  border-top: 3px solid #e7e7e7;
+}
+
+/* line 119, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.banner {
+  padding: 100px 0;
+  color: #f8f8f8;
+  background: url(https://s3.amazonaws.com/valiantdb/images/landing/banner-bg.jpg) no-repeat center center;
+  background-size: cover;
+  margin: 0 auto;
+}
+
+/* line 127, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.banner h2 {
+  margin: 0;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+  font-size: 3em;
+}
+
+/* line 133, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.banner ul {
+  margin-bottom: 0;
+}
+
+/* line 137, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+.banner-social-buttons {
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* line 141, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+ul.banner-social-buttons {
+  padding-top: 15px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  /* line 148, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+  .banner h2 {
+    margin: 0;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+    font-size: 3em;
+  }
+}
+/* line 156, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+footer {
+  padding: 20px 0;
+  background-color: #f8f8f8;
+}
+
+/* line 161, E:/Sites/valiantdb/app/assets/stylesheets/home.css.scss */
+p.copyright {
+  margin: 15px 0 0;
+}
