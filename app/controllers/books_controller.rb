@@ -444,8 +444,9 @@ class BooksController < ApplicationController
       @booksales = Book.where(:category => "Default").where(:rdate => @date.beginning_of_month..@date.end_of_month).where("printrun > ?", "1").order(printrun: :desc).limit(300)   
     else
       @date = DateTime.now.strftime("%B %Y")
-      @pgtitle = "Monthly Sales for " + DateTime.now.strftime("%B %Y")
-      @booksales = Book.where(:category => "Default").where(:rdate => DateTime.now.beginning_of_month..DateTime.now.end_of_month).where("printrun > ?", "1").order(printrun: :desc).limit(300)
+      @pgtitle = "Monthly Comic Book Sales"
+      @booksales = Book.where(:category => "Default").where(:rdate => DateTime.now.beginning_of_month..DateTime.now.end_of_month).where("printrun > ?", "1001").order(printrun: :desc).limit(300)
+      @booksales2 = Book.where(:category => "Default").where(:rdate => (DateTime.now.beginning_of_month - 2.month)..(DateTime.now.end_of_month - 2.month)).where("printrun > ?", "1001").order(printrun: :desc).limit(300)
     end
   end
 

@@ -240,15 +240,15 @@
               <% unless title.rdate.future? %>
                   <li id="<%= title.id %>_owns" class="magic">
                     <% if user_signed_in? && current_user.owns?(title) %>
-                      <%= link_to book_own_path(title), method: :delete, remote: true, class: "btn btn-default btn-danger btn-circle", title: "Remove from collection", data: {disable_with: "<i class='fa fa-minus'></i>"} do %><i class="fa fa-heart"></i><% end %>
+                      <%= link_to book_own_path(title), method: :delete, remote: true, class: "btn btn-danger btn-circle", title: "Remove from collection", data: {disable_with: "<i class='fa fa-minus'></i>"} do %><i class="fa fa-heart"></i><% end %>
                     <% else %>
-                      <%= link_to book_own_path(title), method: :post, remote: true, class: "btn btn-success btn-circle", title: "Add to collection", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-heart"></i> <% end %>
+                      <%= link_to book_own_path(title), method: :post, remote: true, class: "btn btn-circle", title: "Add to collection", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-heart"></i> <% end %>
                     <% end %>
                   </li>
                   <% if user_signed_in? && current_user.wishes?(title) %>
-                    <%= link_to book_wish_path(title), method: :delete, remote: true, class: "btn btn btn-danger btn-circle", title: "Remove from wishlist", data: { toggle: "tooltip", disable_with: "<span class='fa fa-minus'></span>"} do %><span class="fa fa-star-o"></span><% end %>
+                    <%= link_to book_wish_path(title), method: :delete, remote: true, class: "btn btn-danger btn-circle", title: "Remove from wishlist", data: { toggle: "tooltip", disable_with: "<span class='fa fa-minus'></span>"} do %><span class="fa fa-star-o"></span><% end %>
                   <% else %>
-                    <%= link_to book_wish_path(title), method: :post, remote: true, class: "btn btn-success btn-circle", title: "Add to wishlist", data: { toggle: "tooltip", disable_with: "<span class='fa fa-plus'></span>"} do %><span class="fa fa-star"></span><% end %>
+                    <%= link_to book_wish_path(title), method: :post, remote: true, class: "btn btn-default btn-circle", title: "Add to wishlist", data: { toggle: "tooltip", disable_with: "<span class='fa fa-plus'></span>"} do %><span class="fa fa-star"></span><% end %>
                   <% end %>
               <% end %>
             <% end %>

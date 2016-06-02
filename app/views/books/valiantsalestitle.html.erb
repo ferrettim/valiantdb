@@ -26,204 +26,204 @@
 			
 			<% @book.each do |title| %>
 				<tr>
-					<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today).end_of_month).sum(:printrun) > 0 %>
+					<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today).end_of_month).sum(:printrun) > 0 %>
 						<td>
 							<strong><%= title.title %></strong>
 						</td>
 					<% end %>
 					<!-- 12 -->
 					<td class="text-center">
-						<%= Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).sum(:printrun) %><br />
-							<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).sum(:printrun) > 0 %>
+						<%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).sum(:printrun) %><br />
+							<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).sum(:printrun) > 0 %>
 								<%=
-									((((Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 13.month).beginning_of_month..(Date.today - 13.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
+									((((Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 13.month).beginning_of_month..(Date.today - 13.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
 							 	%>%
 							<% end %>
 					</td>
 					<!-- 11 -->
-					<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).sum(:printrun) %>
+					<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).sum(:printrun) %>
 						<td class="text-center success">
-					<% elsif Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun) == 0 %>
+					<% elsif Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun) == 0 %>
 						<td class="text-center">
 					<% else %>
 						<td class="text-center danger">
 					<% end%>
-						<%= Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun) %><br />
-							<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun) > 0 %>
+						<%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun) %><br />
+							<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun) > 0 %>
 								<%=
-									((((Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
+									((((Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
 							 	%>%
 							<% end %>
 					</td>
 					<!-- 10 -->
-					<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun) %>
+					<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun) %>
 						<td class="text-center success">
-					<% elsif Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun) == 0 %>
+					<% elsif Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun) == 0 %>
 						<td class="text-center">
 					<% else %>
 						<td class="text-center danger">
 					<% end %>
-						<%= Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun) %><br />
-							<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun) > 0 %>
+						<%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun) %><br />
+							<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun) > 0 %>
 								<%=
-									((((Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
+									((((Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
 							 	%>%
 							<% end %>
 					</td>
 					<!-- 9 -->
-					<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun) %>
+					<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun) %>
 						<td class="text-center success">
-					<% elsif Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun) == 0 %>
+					<% elsif Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun) == 0 %>
 						<td class="text-center">
 					<% else %>
 						<td class="text-center danger">
 					<% end %>
-						<%= Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun) %><br />
-							<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun) > 0 %>
+						<%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun) %><br />
+							<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun) > 0 %>
 								<%=
-									((((Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
+									((((Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
 							 	%>%
 							<% end %>
 					</td>
 					<!-- 8 -->
-					<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun) %>
+					<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun) %>
 						<td class="text-center success">
-					<% elsif Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun) == 0 %>
+					<% elsif Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun) == 0 %>
 						<td class="text-center">
 					<% else %>
 						<td class="text-center danger">
 					<% end %>
-						<%= Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun) %><br />
-							<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun) > 0 %>
+						<%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun) %><br />
+							<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun) > 0 %>
 								<%=
-									((((Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
+									((((Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
 							 	%>%
 							<% end %>
 					</td>
 					<!-- 7 -->
-					<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun) %>
+					<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun) %>
 						<td class="text-center success">
-					<% elsif Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun) == 0 %>
+					<% elsif Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun) == 0 %>
 						<td class="text-center">
 					<% else %>
 						<td class="text-center danger">
 					<% end %>
-						<%= Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun) %><br />
-							<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun) > 0 %>
+						<%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun) %><br />
+							<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun) > 0 %>
 								<%=
-									((((Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
+									((((Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
 							 	%>%
 							<% end %>
 					</td>
 					<!-- 6 -->
-					<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun) %>
+					<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun) %>
 						<td class="text-center success">
-					<% elsif Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun) == 0 %>
+					<% elsif Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun) == 0 %>
 						<td class="text-center">
 					<% else %>
 						<td class="text-center danger">
 					<% end %>
-						<%= Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun) %><br />
-							<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun) > 0 %>
+						<%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun) %><br />
+							<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun) > 0 %>
 								<%=
-									((((Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
+									((((Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
 							 	%>%
 							<% end %>
 					</td>
 					<!-- 5 -->
-					<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun) %>
+					<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun) %>
 						<td class="text-center success">
-					<% elsif Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun) == 0 %>
+					<% elsif Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun) == 0 %>
 						<td class="text-center">
 					<% else %>
 						<td class="text-center danger">
 					<% end %>
-						<%= Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun) %><br />
-							<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun) > 0 %>
+						<%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun) %><br />
+							<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun) > 0 %>
 								<%=
-									((((Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
+									((((Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
 							 	%>%
 							<% end %>
 					</td>
 					<!-- 4 -->
-					<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun) %>
+					<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun) %>
 						<td class="text-center success">
-					<% elsif Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun) == 0 %>
+					<% elsif Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun) == 0 %>
 						<td class="text-center">
 					<% else %>
 						<td class="text-center danger">
 					<% end %>
-						<%= Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun) %><br />
-							<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun) > 0 %>
+						<%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun) %><br />
+							<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun) > 0 %>
 								<%=
-									((((Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
+									((((Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
 							 	%>%
 							<% end %>
 					</td>
 					<!-- 3 -->
-					<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun) %>
+					<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun) %>
 						<td class="text-center success">
-					<% elsif Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun) == 0 %>
+					<% elsif Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun) == 0 %>
 						<td class="text-center">
 					<% else %>
 						<td class="text-center danger">
 					<% end %>
-						<%= Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun) %><br />
-							<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun) > 0 %>
+						<%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun) %><br />
+							<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun) > 0 %>
 								<%=
-									((((Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
+									((((Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
 							 	%>%
 							<% end %>
 					</td>
 					<!-- 2 -->
-					<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun) %>
+					<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun) %>
 						<td class="text-center success">
-					<% elsif Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun) == 0 %>
+					<% elsif Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun) == 0 %>
 						<td class="text-center">
 					<% else %>
 						<td class="text-center danger">
 					<% end %>
-						<%= Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun) %><br />
-							<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun) > 0 %>
+						<%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun) %><br />
+							<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun) > 0 %>
 								<%=
-									((((Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
+									((((Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
 							 	%>%
 							<% end %>
 					</td>
 					<!-- 1 -->
-					<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun) %>
+					<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).sum(:printrun) > Book.where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun) %>
 						<td class="text-center success">
-					<% elsif Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).sum(:printrun) == 0 %>
+					<% elsif Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).sum(:printrun) == 0 %>
 						<td class="text-center">
 					<% else %>
 						<td class="text-center danger">
 					<% end %>
-						<%= Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).sum(:printrun) %><br />
-							<% if Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).sum(:printrun) > 0 %>
+						<%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).sum(:printrun) %><br />
+							<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).sum(:printrun) > 0 %>
 								<%=
-									((((Book.where(:category => "Default").where(:title => title.title, :rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
+									((((Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).sum(:printrun)).to_f - (Book.where(:title => title.title, :rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun)).to_f) / (Book.where(:title => title.title, :rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).sum(:printrun)).to_f) * 100).round(0)
 							 	%>%
 							<% end %>
 					</td>
 					<!-- Total -->
-					<td class="text-right"><%= Book.where(:title => title.title, :rdate => (Date.today - 12.month)..(Date.today)).where(:category => "Default").sum(:printrun) %></td>
+					<td class="text-right"><%= Book.where(:title => title.title, :rdate => (Date.today - 12.month)..(Date.today)).where(:category => "Default").where(:publisher => "Valiant Entertainment").sum(:printrun) %></td>
 				</tr>
 			<% end %>
 			<tr>
 				<td><strong>All books</strong></td>
-				<td class="text-center"><%= Book.where(:category => "Default").where(:rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).sum(:printrun) %></td>
-				<td class="text-center"><%= Book.where(:category => "Default").where(:rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun) %></td>
-				<td class="text-center"><%= Book.where(:category => "Default").where(:rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun) %></td>
-				<td class="text-center"><%= Book.where(:category => "Default").where(:rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun) %></td>
-				<td class="text-center"><%= Book.where(:category => "Default").where(:rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun) %></td>
-				<td class="text-center"><%= Book.where(:category => "Default").where(:rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun) %></td>
-				<td class="text-center"><%= Book.where(:category => "Default").where(:rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun) %></td>
-				<td class="text-center"><%= Book.where(:category => "Default").where(:rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun) %></td>
-				<td class="text-center"><%= Book.where(:category => "Default").where(:rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun) %></td>
-				<td class="text-center"><%= Book.where(:category => "Default").where(:rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun) %></td>
-				<td class="text-center"><%= Book.where(:category => "Default").where(:rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun) %></td>
-				<td class="text-center"><%= Book.where(:category => "Default").where(:rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).sum(:printrun) %></td>
-				<td class="text-right btn-primary"><%= Book.where(:category => "Default").where(:rdate => (Date.today - 12.month).beginning_of_month..(Date.today).end_of_month).sum(:printrun) %></td>
+				<td class="text-center"><%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).sum(:printrun) %></td>
+				<td class="text-center"><%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).sum(:printrun) %></td>
+				<td class="text-center"><%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).sum(:printrun) %></td>
+				<td class="text-center"><%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).sum(:printrun) %></td>
+				<td class="text-center"><%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).sum(:printrun) %></td>
+				<td class="text-center"><%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).sum(:printrun) %></td>
+				<td class="text-center"><%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).sum(:printrun) %></td>
+				<td class="text-center"><%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).sum(:printrun) %></td>
+				<td class="text-center"><%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).sum(:printrun) %></td>
+				<td class="text-center"><%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).sum(:printrun) %></td>
+				<td class="text-center"><%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).sum(:printrun) %></td>
+				<td class="text-center"><%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).sum(:printrun) %></td>
+				<td class="text-right btn-primary"><%= Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:rdate => (Date.today - 12.month).beginning_of_month..(Date.today).end_of_month).sum(:printrun) %></td>
 			</tr>
 		</table>
 	</div>

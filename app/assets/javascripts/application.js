@@ -1,6 +1,3 @@
-
-//= require jsapi
-//= require chartkick
 //= require jquery.flexslider-min
 //= require jquery.raty
 //= require tinymce-jquery
@@ -13,7 +10,6 @@
 //= require fancybox
 //= require conversations
 //= require infinite-scroll
-
 
 $(window).ready(function() {
   $('.flexslider').flexslider({
