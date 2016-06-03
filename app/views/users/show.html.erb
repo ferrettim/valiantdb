@@ -157,7 +157,7 @@
         </div>
         <br />
         <div class="col-md-9 col-sm-8 col-xs-12 wellclear bottomcorners">
-            <p>You can choose which books you want to see on this site by going to your <%= link_to edit_user_registration_path, :title => "Edit settings" do %>settings page<% end %> and checking only the publishers you want to see. Remember that non-patrons are limited to a 1000 book collection.</p>
+            <p>You can choose which books you want to see on this site by going to your <%= link_to edit_user_registration_path, :title => "Edit settings" do %>settings page<% end %> and checking only the publishers you want to see. <% unless current_user.patron? %>Remember that non-patrons are limited to a 1000 book collection.<% end %></p>
             <div class="profile-content">
                 <h4 class="text-left">
                     <%= link_to releases_currentweek_path do %>
