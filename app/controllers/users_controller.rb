@@ -57,8 +57,10 @@ class UsersController < ApplicationController
 
   def valianttop25
     @pgtitle = "Top 25 Valiant Collections"
-    book_ids = Book.where(:publisher => ["Valiant Entertainment", "Voyager Communications", "Acclaim Entertainment"]).pluck(:id)
-    @users = Own.select("user_id, book_id, count(book_id) as total_owns").where(book_id: book_ids).group(:user_id).order("total_owns DESC").limit(25)
+    book_ids = Book.where(:publisher => "Valiant Entertainment").pluck(:id)
+    count = book_ids.count
+    users_ids = Own.where(book_id: book_ids).group(:user_id).order("count(*) DESC").limit(25).pluck("user_id")
+    @users = User.where(:id => users_ids).order('owns_count desc')
     @counter = 0
     @hardcats = [1,5,9,18,26,28,29,36,71,121,132,148,152,170,198,230,310,492,472]
     respond_to do |format|

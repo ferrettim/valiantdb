@@ -3,7 +3,6 @@
 //= require tinymce-jquery
 //= require menu
 //= require search
-//= require nprogress
 //= require select2
 //= require ratyrate
 //= require local_time

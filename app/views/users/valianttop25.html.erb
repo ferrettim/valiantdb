@@ -10,10 +10,10 @@
 		                	<div class="place pull-right">
 			                	
 						    </div>
-		                    <% if User.find(u.user_id).avatar.blank? %>
+		                    <% if u.avatar.blank? %>
 		                        <img src="https://s3.amazonaws.com/valiantdb/images/noimg-med.png" class="img-responsive">
 		                    <% else %>
-		                        <%= image_tag User.find(u.user_id).avatar.url(:medium), :alt => "Profile image", class: "img-responsive" %>
+		                        <%= image_tag u.avatar.url(:medium), :alt => "Profile image", class: "img-responsive" %>
 		                    <% end %>
 		                </div>
 		                <!-- END SIDEBAR USERPIC -->
@@ -21,7 +21,7 @@
 		                <div class="profile-usertitle">
 		                    <div class="profile-usertitle-name">
 		                    	<div class="text-center">
-			                    	<% if User.find(u.user_id).online? %>
+			                    	<% if u.online? %>
 										<div class="online-button">
 											<button class="btn btn-success btn-circle btn-sm" title="Online">&nbsp;</button>
 										</div>
@@ -31,16 +31,16 @@
 										</div>
 									<% end %>
 								</div>
-		                        <%= link_to root_url + "users/" + User.find(u.user_id).slug + "/profile", :title => "See profile" do %>
-		                        	<small><%= User.find(u.user_id).name %></small> 
+		                        <%= link_to root_url + "users/" + u.slug + "/profile", :title => "See profile" do %>
+		                        	<small><%= u.name %></small> 
 		                        <% end %>
-			                    <% if User.find(u.user_id).patron? %>
+			                    <% if u.patron? %>
 			                        <%= link_to "http://www.patreon.com/comicark", :title => "I'm a patron, are you?", :target => "_blank" do %><%= image_tag "https://s3.amazonaws.com/valiantdb/images/patreonbadge.png", height: "12px" %><% end %>
 			                    <% end %>
 		                        <br />
-		                        <small>Owns <%= User.find(u.user_id).owned_books.where(:publisher => ["Valiant Entertainment", "Voyager Communications", "Acclaim Entertainment"]).count %> <% if User.find(u.user_id).owned_books.where(:publisher => ["Valiant Entertainment", "Voyager Communications", "Acclaim Entertainment"]).count == 1 %>book<% else %>books<% end %></small>
+		                        <small>Owns <%= u.owned_books.where(:publisher => ["Valiant Entertainment", "Voyager Communications", "Acclaim Entertainment"]).count %> <% if u.owned_books.where(:publisher => ["Valiant Entertainment", "Voyager Communications", "Acclaim Entertainment"]).count == 1 %>book<% else %>books<% end %></small>
 		                        <br />
-		                        <small>Joined <%= User.find(u.user_id).created_at.strftime("%B %d, %Y") %></small>
+		                        <small>Joined <%= u.created_at.strftime("%B %d, %Y") %></small>
 		                    </div>
 		                </div>
 		                <!-- END SIDEBAR USER TITLE -->
