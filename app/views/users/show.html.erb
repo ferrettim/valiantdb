@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row profile">
         <div class="col-md-3 col-sm-4 col-xs-12">
-            <div class="profile-sidebar bottomcorners">
+            <div class="profile-sidebar">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
                     <% if @user.avatar.blank? %>
@@ -155,9 +155,11 @@
             </div>
 
         </div>
-        <br />
         <div class="col-md-9 col-sm-8 col-xs-12 wellclear bottomcorners">
-            <p>You can choose which books you want to see on this site by going to your <%= link_to edit_user_registration_path, :title => "Edit settings" do %>settings page<% end %> and checking only the publishers you want to see. <% unless current_user.patron? %>Remember that non-patrons are limited to a 1000 book collection.<% end %></p>
+            <% unless user_signed_in? && current_user.patron? %>
+                <a href="//lootcrate.7eer.net/c/264379/277903/4019"><img src="//a.impactradius-go.com/display-ad/4019-277903" border="0" alt="" width="101.4%" height="100" style="margin: -7px 0px 0px -6px;" /></a><img height="0" width="0" src="//lootcrate.7eer.net/i/264379/277903/4019" style="position:absolute;visibility:hidden;" border="0" />
+            <% end %>
+            <p>You can choose which books you want to see on this site by going to your <%= link_to edit_user_registration_path, :title => "Edit settings" do %>settings page<% end %> and checking only the publishers you want to see. <% unless current_user.patron? %>Remember that patron accounts are ad-free and have no limits on their collection size.<% end %></p>
             <div class="profile-content">
                 <h4 class="text-left">
                     <%= link_to releases_currentweek_path do %>
