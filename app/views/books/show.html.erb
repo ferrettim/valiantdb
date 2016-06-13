@@ -1,4 +1,4 @@
-<% cache("books", :expires_in => 7.days) do %>
+
 	<% if controller_name == "books" && action_name == "show" %>
 	    <div itemscope itemtype="http://schema.org/Book" class="hidden">
 	      <meta itemprop="description" content="<%= @book.summary %>">
@@ -950,4 +950,3 @@
 				<% end %>
 	</div>
 	<% end %>
-<% end %>

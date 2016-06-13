@@ -1,7 +1,6 @@
 <div id="books">
  	<div class="clearfix"></div>
 	<% @book.each do |title| %>
-		<% cache("book_list", :expires_in => 7.days) do %>
 		 	<div class="col-md-2 col-sm-4 col-xs-6 book-image">
 		 		<% if title.iskey? %>
 		 			<div class="ribbon"><span><i class="fa fa-key"></i> KEY</span></div>
@@ -75,7 +74,6 @@
 		 		<% end %>
 
 		 	</div>
-	 	<% end %>
  	<% end %>
 </div>
 

@@ -174,7 +174,6 @@
                     <div class="flexslider2 col-md-12 col-sm-12 col-xs-12">
                         <ul class="slides">
                             <% if @newbooks.count > 0 %>
-                                <% cache("this_weeks", :expires_in => 1.hour) do %>
                                     <% @newbooks.each do |upcoming| %>
                                             <% if upcoming.category == "Paperback" %>
                                                 <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover.to_s do %>
@@ -190,7 +189,6 @@
                                                     <% end %></li>
                                             <% end %>
                                     <% end %>
-                                <% end %>
                             <% else %>
                                 <p>No new releases for this week</p>
                             <% end %>
@@ -207,7 +205,6 @@
                         <div class="flexslider2 col-md-12 col-sm-12 col-xs-12">
                             <ul class="slides">
                                 <% if @newbooks2.count > 0 %>
-                                    <% cache("next_weeks", :expires_in => 1.day) do %>
                                         <% @newbooks2.each do |upcoming2| %>
                                                 <% if upcoming2.category == "Paperback" %>
                                                     <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " Vol. " + upcoming2.issue.to_s + " TPB cover by " + upcoming2.cover.to_s do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover.to_s, class: "img-responsive img-home" %><% end %></li>
@@ -217,7 +214,6 @@
                                                     <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " #" + upcoming2.issue.to_s + " cover by " + upcoming2.cover.to_s do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover.to_s, class: "img-responsive img-home" %><% end %></li>
                                                 <% end %>
                                         <% end %>
-                                    <% end %>
                                 <% else %>
                                     <p>No new releases for this week</p>
                                 <% end %>
@@ -262,14 +258,7 @@
                       <% end %>
                         <div class="clearfix"><br /></div>
                 <% end %>
-                <% if @user == current_user %>
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#friends" aria-controls="home" role="tab" data-toggle="tab">Friends</a></li>
-                        <li role="presentation"><a href="#latest" aria-controls="messages" role="tab" data-toggle="tab">Recently Added</a></li>
-                    </ul>
-
-                   
-                <% end %>
+                
 
             </div>
         </div>
