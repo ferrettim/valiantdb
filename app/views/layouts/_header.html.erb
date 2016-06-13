@@ -7,736 +7,705 @@
   <% end %>
 <% end %>
 
-<div id='cssmenu'>
-<ul>
-   <li class="gone"><a href='/' rel="prerender">ComicArk</a></li>
-   <% if user_signed_in? %>
-     <li class='active'>
-        <a href='#'>
-          <% if current_user.avatar? %>
-            <%= image_tag current_user.avatar.url(:thumb), class: "img-responsive gone", :alt => "User" %> 
-          <% else %>
-            <%= image_tag "https://s3.amazonaws.com/valiantdb/images/noimage.png", class: "img-responsive gone", :alt => "User" %>
-          <% end %>
-          <span class="gone2"><%= current_user.name.to_s %></span>
-        </a>
-        <ul>
-          <% if current_user.super_admin? %>
-             <li><a href="#">Admin</a>
-                <ul>
-                   <li><%= link_to new_book_path do %>Add new book<% end %></li>
-                   <% if Book.all.where(:status => "Pending").count > 0 %>
-                      <li><%= link_to manage_books_path do %>Manage pending<% end %></li>
-                   <% end %>
-                   <% if controller_name == "books" && action_name == "show" %>
-                      <li><%= link_to edit_book_path do %>Edit book<% end %></li>
-                      <li><%= link_to @book, method: :delete, data: { 
-                                                                          confirm: 'Are you sure?',
-                                                                          :'confirm-button-text' => "Yes",
-                                                                          :'cancel-button-text' => "No",
-                                                                          :'confirm-button-color' => "#66CD00",
-                                                                          :'sweet-alert-type' => 'info' },
-                                                                          remote: false do %>Delete book<% end %></li>
-                   <% end %>
-                   <li><%= link_to new_collectible_path do %>Add new collectible<% end %></li>
-                   <% if controller_name == "collectibles" && action_name == "show" %>
-                      <li><%= link_to edit_collectible_path do %>Edit collectible<% end %></li>
-                      <li><%= link_to @collectible, method: :delete, data: { 
-                                                                          confirm: 'Are you sure?',
-                                                                          :'confirm-button-text' => "Yes",
-                                                                          :'cancel-button-text' => "No",
-                                                                          :'confirm-button-color' => "#66CD00",
-                                                                          :'sweet-alert-type' => 'info' },
-                                                                          remote: false do %>Delete collectible<% end %>
-                      </li>
-                   <% end %>
-                   <li><%= link_to "User Stats", user_statistics_path %></li>         
-                </ul>
-             </li>
-         <% end %>
-          <li><a href="#">My Links</a>
-            <ul>
-               <li><a href='/'>My Dashboard</a></li>
-               <li><%= link_to root_url + "users/" + current_user.slug + "/collection", :title => "My Collection" do %>My Collection<% end %></li>
-               <li><%= link_to root_url + "users/" + current_user.slug + "/wishlist", :title => "My Wishlist" do %>My Wishlist<% end %></li>
-               <li><%= link_to root_url + "users/" + current_user.slug + "/forsale", :title => "My Books For Sale" do %>My Books For Sale<% end %></li>
-               <li><%= link_to root_url + "users/" + current_user.slug + "/notes", :title => "My Notes" do %>My Notes<% end %></li>
-               <li><%= link_to mailbox_inbox_path, :title => "My Messages" do %>My Messages<% end %></li>
-               <% unless current_user.admin? %>
-                  <li><%= link_to new_book_path do %>Add sketch cover<% end %></li>
-               <% end %>
-               <li><%= link_to edit_user_registration_path, title: "Settings" do %>Settings<% end %></li>
-            </ul>
-          </li>
-          <li><a href='#'>Other Links</a>
-            <ul>
-              <li><%= link_to users_leaderboard_path, :title => "Leaderboard" do %>Leaderboard<% end %></li>
-              <li><%= link_to users_backers_path, :title => "Patrons" do %>Patrons<% end %></li>
-              <li><a href="#">Top 25 Collections</a>
-                <ul>
-                  <li><%= link_to users_top25_path, :title => "Top 25 Collections" do %>All Publishers<% end %></li>
-                  <li><%= link_to users_top25_valiant_path, :title => "Top 25 Valiant Collections" do %>Valiant<% end %></li>
-                </ul>
-              </li>
-              <li><%= link_to users_all_path, :title => "User Directory" do %>User Directory<% end %></li>
-            </ul>
-          </li>
-          <li><%= link_to new_contact_path, :title => "Contact Us" do %>Contact Us<% end %></li>
-          <li><%= link_to supportus_path, :title => "Support ComicArk" do %>Support This Site<% end %></li>
-          <li><%= link_to destroy_user_session_path, method: :get, :title => "Logout" do %>Logout<% end %></li>
-        </ul>
-     </li>
-   <% else %>
-      <li class="active"><%= link_to "Login", new_user_session_path, :title => "Log in", :rel => "prerender" %></li>
-   <% end %>
-   <li><a href='#'>Upcoming</a>
-      <% if user_signed_in? %>
-        <ul>
-          <li><a href="#">This Week</a>
-            <ul>
-              <li><%= link_to releases_currentweek_path do %>All<% end %></li>
-              <% if current_user.pubboom? %>
-                <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
-              <% end %>
-              <% if current_user.pubdarkhorse? %>
-                <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
-              <% end %>
-              <% if current_user.pubdc? %>
-                <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=DC+Comics" do %>DC Comics<% end %></li>
-              <% end %>
-              <% if current_user.pubdynamite? %>
-                <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
-              <% end %>
-              <% if current_user.pubidw? %>
-                <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
-              <% end %>
-              <% if current_user.pubimage? %>
-                <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Image+Comics" do %>Image Comics<% end %></li>
-              <% end %>
-              <li><a href="#">Independents</a>
-                <ul>
-                  <% if current_user.pubfourfiveone? %>
-                    <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=451" do %>451<% end %></li>
-                  <% end %>
-                  <% if current_user.pubaftershock? %>
-                    <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
-                  <% end %>
-                  <% if current_user.pubarchie? %>
-                    <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
-                  <% end %>
-                  <% if current_user.pubaspen? %>
-                    <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
-                  <% end %>
-                  <% if current_user.pubavatar? %>
-                    <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
-                  <% end %>
-                  <% if current_user.pubblackmask? %>
-                    <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Black+Mask+Studios" do %>Black Mask Studios<% end %></li>
-                  <% end %>
-                  <% if current_user.pubzenescope? %>
-                    <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
-                  <% end %>
-                </ul>
-              </li>
-              <% if current_user.pubmarvel? %>
-                <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
-              <% end %>
-              <% if current_user.pubvaliant? %>
-                <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
-              <% end %>
-              <% if current_user.pubvertigo? %>
-                <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
-              <% end %>
-            </ul>
-          </li>
-          <li><a href="#">Next Week</a>
-            <ul>
-              <li><%= link_to releases_nextweek_path do %>All<% end %></li>
-              <% if current_user.pubboom? %>
-                <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
-              <% end %>
-              <% if current_user.pubdarkhorse? %>
-                <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
-              <% end %>
-              <% if current_user.pubdc? %>
-                <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=DC+Comics" do %>DC Comics<% end %></li>
-              <% end %>
-              <% if current_user.pubdynamite? %>
-                <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
-              <% end %>
-              <% if current_user.pubidw? %>
-                <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
-              <% end %>
-              <% if current_user.pubimage? %>
-                <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Image+Comics" do %>Image Comics<% end %></li>
-              <% end %>
-              <li><a href="#">Independents</a>
-                <ul>
-                  <% if current_user.pubfourfiveone? %>
-                    <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=451" do %>451<% end %></li>
-                  <% end %>
-                  <% if current_user.pubaftershock? %>
-                    <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
-                  <% end %>
-                  <% if current_user.pubarchie? %>
-                    <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
-                  <% end %>
-                  <% if current_user.pubaspen? %>
-                    <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
-                  <% end %>
-                  <% if current_user.pubavatar? %>
-                    <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
-                  <% end %>
-                  <% if current_user.pubblackmask? %>
-                    <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Black+Mask+Studios" do %>Black Mask Studios<% end %></li>
-                  <% end %>
-                  <% if current_user.pubzenescope? %>
-                    <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
-                  <% end %>
-                </ul>
-              </li>
-              <% if current_user.pubmarvel? %>
-                <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
-              <% end %>
-              <% if current_user.pubvaliant? %>
-                <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
-              <% end %>
-              <% if current_user.pubvertigo? %>
-                <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
-              <% end %>
-            </ul>
-          </li>
-          <li><a href="#">By Month</a>
-            <ul>
-              <li><a href="#"><%= (Date.today - 1.month).strftime("%B %Y") %></a>
-                <ul>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}" do %>All<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
-                  <li><a href="#">Independents</a>
-                    <ul>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
-                    </ul>
-                  </li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
-                </ul>
-              </li>
-              <li><a href="#"><%= (Date.today).strftime("%B %Y") %></a>
-                <ul>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}" do %>All<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
-                  <li><a href="#">Independents</a>
-                    <ul>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
-                    </ul>
-                  </li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
-                </ul>
-              </li>
-              <li><a href="#"><%= (Date.today + 1.month).strftime("%B %Y") %></a>
-                <ul>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}" do %>All<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
-                  <li><a href="#">Independents</a>
-                    <ul>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
-                    </ul>
-                  </li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
-                </ul>
-              </li>
-              <li><a href="#"><%= (Date.today + 2.month).strftime("%B %Y") %></a>
-                <ul>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}" do %>All<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
-                  <li><a href="#">Independents</a>
-                    <ul>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
-                    </ul>
-                  </li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
-                </ul>
-              </li>
-              <li><a href="#"><%= (Date.today + 3.month).strftime("%B %Y") %></a>
-                <ul>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}" do %>All<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
-                  <li><a href="#">Independents</a>
-                    <ul>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
-                    </ul>
-                  </li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      <% else %>
-        <ul>
-          <li><a href="#">This Week</a>
-            <ul>
-              <li><%= link_to releases_currentweek_path do %>All<% end %></li>
-              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
-              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
-              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=DC+Comics" do %>DC Comics<% end %></li>
-              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
-              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
-              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Image+Comics" do %>Image Comics<% end %></li>
-              <li><a href="#">Independents</a>
-                <ul>
-                  <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=451" do %>451<% end %></li>
-                  <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
-                  <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
-                  <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
-                  <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
-                  <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Black+Mask+Studios" do %>Black Mask Studios<% end %></li>
-                  <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
-                </ul>
-              </li>
-              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
-              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
-              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
-            </ul>
-          </li>
-          <li><a href="#">Next Week</a>
-            <ul>
-              <li><%= link_to releases_nextweek_path do %>All<% end %></li>
-              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
-              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
-              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=DC+Comics" do %>DC Comics<% end %></li>
-              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
-              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
-              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Image+Comics" do %>Image Comics<% end %></li>
-              <li><a href="#">Independents</a>
-                <ul>
-                  <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=451" do %>451<% end %></li>
-                  <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
-                  <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
-                  <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
-                  <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
-                  <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Black+Mask+Studios" do %>Black Mask Studios<% end %></li>
-                  <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
-                </ul>
-              </li>
-              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
-              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
-              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
-            </ul>
-          </li>
-          <li><a href="#">By Month</a>
-            <ul>
-              <li><a href="#"><%= (Date.today - 1.month).strftime("%B %Y") %></a>
-                <ul>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}" do %>All<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
-                  <li><a href="#">Independents</a>
-                    <ul>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
-                    </ul>
-                  </li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
-                </ul>
-              </li>
-              <li><a href="#"><%= (Date.today).strftime("%B %Y") %></a>
-                <ul>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}" do %>All<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
-                  <li><a href="#">Independents</a>
-                    <ul>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
-                    </ul>
-                  </li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
-                </ul>
-              </li>
-              <li><a href="#"><%= (Date.today + 1.month).strftime("%B %Y") %></a>
-                <ul>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}" do %>All<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
-                  <li><a href="#">Independents</a>
-                    <ul>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
-                    </ul>
-                  </li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
-                </ul>
-              </li>
-              <li><a href="#"><%= (Date.today + 2.month).strftime("%B %Y") %></a>
-                <ul>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}" do %>All<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
-                  <li><a href="#">Independents</a>
-                    <ul>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
-                    </ul>
-                  </li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
-                </ul>
-              </li>
-              <li><a href="#"><%= (Date.today + 3.month).strftime("%B %Y") %></a>
-                <ul>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}" do %>All<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
-                  <li><a href="#">Independents</a>
-                    <ul>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
-                      <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
-                    </ul>
-                  </li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
-                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      <% end %>
-   </li>
-   <li><a href='#'>Browse</a>
-      <% if user_signed_in? %>
-          <ul>
-            <% if current_user.pubboom? %>
-              <li><%= link_to boom_all_books_path, :title => "All BOOM!" do %>BOOM! Studios<% end %></li>
-            <% end %>
-            <% if current_user.pubdarkhorse? %>
-              <li><%= link_to darkhorse_all_books_path, :title => "All Dark Horse" do %>Dark Horse Comics<% end %></li>
-            <% end %>
-            <% if current_user.pubdc? %>
-              <li><%= link_to dc_all_books_path, :title => "All DC" do %>DC Comics<% end %></li>
-            <% end %>
-            <% if current_user.pubdynamite? %>
-              <li><%= link_to dynamite_all_books_path, :title => "All Dynamite" do %>Dynamite <% end %></li>
-            <% end %>
-            <% if current_user.pubidw? %>
-              <li><%= link_to idw_all_books_path, :title => "All IDW" do %>IDW Publishing<% end %></li>
-            <% end %>
-            <% if current_user.pubimage? %>
-              <li><%= link_to image_all_books_path, :title => "All Image" do %>Image Comics<% end %></li>
-            <% end %>
-            <li><a href="#">Independents</a>
-              <ul>
-                <% if current_user.pubfourfiveone? %>
-                  <li><%= link_to fourfiveone_all_books_path, :title => "All 451" do %>451<% end %></li>
-                <% end %>
-                <% if current_user.pubaftershock? %>
-                  <li><%= link_to aftershock_all_books_path, :title => "All Aftershock" do %>Aftershock Comics<% end %>></li>
-                <% end %>
-                <% if current_user.pubarchie? %>
-                  <li><%= link_to archie_all_books_path, :title => "All Archie" do %>Archie Comics<% end %>></li>
-                <% end %>
-                <% if current_user.pubaspen? %>
-                  <li><%= link_to aspen_all_books_path, :title => "All Aspen" do %>Aspen Comics<% end %></li>
-                <% end %>
-                <% if current_user.pubavatar? %>
-                  <li><%= link_to avatar_all_books_path, :title => "All Avatar" do %>Avatar Press<% end %></li>
-                <% end %>
-                <% if current_user.pubblackmask? %>
-                  <li><%= link_to blackmask_all_books_path, :title => "All Black Mask" do %>Black Mask Studios<% end %>></li>
-                <% end %>
-                <% if current_user.pubzenescope? %>
-                  <li><%= link_to zenescope_all_books_path, :title => "All Zenescope" do %>Zenescope <% end %></li>
-                <% end %>
-              </ul>
-            </li>
-            <% if current_user.pubmarvel? %>
-              <li><%= link_to marvel_all_books_path, :title => "All Marvel" do %>Marvel Comics<% end %></li>
-            <% end %>
-            <% if current_user.pubvaliant? %>
-              <li><a href="#">Valiant </a>
-                <ul>
-                  <li><a href="#">Current</a>
-                    <ul>
-                      <li><%= link_to valiant_all_books_path, :title => "All Valiant" do %>All Titles<% end %></li>
-                      <li><%= link_to "Collectibles", all_collectibles_path %></li>
-                      <li><a href="#">Events</a>
-                        <ul>
-                          <li><%= link_to "4001 A.D. (2016)", valiant_events_4001ad_books_path %></li>
-                          <li><%= link_to "Armor Hunters (2014)", valiant_events_armorhunters_books_path %></li>
-                          <li><%= link_to "Book of Death (2015)", valiant_events_bookofdeath_books_path %></li>
-                          <li><%= link_to "Harbinger Wars (2013)", valiant_events_harbingerwars_books_path %></li>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ComicArk</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <% if user_signed_in? %>
+                  <li>
+                    <a href='#' class="dropdown-toggle" data-toggle="dropdown">
+                      <% if current_user.avatar? %>
+                        <%= image_tag current_user.avatar.url(:thumb), class: "gone", :height => "20px;" , :alt => "User" %> 
+                      <% else %>
+                        <%= image_tag "https://s3.amazonaws.com/valiantdb/images/noimage.png", class: "img-responsive gone", :alt => "User" %>
+                      <% end %>
+                      <span class="gone2"><%= current_user.name.to_s %></span>
+                      <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu multi-level">
+                      <% if current_user.super_admin? %>
+                         <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin</a>
+                            <ul class="dropdown-menu">
+                               <li><%= link_to new_book_path do %>Add new book<% end %></li>
+                               <% if Book.all.where(:status => "Pending").count > 0 %>
+                                  <li><%= link_to manage_books_path do %>Manage pending<% end %></li>
+                               <% end %>
+                               <% if controller_name == "books" && action_name == "show" %>
+                                  <li><%= link_to edit_book_path do %>Edit book<% end %></li>
+                                  <li><%= link_to @book, method: :delete, data: { 
+                                                                                      confirm: 'Are you sure?',
+                                                                                      :'confirm-button-text' => "Yes",
+                                                                                      :'cancel-button-text' => "No",
+                                                                                      :'confirm-button-color' => "#66CD00",
+                                                                                      :'sweet-alert-type' => 'info' },
+                                                                                      remote: false do %>Delete book<% end %></li>
+                               <% end %>
+                               <li><%= link_to new_collectible_path do %>Add new collectible<% end %></li>
+                               <% if controller_name == "collectibles" && action_name == "show" %>
+                                  <li><%= link_to edit_collectible_path do %>Edit collectible<% end %></li>
+                                  <li><%= link_to @collectible, method: :delete, data: { 
+                                                                                      confirm: 'Are you sure?',
+                                                                                      :'confirm-button-text' => "Yes",
+                                                                                      :'cancel-button-text' => "No",
+                                                                                      :'confirm-button-color' => "#66CD00",
+                                                                                      :'sweet-alert-type' => 'info' },
+                                                                                      remote: false do %>Delete collectible<% end %>
+                                  </li>
+                               <% end %>
+                               <li><%= link_to "User Stats", user_statistics_path %></li>         
+                            </ul>
+                         </li>
+                     <% end %>
+                      <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">My Links</a>
+                        <ul class="dropdown-menu multi-level">
+                           <li><a href='/'>My Dashboard</a></li>
+                           <li><%= link_to root_url + "users/" + current_user.slug + "/collection", :title => "My Collection" do %>My Collection<% end %></li>
+                           <li><%= link_to root_url + "users/" + current_user.slug + "/wishlist", :title => "My Wishlist" do %>My Wishlist<% end %></li>
+                           <li><%= link_to root_url + "users/" + current_user.slug + "/forsale", :title => "My Books For Sale" do %>My Books For Sale<% end %></li>
+                           <li><%= link_to root_url + "users/" + current_user.slug + "/notes", :title => "My Notes" do %>My Notes<% end %></li>
+                           <li><%= link_to mailbox_inbox_path, :title => "My Messages" do %>My Messages<% end %></li>
+                           <% unless current_user.admin? %>
+                              <li><%= link_to new_book_path do %>Add sketch cover<% end %></li>
+                           <% end %>
+                           <li><%= link_to edit_user_registration_path, title: "Settings" do %>Settings<% end %></li>
                         </ul>
                       </li>
-                      <li><%= link_to "Keys/First Appearances", valiant_keys_books_path %></li>
-                      <li><%= link_to "Reading Order", releases_veibydate_path %></li>
-                      <li><%= link_to "Sketch Covers", valiant_sketch_books_path %></li>
-                    </ul>
-                  </li>
-                  <li><a href="#">Classic</a>
-                    <ul>
-                      <li><%= link_to valiant_classic_all_books_path, :title => "All Classic Valiant" do %>All Titles<% end %></li>
-                      <li><a href="#">Events</a>
-                        <ul>
-                          <li><%= link_to "Chaos Effect", valiant_events_chaoseffect_books_path %></li>
-                          <li><%= link_to "Unity", valiant_events_unity_books_path %></li>
+                      <li class="dropdown-submenu"><a href='#' class="dropdown-toggle" data-toggle="dropdown">Other Links</a>
+                        <ul class="dropdown-menu multi-level">
+                          <li><%= link_to users_leaderboard_path, :title => "Leaderboard" do %>Leaderboard<% end %></li>
+                          <li><%= link_to users_backers_path, :title => "Patrons" do %>Patrons<% end %></li>
+                          <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Top 25 Collections</a>
+                            <ul class="dropdown-menu multi-level">
+                              <li><%= link_to users_top25_path, :title => "Top 25 Collections" do %>All Publishers<% end %></li>
+                              <li><%= link_to users_top25_valiant_path, :title => "Top 25 Valiant Collections" do %>Valiant<% end %></li>
+                            </ul>
+                          </li>
+                          <li><%= link_to users_all_path, :title => "User Directory" do %>User Directory<% end %></li>
                         </ul>
                       </li>
-                      <li><%= link_to "Keys/First Appearances", valiant_keys_books_path %></li>
-                      <li><%= link_to "Reading Order", releases_vh1bydate_path %></li>
+                      <li><%= link_to new_contact_path, :title => "Contact Us" do %>Contact Us<% end %></li>
+                      <li><%= link_to supportus_path, :title => "Support ComicArk" do %>Support This Site<% end %></li>
+                      <li><%= link_to destroy_user_session_path, method: :get, :title => "Logout" do %>Logout<% end %></li>
                     </ul>
                   </li>
-                  <li><%= link_to valiant_acclaim_all_books_path, :title => "All Acclaim" do %>Acclaim<% end %></li>
-                  <li><a href="#">International</a>
-                    <ul>
-                        <li><%= link_to "Brazil (Brasil)", valiant_brazil_all_books_path %></li>
-                        <li><%= link_to "Canada", valiant_canada_all_books_path %></li>
-                        <li><%= link_to "China (中国)", valiant_china_all_books_path %></li>
-                        <li><%= link_to "France", valiant_france_all_books_path %></li>
-                        <li><%= link_to "Italy (Italia)", valiant_italy_all_books_path %></li>
-                        <li><%= link_to "Japan (日本)", valiant_japan_all_books_path %></li>
-                        <li><%= link_to "Mexico", valiant_mexico_all_books_path %></li>
-                        <li><%= link_to "Russia (Россия)", valiant_russia_all_books_path %></li>
-                        <li><%= link_to "Turkey (Türkiye)", valiant_turkey_all_books_path %></li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            <% end %>
-            <% if current_user.pubvertigo? %>
-              <li><%= link_to vertigo_all_books_path, :title => "All Vertigo" do %>Vertigo Comics<% end %></li>
-            <% end %>
-          </ul>
-      <% else %>
-          <ul>
-            <li><%= link_to new_user_session_path do %>Login for access<% end %></li>
-          </ul>
-          <!--
-          <ul>
-            <li><%= link_to boom_all_books_path, :title => "All BOOM!" do %>BOOM! Studios<% end %></li>
-            <li><%= link_to darkhorse_all_books_path, :title => "All Dark Horse" do %>Dark Horse Comics<% end %></li>
-            <li><%= link_to dc_all_books_path, :title => "All DC" do %>DC Comics<% end %></li>
-            <li><%= link_to dynamite_all_books_path, :title => "All Dynamite" do %>Dynamite <% end %></li>
-            <li><%= link_to idw_all_books_path, :title => "All IDW" do %>IDW Publishing<% end %></li>
-            <li><%= link_to image_all_books_path, :title => "All Image" do %>Image Comics<% end %></li>
-            <li><a href="#">Independents</a>
-              <ul>
-                <li><%= link_to fourfiveone_all_books_path, :title => "All 451" do %>451<% end %></li>
-                <li><%= link_to aftershock_all_books_path, :title => "All Aftershock" do %>Aftershock Comics<% end %>></li>
-                <li><%= link_to archie_all_books_path, :title => "All Archie" do %>Archie<% end %></li>
-                <li><%= link_to aspen_all_books_path, :title => "All Aspen" do %>Aspen Comics<% end %></li>
-                <li><%= link_to avatar_all_books_path, :title => "All Avatar" do %>Avatar Press<% end %></li>
-                <li><%= link_to blackmask_all_books_path, :title => "All Black Mask" do %>Black Mask Studios<% end %>></li>
-                <li><%= link_to zenescope_all_books_path, :title => "All Zenescope" do %>Zenescope <% end %></li>
-              </ul>
-            </li>
-            <li><%= link_to marvel_all_books_path, :title => "All Marvel" do %>Marvel<% end %></li>
-            <li><a href="#">Valiant </a>
-                <ul>
-                  <li><a href="#">Current</a>
-                    <ul>
-                      <li><%= link_to valiant_all_books_path, :title => "All Valiant" do %>All Titles<% end %></li>
-                      <li><%= link_to "Collectibles", all_collectibles_path %></li>
-                      <li><a href="#">Events</a>
-                        <ul>
-                          <li><%= link_to "4001 A.D. (2016)", valiant_events_4001ad_books_path %></li>
-                          <li><%= link_to "Armor Hunters (2014)", valiant_events_armorhunters_books_path %></li>
-                          <li><%= link_to "Book of Death (2015)", valiant_events_bookofdeath_books_path %></li>
-                          <li><%= link_to "Harbinger Wars (2013)", valiant_events_harbingerwars_books_path %></li>
+                <% else %>
+                  <li class="active"><%= link_to "Login", new_user_session_path, :title => "Log in", :rel => "prerender" %></li>
+                <% end %>
+                <li>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Upcoming <b class="caret"></b></a>
+                  <% if user_signed_in? %>
+                      <ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">This Week</a>
+                          <ul class="dropdown-menu">
+                            <li><%= link_to releases_currentweek_path do %>All<% end %></li>
+                            <% if current_user.pubboom? %>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
+                            <% end %>
+                            <% if current_user.pubdarkhorse? %>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
+                            <% end %>
+                            <% if current_user.pubdc? %>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=DC+Comics" do %>DC Comics<% end %></li>
+                            <% end %>
+                            <% if current_user.pubdynamite? %>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
+                            <% end %>
+                            <% if current_user.pubidw? %>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
+                            <% end %>
+                            <% if current_user.pubimage? %>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Image+Comics" do %>Image Comics<% end %></li>
+                            <% end %>
+                            <li class="dropdown-submenu">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                              <ul class="dropdown-menu">
+                                <% if current_user.pubfourfiveone? %>
+                                  <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=451" do %>451<% end %></li>
+                                <% end %>
+                                <% if current_user.pubaftershock? %>
+                                  <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
+                                <% end %>
+                                <% if current_user.pubarchie? %>
+                                  <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
+                                <% end %>
+                                <% if current_user.pubaspen? %>
+                                  <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
+                                <% end %>
+                                <% if current_user.pubavatar? %>
+                                  <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
+                                <% end %>
+                                <% if current_user.pubblackmask? %>
+                                  <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Black+Mask+Studios" do %>Black Mask Studios<% end %></li>
+                                <% end %>
+                                <% if current_user.pubzenescope? %>
+                                  <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
+                                <% end %>
+                              </ul>
+                            </li>
+                            <% if current_user.pubmarvel? %>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
+                            <% end %>
+                            <% if current_user.pubvaliant? %>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
+                            <% end %>
+                            <% if current_user.pubvertigo? %>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
+                            <% end %>
+                          </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Next Week</a>
+                          <ul class="dropdown-menu">
+                            <li><%= link_to releases_nextweek_path do %>All<% end %></li>
+                            <% if current_user.pubboom? %>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
+                            <% end %>
+                            <% if current_user.pubdarkhorse? %>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
+                            <% end %>
+                            <% if current_user.pubdc? %>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=DC+Comics" do %>DC Comics<% end %></li>
+                            <% end %>
+                            <% if current_user.pubdynamite? %>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
+                            <% end %>
+                            <% if current_user.pubidw? %>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
+                            <% end %>
+                            <% if current_user.pubimage? %>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Image+Comics" do %>Image Comics<% end %></li>
+                            <% end %>
+                            <li class="dropdown-submenu">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                              <ul class="dropdown-menu">
+                                <% if current_user.pubfourfiveone? %>
+                                  <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=451" do %>451<% end %></li>
+                                <% end %>
+                                <% if current_user.pubaftershock? %>
+                                  <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
+                                <% end %>
+                                <% if current_user.pubarchie? %>
+                                  <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
+                                <% end %>
+                                <% if current_user.pubaspen? %>
+                                  <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
+                                <% end %>
+                                <% if current_user.pubavatar? %>
+                                  <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
+                                <% end %>
+                                <% if current_user.pubblackmask? %>
+                                  <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Black+Mask+Studios" do %>Black Mask Studios<% end %></li>
+                                <% end %>
+                                <% if current_user.pubzenescope? %>
+                                  <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
+                                <% end %>
+                              </ul>
+                            </li>
+                            <% if current_user.pubmarvel? %>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
+                            <% end %>
+                            <% if current_user.pubvaliant? %>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
+                            <% end %>
+                            <% if current_user.pubvertigo? %>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
+                            <% end %>
+                          </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">By Month</a>
+                          <ul class="dropdown-menu">
+                            <li class="dropdown-submenu">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= (Date.today - 1.month).strftime("%B %Y") %></a>
+                              <ul class="dropdown-menu">
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}" do %>All<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
+                                <li class="dropdown-submenu">
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                                  <ul class="dropdown-menu">
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
+                                  </ul>
+                                </li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= (Date.today).strftime("%B %Y") %></a>
+                              <ul class="dropdown-menu">
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}" do %>All<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
+                                <li class="dropdown-submenu">
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                                  <ul class="dropdown-menu">
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
+                                  </ul>
+                                </li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= (Date.today + 1.month).strftime("%B %Y") %></a>
+                              <ul class="dropdown-menu">
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}" do %>All<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
+                                <li class="dropdown-submenu">
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                                  <ul class="dropdown-menu">
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
+                                  </ul>
+                                </li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= (Date.today + 2.month).strftime("%B %Y") %></a>
+                              <ul class="dropdown-menu">
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}" do %>All<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
+                                <li class="dropdown-submenu">
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                                  <ul class="dropdown-menu">
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
+                                  </ul>
+                                </li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
+                              </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= (Date.today + 3.month).strftime("%B %Y") %></a>
+                              <ul class="dropdown-menu">
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}" do %>All<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
+                                <li class="dropdown-submenu">
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                                  <ul class="dropdown-menu">
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
+                                    <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
+                                  </ul>
+                                </li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
+                                <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                  <% else %>
+                    <ul class="dropdown-menu">
+                      <li class="dropdown-submenu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">This Week</a>
+                        <ul class="dropdown-menu">
+                          <li><%= link_to releases_currentweek_path do %>All<% end %></li>
+                          <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
+                          <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
+                          <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=DC+Comics" do %>DC Comics<% end %></li>
+                          <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
+                          <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
+                          <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Image+Comics" do %>Image Comics<% end %></li>
+                          <li class="dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                            <ul class="dropdown-menu">
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=451" do %>451<% end %></li>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Black+Mask+Studios" do %>Black Mask Studios<% end %></li>
+                              <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
+                            </ul>
+                          </li>
+                          <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
+                          <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
+                          <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
                         </ul>
                       </li>
-                      <li><%= link_to "Keys/First Appearances", valiant_keys_books_path %></li>
-                      <li><%= link_to "Reading Order", releases_veibydate_path %></li>
-                      <li><%= link_to "Sketch Covers", valiant_sketch_books_path %></li>
-                    </ul>
-                  </li>
-                  <li><a href="#">Classic</a>
-                    <ul>
-                      <li><%= link_to valiant_classic_all_books_path, :title => "All Classic Valiant" do %>All Titles<% end %></li>
-                      <li><a href="#">Events</a>
-                        <ul>
-                          <li><%= link_to "Chaos Effect", valiant_events_chaoseffect_books_path %></li>
-                          <li><%= link_to "Unity", valiant_events_unity_books_path %></li>
+                      <li class="dropdown-submenu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Next Week</a>
+                        <ul class="dropdown-menu">
+                          <li><%= link_to releases_nextweek_path do %>All<% end %></li>
+                          <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
+                          <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
+                          <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=DC+Comics" do %>DC Comics<% end %></li>
+                          <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
+                          <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
+                          <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Image+Comics" do %>Image Comics<% end %></li>
+                          <li class="dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                            <ul class="dropdown-menu">
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=451" do %>451<% end %></li>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Black+Mask+Studios" do %>Black Mask Studios<% end %></li>
+                              <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
+                            </ul>
+                          </li>
+                          <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
+                          <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
+                          <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
                         </ul>
                       </li>
-                      <li><%= link_to "Keys/First Appearances", valiant_keys_books_path %></li>
-                      <li><%= link_to "Reading Order", releases_vh1bydate_path %></li>
+                      <li class="dropdown-submenu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">By Month</a>
+                        <ul class="dropdown-menu">
+                          <li class="dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= (Date.today - 1.month).strftime("%B %Y") %></a>
+                            <ul class="dropdown-menu">
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}" do %>All<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
+                              <li class="dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                                <ul class="dropdown-menu">
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
+                                </ul>
+                              </li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today - 1.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= (Date.today).strftime("%B %Y") %></a>
+                            <ul class="dropdown-menu">
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}" do %>All<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
+                              <li class="dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                                <ul class="dropdown-menu">
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
+                                </ul>
+                              </li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= (Date.today + 1.month).strftime("%B %Y") %></a>
+                            <ul class="dropdown-menu">
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}" do %>All<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
+                              <li class="dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                                <ul class="dropdown-menu">
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
+                                </ul>
+                              </li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 1.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= (Date.today + 2.month).strftime("%B %Y") %></a>
+                            <ul class="dropdown-menu">
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}" do %>All<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
+                              <li class="dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                                <ul class="dropdown-menu">
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
+                                </ul>
+                              </li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 2.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
+                            </ul>
+                          </li>
+                          <li class="dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= (Date.today + 3.month).strftime("%B %Y") %></a>
+                            <ul class="dropdown-menu">
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}" do %>All<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Boom+Studios" do %>BOOM! Studios<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Dark+Horse+Comics" do %>Dark Horse Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=DC+Comics" do %>DC Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Dynamite+Entertainment" do %>Dynamite<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=IDW+Publishing" do %>IDW Publishing<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Image+Comics" do %>Image Comics<% end %></li>
+                              <li class="dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                                <ul class="dropdown-menu">
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=451" do %>451<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Aftershock+Comics" do %>Aftershock Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Archie+Comics" do %>Archie Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Aspen+Comics" do %>Aspen Comics<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Avatar+Press" do %>Avatar Press<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Black+Mask+Studios" do %>Black Mask<% end %></li>
+                                  <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Zenescope+Entertainment" do %>Zenescope<% end %></li>
+                                </ul>
+                              </li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Marvel+Comics" do %>Marvel Comics<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Valiant+Entertainment" do %>Valiant<% end %></li>
+                              <li><%= link_to releases_solicitations_path + "?utf8=✓&date=#{(Date.today + 3.month).strftime("%m-%Y")}&publisher=Vertigo+Comics" do %>Vertigo Comics<% end %></li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
                     </ul>
-                  </li>
-                  <li><%= link_to valiant_acclaim_all_books_path, :title => "All Acclaim" do %>Acclaim<% end %></li>
-                  <li><a href="#">International</a>
-                    <ul>
-                        <li><%= link_to "Brazil (Brasil)", valiant_brazil_all_books_path %></li>
-                        <li><%= link_to "Canada", valiant_canada_all_books_path %></li>
-                        <li><%= link_to "China (中国)", valiant_china_all_books_path %></li>
-                        <li><%= link_to "France", valiant_france_all_books_path %></li>
-                        <li><%= link_to "Italy (Italia)", valiant_italy_all_books_path %></li>
-                        <li><%= link_to "Japan (日本)", valiant_japan_all_books_path %></li>
-                        <li><%= link_to "Mexico", valiant_mexico_all_books_path %></li>
-                        <li><%= link_to "Russia (Россия)", valiant_russia_all_books_path %></li>
-                        <li><%= link_to "Turkey (Türkiye)", valiant_turkey_all_books_path %></li>
+                  <% end %>
+                </li>
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse <b class="caret"></b></a>
+                    <% if user_signed_in? %>
+                      <ul class="dropdown-menu multi-level">
+                        <% if current_user.pubboom? %>
+                          <li><%= link_to boom_all_books_path, :title => "All BOOM!" do %>BOOM! Studios<% end %></li>
+                        <% end %>
+                        <% if current_user.pubdarkhorse? %>
+                          <li><%= link_to darkhorse_all_books_path, :title => "All Dark Horse" do %>Dark Horse Comics<% end %></li>
+                        <% end %>
+                        <% if current_user.pubdc? %>
+                          <li><%= link_to dc_all_books_path, :title => "All DC" do %>DC Comics<% end %></li>
+                        <% end %>
+                        <% if current_user.pubdynamite? %>
+                          <li><%= link_to dynamite_all_books_path, :title => "All Dynamite" do %>Dynamite <% end %></li>
+                        <% end %>
+                        <% if current_user.pubidw? %>
+                          <li><%= link_to idw_all_books_path, :title => "All IDW" do %>IDW Publishing<% end %></li>
+                        <% end %>
+                        <% if current_user.pubimage? %>
+                          <li><%= link_to image_all_books_path, :title => "All Image" do %>Image Comics<% end %></li>
+                        <% end %>
+                        <li class="dropdown-submenu">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Independents</a>
+                          <ul class="dropdown-menu">
+                            <% if current_user.pubfourfiveone? %>
+                              <li><%= link_to fourfiveone_all_books_path, :title => "All 451" do %>451<% end %></li>
+                            <% end %>
+                            <% if current_user.pubaftershock? %>
+                              <li><%= link_to aftershock_all_books_path, :title => "All Aftershock" do %>Aftershock Comics<% end %></li>
+                            <% end %>
+                            <% if current_user.pubarchie? %>
+                              <li><%= link_to archie_all_books_path, :title => "All Archie" do %>Archie Comics<% end %></li>
+                            <% end %>
+                            <% if current_user.pubaspen? %>
+                              <li><%= link_to aspen_all_books_path, :title => "All Aspen" do %>Aspen Comics<% end %></li>
+                            <% end %>
+                            <% if current_user.pubavatar? %>
+                              <li><%= link_to avatar_all_books_path, :title => "All Avatar" do %>Avatar Press<% end %></li>
+                            <% end %>
+                            <% if current_user.pubblackmask? %>
+                              <li><%= link_to blackmask_all_books_path, :title => "All Black Mask" do %>Black Mask Studios<% end %></li>
+                            <% end %>
+                            <% if current_user.pubzenescope? %>
+                              <li><%= link_to zenescope_all_books_path, :title => "All Zenescope" do %>Zenescope <% end %></li>
+                            <% end %>
+                          </ul>
+                        </li>
+                        <% if current_user.pubmarvel? %>
+                          <li><%= link_to marvel_all_books_path, :title => "All Marvel" do %>Marvel Comics<% end %></li>
+                        <% end %>
+                        <% if current_user.pubvaliant? %>
+                          <li class="dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Valiant </a>
+                            <ul class="dropdown-menu multi-level">
+                              <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Current</a>
+                                <ul class="dropdown-menu">
+                                  <li><%= link_to valiant_all_books_path, :title => "All Valiant" do %>All Titles<% end %></li>
+                                  <li><%= link_to "Collectibles", all_collectibles_path %></li>
+                                  <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Events</a>
+                                    <ul class="dropdown-menu">
+                                      <li><%= link_to "4001 A.D. (2016)", valiant_events_4001ad_books_path %></li>
+                                      <li><%= link_to "Armor Hunters (2014)", valiant_events_armorhunters_books_path %></li>
+                                      <li><%= link_to "Book of Death (2015)", valiant_events_bookofdeath_books_path %></li>
+                                      <li><%= link_to "Harbinger Wars (2013)", valiant_events_harbingerwars_books_path %></li>
+                                    </ul>
+                                  </li>
+                                  <li><%= link_to "Keys/First Appearances", valiant_keys_books_path %></li>
+                                  <li><%= link_to "Reading Order", releases_veibydate_path %></li>
+                                  <li><%= link_to "Sketch Covers", valiant_sketch_books_path %></li>
+                                </ul>
+                              </li>
+                              <li class="dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Classic</a>
+                                <ul class="dropdown-menu">
+                                  <li><%= link_to valiant_classic_all_books_path, :title => "All Classic Valiant" do %>All Titles<% end %></li>
+                                  <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events</a>
+                                    <ul class="dropdown-menu">
+                                      <li><%= link_to "Chaos Effect", valiant_events_chaoseffect_books_path %></li>
+                                      <li><%= link_to "Unity", valiant_events_unity_books_path %></li>
+                                    </ul>
+                                  </li>
+                                  <li><%= link_to "Keys/First Appearances", valiant_keys_books_path %></li>
+                                  <li><%= link_to "Reading Order", releases_vh1bydate_path %></li>
+                                </ul>
+                              </li>
+                              <li><%= link_to valiant_acclaim_all_books_path, :title => "All Acclaim" do %>Acclaim<% end %></li>
+                              <li class="dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">International</a>
+                                <ul class="dropdown-menu">
+                                    <li><%= link_to "Brazil (Brasil)", valiant_brazil_all_books_path %></li>
+                                    <li><%= link_to "Canada", valiant_canada_all_books_path %></li>
+                                    <li><%= link_to "China (中国)", valiant_china_all_books_path %></li>
+                                    <li><%= link_to "France", valiant_france_all_books_path %></li>
+                                    <li><%= link_to "Italy (Italia)", valiant_italy_all_books_path %></li>
+                                    <li><%= link_to "Japan (日本)", valiant_japan_all_books_path %></li>
+                                    <li><%= link_to "Mexico", valiant_mexico_all_books_path %></li>
+                                    <li><%= link_to "Russia (Россия)", valiant_russia_all_books_path %></li>
+                                    <li><%= link_to "Turkey (Türkiye)", valiant_turkey_all_books_path %></li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                        <% end %>
+                        <% if current_user.pubvertigo? %>
+                          <li><%= link_to vertigo_all_books_path, :title => "All Vertigo" do %>Vertigo Comics<% end %></li>
+                        <% end %>
+                      </ul>
+                    <% else %>
+                      <ul class="dropdown-menu">
+                        <li><%= link_to new_user_session_path do %>Login for access<% end %></li>
+                      </ul>
+                  <% end %>
+                </li>
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sales <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <% if user_signed_in? %>
+                        <li><%= link_to sales_monthly_path, :title => "Monthly Sales" do %>Monthly Sales<% end %></li>
+                        <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Valiant Specific</a>
+                            <ul class="dropdown-menu">
+                              <li><%= link_to sales_veibytitle_path do %>12 Month Sales Trends<% end %></li>
+                              <li><%= link_to sales_vei_path do %>Sales Rankings<% end %></li>
+                              <li><%= link_to sales_statistics_path do %>Sales Statistics<% end %></li>
+                              <li><%= link_to sales_topselling_path do %>Top Selling by Month<% end %></li>
+                              <li><%= link_to sales_titlestatistics_path do %>Total Title Sales<% end %></li>
+                            </ul>
+                        </li>
+                      <% else %>
+                        <li><%= link_to new_user_session_path do %>Login for access<% end %></li>
+                      <% end %>
                     </ul>
-                  </li>
-                </ul>
-            </li>
-            <li><%= link_to vertigo_all_books_path, :title => "All Vertigo" do %>Vertigo Comics<% end %></li>
-          </ul>
-          -->
-      <% end %>
-   </li>
-   <li><a href="#">Sales</a>
-      <ul>
-        <% if user_signed_in? %>
-          <li><%= link_to sales_monthly_path, :title => "Monthly Sales" do %>Monthly Sales<% end %></li>
-          <li><a href="#">Valiant Specific</a>
-              <ul>
-                <li><%= link_to sales_veibytitle_path do %>12 Month Sales Trends<% end %></li>
-                <li><%= link_to sales_vei_path do %>Sales Rankings<% end %></li>
-                <li><%= link_to sales_statistics_path do %>Sales Statistics<% end %></li>
-                <li><%= link_to sales_topselling_path do %>Top Selling by Month<% end %></li>
-                <li><%= link_to sales_titlestatistics_path do %>Total Title Sales<% end %></li>
-              </ul>
-          </li>
-        <% else %>
-          <li><%= link_to new_user_session_path do %>Login for access<% end %></li>
-        <% end %>
-      </ul>
-   </li>
-   <li><%= link_to news_path, :title => "News", :rel => "prerender" do %>News<% end %></li>
-   <li class="pull-right"><a href="#searchpopup"><i class="fa fa-search"></i> <span class="lg-only">Search</span></a></li>
-
-   <div id="searchpopup">
-      <button type="button" class="close">×</button>
-      <%= form_tag "/search", :method => 'get', :role => "search" do %>
-        <%= text_field_tag :query, params[:query], autocomplete: "off", :placeholder => "Search ComicArk...", type: "search", id: "barcode" %>
-        <button type="submit" class="btn btn-primary btn-lg">Search</button>
-      <% end %>
-  </div>
-
-  <% if user_signed_in? %>
-     <% unless request.original_url == root_url + "users/" + current_user.slug.to_s + "/profile" %>
-        <li class="pull-right"><a href="#" onclick="history.go(-1)"><i class="fa fa-angle-left"></i> Back</a></li>
-     <% end %>
-  <% else %>
-     <% unless request.original_url %>
-      <li class="pull-right"><a href="#" onclick="history.go(-1)"><i class="fa fa-angle-left"></i> Back</a></li>
-     <% end %>
-  <% end %>
-</ul>
+                </li>
+                <li><%= link_to news_path, :title => "News", :rel => "prerender" do %>News<% end %></li>
+                <li><a href="#searchpopup"><i class="fa fa-search"></i> <span class="lg-only">Search</span></a></li>
+                <div id="searchpopup">
+                    <button type="button" class="close">×</button>
+                    <%= form_tag "/search", :method => 'get', :role => "search" do %>
+                      <%= text_field_tag :query, params[:query], autocomplete: "off", :placeholder => "Search ComicArk...", type: "search", id: "barcode" %>
+                      <button type="submit" class="btn btn-primary btn-lg">Search</button>
+                    <% end %>
+                </div>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
 </div>

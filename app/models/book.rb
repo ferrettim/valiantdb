@@ -7,7 +7,7 @@ class Book < ActiveRecord::Base
 
 	acts_as_votable
 	ratyrate_rateable 'book'
-	validates_uniqueness_of :image_remote_link, scope: :id
+	validates_uniqueness_of :image_remote_url, scope: :id
 	validates :issue, presence: true
 	validates :title, presence: true
 	validates :rdate, presence: true
@@ -58,7 +58,7 @@ class Book < ActiveRecord::Base
 		self.pricenm = dollars.to_d*100 if dollars.present?
 	end
 
-	def image_remote_link=(url_value)
+	def image_remote_url=(url_value)
 	  self.image = URI.parse(url_value) unless url_value.blank?
 	  super
 	end

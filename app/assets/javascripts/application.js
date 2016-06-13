@@ -1,14 +1,21 @@
-//= require jquery.flexslider-min
-//= require jquery.raty
-//= require tinymce-jquery
-//= require menu
+//= require jquery
 //= require search
-//= require select2
-//= require ratyrate
-//= require local_time
-//= require fancybox
+//= require jquery_ujs
+//= require jquery-ui
+//= require tinymce-jquery
+//= require jasny-bootstrap.min
+//= require jquery.flexslider-min
 //= require conversations
 //= require infinite-scroll
+//= require jquery.raty
+//= require pages
+//= require ratyrate
+//= require nprogress
+//= require nprogress-turbolinks
+//= require select2
+//= require local_time
+//= require fancybox
+//= require bootstrap-sprockets
 
 $(window).ready(function() {
   $('.flexslider').flexslider({

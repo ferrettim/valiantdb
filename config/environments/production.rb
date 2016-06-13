@@ -21,7 +21,6 @@ Rails.application.configure do
   config.action_dispatch.rack_cache = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.assets.initialize_on_precompile = false
   config.serve_static_files = true
   # Cache control
   # config.static_cache_control = "public, s-maxage=259200, max-age=604800"

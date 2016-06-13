@@ -13,7 +13,7 @@
                         <% if Date.today == Date.today.beginning_of_week + 2.day %>
                             <h2>It's new comic book day!</h2>
                         <% else %>
-                            <p class="timer"><strong>Only <span id="countdowntimer"></span> until new comic book day!</strong></p>
+                            <h2 class="homeh2">Only <%= ((Date.today.beginning_of_week + 9.day) - (Date.today)).to_i %> days until new comic book day!</small></h2>
                         <% end %>
                         <hr class="intro-divider gone">
                         <div class="btn-group">
@@ -25,7 +25,7 @@
                                 <span class="network-name"> Login Now!</span><% end %>
                         </div>
 
-                        
+
                     </div>
                 </div>
             </div>

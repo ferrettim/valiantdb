@@ -2954,7 +2954,21 @@
   <div id="bannerclassic"></div>
 
   <% elsif action_name == "monthlysales" %>
-    <div id="bannermine"></div>
+    <div id="bannermine">
+      <div class="pageinfo">
+        <div class="pull-right table-view">
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              Choose Month
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu months" aria-labelledby="dropdownMenu1">
+              <li><a href="http://www.comicark.com/sales/monthly?utf8=%E2%9C%93&date=04-2016">April 2016</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
   <% elsif action_name == "valiantkeys" %>
   <div id="bannerall"></div>
