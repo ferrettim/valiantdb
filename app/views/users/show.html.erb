@@ -159,7 +159,7 @@
             <% unless user_signed_in? && current_user.patron? %>
                 <a href="//lootcrate.7eer.net/c/264379/277903/4019"><img src="//a.impactradius-go.com/display-ad/4019-277903" border="0" alt="" width="101.4%" height="100" style="margin: -7px 0px 0px -6px;" /></a><img height="0" width="0" src="//lootcrate.7eer.net/i/264379/277903/4019" style="position:absolute;visibility:hidden;" border="0" />
             <% end %>
-            <p>You can choose which books you want to see on this site by going to your <%= link_to edit_user_registration_path, :title => "Edit settings" do %>settings page<% end %> and checking only the publishers you want to see. <% unless current_user.patron? %>Remember that patron accounts are ad-free and have no limits on their collection size.<% end %></p>
+            <p>You can choose which books you want to see on this site by going to your <%= link_to edit_user_registration_path, :title => "Edit settings" do %>settings page<% end %> and checking only the publishers you want to see. <% unless current_user.patron? %>Remember that patron accounts are ad-free and have no limits on their collection size.<% end %> This site is brought to you by users like <a href="http://www.octobercountrycomics.com/"><strong>October County Comics</strong></a>, <a href="http://www.comicark.com/users/dbs/profile">DBS</a>, and our <a href="http://www.comicark.com/users/backers">amazing patrons</a>.</p>
             <div class="profile-content">
                 <h4 class="text-left">
                     <%= link_to releases_currentweek_path do %>
@@ -174,20 +174,22 @@
                     <div class="flexslider2 col-md-12 col-sm-12 col-xs-12">
                         <ul class="slides">
                             <% if @newbooks.count > 0 %>
-                                <% @newbooks.each do |upcoming| %>
-                                        <% if upcoming.category == "Paperback" %>
-                                            <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover.to_s do %>
-                                                <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover.to_s, class: "img-responsive img-home" %>
-                                            <% end %></li>
-                                        <% elsif upcoming.category == "Hardcover" %>
-                                            <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover.to_s do %>
-                                                <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover.to_s, class: "img-responsive img-home" %>
-                                            <% end %></li>
-                                        <% else %>
-                                            <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover.to_s do %>
-                                                <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover.to_s, class: "img-responsive img-home" %>
+                                <% cache("this_weeks", :expires_in => 1.hour) do %>
+                                    <% @newbooks.each do |upcoming| %>
+                                            <% if upcoming.category == "Paperback" %>
+                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover.to_s do %>
+                                                    <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover.to_s, class: "img-responsive img-home" %>
                                                 <% end %></li>
-                                        <% end %>
+                                            <% elsif upcoming.category == "Hardcover" %>
+                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover.to_s do %>
+                                                    <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover.to_s, class: "img-responsive img-home" %>
+                                                <% end %></li>
+                                            <% else %>
+                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover.to_s do %>
+                                                    <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover.to_s, class: "img-responsive img-home" %>
+                                                    <% end %></li>
+                                            <% end %>
+                                    <% end %>
                                 <% end %>
                             <% else %>
                                 <p>No new releases for this week</p>
@@ -205,14 +207,16 @@
                         <div class="flexslider2 col-md-12 col-sm-12 col-xs-12">
                             <ul class="slides">
                                 <% if @newbooks2.count > 0 %>
-                                    <% @newbooks2.each do |upcoming2| %>
-                                            <% if upcoming2.category == "Paperback" %>
-                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " Vol. " + upcoming2.issue.to_s + " TPB cover by " + upcoming2.cover.to_s do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover.to_s, class: "img-responsive img-home" %><% end %></li>
-                                            <% elsif upcoming2.category == "Hardcover" %>
-                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " Vol. " + upcoming2.issue.to_s + " Deluxe HC cover by " + upcoming2.cover.to_s do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover.to_s, class: "img-responsive img-home" %><% end %></li>
-                                            <% else %>
-                                                <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " #" + upcoming2.issue.to_s + " cover by " + upcoming2.cover.to_s do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover.to_s, class: "img-responsive img-home" %><% end %></li>
-                                            <% end %>
+                                    <% cache("next_weeks", :expires_in => 1.day) do %>
+                                        <% @newbooks2.each do |upcoming2| %>
+                                                <% if upcoming2.category == "Paperback" %>
+                                                    <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " Vol. " + upcoming2.issue.to_s + " TPB cover by " + upcoming2.cover.to_s do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover.to_s, class: "img-responsive img-home" %><% end %></li>
+                                                <% elsif upcoming2.category == "Hardcover" %>
+                                                    <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " Vol. " + upcoming2.issue.to_s + " Deluxe HC cover by " + upcoming2.cover.to_s do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover.to_s, class: "img-responsive img-home" %><% end %></li>
+                                                <% else %>
+                                                    <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming2, :title => upcoming2.title.to_s + " #" + upcoming2.issue.to_s + " cover by " + upcoming2.cover.to_s do %><%= image_tag upcoming2.image.url(:thumb), :alt => upcoming2.title + " cover by " + upcoming2.cover.to_s, class: "img-responsive img-home" %><% end %></li>
+                                                <% end %>
+                                        <% end %>
                                     <% end %>
                                 <% else %>
                                     <p>No new releases for this week</p>
@@ -258,8 +262,19 @@
                       <% end %>
                         <div class="clearfix"><br /></div>
                 <% end %>
-                <br />
-                <p>This site is brought to you by users like <a href="http://www.octobercountrycomics.com/"><strong>October County Comics</strong></a>, <a href="http://www.comicark.com/users/dbs/profile">DBS</a>, and our <a href="http://www.comicark.com/users/backers">amazing patrons</a>.</p>
+                <% if @user == current_user %>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#friends" aria-controls="home" role="tab" data-toggle="tab">Friends</a></li>
+                        <li role="presentation"><a href="#latest" aria-controls="messages" role="tab" data-toggle="tab">Recently Added</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="friends">
+                            <%= render "stream" %></div>
+                        <div role="tabpanel" class="tab-pane" id="latest">
+                            <%= render "streambooks" %></div>
+                    </div>
+                <% end %>
 
             </div>
         </div>

@@ -11,7 +11,9 @@
  *= require home
  *= require menus
  *= require search
- *= require users                                               
+ *= require users   
+ *= require select2
+ *= require select2-bootstrap                                            
  *= require_self                                                                
  */    
 @import 'bootstrap'

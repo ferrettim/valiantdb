@@ -4,16 +4,9 @@ class Books::OwnsController < ApplicationController
 	respond_to :html, :json, :js
 
 	def create
-		if Rails.env.production?
-			if user_signed_in? && current_user.wishes?(@book)
-				@book.wishes.where(user_id: current_user.id).destroy_all
-			end
-			(@book.owns.where(user_id: current_user.id).first_or_create)
-		else
-			(@book.owns.where(user_id: current_user.id).first_or_create)
-			if user_signed_in? && current_user.wishes?(@book)
-				@book.wishes.where(user_id: current_user.id).destroy_all
-			end
+		@book.owns.where(user_id: current_user.id).first_or_create
+		if user_signed_in? && current_user.wishes?(@book)
+			@book.wishes.where(user_id: current_user.id).destroy_all
 		end
 		@own = Own.where(user_id: current_user.id, book_id: @book.id)
 		Own.update(@own, :quantity => "1")

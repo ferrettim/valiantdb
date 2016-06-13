@@ -83,8 +83,6 @@ gem 'barby'
 gem 'friendly_id', '~> 5.1.0'
 # Stream
 gem 'public_activity'
-# Link shortener
-gem 'bitly'
 # Memcached
 gem 'dalli'
 # Papertrail
@@ -113,7 +111,6 @@ group :development do
 	gem 'binding_of_caller'
 	gem 'brakeman', :require => false
 	gem 'quiet_assets'
-	gem 'derailed'
 	gem 'sys-proctable'
 end
 

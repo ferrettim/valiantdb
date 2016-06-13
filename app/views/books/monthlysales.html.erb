@@ -1,33 +1,8 @@
-<div class="wellclear">
-	<h3 class="text-center"><%= @pgtitle %></h3>
-	<p><strong>Always remember these numbers are not exact representations of sales</strong>. We use sales data from Diamond Comic Distributors to generate these charts but actual numbers may differ slightly based on returnability, etc. These numbers are not actual sales numbers for each book, but rather level of sales at the distribution level. These numbers take into account physical book sales only.</p>
-	<% if params[:date].present? %>
-		<table class="table table-responsive table-striped">
-			<thead>
-				<tr>
-					<td><strong>Image</strong></td>
-					<td><strong>Title</strong></td>
-					<td><strong>Release Date</strong></td>
-					<td><strong>Price</strong></td>
-					<td><strong>Publisher</strong></td>
-					<td class="pull-right"><strong>Estimated Sales</strong></td>
-				</tr>
-			</thead>
-			<tbody>
-				<% @booksales.each do |t| %>
-					<tr>
-						<td><%= link_to t, :title => t.title.to_s + " #" + t.issue.to_s do %><%= image_tag t.image.url(:mini), class: "img-responsive" %><% end %></td>
-						<td><%= link_to t, :title => t.title.to_s + " #" + t.issue.to_s do %><%= t.title.to_s + " #" + t.issue.to_s %><% end %></td>
-						<td><%= t.rdate.strftime("%B %d, %Y") %></td>
-						<td>$<%= t.price_in_dollars.to_s %></td>
-						<td><%= t.publisher.to_s %></td>
-						<td class="pull-right"><%= t.printrun.to_s %> copies</td>
-					</tr>
-				<% end %>
-			</tbody>
-		</table>
-	<% else %>
-		<% if Date.today > Date.today.beginning_of_month + 17.day %>
+<% cache("monthly_sales", :expires_in => 3.days) do %>	
+	<div class="wellclear">
+		<h3 class="text-center"><%= @pgtitle %></h3>
+		<p><strong>Always remember these numbers are not exact representations of sales</strong>. We use sales data from Diamond Comic Distributors to generate these charts but actual numbers may differ slightly based on returnability, etc. These numbers are not actual sales numbers for each book, but rather level of sales at the distribution level. These numbers take into account physical book sales only.</p>
+		<% if params[:date].present? %>
 			<table class="table table-responsive table-striped">
 				<thead>
 					<tr>
@@ -53,31 +28,58 @@
 				</tbody>
 			</table>
 		<% else %>
-			<p>Latest available sales numbers are for <a href="http://www.comicark.com/sales/monthly?utf8=%E2%9C%93&date=04-2016"><%= (Date.today - 2.month).strftime("%B, %Y") %></a></p>
-			<table class="table table-responsive table-striped">
-				<thead>
-					<tr>
-						<td><strong>Image</strong></td>
-						<td><strong>Title</strong></td>
-						<td><strong>Release Date</strong></td>
-						<td><strong>Price</strong></td>
-						<td><strong>Publisher</strong></td>
-						<td class="pull-right"><strong>Estimated Sales</strong></td>
-					</tr>
-				</thead>
-				<tbody>
-					<% @booksales2.each do |t| %>
+			<% if Date.today > Date.today.beginning_of_month + 17.day %>
+				<table class="table table-responsive table-striped">
+					<thead>
 						<tr>
-							<td><%= link_to t, :title => t.title.to_s + " #" + t.issue.to_s do %><%= image_tag t.image.url(:mini), class: "img-responsive" %><% end %></td>
-							<td><%= link_to t, :title => t.title.to_s + " #" + t.issue.to_s do %><%= t.title.to_s + " #" + t.issue.to_s %><% end %></td>
-							<td><%= t.rdate.strftime("%B %d, %Y") %></td>
-							<td>$<%= t.price_in_dollars.to_s %></td>
-							<td><%= t.publisher.to_s %></td>
-							<td class="pull-right"><%= t.printrun.to_s %> copies</td>
+							<td><strong>Image</strong></td>
+							<td><strong>Title</strong></td>
+							<td><strong>Release Date</strong></td>
+							<td><strong>Price</strong></td>
+							<td><strong>Publisher</strong></td>
+							<td class="pull-right"><strong>Estimated Sales</strong></td>
 						</tr>
-					<% end %>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<% @booksales.each do |t| %>
+							<tr>
+								<td><%= link_to t, :title => t.title.to_s + " #" + t.issue.to_s do %><%= image_tag t.image.url(:mini), class: "img-responsive" %><% end %></td>
+								<td><%= link_to t, :title => t.title.to_s + " #" + t.issue.to_s do %><%= t.title.to_s + " #" + t.issue.to_s %><% end %></td>
+								<td><%= t.rdate.strftime("%B %d, %Y") %></td>
+								<td>$<%= t.price_in_dollars.to_s %></td>
+								<td><%= t.publisher.to_s %></td>
+								<td class="pull-right"><%= t.printrun.to_s %> copies</td>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+			<% else %>
+				<p>Latest available sales numbers are for <a href="http://www.comicark.com/sales/monthly?utf8=%E2%9C%93&date=04-2016"><%= (Date.today - 2.month).strftime("%B, %Y") %></a></p>
+				<table class="table table-responsive table-striped">
+					<thead>
+						<tr>
+							<td><strong>Image</strong></td>
+							<td><strong>Title</strong></td>
+							<td><strong>Release Date</strong></td>
+							<td><strong>Price</strong></td>
+							<td><strong>Publisher</strong></td>
+							<td class="pull-right"><strong>Estimated Sales</strong></td>
+						</tr>
+					</thead>
+					<tbody>
+						<% @booksales2.each do |t| %>
+							<tr>
+								<td><%= link_to t, :title => t.title.to_s + " #" + t.issue.to_s do %><%= image_tag t.image.url(:mini), class: "img-responsive" %><% end %></td>
+								<td><%= link_to t, :title => t.title.to_s + " #" + t.issue.to_s do %><%= t.title.to_s + " #" + t.issue.to_s %><% end %></td>
+								<td><%= t.rdate.strftime("%B %d, %Y") %></td>
+								<td>$<%= t.price_in_dollars.to_s %></td>
+								<td><%= t.publisher.to_s %></td>
+								<td class="pull-right"><%= t.printrun.to_s %> copies</td>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+			<% end %>
 		<% end %>
-	<% end %>
-</div>
+	</div>
+<% end %>

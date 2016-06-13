@@ -17,6 +17,10 @@
 //= require fancybox
 //= require bootstrap-sprockets
 
+$( ".chosen-select" ).select2({
+    theme: "bootstrap"
+});
+
 $(window).ready(function() {
   $('.flexslider').flexslider({
     animation: "slide",

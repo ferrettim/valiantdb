@@ -1,96 +1,98 @@
-<div id="books" align="center">
-<h3 class="white text-center page">
-      <span class="pull-right">
-        <%= link_to releases_thismonth_path(format: "csv"), :class => "btn btn-success btn-sm" do %>
-            <span class="fa fa-download"></span> <span class="gone">Export Releases</span>
-        <% end %>
-      </span>
-</h3>
-<div class="clearfix"></div>
+<% cache("solicitations", :expires_in => 3.days) do %>
+	<div id="books" align="center">
+	<h3 class="white text-center page">
+	      <span class="pull-right">
+	        <%= link_to releases_thismonth_path(format: "csv"), :class => "btn btn-success btn-sm" do %>
+	            <span class="fa fa-download"></span> <span class="gone">Export Releases</span>
+	        <% end %>
+	      </span>
+	</h3>
+	<div class="clearfix"></div>
 
-<div class="container wellclear">
-		<div class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
-			<h3><%= @pgtitle %></h3>
-			<h4><%= params[:publisher] %></h4>
-			<p>Breakdown of releases by category - 
-				<strong><%= @newbooks.where(:category => "Default").count %></strong> titles, <strong><%= @newbooks.where(:category => "Variant").count %></strong> variant covers, <strong><%= @newbooks.where(:category => "Paperback").count %></strong> trades, and <strong><%= @newbooks.where(:category => "Hardcover").count %></strong> deluxe hardcovers.
-			</p>
-			<% @newbooks.where.not(:category => "Variant").each do |upcoming| %>
-				<div class="col-md-3 col-sm-4 col-xs-12">
-					<% if upcoming.category == "Paperback" %>
-						<%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover, :target => "_blank" do %><%= image_tag upcoming.image.url(:original), :alt => upcoming.title + " cover by " + upcoming.cover,  class: "img-responsive" %><% end %>
-					<% elsif upcoming.category == "Hardcover" %>
-						<%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover, :target => "_blank" do %><%= image_tag upcoming.image.url(:original), :alt => upcoming.title + " cover by " + upcoming.cover,  class: "img-responsive" %><% end %>
-					<% else %>
-						<%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover, :target => "_blank" do %><%= image_tag upcoming.image.url(:original), :alt => upcoming.title + " cover by " + upcoming.cover,  class: "img-responsive" %><% end %>
-					<% end %>
-					<br /><br />
-				</div>
-				<div class="col-md-9 col-sm-8 col-xs-12 text-left">
-					<% if upcoming.category == "Paperback" %>
-						<%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover, :target => "_blank" do %>
-							<h4><%= upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB" %></h4>
-						<% end %>
-					<% elsif upcoming.category == "Hardcover" %>
-						<%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover, :target => "_blank" do %>
-							<h4><%= upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " HC" %></h4>
-						<% end %>
-					<% else %>
-						<%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover, :target => "_blank" do %>
-							<h4><%= upcoming.title.to_s + " #" + upcoming.issue.to_s %></h4>
-						<% end %>
-					<% end %>
-					<p>
-						Written by <%= upcoming.writer.to_s %>
-							<% if upcoming.writer2? %> and <%= upcoming.writer2.to_s %><% end %><br />
-						Art by <%= upcoming.artist.to_s %>
-							<% if upcoming.artist2? %> and <%= upcoming.artist2.to_s %><% end %><br />
-						<% if upcoming.colors? %>
-							Colors by <%= upcoming.colors.to_s %><br />
-						<% end %>
+	<div class="container wellclear">
+			<div class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+				<h3><%= @pgtitle %></h3>
+				<h4><%= params[:publisher] %></h4>
+				<p>Breakdown of releases by category - 
+					<strong><%= @newbooks.where(:category => "Default").count %></strong> titles, <strong><%= @newbooks.where(:category => "Variant").count %></strong> variant covers, <strong><%= @newbooks.where(:category => "Paperback").count %></strong> trades, and <strong><%= @newbooks.where(:category => "Hardcover").count %></strong> deluxe hardcovers.
+				</p>
+				<% @newbooks.where.not(:category => "Variant").each do |upcoming| %>
+					<div class="col-md-3 col-sm-4 col-xs-12">
 						<% if upcoming.category == "Paperback" %>
-							Cover by <%= upcoming.cover.to_s %><br />
+							<%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover, :target => "_blank" do %><%= image_tag upcoming.image.url(:original), :alt => upcoming.title + " cover by " + upcoming.cover,  class: "img-responsive" %><% end %>
 						<% elsif upcoming.category == "Hardcover" %>
-							Cover by <%= upcoming.cover.to_s %><br />
-						<% elsif upcoming.category == "Promo" %>
-							Cover by <%= upcoming.cover.to_s %><br />
+							<%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover, :target => "_blank" do %><%= image_tag upcoming.image.url(:original), :alt => upcoming.title + " cover by " + upcoming.cover,  class: "img-responsive" %><% end %>
 						<% else %>
-							Covers by <%= upcoming.cover.to_s %>
-							<% if upcoming.category == "Default" %>
-								<% Book.where(:title => upcoming.title).where(:issue => upcoming.issue).where(rdate: (upcoming.rdate - 1.month)..(upcoming.rdate + 1.month)).where(:category => "Variant").where.not(:id => upcoming.id).each do |related| %>, <%= related.cover.to_s %>
-							<% end %><br />
+							<%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover, :target => "_blank" do %><%= image_tag upcoming.image.url(:original), :alt => upcoming.title + " cover by " + upcoming.cover,  class: "img-responsive" %><% end %>
 						<% end %>
-						<% end %>
-						<% if upcoming.letters? %>
-							Letters by <%= upcoming.letters.to_s %><br />
-						<% end %>
-						Price: US $<%= upcoming.price_in_dollars %><br />
-						<% if upcoming.rdate.future? %>
-							Coming <%= upcoming.rdate.strftime("%B %d, %Y") %><br />
-						<% else %>
-							Released <%= upcoming.rdate.strftime("%B %d, %Y") %><br />
-						<% end %>
+						<br /><br />
+					</div>
+					<div class="col-md-9 col-sm-8 col-xs-12 text-left">
 						<% if upcoming.category == "Paperback" %>
-							 ISBN: <%= upcoming.isb.to_s %>
+							<%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover, :target => "_blank" do %>
+								<h4><%= upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB" %></h4>
+							<% end %>
 						<% elsif upcoming.category == "Hardcover" %>
-							 ISBN <%= upcoming.isb.to_s %>
-						<% end %>
-					</p>
-					<% if upcoming.summary? %>
-						<%= h upcoming.summary.html_safe %>
-					<% end %>
-					<ul class="list-inline">
-						<% if upcoming.category == "Default" %>
-							<% Book.where(:title => upcoming.title).where(:issue => upcoming.issue).where(rdate: (upcoming.rdate - 1.month)..(upcoming.rdate + 1.month)).where(:category => "Variant").where.not(:id => upcoming.id).each do |related| %>
-								<li><%= link_to related, data: { toggle: "tooltip" }, :title => related.title + " #" + related.issue.to_s + " cover by " + related.cover do %><%= image_tag related.image.url(:thumb), class: "img-responsive img-rel2 img-shadow",:alt => related.title + " cover by " + related.cover %><% end %><br />
-								</li>
+							<%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover, :target => "_blank" do %>
+								<h4><%= upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " HC" %></h4>
+							<% end %>
+						<% else %>
+							<%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover, :target => "_blank" do %>
+								<h4><%= upcoming.title.to_s + " #" + upcoming.issue.to_s %></h4>
 							<% end %>
 						<% end %>
-					</ul>
-				</div>
-				<div class="clearfix"><br /><br /></div>
-			<% end %>
-		</div>
-</div>
+						<p>
+							Written by <%= upcoming.writer.to_s %>
+								<% if upcoming.writer2? %> and <%= upcoming.writer2.to_s %><% end %><br />
+							Art by <%= upcoming.artist.to_s %>
+								<% if upcoming.artist2? %> and <%= upcoming.artist2.to_s %><% end %><br />
+							<% if upcoming.colors? %>
+								Colors by <%= upcoming.colors.to_s %><br />
+							<% end %>
+							<% if upcoming.category == "Paperback" %>
+								Cover by <%= upcoming.cover.to_s %><br />
+							<% elsif upcoming.category == "Hardcover" %>
+								Cover by <%= upcoming.cover.to_s %><br />
+							<% elsif upcoming.category == "Promo" %>
+								Cover by <%= upcoming.cover.to_s %><br />
+							<% else %>
+								Covers by <%= upcoming.cover.to_s %>
+								<% if upcoming.category == "Default" %>
+									<% Book.where(:title => upcoming.title).where(:issue => upcoming.issue).where(rdate: (upcoming.rdate - 1.month)..(upcoming.rdate + 1.month)).where(:category => "Variant").where.not(:id => upcoming.id).each do |related| %>, <%= related.cover.to_s %>
+								<% end %><br />
+							<% end %>
+							<% end %>
+							<% if upcoming.letters? %>
+								Letters by <%= upcoming.letters.to_s %><br />
+							<% end %>
+							Price: US $<%= upcoming.price_in_dollars %><br />
+							<% if upcoming.rdate.future? %>
+								Coming <%= upcoming.rdate.strftime("%B %d, %Y") %><br />
+							<% else %>
+								Released <%= upcoming.rdate.strftime("%B %d, %Y") %><br />
+							<% end %>
+							<% if upcoming.category == "Paperback" %>
+								 ISBN: <%= upcoming.isb.to_s %>
+							<% elsif upcoming.category == "Hardcover" %>
+								 ISBN <%= upcoming.isb.to_s %>
+							<% end %>
+						</p>
+						<% if upcoming.summary? %>
+							<%= h upcoming.summary.html_safe %>
+						<% end %>
+						<ul class="list-inline">
+							<% if upcoming.category == "Default" %>
+								<% Book.where(:title => upcoming.title).where(:issue => upcoming.issue).where(rdate: (upcoming.rdate - 1.month)..(upcoming.rdate + 1.month)).where(:category => "Variant").where.not(:id => upcoming.id).each do |related| %>
+									<li><%= link_to related, data: { toggle: "tooltip" }, :title => related.title + " #" + related.issue.to_s + " cover by " + related.cover do %><%= image_tag related.image.url(:thumb), class: "img-responsive img-rel2 img-shadow",:alt => related.title + " cover by " + related.cover %><% end %><br />
+									</li>
+								<% end %>
+							<% end %>
+						</ul>
+					</div>
+					<div class="clearfix"><br /><br /></div>
+				<% end %>
+			</div>
+	</div>
 
-</div> 
+	</div> 
+<% end %>
