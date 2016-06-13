@@ -13,8 +13,6 @@ class ApplicationController < ActionController::Base
   after_filter :user_activity
   after_filter :store_location
   hide_action :current_user
- 
-
   
   protected
 

@@ -1,2 +1,0 @@
-      invoke  active_record
-      create    db/migrate/20151107184207_add_tableview_to_users.rb

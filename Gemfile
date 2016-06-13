@@ -129,7 +129,7 @@ group :production do
 	# Compression
 	gem 'heroku_rails_deflate'
 	# Server
-	gem 'puma'
+	gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
 	# Background processing
 	gem 'sidekiq'
 	gem 'sinatra', require: false
