@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 ruby "2.2.4" 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails'
+gem "rails"
 gem 'excon'
 gem 'rack-cache'
 # Assets
@@ -12,7 +12,7 @@ gem 'font-awesome-rails'
 gem 'sprockets', '~> 3.0'
 gem 'jasny-bootstrap-rails'
 gem 'sass-rails'
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.1.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'yui-compressor'
 gem 'sweet-alert', '~> 0.0.9'
