@@ -6,7 +6,7 @@ gem "rails"
 gem 'excon'
 gem 'rack-cache'
 # Assets
-gem 'bootstrap-sass'
+gem 'bootstrap-sass' 
 gem 'rails-assets-tether', '~> 1.1', '>= 1.1.1'
 gem 'font-awesome-rails'
 gem 'sprockets', '~> 3.0'
