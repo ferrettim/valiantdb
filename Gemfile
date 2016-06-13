@@ -4,6 +4,7 @@ ruby "2.2.4"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 gem 'excon'
+gem 'rack-cache'
 # Assets
 gem 'bootstrap-sass'
 gem 'rails-assets-tether', '~> 1.1', '>= 1.1.1'

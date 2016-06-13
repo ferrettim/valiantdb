@@ -328,6 +328,8 @@ GEM
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.4)
+    rack-cache (1.6.1)
+      rack (>= 0.4)
     rack-livereload (0.3.16)
       rack
     rack-protection (1.5.3)
@@ -506,6 +508,7 @@ DEPENDENCIES
   public_activity
   puma
   quiet_assets
+  rack-cache
   rack-livereload
   rails
   rails-assets-tether (~> 1.1, >= 1.1.1)
