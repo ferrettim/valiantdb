@@ -95,6 +95,7 @@ gem 'google_currency'
 # News
 gem 'feedjira'
 # Security
+gem 'rack-timeout'
 
 group :development do
 # Use sqlite3 as the database for Active Record
