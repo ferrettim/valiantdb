@@ -304,7 +304,6 @@ Rails.application.routes.draw do
   authenticate :user, lambda { |u| u.admin? } do
     if Rails.env.production?
       mount Sidekiq::Web, at: '/sidekiq'
-      mount PgHero::Engine, at: 'pghero'
     end 
     get 'stats' => 'users#admin', :as => 'user_statistics'
   end

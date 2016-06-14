@@ -20,7 +20,7 @@ gem 'sweet-alert-confirm'
 gem 'fancybox-rails'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'execjs'
-# gem 'therubyracer'
+gem 'therubyracer'
 gem 'flexslider'
 # Progress bar for turbolinks
 gem 'jquery-rails'
@@ -47,8 +47,7 @@ gem 'socialization'
 gem 'simple_form'
 gem 'mail_form'
 # Autocomplete
-#gem 'rails4-autocomplete'
-gem 'rails-jquery-autocomplete'
+gem 'rails4-autocomplete'
 # Rich text formatting
 gem 'tinymce-rails'
 # Messaging system
@@ -64,8 +63,6 @@ gem 'aws-sdk', '~> 2'
 # Pagination
 gem 'kaminari'
 gem 'kaminari-bootstrap', '~> 3.0.1'
-# Favorites system
-gem 'acts_as_votable', '~> 0.10.0'
 # Search functionality
 gem 'searchkick'
 # Rating system
@@ -76,8 +73,6 @@ gem 'local_time'
 gem 'dateslices'
 gem 'chartkick'
 gem 'active_median'
-# Barcodes
-gem 'barby'
 # Passenger server
 # gem 'passenger'
 gem 'friendly_id', '~> 5.1.0'
@@ -122,8 +117,6 @@ group :production do
 	gem 'pg'
 	gem 'redis'
 	gem 'rails_12factor'
-	# Stats
-	gem 'newrelic_rpm'
 	# Compression
 	gem 'heroku_rails_deflate'
 	# Server
@@ -132,6 +125,4 @@ group :production do
 	gem 'sidekiq'
 	gem 'sinatra', require: false
 	gem 'activejob'
-	# Database panel
-	gem 'pghero'
 end
