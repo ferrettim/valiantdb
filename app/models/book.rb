@@ -5,7 +5,6 @@ class Book < ActiveRecord::Base
 	extend FriendlyId
   	friendly_id :slug_candidates, use: :slugged
 
-	acts_as_votable
 	ratyrate_rateable 'book'
 	validates_uniqueness_of :image_remote_url, scope: :id
 	validates :issue, presence: true
