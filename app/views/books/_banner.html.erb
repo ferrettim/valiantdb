@@ -2963,7 +2963,8 @@
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu months" aria-labelledby="dropdownMenu1">
-              <li><a href="http://www.comicark.com/sales/monthly?utf8=%E2%9C%93&date=04-2016">April 2016</a></li>
+              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=04-2016" do %>April 2016<% end %></li>
+              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=05-2016" do %>May 2016<% end %></li>
             </ul>
           </div>
         </div>
