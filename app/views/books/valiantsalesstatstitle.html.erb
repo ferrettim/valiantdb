@@ -5,71 +5,71 @@
 	<div class="col-md-12 col-sm-12 col-xs-12 text-center">
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Linewide Sales</h4>
-			<%= area_chart Book.where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Archer & Armstrong</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Archer%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Archer%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Armor Hunters</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Armor Hunters%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Armor Hunters%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Bloodshot</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Bloodshot%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Bloodshot%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Book of Death</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Book of Death%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Book of Death%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Divinity</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Divinity%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Divinity%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Doctor Mirage</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Mirage%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Mirage%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Eternal Warrior</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Eternal Warrior%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Eternal Warrior%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Harbinger</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Harbinger%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Harbinger%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Imperium</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Imperium%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Imperium%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Ivar, Timewalker</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Timewalker%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Timewalker%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Ninjak</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Ninjak%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Ninjak%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Quantum & Woody</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Quantum%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Quantum%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Rai</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Rai%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Rai%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Shadowman</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Shadowman%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Shadowman%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Unity</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%Unity%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%Unity%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">X-O Manowar</h4>
-			<%= area_chart Book.where(:category => "Default").where("title like ?", "%X-O Manowar%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+			<%= area_chart Book.where(:publisher => "Valiant Entertainment")where(:category => "Default").where("title like ?", "%X-O Manowar%").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
 		</div>
 	</div>
 	<div class="clearfix"><br /></div>

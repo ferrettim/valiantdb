@@ -12,7 +12,7 @@
 			<td class="text-center"><strong>Variants</strong></td>
 			<td class="text-right"><strong>Sales</strong></td>
 		</tr>
-		<% Book.where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment").where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<% if a.printrun? %>
 					<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
@@ -20,7 +20,7 @@
 					<td><%= a.rdate.strftime("%b %d, %Y") %></td>
 					<td><%= a.price_in_dollars %></td>
 					<td class="text-center">
-						<%= Book.where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
+						<%= Book.all.where(:publisher => "Valiant Entertainment").where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
 					</td>
 					<td class="text-right"><%= a.printrun %></td>
 				<% else %>
@@ -34,154 +34,154 @@
 			</tr>
 		<% end %>
 
-		<% Book.where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> #<%= a.issue.to_s %><% end %></td>
 				<td><%= a.rdate.strftime("%b %d, %Y") %></td>
 				<td><%= a.price_in_dollars %></td>
 				<td class="text-center">
-						<%= Book.where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
+						<%= Book.all.where(:publisher => "Valiant Entertainment")where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
 					</td>
 				<td class="text-right"><%= a.printrun %></td>
 			</tr>
 		<% end %>
 
-		<% Book.where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> #<%= a.issue.to_s %><% end %></td>
 				<td><%= a.rdate.strftime("%b %d, %Y") %></td>
 				<td><%= a.price_in_dollars %></td>
 				<td class="text-center">
-						<%= Book.where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
+						<%= Book.all.where(:publisher => "Valiant Entertainment")where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
 					</td>
 				<td class="text-right"><%= a.printrun %></td>
 			</tr>
 		<% end %>
 
-		<% Book.where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> #<%= a.issue.to_s %><% end %></td>
 				<td><%= a.rdate.strftime("%b %d, %Y") %></td>
 				<td><%= a.price_in_dollars %></td>
 				<td class="text-center">
-						<%= Book.where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
+						<%= Book.all.where(:publisher => "Valiant Entertainment")where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
 					</td>
 				<td class="text-right"><%= a.printrun %></td>
 			</tr>
 		<% end %>
 
-		<% Book.where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> #<%= a.issue.to_s %><% end %></td>
 				<td><%= a.rdate.strftime("%b %d, %Y") %></td>
 				<td><%= a.price_in_dollars %></td>
 				<td class="text-center">
-						<%= Book.where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
+						<%= Book.all.where(:publisher => "Valiant Entertainment")where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
 					</td>
 				<td class="text-right"><%= a.printrun %></td>
 			</tr>
 		<% end %>
 
-		<% Book.where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> #<%= a.issue.to_s %><% end %></td>
 				<td><%= a.rdate.strftime("%b %d, %Y") %></td>
 				<td><%= a.price_in_dollars %></td>
 				<td class="text-center">
-						<%= Book.where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
+						<%= Book.all.where(:publisher => "Valiant Entertainment")where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
 					</td>
 				<td class="text-right"><%= a.printrun %></td>
 			</tr>
 		<% end %>
 
-		<% Book.where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> #<%= a.issue.to_s %><% end %></td>
 				<td><%= a.rdate.strftime("%b %d, %Y") %></td>
 				<td><%= a.price_in_dollars %></td>
 				<td class="text-center">
-						<%= Book.where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
+						<%= Book.all.where(:publisher => "Valiant Entertainment")where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
 					</td>
 				<td class="text-right"><%= a.printrun %></td>
 			</tr>
 		<% end %>
 
-		<% Book.where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> #<%= a.issue.to_s %><% end %></td>
 				<td><%= a.rdate.strftime("%b %d, %Y") %></td>
 				<td><%= a.price_in_dollars %></td>
 				<td class="text-center">
-						<%= Book.where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
+						<%= Book.all.where(:publisher => "Valiant Entertainment")where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
 					</td>
 				<td class="text-right"><%= a.printrun %></td>
 			</tr>
 		<% end %>
 
-		<% Book.where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> #<%= a.issue.to_s %><% end %></td>
 				<td><%= a.rdate.strftime("%b %d, %Y") %></td>
 				<td><%= a.price_in_dollars %></td>
 				<td class="text-center">
-						<%= Book.where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
+						<%= Book.all.where(:publisher => "Valiant Entertainment")where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
 					</td>
 				<td class="text-right"><%= a.printrun %></td>
 			</tr>
 		<% end %>
 
-		<% Book.where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> #<%= a.issue.to_s %><% end %></td>
 				<td><%= a.rdate.strftime("%b %d, %Y") %></td>
 				<td><%= a.price_in_dollars %></td>
 				<td class="text-center">
-						<%= Book.where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
+						<%= Book.all.where(:publisher => "Valiant Entertainment")where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
 					</td>
 				<td class="text-right"><%= a.printrun %></td>
 			</tr>
 		<% end %>
 
-		<% Book.where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> #<%= a.issue.to_s %><% end %></td>
 				<td><%= a.rdate.strftime("%b %d, %Y") %></td>
 				<td><%= a.price_in_dollars %></td>
 				<td class="text-center">
-						<%= Book.where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
+						<%= Book.all.where(:publisher => "Valiant Entertainment")where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
 					</td>
 				<td class="text-right"><%= a.printrun %></td>
 			</tr>
 		<% end %>
 
-		<% Book.where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> #<%= a.issue.to_s %><% end %></td>
 				<td><%= a.rdate.strftime("%b %d, %Y") %></td>
 				<td><%= a.price_in_dollars %></td>
 				<td class="text-center">
-						<%= Book.where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
+						<%= Book.all.where(:publisher => "Valiant Entertainment")where(:category => "Variant").where(:title => a.title).where(:issue => a.issue.to_s).where(:rdate => a.rdate.beginning_of_month..(a.rdate + 5.month).end_of_month).count %>
 					</td>
 				<td class="text-right"><%= a.printrun %></td>
 			</tr>
 		<% end %>
 	</table>
 	<p>
-		<% Book.where("printrun > ?", "501").where(:category => "Default").where(:rdate => Date.today.beginning_of_year..Date.today.end_of_year).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("printrun > ?", "501").where(:category => "Default").where(:rdate => Date.today.beginning_of_year..Date.today.end_of_year).order(printrun: :desc).limit(1).each do |a| %>
 			The top selling single issue of this year is currently <%= link_to a do %><%= a.title %> #<%= a.issue %><% end %> by <strong><%= a.writer %></strong> and <strong><%= a.artist %></strong> with reported sales of <strong><%= a.printrun %></strong> copies released <%= a.rdate.strftime("%B %d, %Y") %>.
 		<% end %>
-		<% Book.where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 1.year).beginning_of_year..(Date.today - 1.year).end_of_year).where("rdate < ?", "2014-12-31").order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("printrun > ?", "501").where(:category => "Default").where(:rdate => (Date.today - 1.year).beginning_of_year..(Date.today - 1.year).end_of_year).where("rdate < ?", "2014-12-31").order(printrun: :desc).limit(1).each do |a| %>
 			Last year's top seller was <%= link_to a do %><%= a.title %> #<%= a.issue %><% end %> by <strong><%= a.writer %></strong> and <strong><%= a.artist %></strong> with reported sales of <strong><%= a.printrun %></strong> copies, released <%= a.rdate.strftime("%B %d, %Y") %>.
 		<% end %>
 	</p>
@@ -196,7 +196,7 @@
 			<td><strong>Price</strong></td>
 			<td class="text-right"><strong>Sales</strong></td>
 		</tr>
-		<% Book.where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 1.month).beginning_of_month..(Date.today - 1.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> Vol. <%= a.issue.to_s %> <% if a.category == "Paperback" %>TPB<% elsif a.category == "Hardcover" %>HC<% end %><% end %></td>
@@ -206,7 +206,7 @@
 			</tr>
 		<% end %>
 
-		<% Book.where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 2.month).beginning_of_month..(Date.today - 2.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> Vol. <%= a.issue.to_s %> <% if a.category == "Paperback" %>TPB<% elsif a.category == "Hardcover" %>HC<% end %><% end %></td>
@@ -216,7 +216,7 @@
 			</tr>
 		<% end %>
 
-		<% Book.where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 3.month).beginning_of_month..(Date.today - 3.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> Vol. <%= a.issue.to_s %> <% if a.category == "Paperback" %>TPB<% elsif a.category == "Hardcover" %>HC<% end %><% end %></td>
@@ -226,7 +226,7 @@
 			</tr>
 		<% end %>
 
-		<% Book.where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 4.month).beginning_of_month..(Date.today - 4.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> Vol. <%= a.issue.to_s %> <% if a.category == "Paperback" %>TPB<% elsif a.category == "Hardcover" %>HC<% end %><% end %></td>
@@ -236,7 +236,7 @@
 			</tr>
 		<% end %>
 
-		<% Book.where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 5.month).beginning_of_month..(Date.today - 5.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> Vol. <%= a.issue.to_s %> <% if a.category == "Paperback" %>TPB<% elsif a.category == "Hardcover" %>HC<% end %><% end %></td>
@@ -246,7 +246,7 @@
 			</tr>
 		<% end %>
 
-		<% Book.where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 6.month).beginning_of_month..(Date.today - 6.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> Vol. <%= a.issue.to_s %> <% if a.category == "Paperback" %>TPB<% elsif a.category == "Hardcover" %>HC<% end %><% end %></td>
@@ -256,7 +256,7 @@
 			</tr>
 		<% end %>
 
-		<% Book.where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 7.month).beginning_of_month..(Date.today - 7.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> Vol. <%= a.issue.to_s %> <% if a.category == "Paperback" %>TPB<% elsif a.category == "Hardcover" %>HC<% end %><% end %></td>
@@ -266,7 +266,7 @@
 			</tr>
 		<% end %>
 
-		<% Book.where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 8.month).beginning_of_month..(Date.today - 8.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> Vol. <%= a.issue.to_s %> <% if a.category == "Paperback" %>TPB<% elsif a.category == "Hardcover" %>HC<% end %><% end %></td>
@@ -276,7 +276,7 @@
 			</tr>
 		<% end %>
 
-		<% Book.where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 9.month).beginning_of_month..(Date.today - 9.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> Vol. <%= a.issue.to_s %> <% if a.category == "Paperback" %>TPB<% elsif a.category == "Hardcover" %>HC<% end %><% end %></td>
@@ -286,7 +286,7 @@
 			</tr>
 		<% end %>
 
-		<% Book.where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 10.month).beginning_of_month..(Date.today - 10.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> Vol. <%= a.issue.to_s %> <% if a.category == "Paperback" %>TPB<% elsif a.category == "Hardcover" %>HC<% end %><% end %></td>
@@ -296,7 +296,7 @@
 			</tr>
 		<% end %>
 
-		<% Book.where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 11.month).beginning_of_month..(Date.today - 11.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> Vol. <%= a.issue.to_s %> <% if a.category == "Paperback" %>TPB<% elsif a.category == "Hardcover" %>HC<% end %><% end %></td>
@@ -306,7 +306,7 @@
 			</tr>
 		<% end %>
 
-		<% Book.where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
+		<% Book.all.where(:publisher => "Valiant Entertainment")where("note like ?", "%Trade%").where("printrun > ?", "1").where(:rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).order(printrun: :desc).limit(1).each do |a| %>
 			<tr>
 				<td><strong><%= a.rdate.strftime("%b %Y") %></strong></td>
 				<td><%= link_to a do %><%= a.title %> Vol. <%= a.issue.to_s %> <% if a.category == "Paperback" %>TPB<% elsif a.category == "Hardcover" %>HC<% end %><% end %></td>
