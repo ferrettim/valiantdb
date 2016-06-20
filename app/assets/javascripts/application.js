@@ -2,9 +2,11 @@
 //= require search
 //= require jquery_ujs
 //= require jquery-ui
+//= require jquery-ui/autocomplete
 //= require tinymce-jquery
 //= require jasny-bootstrap.min
 //= require jquery.flexslider-min
+//= require autocomplete-rails
 //= require conversations
 //= require infinite-scroll
 //= require jquery.raty
@@ -15,6 +17,8 @@
 //= require select2
 //= require local_time
 //= require fancybox
+//= require jsapi
+//= require chartkick
 //= require bootstrap-sprockets
 
 $( ".chosen-select" ).select2({

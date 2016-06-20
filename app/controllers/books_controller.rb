@@ -485,7 +485,7 @@ class BooksController < ApplicationController
 
   def valiantsalestitle
     @pgtitle = "Valiant Comics Sales by title"
-    @book = Book.where(:category => "Default").where(:rdate => (Date.today - 12.month)..(Date.today)).where("printrun > ?", "1").select("DISTINCT(title)").group("title").order("title")
+    @book = Book.all.where(:publisher => "Valiant Entertainment").where(:category => "Default").where(:rdate => (Date.today - 12.month)..(Date.today)).where("printrun > ?", "1").select("DISTINCT(title)").group("title").order("title")
     respond_to do |format|
       format.html
       format.json { render json: @book }
