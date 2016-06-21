@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     get :autocomplete_book_eic, :on => :collection
     get :autocomplete_book_country, :on => :collection
     get :autocomplete_book_publisher, :on => :collection
+    get :autocomplete_book_imprint, :on => :collection
     resources :comments
     collection do 
       post :import
