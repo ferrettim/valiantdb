@@ -223,12 +223,13 @@
                 <% end %>
 
                 <% if @user == current_user %>
+                    <br />
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation"><a href="#latest" aria-controls="messages" role="tab" data-toggle="tab">Recently Added</a></li>
+                        <li role="presentation" class="active"><a href="#latest" aria-controls="messages" role="tab" data-toggle="tab">Recently Added</a></li>
                     </ul>
 
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane" id="latest">
+                        <div role="tabpanel" class="tab-pane active" id="latest">
                             <%= render "streambooks" %></div>
                     </div>
                 <% end %>
