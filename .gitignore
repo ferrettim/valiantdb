@@ -8,6 +8,7 @@
 /.bundle
 /.bundle/config
 .bundle/config
+/vendor/bundle
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

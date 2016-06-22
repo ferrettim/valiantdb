@@ -222,6 +222,20 @@
                         <div class="clearfix"><br /></div>
                 <% end %>
 
+                <% if @user == current_user %>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#friends" aria-controls="home" role="tab" data-toggle="tab">Friends</a></li>
+                        <li role="presentation"><a href="#latest" aria-controls="messages" role="tab" data-toggle="tab">Recently Added</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="friends">
+                            <%= render "stream" %></div>
+                        <div role="tabpanel" class="tab-pane" id="latest">
+                            <%= render "streambooks" %></div>
+                    </div>
+                <% end %>
+
                 <% unless @user.id == current_user.id %>
                     <h4 class="text-left">Recent collection updates</h4>
                       <% if @user.owned_books.count > 0 %>

@@ -18,6 +18,7 @@ class BooksController < ApplicationController
   autocomplete :book, :eic
   autocomplete :book, :country
   autocomplete :book, :publisher
+  autocomplete :book, :imprint
   respond_to :html, :json, :js
 
   def autocomplete
@@ -2778,7 +2779,11 @@ class BooksController < ApplicationController
 
   # Dynamite
   def dynamiteall
-    @pgtitle = "Dynamite All"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Dynamite All"
+    end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Dynamite Entertainment").count
     @tcount = Book.all.where(:publisher => "Dynamite Entertainment")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
@@ -2799,7 +2804,11 @@ class BooksController < ApplicationController
   end
 
   def dynamitealltbl
-    @pgtitle = "Dynamite All"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Dynamite All"
+    end
     @tcount = Book.all.where(:publisher => "Dynamite Entertainment")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
@@ -2817,7 +2826,11 @@ class BooksController < ApplicationController
   end
 
   def dynamiteallmissing
-    @pgtitle = "Dynamite (Missing)"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Dynamite (Missing)"
+    end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Dynamite Entertainment").where.not(id: current_user.owned_book_ids).count
     @tcount = Book.all.where(:publisher => "Dynamite Entertainment").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
@@ -2838,7 +2851,11 @@ class BooksController < ApplicationController
   end
 
   def dynamitealltblmissing
-    @pgtitle = "Dynamite (Missing)"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Dynamite (Missing)"
+    end
     @tcount = Book.all.where(:publisher => "Dynamite Entertainment").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
@@ -2857,7 +2874,11 @@ class BooksController < ApplicationController
 
   # IDW
   def idwall
-    @pgtitle = "IDW All"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "IDW All"
+    end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "IDW Publishing").count
     @tcount = Book.all.where(:publisher => "IDW Publishing")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
@@ -2878,7 +2899,11 @@ class BooksController < ApplicationController
   end
 
   def idwalltbl
-    @pgtitle = "IDW All"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "IDW All"
+    end
     @tcount = Book.all.where(:publisher => "IDW Publishing")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
@@ -2896,7 +2921,11 @@ class BooksController < ApplicationController
   end
 
   def idwallmissing
-    @pgtitle = "IDW (Missing)"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "IDW (Missing)"
+    end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "IDW Publishing").where.not(id: current_user.owned_book_ids).count
     @tcount = Book.all.where(:publisher => "IDW Publishing").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
@@ -2917,7 +2946,11 @@ class BooksController < ApplicationController
   end
 
   def idwtblmissing
-    @pgtitle = "IDW (Missing)"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "IDW (Missing)"
+    end
     @tcount = Book.all.where(:publisher => "IDW Publishing").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
@@ -2936,7 +2969,11 @@ class BooksController < ApplicationController
 
   # Image
   def imageall
-    @pgtitle = "Image"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Image"
+    end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Image Comics").count
     @tcount = Book.all.where(:publisher => "Image Comics")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
@@ -2957,7 +2994,11 @@ class BooksController < ApplicationController
   end
 
   def imagealltbl
-    @pgtitle = "Image"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Image"
+    end
     @tcount = Book.all.where(:publisher => "Image Comics")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
@@ -2975,7 +3016,11 @@ class BooksController < ApplicationController
   end
 
   def imageallmissing
-    @pgtitle = "Image (Missing)"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Image (Missing)"
+    end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Image Comics").where.not(id: current_user.owned_book_ids).count
     @tcount = Book.all.where(:publisher => "Image Comics").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
@@ -2996,7 +3041,11 @@ class BooksController < ApplicationController
   end
 
   def imagealltblmissing
-    @pgtitle = "Image (Missing)"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Image (Missing)"
+    end
     @tcount = Book.all.where(:publisher => "Image Comics").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
@@ -3015,7 +3064,11 @@ class BooksController < ApplicationController
 
   # Marvel
   def marvelall
-    @pgtitle = "Marvel All"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Marvel All"
+    end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Marvel Comics").count
     @tcount = Book.all.where(:publisher => "Marvel Comics")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
@@ -3036,7 +3089,11 @@ class BooksController < ApplicationController
   end
 
   def marvelalltbl
-    @pgtitle = "Marvel All"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Marvel All"
+    end
     @tcount = Book.all.where(:publisher => "Marvel Comics")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
@@ -3054,7 +3111,11 @@ class BooksController < ApplicationController
   end
 
   def marvelallmissing
-    @pgtitle = "Marvel (Missing)"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Marvel (Missing)"
+    end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Marvel Comics").where.not(id: current_user.owned_book_ids).count
     @tcount = Book.all.where(:publisher => "Marvel Comics").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
@@ -3075,7 +3136,11 @@ class BooksController < ApplicationController
   end
 
   def marvelalltblmissing
-    @pgtitle = "Marvel (Missing)"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Marvel (Missing)"
+    end
     @tcount = Book.all.where(:publisher => "Marvel Comics").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
@@ -3094,7 +3159,11 @@ class BooksController < ApplicationController
 
   # Vertigo
   def vertigoall
-    @pgtitle = "Vertigo All"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Vertigo All"
+    end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Vertigo Comics").count
     @tcount = Book.all.where(:publisher => "Vertigo Comics")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
@@ -3115,7 +3184,11 @@ class BooksController < ApplicationController
   end
 
   def vertigoalltbl
-    @pgtitle = "Vertigo All"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Vertigo All"
+    end
     @tcount = Book.all.where(:publisher => "Vertigo Comics")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
@@ -3133,7 +3206,11 @@ class BooksController < ApplicationController
   end
 
   def vertigoallmissing
-    @pgtitle = "Vertigo (Missing)"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Vertigo (Missing)"
+    end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Vertigo Comics").where.not(id: current_user.owned_book_ids).count
     @tcount = Book.all.where(:publisher => "Vertigo Comics").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
@@ -3154,7 +3231,11 @@ class BooksController < ApplicationController
   end
 
   def vertigoalltblmissing
-    @pgtitle = "Vertigo (Missing)"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Vertigo (Missing)"
+    end
     @tcount = Book.all.where(:publisher => "Vertigo Comics").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
@@ -3173,7 +3254,11 @@ class BooksController < ApplicationController
 
   # fcope
   def zenescopeall
-    @pgtitle = "Zenescope All"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Zenescope All"
+    end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Zenescope Entertainment").count
     @tcount = Book.all.where(:publisher => "Zenescope Entertainment")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
@@ -3194,7 +3279,11 @@ class BooksController < ApplicationController
   end
 
   def zenescopealltbl
-    @pgtitle = "Zenescope All"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Zenescope All"
+    end
     @tcount = Book.all.where(:publisher => "Zenescope Entertainment")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
@@ -3212,7 +3301,11 @@ class BooksController < ApplicationController
   end
 
   def zenescopeallmissing
-    @pgtitle = "Zenescope (Missing)"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Zenescope (Missing)"
+    end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Zenescope Entertainment").where.not(id: current_user.owned_book_ids).count
     @tcount = Book.all.where(:publisher => "Zenescope Entertainment").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
@@ -3233,7 +3326,11 @@ class BooksController < ApplicationController
   end
 
   def zenescopealltblmissing
-    @pgtitle = "Zenescope (Missing)"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Zenescope (Missing)"
+    end
     @tcount = Book.all.where(:publisher => "Zenescope Entertainment").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
@@ -3277,7 +3374,11 @@ class BooksController < ApplicationController
   end
 
   def valiantalltbl
-    @pgtitle = "Valiant"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Valiant"
+    end
     @tcount = Book.all.where(:publisher => "Valiant Entertainment")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
@@ -3295,7 +3396,11 @@ class BooksController < ApplicationController
   end
 
   def valiantallmissing
-    @pgtitle = "Valiant (Missing)"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Valiant (Missing)"
+    end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Valiant Entertainment").where.not(id: current_user.owned_book_ids).count
     @tcount = Book.all.where(:publisher => "Valiant Entertainment").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
@@ -3316,7 +3421,11 @@ class BooksController < ApplicationController
   end
 
   def valiantalltblmissing
-    @pgtitle = "Valiant (Missing)"
+    if params[:title].present?
+      @pgtitle = params[:title]
+    else 
+      @pgtitle = "Valiant (Missing)"
+    end
     @tcount = Book.all.where(:publisher => "Valiant Entertainment").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?

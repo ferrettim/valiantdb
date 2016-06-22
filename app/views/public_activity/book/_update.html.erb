@@ -1,28 +1,28 @@
 <% if a.trackable %>
-		<% if Book.find(a.trackable_id).category == "Paperback" %>
+		<% if Book.friendly.find(a.trackable_id).category == "Paperback" %>
 			<div class="col-md-1 col-sm-2 col-xs-2">
-				<%= image_tag Book.find(a.trackable_id).image.url(:mini), :height => "36px", class: "img-shadow" %>
+				<%= image_tag Book.friendly.find(a.trackable_id).image.url(:mini), :height => "36px", class: "img-shadow" %>
 			</div>
 			<div class="col-md-11 col-sm-10 col-xs-10">
-				<i class="fa fa-plus"></i>  <%= link_to Book.find(a.trackable_id) do %><%= Book.find(a.trackable_id).title %> TPB Vol. <%= Book.find(a.trackable_id).issue %> cover by <%= Book.find(a.trackable_id).cover %><% end %> was added to the database
+				<i class="fa fa-plus"></i>  <%= link_to Book.friendly.find(a.trackable_id) do %><%= Book.friendly.find(a.trackable_id).title %> TPB Vol. <%= Book.friendly.find(a.trackable_id).issue %> cover by <%= Book.friendly.find(a.trackable_id).cover %><% end %> was added to the database
 				<br />
 				<span class="time"><%= local_time_ago(a.created_at) %></span>
 			</div>
-		<% elsif Book.find(a.trackable_id).category == "Hardcover" %>
+		<% elsif Book.friendly.find(a.trackable_id).category == "Hardcover" %>
 			<div class="col-md-1 col-sm-2 col-xs-2">
-				<%= image_tag Book.find(a.trackable_id).image.url(:mini), :height => "36px", class: "img-shadow" %>
+				<%= image_tag Book.friendly.find(a.trackable_id).image.url(:mini), :height => "36px", class: "img-shadow" %>
 			</div>
 			<div class="col-md-11 col-sm-10 col-xs-10">
-				<i class="fa fa-plus"></i>  <%= link_to Book.find(a.trackable_id) do %><%= Book.find(a.trackable_id).title %> Deluxe HC Vol. <%= Book.find(a.trackable_id).issue %> cover by <%= Book.find(a.trackable_id).cover %><% end %> was added to the database
+				<i class="fa fa-plus"></i>  <%= link_to Book.friendly.find(a.trackable_id) do %><%= Book.friendly.find(a.trackable_id).title %> Deluxe HC Vol. <%= Book.friendly.find(a.trackable_id).issue %> cover by <%= Book.friendly.find(a.trackable_id).cover %><% end %> was added to the database
 				<br />
 				<span class="time"><%= local_time_ago(a.created_at) %></span>
 			</div>
 		<% else %>
 			<div class="col-md-1 col-sm-2 col-xs-2">
-				<%= image_tag Book.find(a.trackable_id).image.url(:mini), :height => "36px", class: "img-shadow" %>
+				<%= image_tag Book.friendly.find(a.trackable_id).image.url(:mini), :height => "36px", class: "img-shadow" %>
 			</div>
 			<div class="col-md-11 col-sm-10 col-xs-10">
-				<i class="fa fa-plus"></i>  <%= link_to Book.find(a.trackable_id) do %><%= Book.find(a.trackable_id).title %> #<%= Book.find(a.trackable_id).issue %> cover by <%= Book.find(a.trackable_id).cover %><% end %> was added to the database
+				<i class="fa fa-plus"></i>  <%= link_to Book.friendly.find(a.trackable_id) do %><%= Book.friendly.find(a.trackable_id).title %> #<%= Book.friendly.find(a.trackable_id).issue %> cover by <%= Book.friendly.find(a.trackable_id).cover %><% end %> was added to the database
 				<br />
 				<span class="time"><%= local_time_ago(a.created_at) %></span>
 			</div>
