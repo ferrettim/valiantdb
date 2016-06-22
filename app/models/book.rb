@@ -125,7 +125,7 @@ class Book < ActiveRecord::Base
 	      csv << attributes
 	      all.each do |book|
 	        row = book.attributes.values_at(*attributes)
-	        row << "http://www.valiantdatabase.com/books/" + Book.find(book.id).to_param
+	        row << "http://www.comicark.com/books/" + Book.find(book.id).to_param
 	        csv << row
 	      end
 	    end
@@ -138,27 +138,27 @@ class Book < ActiveRecord::Base
 	end
 
 	 def previous_book
-	   Book.where(:title => title).where(:category => "Default").where(:era => era).where('issue < ?', issue).order(issue: :desc).first
+	   Book.where(:title => title).where(:publisher => publisher).where(:category => "Default").where(:era => era).where('issue < ?', issue).order(issue: :desc).first
 	 end
 
 	 def next_book
-	   Book.where(:title => title).where(:category => "Default").where(:era => era).where('issue > ?', issue).order(issue: :asc).first
+	   Book.where(:title => title).where(:publisher => publisher).where(:category => "Default").where(:era => era).where('issue > ?', issue).order(issue: :asc).first
 	 end
 
 	 def previous_tpb
-	   Book.where(:title => title).where(:category => "Paperback").where(:era => era).where('issue < ?', issue).order(issue: :desc).first
+	   Book.where(:title => title).where(:publisher => publisher).where(:category => "Paperback").where(:era => era).where('issue < ?', issue).order(issue: :desc).first
 	 end
 
 	 def next_tpb
-	   Book.where(:title => title).where(:category => "Paperback").where(:era => era).where('issue > ?', issue).order(issue: :asc).first
+	   Book.where(:title => title).where(:publisher => publisher).where(:category => "Paperback").where(:era => era).where('issue > ?', issue).order(issue: :asc).first
 	 end
 
 	 def previous_hc
-	   Book.where(:title => title).where(:category => "Hardcover").where(:era => era).where('issue < ?', issue).order(issue: :desc).first
+	   Book.where(:title => title).where(:publisher => publisher).where(:category => "Hardcover").where(:era => era).where('issue < ?', issue).order(issue: :desc).first
 	 end
 
 	 def next_hc
-	   Book.where(:title => title).where(:category => "Hardcover").where(:era => era).where('issue > ?', issue).order(issue: :asc).first
+	   Book.where(:title => title).where(:publisher => publisher).where(:category => "Hardcover").where(:era => era).where('issue > ?', issue).order(issue: :asc).first
 	 end
 
 end
