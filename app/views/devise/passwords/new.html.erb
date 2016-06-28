@@ -2,12 +2,11 @@
 	<br />
   	<%= image_tag "https://s3.amazonaws.com/valiantdb/images/cabanner.jpg", :alt => "ComicArk", class: "divfill" %>
 	<div class="wellclear bottomcorners">
-		<div class="container">
+		<div class="container-fluid">
 			<h3 class="text-center">Forgot your password?</h3>
 			<p>If you can't remember your password you can enter your email address below to receive a message with instructions to reset your password.</p>
 			<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
 			  <%= f.error_notification %>
-
 			  <div class="form-inputs">
 			    <%= f.input :email, required: true, autofocus: true, placeholder: "Enter your e-mail address", label: false %>
 			  </div>
