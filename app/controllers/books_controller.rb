@@ -3498,6 +3498,35 @@ class BooksController < ApplicationController
     end
   end
 
+  def valianttrades
+    @pgtitle = "Trades"
+    @search_count = Book.where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").where(:title => params[:query]).where(:publisher => "Valiant Entertainment")
+    @tcount = Book.all.where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").where(:publisher => "Valiant Entertainment").where(status: "Active")
+    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
+    @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = @book.where(:title => params[:title]) if params[:title].present?
+    @optionstitle = Book.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").select("DISTINCT(title)").group("title").order("title")
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
+  def valianttradestbl
+    @pgtitle = "Trades"
+    @tcount = Book.all.where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").where(:publisher => "Valiant Entertainment").where(status: "Active")
+    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
+    @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = @book.where(:title => params[:title]) if params[:title].present?
+    @optionstitle = Book.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").select("DISTINCT(title)").group("title").order("title")
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+    end
+  end
+
   # Clasic Valiant
   def valiantvh1keys
     @pgtitle = "Key Issues (1991-1996)"

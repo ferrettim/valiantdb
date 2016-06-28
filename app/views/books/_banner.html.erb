@@ -3028,6 +3028,60 @@
         </div>
     </div>
 
+  <% elsif action_name == "valianttrades" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+          <% if user_signed_in? %>
+            <div class="pull-right table-view">
+              <ul class="list-inline btn-group">
+                  <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount.count %></span><% end %></li>
+                  <li class="btn btn-default btn-sm"><%= link_to valiant_trades_table_books_path, :class => "btn btn-default", :title => "Table View" do %>
+                      <span class="fa fa-th"></span>
+                    <% end %></li>
+                <li class="btn btn-default btn-sm">
+                  <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
+                    <select name="title" class="form-control chosen-select">
+                      <option value="">Title</option>
+                      <% @optionstitle.each do |n| %>
+                        <option value="<%= n.title %>"><%= n.title %></option>
+                      <% end %>
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+                  <% end %>
+              </li>
+              </ul>
+            </div>
+          <% end %>
+        </div>
+    </div>
+
+  <% elsif action_name == "valianttradestbl" %>
+    <div id="bannerall">
+      <div class="pageinfo">
+          <% if user_signed_in? %>
+            <div class="pull-right table-view">
+              <ul class="list-inline btn-group">
+                  <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @tcount.count %></span><% end %></li>
+                  <li class="btn btn-default btn-sm"><%= link_to valiant_trades_books_path, :class => "btn btn-default", :title => "Grid View" do %>
+                      <span class="fa fa-th"></span>
+                    <% end %></li>
+                <li class="btn btn-default btn-sm">
+                  <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
+                    <select name="title" class="form-control chosen-select">
+                      <option value="">Title</option>
+                      <% @optionstitle.each do |n| %>
+                        <option value="<%= n.title %>"><%= n.title %></option>
+                      <% end %>
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+                  <% end %>
+              </li>
+              </ul>
+            </div>
+          <% end %>
+        </div>
+    </div>
+
   <% elsif action_name == "valiantvh1keys" %>
     <div id="bannerclassic">
     </div>

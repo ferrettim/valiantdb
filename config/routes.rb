@@ -152,6 +152,8 @@ Rails.application.routes.draw do
       get :alladmin
       get "valiant/sketch" => "books#valiantsketch"
       get "valiant/sketch/table" => "books#valiantsketchtbl"
+      get "valiant/trades" => "books#valianttrades"
+      get "valiant/trades/table" => "books#valianttradestbl"
 
       # VH1 Valiant
       get "valiant/classic/all" => "books#valiantvh1all"
