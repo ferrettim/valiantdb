@@ -71,7 +71,7 @@ Rails.application.configure do
   config.action_mailer.default :charset => "utf-8"
 
   config.action_mailer.smtp_settings = {
-  address: "marvelcomicsdatabase.domain.com",
+  address: "smtp.comicark.com",
   port: 587,
   domain: ENV["CA_DOMAIN"],
   authentication: "plain",
