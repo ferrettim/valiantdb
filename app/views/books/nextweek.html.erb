@@ -70,7 +70,7 @@
 							 ISBN <%= upcoming.isb.to_s %>
 						<% end %>
 					</p>
-					<%= upcoming.summary.html_safe %>
+					<%= h upcoming.summary.html_safe %>
 					<ul class="list-inline">
 						<% if upcoming.category == "Default" %>
 							<% Book.where(:title => upcoming.title).where(:issue => upcoming.issue).where(rdate: (upcoming.rdate - 1.month)..(upcoming.rdate + 1.month)).where(:category => "Variant").where.not(:id => upcoming.id).each do |related| %>
