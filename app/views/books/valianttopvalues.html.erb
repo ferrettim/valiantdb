@@ -35,7 +35,7 @@
 			<td><strong>Cover</strong></td>
 			<td class="text-right"><strong>Current Value</strong></td>
 		</tr>
-		<% Book.all.where(:publisher => "Valiant Entertainment").where("pricenm > ?", "0").where(:era => "VH1").where.not(:category => "Paperback").where.not(:category => "Hardcover").where.not(:category => "Sketch").order(pricenm: :desc).limit(10).each do |a| %>
+		<% Book.all.where(:publisher => "Voyager Communications").where("pricenm > ?", "0").where(:era => "VH1").where.not(:category => "Paperback").where.not(:category => "Hardcover").where.not(:category => "Sketch").order(pricenm: :desc).limit(10).each do |a| %>
 			<tr>
 				<td><%= link_to a do %><%= a.title.to_s %> #<%= a.issue.to_i %><% end %></td>
 				<td><%= a.rdate.strftime("%B %d, %Y") %></td>
@@ -57,7 +57,7 @@
 			<td><strong>Cover</strong></td>
 			<td class="text-right"><strong>Current Value</strong></td>
 		</tr>
-		<% Book.all.where(:publisher => "Valiant Entertainment").where("pricenm > ?", "0").where(:era => "VH2").where.not(:category => "Paperback").where.not(:category => "Hardcover").where.not(:category => "Sketch").order(pricenm: :desc).limit(10).each do |a| %>
+		<% Book.all.where(:publisher => "Acclaim Entertainment").where("pricenm > ?", "0").where(:era => "VH2").where.not(:category => "Paperback").where.not(:category => "Hardcover").where.not(:category => "Sketch").order(pricenm: :desc).limit(10).each do |a| %>
 			<tr>
 				<td><%= link_to a do %><%= a.title.to_s %> #<%= a.issue.to_i %><% end %></td>
 				<td><%= a.rdate.strftime("%B %d, %Y") %></td>
