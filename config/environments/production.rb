@@ -72,7 +72,7 @@ Rails.application.configure do
 
   config.action_mailer.smtp_settings = {
   address: "marvelcomicsdatabase.domain.com",
-  port: 25,
+  port: 587,
   domain: ENV["CA_DOMAIN"],
   authentication: "plain",
   enable_starttls_auto: true,
