@@ -56,7 +56,7 @@
                 <div class="profile-usermenu">
                     <% unless current_user.patron? %>
                         <div class="text-center">
-                            <%= link_to "https://www.valiantdatabase.com/supportus", :title => "Support us", class: "label label-as-badge label-primary" do %>Upgrade to patron!<% end %>
+                            <%= link_to supportus_path, :title => "Support us", class: "label label-as-badge label-primary" do %>Upgrade to patron!<% end %>
                         </div>
                     <% end %>
                     <ul class="nav">
@@ -159,7 +159,7 @@
             <% unless user_signed_in? && current_user.patron? %>
                 <a href="//lootcrate.7eer.net/c/264379/277903/4019"><img src="//a.impactradius-go.com/display-ad/4019-277903" border="0" alt="" width="101.4%" height="100" style="margin: -7px 0px 0px -6px;" /></a><img height="0" width="0" src="//lootcrate.7eer.net/i/264379/277903/4019" style="position:absolute;visibility:hidden;" border="0" />
             <% end %>
-            <p>You can choose which books you want to see on this site by going to your <%= link_to edit_user_registration_path, :title => "Edit settings" do %>settings page<% end %> and checking only the publishers you want to see. <% unless current_user.patron? %>Remember that patron accounts are ad-free and have no limits on their collection size.<% end %> This site is brought to you by users like <a href="http://www.octobercountrycomics.com/"><strong>October County Comics</strong></a>, <a href="http://www.comicark.com/users/dbs/profile">DBS</a>, and our <a href="http://www.comicark.com/users/backers">amazing patrons</a>.</p>
+            <p>You can choose which books you want to see on this site by going to your <%= link_to edit_user_registration_path, :title => "Edit settings" do %>settings page<% end %> and checking only the publishers you want to see. <% unless current_user.patron? %>Remember that patron accounts are ad-free and have no limits on their collection size.<% end %> This site is brought to you by users like <a href="http://www.octobercountrycomics.com/"><strong>October County Comics</strong></a>, <a href="http://www.comicark.com/users/dbs/profile">DBS</a>, and our <%= link_to users_backers_path do %>amazing patrons<% end %>.</p>
             <div class="profile-content">
                 <h4 class="text-left">
                     <%= link_to releases_currentweek_path do %>

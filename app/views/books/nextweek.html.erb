@@ -71,7 +71,7 @@
 						<% end %>
 					</p>
 					<% if upcoming.summary? %>
-						<%= h upcoming.summary.html_safe %>
+						<%= h upcoming.summary.to_s.html_safe %>
 					<% end %>
 					<ul class="list-inline">
 						<% if upcoming.category == "Default" %>
