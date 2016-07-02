@@ -64,10 +64,12 @@
 						<% else %>
 							Released <%= upcoming.rdate.strftime("%B %d, %Y") %><br />
 						<% end %>
-						<% if upcoming.category == "Paperback" %>
-							 ISBN: <%= upcoming.isb.to_s %>
-						<% elsif upcoming.category == "Hardcover" %>
-							 ISBN <%= upcoming.isb.to_s %>
+						<% if upcoming.isb? %>
+							<% if upcoming.category == "Paperback" %>
+								 ISBN: <%= upcoming.isb.to_s %>
+							<% elsif upcoming.category == "Hardcover" %>
+								 ISBN <%= upcoming.isb.to_s %>
+							<% end %>
 						<% end %>
 					</p>
 					<% if upcoming.summary? %>

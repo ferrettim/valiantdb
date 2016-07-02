@@ -1,7 +1,6 @@
-<% cache("book_stream", :expires_in => 1.days) do %>
+
 	<% @activities_site.each do |b| %>
 		<li class="stream-box">
 			<%= render_activity b %>
 		</li>
 	<% end %>
-<% end %>
