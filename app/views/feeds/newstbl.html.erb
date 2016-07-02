@@ -1,0 +1,29 @@
+<div class="container wellclear bottomcorners">
+  <h2 class="text-center">Latest Comic Book News</h2>
+  <p class="text-center">Last updated <%= local_time_ago(@entries.first.updated_at) %></p>
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <% @entries.each do |t| %>
+        <div class="col-md-3 col-sm-4 col-xs-6 fill img-shadow" data-key="sameHeights">
+          <span class="time container"><%= Feed.find(t.feed_id).name %></span>
+          <%= link_to "#{t.url}", :title => "#{t.title.html_safe}", :target => "_blank" do %>
+            <% if t.image_url? %>
+              <%= image_tag t.image_url, :alt => t.title.to_s %>
+            <% else %>
+              <%= image_tag Feed.find(t.feed_id).image_url, :alt => Feed.find(t.feed_id).name.to_s %>
+            <% end %>
+          <% end %>
+          <p class="fill_item">
+            <span class="fill_font"><%= link_to t.title.html_safe, "#{t.url}", :target => "_blank" %></span>
+            <br />
+            <span class="time">
+              Published <%= local_time_ago(t.published.strftime("%B %d %Y at %I:%M %p")) %>
+            </span>
+          </p>
+        </div>
+    <%end%>
+
+    <div class="clearfix"></div>
+    <div class="text-center" id="append_and_paginate"><%= paginate @entries %></div>
+    <div class="clearfix"></div>
+  </div>
+</div>

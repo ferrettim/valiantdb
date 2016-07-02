@@ -17,6 +17,7 @@
 //= require select2
 //= require local_time
 //= require fancybox
+//= require chat
 //= require jsapi
 //= require chartkick
 //= require bootstrap-sprockets

@@ -19,6 +19,12 @@ class FeedsController < ApplicationController
     @entries = Entry.all.order(published: :desc).page(params[:page]).per(36)
   end
 
+  def newstbl
+    @pgtitle = "Latest Comic Book News"
+    @feeds = Feed.all
+    @entries = Entry.all.order(published: :desc).page(params[:page]).per(36)
+  end
+
   # GET /feeds/new
   def new
     @feed = Feed.new

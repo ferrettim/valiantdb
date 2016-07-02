@@ -13,7 +13,8 @@
  *= require search
  *= require users   
  *= require select2
- *= require select2-bootstrap                                            
+ *= require select2-bootstrap 
+ *= require messages                                           
  *= require_self                                                                
  */    
 @import 'bootstrap'

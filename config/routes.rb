@@ -286,6 +286,10 @@ Rails.application.routes.draw do
   get 'userlevels' => 'pages#levels'
   get 'news' => 'feeds#news', as: :news
 
+  # Chat
+  post 'tokens' => 'tokens#create'
+  get 'chat' => 'pages#chat', as: :chat
+
   match 'sitemap', :to => 'sitemap#index', :via => [:get]
 
   # Mailbox routes

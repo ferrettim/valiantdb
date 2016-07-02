@@ -89,6 +89,9 @@ gem 'google_currency'
 gem 'feedjira'
 # Security
 gem 'rack-timeout'
+# Chat
+gem 'twilio-ruby'
+gem 'envyable'
 
 group :development do
 # Use sqlite3 as the database for Active Record

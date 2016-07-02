@@ -3,16 +3,16 @@
                         <ul class="slides">
                             <% @newbooks.each do |upcoming| %>
                                 <% if upcoming.category == "Paperback" %>
-                                    <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover, :target => "_blank" do %>
-                                        <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover, class: "img-responsive img-home" %>
+                                    <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover.to_s, :target => "_blank" do %>
+                                        <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover.to_s, class: "img-responsive img-home" %>
                                     <% end %></li>
                                 <% elsif upcoming.category == "Hardcover" %>
-                                    <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover, :target => "_blank" do %>
-                                        <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover, class: "img-responsive img-home" %>
+                                    <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover.to_s, :target => "_blank" do %>
+                                        <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover.to_s, class: "img-responsive img-home" %>
                                     <% end %></li>
                                 <% else %>
-                                    <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover, :target => "_blank" do %>
-                                        <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover, class: "img-responsive img-home" %>
+                                    <li class="col-md-1 col-sm-2 col-xs-3"><%= link_to upcoming, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover.to_s, :target => "_blank" do %>
+                                        <%= image_tag upcoming.image.url(:thumb), :alt => upcoming.title + " cover by " + upcoming.cover.to_s, class: "img-responsive img-home" %>
                                         <% end %></li>
                                 <% end %>
                             <% end %>

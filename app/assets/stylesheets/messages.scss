@@ -1,0 +1,84 @@
+#chat-window input {
+  display:block;
+  height:30px;
+  width: 100%;
+  margin:10px auto;
+  outline:none;
+  background-color:#232323;
+  border:none;
+  border-bottom:1px solid #2B2B2A;
+  padding:0;
+  font-size:16px;
+  color:#fff;
+}
+
+#messages {
+  background-color:#232323;
+  padding:10px;
+  height:400px;
+  margin:0 auto;
+  overflow-y:auto;
+}
+
+#messages p {
+  margin:5px 0;
+  padding:0;
+}
+
+.info {
+  margin:5px;
+  font-style:italic;
+  opacity: 0.75;
+}
+
+.message-container {
+  margin:5px 0;
+  color:#fff;
+}
+
+.message-container .username {
+  display:inline-block;
+  margin-right:5px;
+  font-weight:bold;
+  color:#849091;
+}
+
+.me, .username.me {
+  font-weight:bold;
+  color:#2980b9;
+}
+
+.message-container .username.me {
+  display:inline-block;
+  margin-right:5px;
+}
+
+#chatusers {
+  background-color:#232323;
+  padding:10px;
+  height:400px;
+  margin:0 auto;
+  overflow-y:auto;
+  border-radius: 5px;
+}
+
+#chatusers h2 {
+	font-size: 14px;
+	color: white;
+	text-decoration: underline;
+	margin-top: 0px;
+}
+
+#chatusers a {
+	color: white;
+}
+
+#chatusers a:hover {
+	color: #ccc;
+	font-style: italic;
+	text-decoration: none;
+}
+
+.notme {
+	color: #fff;
+}

@@ -43,4 +43,8 @@ class PagesController < ApplicationController
     @pgtitle = "Comicark User Levels"
   end
 
+  def chat
+    @pgtitle = "Comicark Chat"
+  end
+
 end
