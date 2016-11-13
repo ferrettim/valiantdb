@@ -4,8 +4,8 @@
 
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
-  before_filter :csvauthenticate
-  before_filter :authenticate, :only => :alladmin
+  before_action :csvauthenticate
+  before_action :authenticate, :only => :alladmin
   autocomplete :book, :title
   autocomplete :book, :writer
   autocomplete :book, :writer2
@@ -57,7 +57,7 @@ class BooksController < ApplicationController
     if user_signed_in?
       if @user == current_user
         @pgtitle = "My Wishlist"
-      else 
+      else
         @pgtitle = "#{User.friendly.find(params[:id]).name} 's Wishlist"
       end
     else
@@ -71,66 +71,18 @@ class BooksController < ApplicationController
         @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.wished_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.wished_books.where(:publisher => "451")
-        @bookaftershock = @user.wished_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.wished_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.wished_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.wished_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.wished_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.wished_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.wished_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.wished_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.wished_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.wished_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.wished_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.wished_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.wished_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.wished_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.wished_books.where(:publisher => "Zenescope Entertainment")
       elsif params[:title].present?
         @book = @user.wished_books.where(:title => params[:title]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
         @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.wished_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.wished_books.where(:publisher => "451")
-        @bookaftershock = @user.wished_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.wished_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.wished_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.wished_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.wished_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.wished_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.wished_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.wished_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.wished_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.wished_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.wished_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.wished_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.wished_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.wished_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.wished_books.where(:publisher => "Zenescope Entertainment")
       else
         @book = @user.wished_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
         @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.wished_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.wished_books.where(:publisher => "451")
-        @bookaftershock = @user.wished_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.wished_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.wished_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.wished_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.wished_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.wished_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.wished_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.wished_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.wished_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.wished_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.wished_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.wished_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.wished_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.wished_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.wished_books.where(:publisher => "Zenescope Entertainment")
       end
       @bookcsv = @user.wished_books.order(title: :asc, rdate: :asc)
       respond_to do |format|
@@ -146,7 +98,7 @@ class BooksController < ApplicationController
     if user_signed_in?
       if @user == current_user
         @pgtitle = "My Collection"
-      else 
+      else
         @pgtitle = "#{User.friendly.find(params[:id]).name} 's Wishlist"
       end
     else
@@ -160,66 +112,18 @@ class BooksController < ApplicationController
         @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.wished_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.wished_books.where(:publisher => "451")
-        @bookaftershock = @user.wished_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.wished_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.wished_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.wished_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.wished_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.wished_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.wished_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.wished_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.wished_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.wished_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.wished_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.wished_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.wished_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.wished_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.wished_books.where(:publisher => "Zenescope Entertainment")
       elsif params[:title].present?
         @book = @user.wished_books.where(:title => params[:title]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
         @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.wished_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.wished_books.where(:publisher => "451")
-        @bookaftershock = @user.wished_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.wished_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.wished_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.wished_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.wished_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.wished_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.wished_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.wished_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.wished_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.wished_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.wished_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.wished_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.wished_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.wished_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.wished_books.where(:publisher => "Zenescope Entertainment")
       else
         @book = @user.wished_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
         @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.wished_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.wished_books.where(:publisher => "451")
-        @bookaftershock = @user.wished_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.wished_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.wished_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.wished_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.wished_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.wished_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.wished_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.wished_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.wished_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.wished_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.wished_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.wished_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.wished_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.wished_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.wished_books.where(:publisher => "Zenescope Entertainment")
       end
       @bookcsv = @user.wished_books.order(title: :asc, rdate: :asc)
       respond_to do |format|
@@ -235,7 +139,7 @@ class BooksController < ApplicationController
     if user_signed_in?
       if @user == current_user
         @pgtitle = "My Wishlist"
-      else 
+      else
         @pgtitle = "#{User.friendly.find(params[:id]).name} 's Wishlist"
       end
     else
@@ -257,14 +161,14 @@ class BooksController < ApplicationController
         format.js
         format.csv { send_data @bookcsv.to_csv, filename: "acclaim-wishlist-#{Date.today}.csv" }
       end
-  end 
+  end
 
   def forsale
     @user = User.friendly.find(params[:id])
     if user_signed_in?
       if @user == current_user
         @pgtitle = "My Books For Sale"
-      else 
+      else
         @pgtitle = "#{User.friendly.find(params[:id]).name} 's Sell List"
       end
     else
@@ -278,66 +182,18 @@ class BooksController < ApplicationController
         @bookvh1 = @user.forsale_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.forsale_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.forsale_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.forsale_books.where(:publisher => "451")
-        @bookaftershock = @user.forsale_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.forsale_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.forsale_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.forsale_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.forsale_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.forsale_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.forsale_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.forsale_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.forsale_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.forsale_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.forsale_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.forsale_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.forsale_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.forsale_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.forsale_books.where(:publisher => "Zenescope Entertainment")
       elsif params[:title].present?
         @book = @user.forsale_books.where(:title => params[:title]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
         @bookvei = @user.forsale_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.forsale_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.forsale_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.forsale_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.forsale_books.where(:publisher => "451")
-        @bookaftershock = @user.forsale_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.forsale_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.forsale_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.forsale_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.forsale_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.forsale_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.forsale_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.forsale_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.forsale_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.forsale_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.forsale_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.forsale_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.forsale_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.forsale_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.forsale_books.where(:publisher => "Zenescope Entertainment")
       else
         @book = @user.forsale_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
         @bookvei = @user.forsale_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.forsale_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.forsale_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.forsale_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.forsale_books.where(:publisher => "451")
-        @bookaftershock = @user.forsale_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.forsale_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.forsale_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.forsale_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.forsale_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.forsale_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.forsale_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.forsale_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.forsale_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.forsale_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.forsale_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.forsale_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.forsale_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.forsale_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.forsale_books.where(:publisher => "Zenescope Entertainment")
       end
         @bookcsv = @user.forsale_books.order(title: :asc, rdate: :asc)
           respond_to do |format|
@@ -346,7 +202,7 @@ class BooksController < ApplicationController
           format.js
           format.csv { send_data @bookcsv.to_csv, filename: "forsale-#{Date.today}.csv" }
         end
-      
+
   end
 
   def forsaletbl
@@ -354,7 +210,7 @@ class BooksController < ApplicationController
     if user_signed_in?
       if @user == current_user
         @pgtitle = "My Books For Sale"
-      else 
+      else
         @pgtitle = "#{User.friendly.find(params[:id]).name} 's Sell List"
       end
     else
@@ -368,66 +224,18 @@ class BooksController < ApplicationController
         @bookvh1 = @user.forsale_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.forsale_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.forsale_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.forsale_books.where(:publisher => "451")
-        @bookaftershock = @user.forsale_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.forsale_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.forsale_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.forsale_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.forsale_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.forsale_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.forsale_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.forsale_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.forsale_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.forsale_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.forsale_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.forsale_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.forsale_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.forsale_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.forsale_books.where(:publisher => "Zenescope Entertainment")
       elsif params[:title].present?
         @book = @user.forsale_books.where(:title => params[:title]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
         @bookvei = @user.forsale_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.forsale_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.forsale_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.forsale_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.forsale_books.where(:publisher => "451")
-        @bookaftershock = @user.forsale_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.forsale_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.forsale_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.forsale_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.forsale_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.forsale_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.forsale_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.forsale_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.forsale_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.forsale_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.forsale_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.forsale_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.forsale_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.forsale_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.forsale_books.where(:publisher => "Zenescope Entertainment")
       else
         @book = @user.forsale_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
         @bookvei = @user.forsale_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.forsale_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.forsale_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.forsale_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.forsale_books.where(:publisher => "451")
-        @bookaftershock = @user.forsale_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.forsale_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.forsale_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.forsale_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.forsale_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.forsale_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.forsale_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.forsale_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.forsale_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.forsale_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.forsale_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.forsale_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.forsale_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.forsale_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.forsale_books.where(:publisher => "Zenescope Entertainment")
       end
         @bookcsv = @user.forsale_books.order(title: :asc, rdate: :asc)
           respond_to do |format|
@@ -435,14 +243,14 @@ class BooksController < ApplicationController
           format.json { render json: @book }
           format.js
           format.csv { send_data @bookcsv.to_csv, filename: "forsale-#{Date.today}.csv" }
-        end 
+        end
   end
 
   def monthlysales
     if params[:date].present?
       @date = Date.strptime(params[:date], '%m-%Y')
       @pgtitle = "Monthly Sales for " + Date.parse(@date.to_s).strftime("%B %Y")
-      @booksales = Book.where(:category => "Default").where(:rdate => @date.beginning_of_month..@date.end_of_month).where("printrun > ?", "1").order(printrun: :desc).limit(300)   
+      @booksales = Book.where(:category => "Default").where(:rdate => @date.beginning_of_month..@date.end_of_month).where("printrun > ?", "1").order(printrun: :desc).limit(300)
     else
       @date = DateTime.now.strftime("%B %Y")
       @pgtitle = "Monthly Comic Book Sales"
@@ -455,7 +263,7 @@ class BooksController < ApplicationController
     if params[:date].present?
       @date = Date.strptime(params[:date], '%Y')
       @pgtitle = "Top Sellers for " + Date.parse(@date.to_s).strftime("%Y")
-      @booksales = Book.where(:category => "Default").where(:rdate => @date.beginning_of_year..@date.end_of_year).where("printrun > ?", "1").order(printrun: :desc).limit(300)   
+      @booksales = Book.where(:category => "Default").where(:rdate => @date.beginning_of_year..@date.end_of_year).where("printrun > ?", "1").order(printrun: :desc).limit(300)
     else
       @date = DateTime.now.strftime("%Y")
       @pgtitle = "Top Sellers for " + DateTime.now.strftime("%Y")
@@ -466,7 +274,7 @@ class BooksController < ApplicationController
   def valiantvalues
     @pgtitle = "Valiant Books Ranked By Value"
     @book = Book.where.not(:category => "Sketch").where.not(:category => "Paperback").where.not(:category => "Hardcover").where("pricenm > ?", "0").order(pricenm: :desc).page(params[:page]).per(24)
-  end 
+  end
 
   def valianttopvalues
     @pgtitle = "Top Valiant Comics Books By Value"
@@ -534,54 +342,9 @@ class BooksController < ApplicationController
 
   def currentweek
     if params[:publisher].present?
-      if params[:publisher] == "Aftershock Comics"
-        @pgtitle = "Aftershock Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Aftershock Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "451"
-        @pgtitle = "451 Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "451").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "Archie Comics"
-        @pgtitle = "Archie Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Archie Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "Aspen Comics"
-        @pgtitle = "Aspen Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Aspen COmics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "Avatar Press"
-        @pgtitle = "Avatar Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Avatar Press").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "Boom Studios"
-        @pgtitle = "Boom Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Boom Studios").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "Black Mask Studios"
-        @pgtitle = "Black Mask Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Black Mask Studios").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "Dark Horse Comics"
-        @pgtitle = "Dark Horse Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Dark Horse Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "DC Comics"
-        @pgtitle = "DC Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "DC Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "Dynamite Entertainment"
-        @pgtitle = "Dynamite Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Dynamite Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "IDW Publishing"
-        @pgtitle = "IDW Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "IDW Publishing").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "Marvel Comics"
-        @pgtitle = "Marvel Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Marvel Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "Image Comics"
-        @pgtitle = "Image Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Image Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "Valiant Entertainment"
+      if params[:publisher] == "Valiant Entertainment"
         @pgtitle = "Valiant Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
         @newbooks = Book.where(:publisher => "Valiant Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "Vertigo Comics"
-        @pgtitle = "Vertigo Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Vertigo Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-      elsif params[:publisher] == "Zenescope Entertainment"
-        @pgtitle = "Zenescope Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Zenescope Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
       end
     else
       @pgtitle = "Comics Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
@@ -596,54 +359,9 @@ class BooksController < ApplicationController
 
   def nextweek
     if params[:publisher].present?
-      if params[:publisher] == "Aftershock Comics"
-        @pgtitle = "Aftershock Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Aftershock Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "451"
-        @pgtitle = "451 Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "451").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "Archie Comics"
-        @pgtitle = "Archie Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Archie Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "Aspen Comics"
-        @pgtitle = "Aspen Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Aspen COmics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "Avatar Press"
-        @pgtitle = "Avatar Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Avatar Press").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "Boom Studios"
-        @pgtitle = "Boom Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Boom Studios").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "Black Mask Studios"
-        @pgtitle = "Black Mask Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Black Mask Studios").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "Dark Horse Comics"
-        @pgtitle = "Dark Horse Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Dark Horse Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "DC Comics"
-        @pgtitle = "DC Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "DC Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "Dynamite Entertainment"
-        @pgtitle = "Dynamite Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Dynamite Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "IDW Publishing"
-        @pgtitle = "IDW Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "IDW Publishing").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "Marvel Comics"
-        @pgtitle = "Marvel Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Marvel Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "Image Comics"
-        @pgtitle = "Image Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Image Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "Valiant Entertainment"
+      if params[:publisher] == "Valiant Entertainment"
         @pgtitle = "Valiant Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
         @newbooks = Book.where(:publisher => "Valiant Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "Vertigo Comics"
-        @pgtitle = "Vertigo Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Vertigo Comics").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
-      elsif params[:publisher] == "Zenescope Entertainment"
-        @pgtitle = "Zenescope Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
-        @newbooks = Book.where(:publisher => "Zenescope Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       end
     else
       @pgtitle = "Comics Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
@@ -665,7 +383,7 @@ class BooksController < ApplicationController
         @date = Date.strptime(params[:date], '%m-%Y')
         @pgtitle = "Releases for " + Date.parse(@date.to_s).strftime("%B %Y")
         @newbooks = Book.where(:rdate => @date.beginning_of_month..@date.end_of_month).where(:publisher => params[:publisher]).where.not(:category => "Sketch").order(:rdate, :title)
-      end    
+      end
     else
         @pgtitle = "Comic Releases for " + DateTime.now.strftime("%B %Y")
         @newbooks = Book.where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_month..Date.today.end_of_month).order(:rdate, :title)
@@ -848,7 +566,7 @@ class BooksController < ApplicationController
     if user_signed_in?
       if @user == current_user
         @pgtitle = "My Book Notes"
-      else 
+      else
         @pgtitle = "#{User.friendly.find(params[:id]).name} 's Book Notes"
       end
     else
@@ -867,7 +585,7 @@ class BooksController < ApplicationController
     if user_signed_in?
       if @user == current_user
         @pgtitle = "My Collection"
-      else 
+      else
         @pgtitle = "#{User.friendly.find(params[:id]).name} 's Collection"
       end
     else
@@ -881,66 +599,18 @@ class BooksController < ApplicationController
         @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.owned_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.owned_books.where(:publisher => "451")
-        @bookaftershock = @user.owned_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.owned_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.owned_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.owned_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.owned_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.owned_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.owned_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.owned_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.owned_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.owned_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.owned_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.owned_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.owned_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.owned_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.owned_books.where(:publisher => "Zenescope Entertainment")
       elsif params[:title].present?
         @book = @user.owned_books.where(:title => params[:title]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
         @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.owned_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.owned_books.where(:publisher => "451")
-        @bookaftershock = @user.owned_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.owned_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.owned_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.owned_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.owned_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.owned_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.owned_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.owned_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.owned_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.owned_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.owned_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.owned_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.owned_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.owned_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.owned_books.where(:publisher => "Zenescope Entertainment")
       else
         @book = @user.owned_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
         @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.owned_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.owned_books.where(:publisher => "451")
-        @bookaftershock = @user.owned_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.owned_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.owned_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.owned_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.owned_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.owned_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.owned_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.owned_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.owned_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.owned_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.owned_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.owned_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.owned_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.owned_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.owned_books.where(:publisher => "Zenescope Entertainment")
       end
         @bookcsv = @user.owned_books.order(title: :asc, rdate: :asc)
           respond_to do |format|
@@ -949,7 +619,7 @@ class BooksController < ApplicationController
           format.js
           format.csv { send_data @bookcsv.to_csv, filename: "collection-#{Date.today}.csv" }
         end
-      
+
   end
 
   def mybookstbl
@@ -957,7 +627,7 @@ class BooksController < ApplicationController
     if user_signed_in?
       if @user == current_user
         @pgtitle = "My Collection"
-      else 
+      else
         @pgtitle = "#{User.friendly.find(params[:id]).name} 's Collection"
       end
     else
@@ -971,66 +641,18 @@ class BooksController < ApplicationController
         @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.owned_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.owned_books.where(:publisher => "451")
-        @bookaftershock = @user.owned_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.owned_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.owned_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.owned_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.owned_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.owned_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.owned_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.owned_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.owned_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.owned_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.owned_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.owned_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.owned_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.owned_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.owned_books.where(:publisher => "Zenescope Entertainment")
       elsif params[:title].present?
         @book = @user.owned_books.where(:title => params[:title]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
         @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.owned_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.owned_books.where(:publisher => "451")
-        @bookaftershock = @user.owned_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.owned_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.owned_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.owned_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.owned_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.owned_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.owned_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.owned_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.owned_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.owned_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.owned_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.owned_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.owned_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.owned_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.owned_books.where(:publisher => "Zenescope Entertainment")
       else
         @book = @user.owned_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
         @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.owned_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.owned_books.where(:publisher => "451")
-        @bookaftershock = @user.owned_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.owned_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.owned_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.owned_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.owned_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.owned_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.owned_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.owned_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.owned_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.owned_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.owned_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.owned_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.owned_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.owned_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.owned_books.where(:publisher => "Zenescope Entertainment")
       end
       @bookcsv = @user.owned_books.order(title: :asc, rdate: :asc)
       respond_to do |format|
@@ -1039,14 +661,14 @@ class BooksController < ApplicationController
         format.js
         format.csv { send_data @bookcsv.to_csv, filename: "collection-#{Date.today}.csv" }
       end
-  end 
+  end
 
   def mybooksint
     @user = User.friendly.find(params[:id])
     if user_signed_in?
       if @user == current_user
         @pgtitle = "My Collection"
-      else 
+      else
         @pgtitle = "#{User.friendly.find(params[:id]).name} 's Collection"
       end
     else
@@ -1058,45 +680,13 @@ class BooksController < ApplicationController
         @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.owned_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.owned_books.where(:publisher => "451")
-        @bookaftershock = @user.owned_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.owned_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.owned_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.owned_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.owned_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.owned_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.owned_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.owned_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.owned_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.owned_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.owned_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.owned_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.owned_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.owned_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.owned_books.where(:publisher => "Zenescope Entertainment")
       else
         @book = @user.owned_books.where.not(:country => "United States").order(title: :asc, rdate: :asc).page(params[:page]).per(24)
         @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.owned_books.where.not(:country => "United States")
-        @bookfourfiveone = @user.owned_books.where(:publisher => "451")
-        @bookaftershock = @user.owned_books.where(:publisher => "Aftershock Comics")
-        @bookarchie = @user.owned_books.where(:publisher => "Archie Comics")
-        @bookaspen = @user.owned_books.where(:publisher => "Aspen Comics")
-        @bookavatar = @user.owned_books.where(:publisher => "Avatar Press")
-        @bookblackmask = @user.owned_books.where(:publisher => "Black Mask Studios")
-        @bookboom = @user.owned_books.where(:publisher => "Boom Studios")
-        @bookdarkhorse = @user.owned_books.where(:publisher => "Dark Horse Comics")
-        @bookdc = @user.owned_books.where(:publisher => "DC Comics")
-        @bookdynamite = @user.owned_books.where(:publisher => "Dynamite Entertainment")
-        @bookidw = @user.owned_books.where(:publisher => "IDW Publishing")
-        @bookimage = @user.owned_books.where(:publisher => "Image Comics")
-        @bookmarvel = @user.owned_books.where(:publisher => "Marvel Comics")
-        @booktopshelf = @user.owned_books.where(:publisher => "Top Shelf Productions")
-        @bookvertigo = @user.owned_books.where(:publisher => "Vertigo Comics")
-        @bookzenescope = @user.owned_books.where(:publisher => "Zenescope Entertainment")
-      end 
+      end
       @bookcsv = @user.owned_books.where(:era => "VH2").order(title: :asc, rdate: :asc)
       respond_to do |format|
         format.html
@@ -1104,7 +694,7 @@ class BooksController < ApplicationController
         format.js
         format.csv { send_data @bookcsv.to_csv, filename: "international-valiant-collection-#{Date.today}.csv" }
       end
-  end  
+  end
 
   # EVENTS
   def valiantevent4001ad
@@ -1187,7 +777,7 @@ class BooksController < ApplicationController
       @tcount = Book.all.where(:country => "Brazil").count
       @book = Book.all.where(:country => "Brazil").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     end
-    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
     @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Brazil").order(rdate: :asc, title: :asc, issue: :asc)
     respond_to do |format|
       format.html
@@ -1270,7 +860,7 @@ class BooksController < ApplicationController
       @tcount = Book.all.where(:country => "Canada").count
       @book = Book.all.where(:country => "Canada").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     end
-    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
     @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Canada").order(rdate: :asc, title: :asc, issue: :asc)
     respond_to do |format|
       format.html
@@ -1353,7 +943,7 @@ class BooksController < ApplicationController
       @tcount = Book.all.where(:country => "China").count
       @book = Book.all.where(:country => "China").order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
     end
-    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
     @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "China").order(rdate: :asc, title: :asc, issue: :asc)
     respond_to do |format|
       format.html
@@ -1436,7 +1026,7 @@ class BooksController < ApplicationController
       @tcount = Book.all.where(:country => "France").count
       @book = Book.all.where(:country => "France").order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
     end
-    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
     @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "France").order(rdate: :asc, title: :asc, issue: :asc)
     respond_to do |format|
       format.html
@@ -1519,7 +1109,7 @@ class BooksController < ApplicationController
       @tcount = Book.all.where(:country => "Italy").count
       @book = Book.all.where(:country => "Italy").order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
     end
-    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
     @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Italy").order(rdate: :asc, title: :asc, issue: :asc)
     respond_to do |format|
       format.html
@@ -1602,7 +1192,7 @@ class BooksController < ApplicationController
       @tcount = Book.all.where(:country => "Japan").count
       @book = Book.all.where(:country => "Japan").order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
     end
-    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
     @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Japan").order(rdate: :asc, title: :asc, issue: :asc)
     respond_to do |format|
       format.html
@@ -1685,7 +1275,7 @@ class BooksController < ApplicationController
       @tcount = Book.all.where(:country => "Mexico").count
       @book = Book.all.where(:country => "Mexico").order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
     end
-    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
     @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Mexico").order(rdate: :asc, title: :asc, issue: :asc)
     respond_to do |format|
       format.html
@@ -1768,7 +1358,7 @@ class BooksController < ApplicationController
       @tcount = Book.all.where(:country => "Russia").count
       @book = Book.all.where(:country => "Russia").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     end
-    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
     @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Russia").order(rdate: :asc, title: :asc, issue: :asc)
     respond_to do |format|
       format.html
@@ -1851,7 +1441,7 @@ class BooksController < ApplicationController
       @tcount = Book.all.where(:country => "Turkey").count
       @book = Book.all.where(:country => "Turkey").order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
     end
-    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
+    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
     @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Turkey").order(rdate: :asc, title: :asc, issue: :asc)
     respond_to do |format|
       format.html
@@ -1921,1437 +1511,11 @@ class BooksController < ApplicationController
     end
   end
 
-  # 451
-  def fourfiveoneall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "451"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "451").count
-    @tcount = Book.all.where(:publisher => "451")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "451").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "451").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "451").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "451").select("DISTINCT(category)").group("category").order("category")       
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "451").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "all451-#{DateTime.now}.csv" }
-    end
-  end
-
-  def fourfiveonealltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "451"
-    end
-    @tcount = Book.all.where(:publisher => "451")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "451").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "451").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "451").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "451").select("DISTINCT(category)").group("category").order("category")  
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def fourfiveoneallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "451 (Missing)"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "451").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "451").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "451").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "451").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "451").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "451").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "451").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "all451missing-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def fourfiveonealltblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else  
-      @pgtitle = "451 (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "451").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "451").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "451").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "451").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "451").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  # Aftershock
-  def aftershockall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Aftershock"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Aftershock Comics").count
-    @tcount = Book.all.where(:publisher => "Aftershock Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Aftershock Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Aftershock Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Aftershock Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Aftershock Comics").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Aftershock Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allaftershock-#{DateTime.now}.csv" }
-    end
-  end
-
-  def aftershockalltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Aftershock"
-    end
-    @tcount = Book.all.where(:publisher => "Aftershock Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Aftershock Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Aftershock Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Aftershock Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Aftershock Comics").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def aftershockallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Aftershock (Missing)"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Aftershock Comics").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "Aftershock Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Aftershock Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Aftershock Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Aftershock Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Aftershock Comics").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Aftershock Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allaftershockmissing-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def aftershockalltblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Aftershock (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "Aftershock Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Aftershock Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Aftershock Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Aftershock Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Aftershock Comics").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  # Archie
-  def archieall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Archie"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Archie Comics").count
-    @tcount = Book.all.where(:publisher => "Archie Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Archie Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Archie Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Archie Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Archie Comics").select("DISTINCT(category)").group("category").order("category")       
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Archie Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allarchie-#{DateTime.now}.csv" }
-    end
-  end
-
-  def archiealltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Archie"
-    end
-    @tcount = Book.all.where(:publisher => "Archie Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Archie Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Archie Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Archie Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Archie Comics").select("DISTINCT(category)").group("category").order("category") 
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def archieallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Archie (Missing)"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Archie Comics").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "Archie Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Archie Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Archie Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Archie Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Archie Comics").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Archie Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allarchiemissing-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def archiealltblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Archie (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "Archie Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Archie Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Archie Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Archie Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Archie Comics").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  # Aspen
-  def aspenall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Aspen All"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Aspen Comics").count
-    @tcount = Book.all.where(:publisher => "Aspen Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Aspen Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Aspen Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Aspen Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Aspen Comics").select("DISTINCT(category)").group("category").order("category")       
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Aspen Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allaspen-#{DateTime.now}.csv" }
-    end
-  end
-
-  def aspenalltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Aspen All"
-    end
-    @tcount = Book.all.where(:publisher => "Aspen Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Aspen Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Aspen Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Aspen Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Aspen Comics").select("DISTINCT(category)").group("category").order("category")  
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def aspenallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Aspen (Missing)"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Aspen Comics").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "Aspen Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Aspen Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Aspen Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Aspen Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Aspen Comics").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Aspen Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allaspenmissing-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def aspenalltblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Aspen (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "Aspen Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Aspen Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Aspen Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Aspen Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Aspen Comics").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  # Avatar
-  def avatarall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Avatar All"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Avatar Press").count
-    @tcount = Book.all.where(:publisher => "Avatar Press")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Avatar Press").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Avatar Press").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Avatar Press").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Avatar Press").select("DISTINCT(category)").group("category").order("category")       
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Avatar Press").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allavatar-#{DateTime.now}.csv" }
-    end
-  end
-
-  def avataralltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Avatar All"
-    end
-    @tcount = Book.all.where(:publisher => "Avatar Press")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Avatar Press").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Avatar Press").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Avatar Press").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Avatar Press").select("DISTINCT(category)").group("category").order("category") 
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def avatarallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Avatar (Missing)"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Avatar Press").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "Avatar Press").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Avatar Press").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Avatar Press").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Avatar press").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Avatar Press").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Avatar Press").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allavatarmissing-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def avataralltblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Avatar (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "Avatar Press").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Avatar Press").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Avatar Press").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Avatar press").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Avatar Press").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  # Black Mask
-  def blackmaskall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Black Mask"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Black Mask Studios").count
-    @tcount = Book.all.where(:publisher => "Black Mask Studios")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Black Mask Studios").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Black Mask Studios").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Black Mask Studios").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Black Mask Studios").select("DISTINCT(category)").group("category").order("category")      
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Black Mask Studios").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allblackmask-#{DateTime.now}.csv" }
-    end
-  end
-
-  def blackmaskalltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Black Mask"
-    end
-    @tcount = Book.all.where(:publisher => "Black Mask Studios")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Black Mask Studios").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Black Mask Studios").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Black Mask Studios").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Black Mask Studios").select("DISTINCT(category)").group("category").order("category")  
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def blackmaskallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Black Mask (Missing)"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Black Mask Studios").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "Black Mask Studios").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Black Mask Studios").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Black Mask Studios").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Black Mask Studios").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Black Mask Studios").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Black Mask Studios").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allblackmaskmissing-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def blackmaskalltblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Black Mask (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "Black Mask Studios").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Black Mask Studios").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Black Mask Studios").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Black Mask Studios").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Black Mask Studios").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  # Boom
-  def boomall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Boom All"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Boom Studios").count
-    @tcount = Book.all.where(:publisher => "Boom Studios")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Boom Studios").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Boom Studios").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Boom Studios").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Boom Studios").select("DISTINCT(category)").group("category").order("category")        
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Boom Studios").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allboom-#{DateTime.now}.csv" }
-    end
-  end
-
-  def boomalltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Boom All"
-    end
-    @tcount = Book.all.where(:publisher => "Boom Studios")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Boom Studios").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Boom Studios").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Boom Studios").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Boom Studios").select("DISTINCT(category)").group("category").order("category") 
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def boomallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Boom (Missing)"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Boom Studios").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "Boom Studios").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Boom Studios").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Boom Studios").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Boom Studios").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Boom Studios").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Boom Studios").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allboommissing-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def boomalltblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Boom (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "Boom Studios").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Boom Studios").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Boom Studios").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Boom Studios").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Boom Studios").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  # Dark Horse
-  def darkhorseall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Dark Horse All"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Dark Horse Comics").count
-    @tcount = Book.all.where(:publisher => "Dark Horse Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Dark Horse Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Dark Horse Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Dark Horse Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Dark Horse Comics").select("DISTINCT(category)").group("category").order("category")        
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Dark Horse Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "alldarkhorse-#{DateTime.now}.csv" }
-    end
-  end
-
-  def darkhorsealltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Dark Horse All"
-    end
-    @tcount = Book.all.where(:publisher => "Dark Horse Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Dark Horse Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Dark Horse Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Dark Horse Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Dark Horse Comics").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def darkhorseallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Dark Horse (Missing)"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Dark Horse Comics").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "Dark Horse Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Dark Horse Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Dark Horse Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Dark Horse Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Dark Horse Comics").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Dark Horse Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "alldarkhorsemissing-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def darkhorsealltblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Dark Horse (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "Dark Horse Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Dark Horse Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Dark Horse Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Dark Horse Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Dark Horse Comics").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  # DC
-  def dcall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "DC All"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "DC Comics").count
-    @tcount = Book.all.where(:publisher => "DC Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "DC Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "DC Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "DC Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "DC Comics").select("DISTINCT(category)").group("category").order("category")
-    @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)        
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "DC Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "alldc-#{DateTime.now}.csv" }
-    end
-  end
-
-  def dcalltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "DC All"
-    end
-    @tcount = Book.all.where(:publisher => "DC Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "DC Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "DC Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "DC Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "DC Comics").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def dcallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "DC (Missing)"
-    end 
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "DC Comics").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "DC Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "DC Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "DC Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "DC Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "DC Comics").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "DC Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "alldc-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def dcalltblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "DC (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "DC Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "DC Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "DC Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "DC Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "DC Comics").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  # Dynamite
-  def dynamiteall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Dynamite All"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Dynamite Entertainment").count
-    @tcount = Book.all.where(:publisher => "Dynamite Entertainment")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Dynamite Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Dynamite Entertainment").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Dynamite Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Dynamite Entertainment").select("DISTINCT(category)").group("category").order("category")       
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Dynamite Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "alldynamite-#{DateTime.now}.csv" }
-    end
-  end
-
-  def dynamitealltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Dynamite All"
-    end
-    @tcount = Book.all.where(:publisher => "Dynamite Entertainment")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Dynamite Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Dynamite Entertainment").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Dynamite Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Dynamite Entertainment").select("DISTINCT(category)").group("category").order("category")  
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def dynamiteallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Dynamite (Missing)"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Dynamite Entertainment").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "Dynamite Entertainment").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Dynamite Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Dynamite Entertainment").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Dynamite Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Dynamite Entertainment").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Dynamite Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "alldynamitemissing-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def dynamitealltblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Dynamite (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "Dynamite Entertainment").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Dynamite Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Dynamite Entertainment").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Dynamite Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Dynamite Entertainment").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  # IDW
-  def idwall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "IDW All"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "IDW Publishing").count
-    @tcount = Book.all.where(:publisher => "IDW Publishing")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "IDW Publishing").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "IDW Publishing").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "IDW Publishing").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "IDW Publishing").select("DISTINCT(category)").group("category").order("category")      
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "IDW Publishing").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allidw-#{DateTime.now}.csv" }
-    end
-  end
-
-  def idwalltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "IDW All"
-    end
-    @tcount = Book.all.where(:publisher => "IDW Publishing")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "IDW Publishing").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "IDW Publishing").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "IDW Publishing").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "IDW Publishing").select("DISTINCT(category)").group("category").order("category") 
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def idwallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "IDW (Missing)"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "IDW Publishing").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "IDW Publishing").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "IDW Publishing").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "IDW Publishing").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "IDW Publishing").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "IDW Publishing").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "IDW Publishing").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allidwmissing-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def idwtblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "IDW (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "IDW Publishing").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "IDW Publishing").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "IDW Publishing").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "IDW Publishing").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "IDW Publishing").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  # Image
-  def imageall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Image"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Image Comics").count
-    @tcount = Book.all.where(:publisher => "Image Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Image Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Image Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Image Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Image Comics").select("DISTINCT(category)").group("category").order("category")      
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Image Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allimage-#{DateTime.now}.csv" }
-    end
-  end
-
-  def imagealltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Image"
-    end
-    @tcount = Book.all.where(:publisher => "Image Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Image Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Image Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Image Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Image Comics").select("DISTINCT(category)").group("category").order("category") 
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def imageallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Image (Missing)"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Image Comics").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "Image Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Image Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Image Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Image Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Image Comics").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Image Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allimagemissing-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def imagealltblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Image (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "Image Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Image Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Image Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Image Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Image Comics").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  # Marvel
-  def marvelall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Marvel All"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Marvel Comics").count
-    @tcount = Book.all.where(:publisher => "Marvel Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Marvel Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Marvel Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Marvel Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Marvel Comics").select("DISTINCT(category)").group("category").order("category")        
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Marvel Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allmarvel-#{DateTime.now}.csv" }
-    end
-  end
-
-  def marvelalltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Marvel All"
-    end
-    @tcount = Book.all.where(:publisher => "Marvel Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Marvel Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Marvel Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Marvel Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Marvel Comics").select("DISTINCT(category)").group("category").order("category") 
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def marvelallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Marvel (Missing)"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Marvel Comics").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "Marvel Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Marvel Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Marvel Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Marvel Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Marvel Comics").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Marvel Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allmarvel-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def marvelalltblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Marvel (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "Marvel Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Marvel Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Marvel Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Marvel Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Marvel Comics").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  # Vertigo
-  def vertigoall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Vertigo All"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Vertigo Comics").count
-    @tcount = Book.all.where(:publisher => "Vertigo Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Vertigo Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Vertigo Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Vertigo Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Vertigo Comics").select("DISTINCT(category)").group("category").order("category")         
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Vertigo Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allvertigo-#{DateTime.now}.csv" }
-    end
-  end
-
-  def vertigoalltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Vertigo All"
-    end
-    @tcount = Book.all.where(:publisher => "Vertigo Comics")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Vertigo Comics").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Vertigo Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Vertigo Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Vertigo Comics").select("DISTINCT(category)").group("category").order("category") 
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def vertigoallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Vertigo (Missing)"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Vertigo Comics").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "Vertigo Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Vertigo Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Vertigo Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Vertigo Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Vertigo Comics").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Vertigo Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allvertigomissing-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def vertigoalltblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Vertigo (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "Vertigo Comics").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Vertigo Comics").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Vertigo Comics").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Vertigo Comics").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Vertigo Comics").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  # fcope
-  def zenescopeall
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Zenescope All"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Zenescope Entertainment").count
-    @tcount = Book.all.where(:publisher => "Zenescope Entertainment")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Zenescope Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Zenescope Entertainment").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Zenescope Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Zenescope Entertainment").select("DISTINCT(category)").group("category").order("category")        
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Zenescope Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allzenescope-#{DateTime.now}.csv" }
-    end
-  end
-
-  def zenescopealltbl
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Zenescope All"
-    end
-    @tcount = Book.all.where(:publisher => "Zenescope Entertainment")
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Zenescope Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Zenescope Entertainment").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Zenescope Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Zenescope Entertainment").select("DISTINCT(category)").group("category").order("category") 
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
-  def zenescopeallmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Zenescope (Missing)"
-    end
-    @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Zenescope Entertainment").where.not(id: current_user.owned_book_ids).count
-    @tcount = Book.all.where(:publisher => "Zenescope Entertainment").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Zenescope Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Zenescope Entertainment").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Zenescope Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Zenescope Entertainment").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Zenescope Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.xml { send_data @bookcsv.super_csv, filename: "allzenescopemissing-valiant-#{DateTime.now}.csv" }
-    end
-  end
-
-  def zenescopealltblmissing
-    if params[:title].present?
-      @pgtitle = params[:title]
-    else 
-      @pgtitle = "Zenescope (Missing)"
-    end
-    @tcount = Book.all.where(:publisher => "Zenescope Entertainment").where.not(id: current_user.owned_book_ids)
-    @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
-    @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Zenescope Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
-    @optionstitle = Book.where(:publisher => "Zenescope Entertainment").select("DISTINCT(title)").group("title").order("title")
-    @optionsissue = Book.where(:publisher => "Zenescope Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Zenescope Entertainment").select("DISTINCT(category)").group("category").order("category")
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-    end
-  end
-
   # Valiant
   def valiantall
     if params[:title].present?
       @pgtitle = params[:title]
-    else 
+    else
       @pgtitle = "Valiant"
     end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
@@ -3360,10 +1524,10 @@ class BooksController < ApplicationController
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
     @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
+    @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(category)").group("category").order("category")      
+    @optionscategory = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(category)").group("category").order("category")
     @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
@@ -3376,7 +1540,7 @@ class BooksController < ApplicationController
   def valiantalltbl
     if params[:title].present?
       @pgtitle = params[:title]
-    else 
+    else
       @pgtitle = "Valiant"
     end
     @tcount = Book.all.where(:publisher => "Valiant Entertainment")
@@ -3384,10 +1548,10 @@ class BooksController < ApplicationController
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
     @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
+    @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(category)").group("category").order("category")  
+    @optionscategory = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(category)").group("category").order("category")
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3398,7 +1562,7 @@ class BooksController < ApplicationController
   def valiantallmissing
     if params[:title].present?
       @pgtitle = params[:title]
-    else 
+    else
       @pgtitle = "Valiant (Missing)"
     end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Valiant Entertainment").where.not(id: current_user.owned_book_ids).count
@@ -3407,7 +1571,7 @@ class BooksController < ApplicationController
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
     @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
+    @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(category)").group("category").order("category")
@@ -3423,7 +1587,7 @@ class BooksController < ApplicationController
   def valiantalltblmissing
     if params[:title].present?
       @pgtitle = params[:title]
-    else 
+    else
       @pgtitle = "Valiant (Missing)"
     end
     @tcount = Book.all.where(:publisher => "Valiant Entertainment").where.not(id: current_user.owned_book_ids)
@@ -3431,7 +1595,7 @@ class BooksController < ApplicationController
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
     @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
+    @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(category)").group("category").order("category")
@@ -3535,7 +1699,7 @@ class BooksController < ApplicationController
       format.html
       format.js
     end
-  end 
+  end
 
   def valiantvh1all
     @pgtitle = "Classic Valiant"
@@ -3545,10 +1709,10 @@ class BooksController < ApplicationController
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
     @book = Book.all.where(:publisher => "Voyager Communications").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
+    @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Voyager Communications").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Voyager Communications").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Voyager Communications").select("DISTINCT(category)").group("category").order("category")  
+    @optionscategory = Book.where(:publisher => "Voyager Communications").select("DISTINCT(category)").group("category").order("category")
     @bookcsv = Book.where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
@@ -3565,10 +1729,10 @@ class BooksController < ApplicationController
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
     @book = Book.all.where(:publisher => "Voyager Communications").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
+    @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Voyager Communications").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Voyager Communications").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Voyager Communications").select("DISTINCT(category)").group("category").order("category") 
+    @optionscategory = Book.where(:publisher => "Voyager Communications").select("DISTINCT(category)").group("category").order("category")
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -3584,7 +1748,7 @@ class BooksController < ApplicationController
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
     @book = Book.all.where(:publisher => "Voyager Communications").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
+    @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Voyager Communications").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Voyager Communications").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Voyager Communications").select("DISTINCT(category)").group("category").order("category")
@@ -3604,7 +1768,7 @@ class BooksController < ApplicationController
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
     @book = Book.all.where(:publisher => "Voyager Communications").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
+    @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Voyager Communications").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Voyager Communications").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Voyager Communications").select("DISTINCT(category)").group("category").order("category")
@@ -3624,10 +1788,10 @@ class BooksController < ApplicationController
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
     @book = Book.all.where(:publisher => "Acclaim Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
+    @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
-    @optionscategory = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(category)").group("category").order("category")  
+    @optionscategory = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(category)").group("category").order("category")
     @bookcsv = Book.where(:era => "VH2").order(rdate: :asc, issue: :asc)
     respond_to do |format|
       format.html
@@ -3644,7 +1808,7 @@ class BooksController < ApplicationController
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
     @book = Book.all.where(:publisher => "Acclaim Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
+    @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(category)").group("category").order("category")
@@ -3663,7 +1827,7 @@ class BooksController < ApplicationController
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
     @book = Book.all.where(:publisher => "Acclaim Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
+    @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(category)").group("category").order("category")
@@ -3683,7 +1847,7 @@ class BooksController < ApplicationController
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
     @book = Book.all.where(:publisher => "Acclaim Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
-    @book = @book.where(:title => params[:title]) if params[:title].present?      
+    @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(category)").group("category").order("category")
@@ -3732,7 +1896,7 @@ class BooksController < ApplicationController
     def compare_previews images
       if images.presence
         images.each { |key,new_image|
-          if @book.previews[key.to_i].presence 
+          if @book.previews[key.to_i].presence
             @book.previews[key.to_i].image = new_image
             @book.previews[key.to_i].save
           else

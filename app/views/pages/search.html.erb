@@ -4,7 +4,7 @@
 			<%= render 'book' %>
 		<% else %>
 			<div class="wellclear bottomcorners" style="margin-top: -10px !important;">
-				<h3 class="text-center">Search ComicArk</h3>
+				<h3 class="text-center">Search Valiant Database</h3>
 				<p class="text-center">Nothing matched your search term. Please try again!</p>
 				<%= form_tag "/search", :method => 'get', :role => "search", class: "form-inline text-center" do %>
 			        <div class="form-group">
@@ -17,7 +17,7 @@
 		<% end %>
 	<% else %>
 		<div class="wellclear">
-			<h3 class="text-center">Search ComicArk</h3>
+			<h3 class="text-center">Search Valiant Database</h3>
 			<%= form_tag "/search", :method => 'get', :role => "search", class: "form-inline text-center" do %>
 		        <div class="form-group">
 			        <%= text_field_tag :query, params[:query], autocomplete: "off", :placeholder => "Search the database...", type: "search", class: "form-control" %>

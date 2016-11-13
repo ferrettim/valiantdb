@@ -2,7 +2,6 @@ require File.expand_path('../boot', __FILE__)
 
 require 'csv'
 require 'rails/all'
-require 'twilio-ruby'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -24,7 +23,7 @@ module Valiantdb
     # config.i18n.default_locale = :de
     config.exceptions_app = self.routes
     config.assets.enabled = true
-    config.assets.paths << "#{Rails}/vendor/assets/fonts" 
+    config.assets.paths << "#{Rails}/vendor/assets/fonts"
     config.active_record.raise_in_transactional_callbacks = true
   end
 end

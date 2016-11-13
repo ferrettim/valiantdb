@@ -2,23 +2,22 @@ require 'excon'
 
 class ApplicationController < ActionController::Base
   include PublicActivity::StoreController
-  
+
   helper_method :mailbox, :conversation
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery except: :sign_in, with: :exception
   # before_action :authenticate_user!
-  before_filter :configure_permitted_parameters, if: :devise_controller?
-  before_filter :ensure_signup_complete, only: [:new, :create, :update, :destroy]
-  after_filter :user_activity
-  after_filter :store_location
-  hide_action :current_user
-  
+  before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :ensure_signup_complete, only: [:new, :create, :update, :destroy]
+  after_action :user_activity
+  after_action :store_location
+
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:name, :email, :password, :avatar) }
-    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:name, :email, :password, :password_confirmation, :current_password, :avatar) }
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :password, :avatar])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email, :password, :password_confirmation, :current_password, :avatar])
   end
 
   def ensure_signup_complete
@@ -39,7 +38,7 @@ class ApplicationController < ActionController::Base
 
   def store_location
   # store last url - this is needed for post-login redirect to whatever the user last visited.
-  return unless request.get? 
+  return unless request.get?
     if (request.path != "http://comicark.com/login" &&
         request.path != "http://comicark.com/register" &&
         request.path != "http://comicark.com/logout" &&
@@ -47,7 +46,7 @@ class ApplicationController < ActionController::Base
         request.path != "http://www.comicark.com/register" &&
         request.path != "http://www.comicark.com/logout" &&
         !request.xhr?) # don't store ajax calls
-      session[:previous_url] = request.fullpath 
+      session[:previous_url] = request.fullpath
     end
   end
 

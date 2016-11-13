@@ -49,99 +49,9 @@ Rails.application.routes.draw do
     get :autocomplete_book_publisher, :on => :collection
     get :autocomplete_book_imprint, :on => :collection
     resources :comments
-    collection do 
+    collection do
       post :import
       get :autocomplete
-
-      # 451
-      get "451/all" => "books#fourfiveoneall", as: :fourfiveone_all
-      get "451/all/table" => "books#fourfiveonealltbl", as: :fourfiveone_all_table
-      get "451/all/missing" => "books#fourfiveoneallmissing", as: :fourfiveone_all_missing
-      get "451/all/table/missing" => "books#fourfiveonealltblmissing", as: :fourfiveone_all_table_missing
-
-      # Aftershock
-      get "aftershock/all" => "books#aftershockall"
-      get "aftershock/all/table" => "books#aftershockalltbl"
-      get "aftershock/all/missing" => "books#aftershockallmissing"
-      get "aftershock/all/table/missing" => "books#aftershockalltblmissing"
-
-      # Archie
-      get "archie/all" => "books#archieall"
-      get "archie/all/table" => "books#archiealltbl"
-      get "archie/all/missing" => "books#archieallmissing"
-      get "archie/all/table/missing" => "books#archiealltblmissing"
-
-      # Aspen
-      get "aspen/all" => "books#aspenall"
-      get "aspen/all/table" => "books#aspenalltbl"
-      get "aspen/all/missing" => "books#aspenallmissing"
-      get "aspen/all/table/missing" => "books#aspenalltblmissing"
-
-      # Avatar
-      get "avatar/all" => "books#avatarall"
-      get "avatar/all/table" => "books#avataralltbl"
-      get "avatar/all/missing" => "books#avatarallmissing"
-      get "avatar/all/table/missing" => "books#avataralltblmissing"
-
-      # Black Mask
-      get "blackmask/all" => "books#blackmaskall"
-      get "blackmask/all/table" => "books#blackmaskalltbl"
-      get "blackmask/all/missing" => "books#blackmaskallmissing"
-      get "blackmask/all/table/missing" => "books#blackmaskalltblmissing"
-
-      # Boom
-      get "boom/all" => "books#boomall"
-      get "boom/all/table" => "books#boomalltbl"
-      get "boom/all/missing" => "books#boomallmissing"
-      get "boom/all/table/missing" => "books#boomalltblmissing"
-
-      # Dark Horse
-      get "darkhorse/all" => "books#darkhorseall"
-      get "darkhorse/all/table" => "books#darkhorsealltbl"
-      get "darkhorse/all/missing" => "books#darkhorseallmissing"
-      get "darkhorse/all/table/missing" => "books#darkhorsealltblmissing"
-
-      # DC
-      get "dc/all" => "books#dcall"
-      get "dc/all/table" => "books#dcalltbl"
-      get "dc/all/missing" => "books#dcallmissing"
-      get "dc/all/table/missing" => "books#dcalltblmissing"
-
-      # Dynamite
-      get "dynamite/all" => "books#dynamiteall"
-      get "dynamite/all/table" => "books#dynamitealltbl"
-      get "dynamite/all/missing" => "books#dynamiteallmissing"
-      get "dynamite/all/table/missing" => "books#dynamitealltblmissing"
-
-      # IDW
-      get "idw/all" => "books#idwall"
-      get "idw/all/table" => "books#idwalltbl"
-      get "idw/all/missing" => "books#idwallmissing"
-      get "idw/all/table/missing" => "books#idwalltblmissing"
-
-      # Image
-      get "image/all" => "books#imageall"
-      get "image/all/table" => "books#imagealltbl"
-      get "image/all/missing" => "books#imageallmissing"
-      get "image/all/table/missing" => "books#imagealltblmissing"
-
-      # Marvel
-      get "marvel/all" => "books#marvelall"
-      get "marvel/all/table" => "books#marvelalltbl"
-      get "marvel/all/missing" => "books#marvelallmissing"
-      get "marvel/all/table/missing" => "books#marvelalltblmissing"
-
-      # Vertigo
-      get "vertigo/all" => "books#vertigoall"
-      get "vertigo/all/table" => "books#vertigoalltbl"
-      get "vertigo/all/missing" => "books#vertigoallmissing"
-      get "vertigo/all/table/missing" => "books#vertigoalltblmissing"
-
-      # Zenescope
-      get "zenescope/all" => "books#zenescopeall"
-      get "zenescope/all/table" => "books#zenescopealltbl"
-      get "zenescope/all/missing" => "books#zenescopeallmissing"
-      get "zenescope/all/table/missing" => "books#zenescopealltblmissing"
 
       # Valiant
       get "valiant/keys" => "books#keys"
@@ -278,17 +188,13 @@ Rails.application.routes.draw do
   get 'values/missing' => 'books#valiantvaluesmissing'
   get 'feed' => 'books#feed'
   get 'allfeed' => 'books#allfeed'
-  
+
   resources "contacts", only: [:new, :create]
   get 'privacy' => 'pages#privacy'
   get 'terms' => 'pages#terms'
   get 'search' => 'pages#search'
   get 'userlevels' => 'pages#levels'
   get 'news' => 'feeds#news', as: :news
-
-  # Chat
-  post 'tokens' => 'tokens#create'
-  get 'chat' => 'pages#chat', as: :chat
 
   match 'sitemap', :to => 'sitemap#index', :via => [:get]
 
@@ -311,14 +217,14 @@ Rails.application.routes.draw do
   authenticate :user, lambda { |u| u.admin? } do
     if Rails.env.production?
       mount Sidekiq::Web, at: '/sidekiq'
-    end 
+    end
     get 'stats' => 'users#admin', :as => 'user_statistics'
   end
 
   # ERROR HANDLING
   match '/404', to: 'errors#file_not_found', via: :all
   match '/422', to: 'errors#unprocessable', via: :all
-  match '/500', to: 'errors#internal_server_error', via: :all 
+  match '/500', to: 'errors#internal_server_error', via: :all
   #match '*path', to: 'errors#file_not_found', via: :all
   get 'errors/file_not_found' => "errors#file_not_found"
   get 'errors/unprocessable' => "errors#unprocessable"

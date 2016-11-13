@@ -1,18 +1,18 @@
 class TokensController < ApplicationController
-  before_filter :authenticate_user! 
- 
+  before_action :authenticate_user! 
+
   def get_token
     Twilio::Util::AccessToken.new(
       ENV['ACCOUNT_SID'],
       ENV['API_KEY_SID'],
       ENV['API_KEY_SECRET'],
-      3600, 
+      3600,
       current_user.name
     )
   end
 
-  def get_grant 
-    grant = Twilio::Util::AccessToken::IpMessagingGrant.new 
+  def get_grant
+    grant = Twilio::Util::AccessToken::IpMessagingGrant.new
     grant.endpoint_id = "Chatty:#{current_user.name.gsub(" ", "_")}:browser"
     grant.service_sid = ENV['IPM_SERVICE_SID']
     grant

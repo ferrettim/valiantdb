@@ -1,24 +1,27 @@
 <div class="container wellclear bottomcorners">
-  <h2 class="text-center">Latest Comic Book News</h2>
-  <p class="text-center">Last updated <%= local_time_ago(@entries.first.updated_at) %></p>
+  <div class="col-md-12">
+      <h2>Latest Valiant News</h2>
+      <span class="pull-right"><small>Updated <%= local_time_ago(@entries.first.updated_at) %></small></span>
+  </div>
   <div class="col-md-12 col-sm-12 col-xs-12">
-    <table class="table table-responsive table-hover">  
+    <table class="table table-responsive table-hover">
       <% @entries.each do |t| %>
         <tr>
-          <td>
+          <td class="col-md-2">
             <%= link_to "#{t.url}", :title => "#{t.title.html_safe}", :target => "_blank" do %>
               <% if t.image_url? %>
-                <%= image_tag t.image_url, :alt => t.title.to_s, width: "40px" %>
+                <%= image_tag t.image_url, :alt => t.title.to_s, width: "125px" %>
               <% else %>
-                <%= image_tag Feed.find(t.feed_id).image_url, :alt => Feed.find(t.feed_id).name.to_s, class: "img-responsive" %>
+                <%= image_tag Feed.find(t.feed_id).image_url, :alt => Feed.find(t.feed_id).name.to_s, width: "125px" %>
               <% end %>
             <% end %>
           </td>
-          <td>
-            <%= link_to t.title.html_safe, "#{t.url}", :target => "_blank" %>
+          <td class="col-md-8">
+            <i><small>From <%= Feed.find(t.feed_id).name %></small></i>
+            <h4><%= link_to t.title.html_safe, "#{t.url}", :target => "_blank" %></h4>
           </td>
-          <td>
-            <small>Published <%= local_time_ago(t.published.strftime("%B %d %Y at %I:%M %p")) %><br /> (<%= Feed.find(t.feed_id).name %>)</small>
+          <td class="col-md-2">
+            <small>Published on<br /><strong><%= local_time_ago(t.published.strftime("%B %d %Y at %I:%M %p")) %></strong><br /></small>
           </td>
         </tr>
       <% end %>

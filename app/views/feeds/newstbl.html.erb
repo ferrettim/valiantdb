@@ -2,25 +2,27 @@
   <h2 class="text-center">Latest Comic Book News</h2>
   <p class="text-center">Last updated <%= local_time_ago(@entries.first.updated_at) %></p>
   <div class="col-md-12 col-sm-12 col-xs-12">
-    <% @entries.each do |t| %>
-        <div class="col-md-3 col-sm-4 col-xs-6 fill img-shadow" data-key="sameHeights">
-          <span class="time container"><%= Feed.find(t.feed_id).name %></span>
-          <%= link_to "#{t.url}", :title => "#{t.title.html_safe}", :target => "_blank" do %>
-            <% if t.image_url? %>
-              <%= image_tag t.image_url, :alt => t.title.to_s %>
-            <% else %>
-              <%= image_tag Feed.find(t.feed_id).image_url, :alt => Feed.find(t.feed_id).name.to_s %>
+    <table class="table table-responsive table-hover">
+      <% @entries.each do |t| %>
+        <tr>
+          <td>
+            <%= link_to "#{t.url}", :title => "#{t.title.html_safe}", :target => "_blank" do %>
+              <% if t.image_url? %>
+                <%= image_tag t.image_url, :alt => t.title.to_s, width: "40px" %>
+              <% else %>
+                <%= image_tag Feed.find(t.feed_id).image_url, :alt => Feed.find(t.feed_id).name.to_s, class: "img-responsive" %>
+              <% end %>
             <% end %>
-          <% end %>
-          <p class="fill_item">
-            <span class="fill_font"><%= link_to t.title.html_safe, "#{t.url}", :target => "_blank" %></span>
-            <br />
-            <span class="time">
-              Published <%= local_time_ago(t.published.strftime("%B %d %Y at %I:%M %p")) %>
-            </span>
-          </p>
-        </div>
-    <%end%>
+          </td>
+          <td>
+            <%= link_to t.title.html_safe, "#{t.url}", :target => "_blank" %>
+          </td>
+          <td>
+            <small>Published <%= local_time_ago(t.published.strftime("%B %d %Y at %I:%M %p")) %><br /> (<%= Feed.find(t.feed_id).name %>)</small>
+          </td>
+        </tr>
+      <% end %>
+    </table>
 
     <div class="clearfix"></div>
     <div class="text-center" id="append_and_paginate"><%= paginate @entries %></div>

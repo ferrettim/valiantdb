@@ -16,27 +16,26 @@
     <% end %>
     <meta name="twitter:description" content="<%= h raw strip_tags(@book.summary) %>">
     <meta property="og:description" content="<%= h raw strip_tags(@book.summary) %>">
-    <meta name="twitter:creator" content="@comicark">
+    <meta name="twitter:creator" content="@geekvine">
     <meta name="twitter:image:src" content="<%= @book.image.url %>">
     <meta property="og:image" content="<%= @book.image.url %>">
-    <meta name="twitter:domain" content="ComicArk.com">
-    <meta property="og:url" content="<%= "www.comicark.com/books/" + @book.id.to_s %>">
+    <meta name="twitter:domain" content="ValiantDatabase.com">
+    <meta property="og:url" content="<%= "www.valiantdatabase.com/books/" + @book.id.to_s %>">
   <% end %>
   <% if controller_name == 'books' && action_name == 'show' %>
     <meta name="description" content="<%= h raw strip_tags(@book.summary) %>">
   <% else %>
-    <meta name="description" content="ComicArk, the ultimate comic book database for all comics. We have EVERY title ever published, soliciations, sales and pricing data, and more!">
+    <meta name="description" content="Valiant Database is the ultimate source for Valiant comics from all eras. We have EVERY title ever published, soliciations, sales and pricing data, and more!">
   <% end %>
   <% if @pgtitle.blank? %>
-  <title>ComicArk</title>
+  <title>Valiant Database</title>
   <% else %>
-  <title><%= @pgtitle %> | ComicArk</title>
+  <title><%= @pgtitle %> | Valiant Database</title>
   <% end %>
   <link rel="icon" href="https://s3.amazonaws.com/valiantdb/images/favicon2.ico" type="image/x-icon" />
-  <link rel="sitemap" type="application/xml" title="Sitemap" href="http://www.comicark.com/sitemap.xml" />
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="http://www.valiantdatabase.com/sitemap.xml" />
   <%= stylesheet_link_tag 'application', media: 'all', :defer => "defer" %>
   <%= javascript_include_tag 'application' %>
-  <%= javascript_include_tag '//media.twiliocdn.com/sdk/rtc/js/ip-messaging/v0.9/twilio-ip-messaging.min.js' %>
   <%= csrf_meta_tags %>
 
 </head>

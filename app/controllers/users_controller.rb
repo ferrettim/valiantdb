@@ -1,8 +1,8 @@
 require 'rss'
 
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :ensure_signup_complete, only: [:new, :create, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :ensure_signup_complete, only: [:new, :create, :update, :destroy]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   respond_to :html, :json, :js
 
@@ -96,7 +96,7 @@ class UsersController < ApplicationController
     @user = User.friendly.find(params[:id])
     if user_signed_in? && current_user == @user
       @pgtitle = "My Dashboard"
-    else 
+    else
       @pgtitle = "#{@user.name}'s Dashboard"
     end
     @hotbooks = Book.where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week)
@@ -168,7 +168,7 @@ class UsersController < ApplicationController
       if @user.update(user_params)
         sign_in(@user == current_user ? @user : current_user, :bypass => true)
         format.html { redirect_to (root_url + "users/" + current_user.slug.to_s + "/profile"), notice: 'Your profile was successfully updated.' }
-        format.json { head :no_content } 
+        format.json { head :no_content }
       else
         format.html { render action: 'edit' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -182,7 +182,7 @@ class UsersController < ApplicationController
 
   # GET/PATCH /users/:id/finish_signup
   def finish_signup
-    # authorize! :update, @user 
+    # authorize! :update, @user
     if request.patch? && params[:user] #&& params[:user][:email]
       if @user.update(user_params)
         @user.skip_reconfirmation!
@@ -193,7 +193,7 @@ class UsersController < ApplicationController
       end
     end
   end
-  
+
   private
     def set_user
       @user = User.friendly.find(params[:id])

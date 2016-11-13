@@ -23,7 +23,7 @@
         <% else %>
             <%= f.input :avatar, label: "Change profile image (Resizes to 350x200)" %>
         <% end %>
-        
+
       </div>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -33,6 +33,7 @@
         <% else %>
           <%= f.input :tableview, label: "Uncheck to use grid view" %>
         <% end %>
+        <!--
         <h5><strong>Publisher Preferences</strong></h5>
         (Check only the publishers you're interested in)<br />
         <ul class="list-inline">
@@ -53,12 +54,13 @@
           <li><%= f.input :pubvertigo, label: "Vertigo" %></li>
           <li><%= f.input :pubzenescope, label: "Zenescope" %></li>
         </ul>
-        
+      -->
+
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
           <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
         <% end %>
         <%= f.input :password, autocomplete: "off", required: false, placeholder: "Leave blank if you don't want to change", label: "Change password" %>
-        <%= f.input :password_confirmation, label: "Change password confirmation", required: false, placeholder: "If changing your password, please verify" %>    
+        <%= f.input :password_confirmation, label: "Change password confirmation", required: false, placeholder: "If changing your password, please verify" %>
         <%= f.input :current_password, autocomplete: "off", required: true, placeholder: "Required to edit your profile", label: "Current password (Required to make changes)" %>
 
     </div>
@@ -71,7 +73,7 @@
 </div>
   <div class="clearfix"><br /><br /></div>
   <div class="col-md-12 col-sm-12 col-xs-12">
-    <p class="pull-right"><small><%= link_to "Cancel your account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, data: { 
+    <p class="pull-right"><small><%= link_to "Cancel your account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, data: {
                                                                   confirm: 'Are you sure?',
                                                                   :'confirm-button-text' => "Yes",
                                                                   :'cancel-button-text' => "No",

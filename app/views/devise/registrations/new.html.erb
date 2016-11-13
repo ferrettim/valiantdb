@@ -1,6 +1,6 @@
-<div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12">  
+<div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12">
   <br />
-  <%= image_tag "https://s3.amazonaws.com/valiantdb/images/cabanner.jpg", :alt => "ComicArk", class: "divfill" %>
+  <%= image_tag "https://s3.amazonaws.com/valiantdb/images/cabanner.jpg", :alt => "Valiant Database", class: "divfill" %>
   <div class="wellclear bottomcorners">
     <div class="col-md-12 col-sm-12 col-xs-12">
       <h2 class="text-center">Account Registration</h2>
@@ -24,17 +24,17 @@
 
 
     </div>
-    
+
      <hr />
       <div class="row">
         <h3 class="text-center">Already have an account?</h3>
         <span class="col-md-4 col-sm-4 col-xs-4"><%= link_to new_session_path(resource_name), class: "btn btn-block btn-social-icon btn-default" do %>
               <i class="fa fa-user"><span class="gone"> <small>Login</small> </span></i><% end %>
           </span>
-        <span class="col-md-4 col-sm-4 col-xs-4"><%= link_to user_omniauth_authorize_path(:facebook), class: "btn btn-block btn-social-icon btn-facebook" do %>
+        <span class="col-md-4 col-sm-4 col-xs-4"><%= link_to user_facebook_omniauth_authorize_path, class: "btn btn-block btn-social-icon btn-facebook" do %>
             <i class="fa fa-facebook"><span class="gone"> Facebook</span></i><% end %>
         </span>
-        <span class="col-md-4 col-sm-4 col-xs-4"><%= link_to user_omniauth_authorize_path(:google_oauth2), class: "btn btn-block btn-social-icon btn-google" do %>
+        <span class="col-md-4 col-sm-4 col-xs-4"><%= link_to user_google_oauth2_omniauth_authorize_path, class: "btn btn-block btn-social-icon btn-google" do %>
             <i class="fa fa-google"><span class="gone"> Google</span></i><% end %>
         </span>
 
@@ -43,4 +43,3 @@
     <div class="clearfix"></div>
   </div>
 </div>
-

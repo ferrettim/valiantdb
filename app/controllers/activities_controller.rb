@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_filter :set_locale
+  before_action :set_locale
 
   def index
   	@activities = PublicActivity::Activity.order("created_at desc")

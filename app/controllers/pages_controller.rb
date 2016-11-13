@@ -21,7 +21,7 @@ class PagesController < ApplicationController
 
   def privacy
     @pgtitle = "Comicark Privacy Policy"
-  end 
+  end
 
   def terms
     @pgtitle = "Comicark Terms of Use"
@@ -41,10 +41,6 @@ class PagesController < ApplicationController
 
   def levels
     @pgtitle = "Comicark User Levels"
-  end
-
-  def chat
-    @pgtitle = "Comicark Chat"
   end
 
 end

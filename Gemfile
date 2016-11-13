@@ -1,44 +1,46 @@
 source 'http://rubygems.org'
-ruby "2.3.0" 
+ruby "2.3.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails"
+gem 'rails'
+gem 'railties'
 gem 'excon'
+gem 'rack'
 gem 'rack-cache'
 # Assets
-gem 'bootstrap-sass' 
-gem 'rails-assets-tether', '~> 1.1', '>= 1.1.1'
+gem 'bootstrap-sass'
+gem 'rails-assets-tether'
 gem 'font-awesome-rails'
-gem 'sprockets', '~> 3.0'
+gem 'sprockets'
 gem 'jasny-bootstrap-rails'
 gem 'sass-rails'
-gem 'coffee-rails', '~> 4.1.0'
-gem 'uglifier', '>= 1.3.0'
+gem 'coffee-rails'
+gem 'uglifier'
 gem 'yui-compressor'
-gem 'sweet-alert', '~> 0.0.9'
+gem 'sweet-alert'
 gem 'sweet-alert-confirm'
 gem 'fancybox-rails'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'execjs'
-gem 'therubyracer'
+# gem 'execjs'
+# gem 'therubyracer'
 gem 'flexslider'
 # Progress bar for turbolinks
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'nprogress-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 # Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt'
 # Use Devise for user signin
 gem 'devise'
 gem 'devise-async'
-gem 'gibbon', git: 'git://github.com/amro/gibbon.git'
+gem 'gibbon', git: 'https://github.com/amro/gibbon.git'
 gem 'omniauth-oauth2'
 gem 'omniauth-facebook'
-gem 'omniauth-google-oauth2', github: 'zquestz/omniauth-google-oauth2'
+gem 'omniauth-google-oauth2', git: 'https://github.com/zquestz/omniauth-google-oauth2'
 # Impersonate other users
 gem 'switch_user'
 # Follow users
@@ -54,7 +56,7 @@ gem 'tinymce-rails'
 gem 'mailboxer'
 gem 'select2-rails'
 # Use Paperclip for image uploads
-gem 'paperclip', github: 'thoughtbot/paperclip'
+gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip'
 gem 'delayed_paperclip'
 # Amazon SDK
 gem 'aws-sdk-v1'
@@ -62,7 +64,7 @@ gem 'aws-sdk', '~> 2'
 
 # Pagination
 gem 'kaminari'
-gem 'kaminari-bootstrap', '~> 3.0.1'
+gem 'kaminari-bootstrap'
 # Search functionality
 gem 'searchkick'
 # Rating system
@@ -81,34 +83,22 @@ gem 'public_activity'
 # Memcached
 gem 'dalli'
 # Papertrail
-gem 'paper_trail', '~> 4.0.0'
+gem 'paper_trail'
 # Currency conversion
 gem 'money'
 gem 'google_currency'
 # News
 gem 'feedjira'
-# Security
-gem 'rack-timeout'
-# Chat
-gem 'twilio-ruby'
-gem 'envyable'
 
 group :development do
 # Use sqlite3 as the database for Active Record
 	gem 'sqlite3'
-	gem 'guard-rails'
-	gem 'guard-livereload'
-	gem 'guard-spork'
-	gem 'rack-livereload'
-	gem 'guard-bundler'
-	gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 	gem 'ruby_gntp'
 	gem 'rb-notifu'
 	gem 'childprocess', '0.3.6'
 	gem 'better_errors'
 	gem 'binding_of_caller'
 	gem 'brakeman', :require => false
-	gem 'quiet_assets'
 	gem 'sys-proctable'
 end
 
@@ -123,7 +113,7 @@ group :production do
 	# Compression
 	gem 'heroku_rails_deflate'
 	# Server
-	gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
+	gem "unicorn"
 	# Background processing
 	gem 'sidekiq'
 	gem 'sinatra', require: false
