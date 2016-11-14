@@ -21,7 +21,7 @@ module Valiantdb
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
-    config.exceptions_app = self.routes
+    # config.exceptions_app = self.routes
     config.assets.enabled = true
     config.assets.paths << "#{Rails}/vendor/assets/fonts"
     config.active_record.raise_in_transactional_callbacks = true
