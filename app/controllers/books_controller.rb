@@ -5,7 +5,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   before_action :csvauthenticate
-  before_action :authenticate, :only => :alladmin
   autocomplete :book, :title
   autocomplete :book, :writer
   autocomplete :book, :writer2
