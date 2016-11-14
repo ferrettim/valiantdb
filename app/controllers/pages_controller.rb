@@ -20,27 +20,27 @@ class PagesController < ApplicationController
   end
 
   def privacy
-    @pgtitle = "Comicark Privacy Policy"
+    @pgtitle = "Valiant Database Privacy Policy"
   end
 
   def terms
-    @pgtitle = "Comicark Terms of Use"
+    @pgtitle = "Valiant Database Terms of Use"
   end
 
   def changelog
-    @pgtitle = "Comicark Changelog"
+    @pgtitle = "Valiant Database Changelog"
   end
 
   def top25
-    @pgtitle = "Comicark Top 25 User Collections"
+    @pgtitle = "Valiant Database Top 25 User Collections"
   end
 
   def supportus
-    @pgtitle = "Support the Comicark"
+    @pgtitle = "Support the Valiant Database"
   end
 
   def levels
-    @pgtitle = "Comicark User Levels"
+    @pgtitle = "Valiant Database User Levels"
   end
 
 end

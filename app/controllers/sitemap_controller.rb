@@ -1,7 +1,7 @@
 class SitemapController < ApplicationController
   def index
-  	@pgtitle = "Comicark Sitemap"
-    @books = Book.order("created_at DESC") 
+  	@pgtitle = "Valiant Database Sitemap"
+    @books = Book.order("created_at DESC")
 
     respond_to do |format|
       format.xml { render :layout => false }
