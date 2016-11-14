@@ -3,9 +3,9 @@
 	    <div itemscope itemtype="http://schema.org/Book" class="hidden">
 	      <meta itemprop="description" content="<%= @book.summary %>">
 	        <meta itemprop="datePublished" content="<%= @book.rdate.strftime("%B %d, %Y") %>">
-	        <link itemprop="url" href="http://www.comicark.com/books/<%= @book.id.to_s %>" rel="author"/>
+	        <link itemprop="url" href="http://www.valiantdatabase.com/books/<%= @book.id.to_s %>" rel="author"/>
 	  		<img itemprop="image" src="<%= @book.image.url(:thumb) %>" alt="<%= @book.id.to_s %>" />
-	        <a itemprop="url" href="http://www.comicark.com/books/<%= @book.id.to_s %>"><span itemprop="name" style="display:block;"><strong><%= @book.title + " #" + @book.issue.to_s %></strong></span></a>
+	        <a itemprop="url" href="http://www.valiantdatabase.com/books/<%= @book.id.to_s %>"><span itemprop="name" style="display:block;"><strong><%= @book.title + " #" + @book.issue.to_s %></strong></span></a>
 	        <span itemprop="author" itemscope itemtype="http://schema.org/Person" style="display:block;"><span itemprop="name"><%= @book.writer %></span></span>
 	    <span itemprop="isbn"><%= @book.isb %></span>
 	  </div>
@@ -25,7 +25,7 @@
 	            <div class="md-glare">
 	                <div class="md-lid">
 	                    <div class="md-screen">
-	                    <!-- content goes here -->                
+	                    <!-- content goes here -->
 	                        <div class="tab-featured-image">
 	                            <div class="tab-content">
 	                                <div class="tab-pane  in active" id="tab1">
@@ -90,7 +90,7 @@
 					                            </div>
 				                            </div>
 				                        <% end %>
-		                   
+
 	                                </div>
 	                                <div class="tab-pane " id="tab2">
 	                                    <% if @book.category == "Paperback" %>
@@ -106,7 +106,7 @@
 		                                    	<%= image_tag @book.image.url(:original), :alt => @book.title + " cover by " + @book.cover, class: "img-responsive img-shadow" %>
 		                                    <% end %>
 		                                <% end %>
-		                                
+
 	                                </div>
 
 	                                <div class="tab-pane " id="tab3">
@@ -171,7 +171,7 @@
 	        <div class="col-md-6 col-sm-6 col-xs-12">
 	            <!-- begin panel group -->
 	            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-	                
+
 	                <!-- panel 1 -->
 	                <div class="panel panel-default">
 	                    <!--wrap panel heading in span to trigger image change as well as collapse -->
@@ -182,7 +182,7 @@
 										<%= @book.title + " Vol. " + @book.issue.to_s + " TPB" %>
 									<% elsif @book.category == "Hardcover" %>
 										<%= @book.title + " Vol. " + @book.issue.to_s + " Deluxe HC" %>
-									<% else %> 
+									<% else %>
 										<% if @book.id.to_s == "1107" %>
 											<%= @book.title + " #1/2" %>
 										<% elsif @book.id.to_s == "1109" %>
@@ -195,14 +195,14 @@
 											<%= @book.title + " #" + @book.issue.to_s %>
 										<% end %>
 									<% end %>
-									
+
 								</h4>
-								
+
 	                        </div>
 	                    </span>
-	                    
+
 	                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-	                    	
+
 			                <div class="panel-body">
 
 			                        	<!-- Tab content goes here -->
@@ -215,7 +215,7 @@
 					 						<% else %>
 												Released on <%= @book.rdate.strftime("%B %d, %Y") %>
 											<% end %>
-										
+
 											<ul class="list-unstyled pull-right">
 												<% if user_signed_in? %>
 													<% unless @book.rdate.future? %>
@@ -244,7 +244,7 @@
 													<li id="<%= @book.id %>_notes">
 														<% if user_signed_in? %>
 															<%= link_to "#", data: { toggle: "modal", target: "#mynotes" }, :title => "Add a new note", class: "btn btn-primary btn-circle" do %>
-																
+
 																<% if @book.comments.where(:user_id => current_user.id).count > 0 %>
 																	<i class="fa fa-comment"></i>
 																<% else %>
@@ -299,7 +299,7 @@
 														<% end %>
 													</li>
 												<% end %>
-												
+
 											</ul>
 										<% unless @book.writer.blank? %>
 										<p>Written by <%= link_to search_path + "/?utf8=✓&query=" + @book.writer, data: { toggle: "tooltip" }, :title => "View books by " + @book.writer do %><%= @book.writer %><% end %>
@@ -372,7 +372,7 @@
 											   		Diamond Code: <strong><%= @book.code.to_s.upcase %></strong><br />
 											   	<% end %>
 											<% end %>
-											
+
 											<% if user_signed_in? && current_user.patron? && @book.pricenm? %>
 										   		Value: <strong>US $<%= '%.2f' % @book.value_in_dollars %></strong>
 										   			<% if @book.versions.last.reify.pricenm.to_s > "0" %>
@@ -402,7 +402,7 @@
 										   Accounted for: <strong><%= @rescues.sum :quantity %></strong> <% if (@rescues.sum :quantity) == 1 %>copy<% else %>copies<% end %>
 										   <% end %>
 										   <br />
-											
+
 										   <% if user_signed_in? && @book.printrun? %>
 												Print Run: <strong><%= @book.printrun %></strong> copies
 												<% if @book.title == "A&A Bootleg" %>
@@ -513,7 +513,7 @@
 										   			<% end %>
 										   <% end %>
 										<% end %>
-										   
+
 										   <% if @book.publisher? %>
 										   		Published by <strong><%= @book.publisher %></strong>
 										   	<% end %>
@@ -525,13 +525,13 @@
 										   		<% end %>
 										   	<% end %>
 										</p>
-										
+
 										<% if user_signed_in? %>
 											<span id="<%= @book.id %>_quantity">
 												<%= render 'books/ownsquantity' %>
 											</span>
 										<% end %>
-										
+
 										<div class="col-md-12 col-sm-12 col-xs-12" style="margin-left: -30px;">
 											<div class="col-md-5 col-sm-6 col-xs-12">
 												<span id="user_rating">
@@ -595,15 +595,15 @@
 												<span id="own_notes"><%= render 'ownsnotes' %></span>
 											<% end %>
 											<span id="own_wish_stats"><%= render 'ownwish' %></span>
-											
 
-											
+
+
 										</p>
 
-										<!-- BOOK SUMMARY --> 
+										<!-- BOOK SUMMARY -->
 										<% if @book.summary? %>
 										<a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target="#read_summary">
-									        <i class="fa fa-info"></i> 
+									        <i class="fa fa-info"></i>
 									        	Summary
 									    </a>
 												<div class="modal fade" id="read_summary" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -624,7 +624,7 @@
 										<% end %>
 
 
-									
+
 											<% if @book.link? %>
 										   		<%= link_to @book.link, data: { toggle: "tooltip" }, :title => "Click to purchase", class: "btn btn-default btn-sm", :target => "_blank" do %><span class="fa fa-shopping-cart"></span> <span class="gone">Purchase</span> <% end %>
 										   	<% end %>
@@ -635,8 +635,8 @@
 											<% Book.where(:title => @book.title).where(:issue => @book.issue.to_s).where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).where(:category => "Default").where.not(:id => @book.id).each do |x| %>
 												<% if x.previews.count > 1 %>
 													<a class="btn btn-info btn-sm" href="#" data-toggle="modal" data-target="#image-gallery">
-											                <i class="fa fa-photo"></i> 
-											                <span class="gone">Preview Images</span> 
+											                <i class="fa fa-photo"></i>
+											                <span class="gone">Preview Images</span>
 											        </a>
 											        <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 											        	<br />
@@ -662,7 +662,7 @@
 										<% else %>
 											<% if @book.previews.count > 1 %>
 												<a class="btn btn-info btn-sm" href="#" data-toggle="modal" data-target="#image-gallery">
-									                <i class="fa fa-photo"></i> 
+									                <i class="fa fa-photo"></i>
 									                <% if @book.category == "Paperback" %>
 									                	Additional Images
 									                <% elsif @book.category == "Hardcover" %>
@@ -693,8 +693,8 @@
 										<!-- PREVIEW IMAGES END HERE -->
 
 										<% if @book.qr? %>
-													<a class="fancybox-video btn btn-danger btn-sm" title="<%= @book.title + " #" + @book.issue.to_s %>" href="http://www.youtube.com/v/<%= @book.qr %>?fs=1&amp;autoplay=1"> 
-														<i class="fa fa-video-camera"></i> 
+													<a class="fancybox-video btn btn-danger btn-sm" title="<%= @book.title + " #" + @book.issue.to_s %>" href="http://www.youtube.com/v/<%= @book.qr %>?fs=1&amp;autoplay=1">
+														<i class="fa fa-video-camera"></i>
 														<span class="gone">
 															<% if @book.note.include? ("QR") %>
 																 Watch QR Video
@@ -712,7 +712,7 @@
 										  </button>
 										  <ul class="dropdown-menu" aria-labelledby="sharelist">
 										    <li><a href="https://www.facebook.com/sharer/sharer.php?u=<%= root_url + "books/" + @book.slug.to_s %>&t=<%= @book.title.to_s + " " + @book.issue.to_s %>" title="Share on Facebook" target="_blank"><i class="fa fa-facebook"></i> &nbsp;&nbsp;Share on Facebook</a></li>
-										    <li><a href="https://twitter.com/intent/tweet?source=<%= root_url + "books/" + @book.slug.to_s %>&text=<%= @book.title.to_s + " " + @book.issue.to_s %>:%20<%= root_url + "books/" + @book.slug.to_s %>&via=comicark" target="_blank" title="Tweet"><i class="fa fa-twitter"></i> &nbsp;Tweet This</a></li>
+										    <li><a href="https://twitter.com/intent/tweet?source=<%= root_url + "books/" + @book.slug.to_s %>&text=<%= @book.title.to_s + " " + @book.issue.to_s %>:%20<%= root_url + "books/" + @book.slug.to_s %>&via=ValiantDB" target="_blank" title="Tweet"><i class="fa fa-twitter"></i> &nbsp;Tweet This</a></li>
 										    <li><a href="https://plus.google.com/share?url=<%= root_url + "books/" + @book.slug.to_s %>" target="_blank" title="Share on Google+"><i class="fa fa-google-plus"></i> Share on Google+</a></li>
 										    <li><a href="http://pinterest.com/pin/create/button/?url=<%= root_url + "books/" + @book.slug.to_s %>&media=<%= @book.image.url(:thumb) %>&description=<%= @book.title.to_s + " " + @book.issue.to_s %>" target="_blank" title="Pin it"><i class="fa fa-pinterest"></i> &nbsp;Pin it</a></li>
 										  </ul>
@@ -720,7 +720,7 @@
 
 										<% if user_signed_in? && current_user.super_admin? %>
 											<%= link_to edit_book_path, class: "btn btn-default btn-sm" do %><i class="fa fa-pencil"></i> Edit<% end %>
-		                      				<%= link_to @book, method: :delete, data: { 
+		                      				<%= link_to @book, method: :delete, data: {
 		                                                                          confirm: 'Are you sure?',
 		                                                                          :'confirm-button-text' => "Yes",
 		                                                                          :'cancel-button-text' => "No",
@@ -739,7 +739,7 @@
 										<div class="clearfix"><br /></div>
 
 			                </div>
-		                    
+
 
 		                    <% unless user_signed_in? && current_user.patron? %>
 			                    <div id="2">
@@ -762,10 +762,10 @@
 
 
 	                    </div>
-	                </div> 
+	                </div>
 	                <!-- / panel 1 -->
-	                
-	                
+
+
 
 	                <!-- panel 3-->
 	                <% if @sales_count > 0 %>
@@ -796,8 +796,8 @@
 									                    <% end %>
 									                    <%= link_to new_conversation_path(:user => u.id, :subject => "TEST"), title: "Message" do %>
 						                                	<i class="fa fa-envelope black"> Message User</i>
-						                                <% end %>	
-														
+						                                <% end %>
+
 					                        		</div>
 					                        	<% end %>
 				                        	<% end %>
@@ -810,7 +810,7 @@
 		                </div>
 	                <!-- / panel 3 -->
 	                <% end %>
-	            
+
 	                <!--  panel 4 -->
 	                <% if user_signed_in? %>
 		                <% if @book.category == "Sketch" %>

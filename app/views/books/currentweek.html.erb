@@ -6,31 +6,31 @@
 <div class="container wellclear">
         <div class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
             <h3><%= @pgtitle %></h3>
-            <p>Breakdown of books releasing <strong><%= (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y") %></strong> - 
+            <p>Breakdown of books releasing <strong><%= (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y") %></strong> -
                 <strong><%= @newbooks.where(:category => "Default").count %></strong> titles, <strong><%= @newbooks.where(:category => "Variant").count %></strong> variant covers, <strong><%= @newbooks.where(:category => "Paperback").count %></strong> trades, and <strong><%= @newbooks.where(:category => "Hardcover").count %></strong> deluxe hardcovers.
             </p>
             <% @newbooks.where.not(:category => "Variant").each do |upcoming| %>
                 <div class="col-md-3 col-sm-4 col-xs-12">
                     <% if upcoming.category == "Paperback" %>
-                        <%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover.to_s, :target => "_blank" do %><%= image_tag upcoming.image.url(:original), :alt => upcoming.title + " cover by " + upcoming.cover.to_s,  class: "img-responsive" %><% end %>
+                        <%= link_to "https://www.valiantdatabase.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover.to_s, :target => "_blank" do %><%= image_tag upcoming.image.url(:original), :alt => upcoming.title + " cover by " + upcoming.cover.to_s,  class: "img-responsive" %><% end %>
                     <% elsif upcoming.category == "Hardcover" %>
-                        <%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover.to_s, :target => "_blank" do %><%= image_tag upcoming.image.url(:original), :alt => upcoming.title + " cover by " + upcoming.cover.to_s,  class: "img-responsive" %><% end %>
+                        <%= link_to "https://www.valiantdatabase.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover.to_s, :target => "_blank" do %><%= image_tag upcoming.image.url(:original), :alt => upcoming.title + " cover by " + upcoming.cover.to_s,  class: "img-responsive" %><% end %>
                     <% else %>
-                        <%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover.to_s, :target => "_blank" do %><%= image_tag upcoming.image.url(:original), :alt => upcoming.title + " cover by " + upcoming.cover.to_s,  class: "img-responsive" %><% end %>
+                        <%= link_to "https://www.valiantdatabase.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover.to_s, :target => "_blank" do %><%= image_tag upcoming.image.url(:original), :alt => upcoming.title + " cover by " + upcoming.cover.to_s,  class: "img-responsive" %><% end %>
                     <% end %>
                     <br /><br />
                 </div>
                 <div class="col-md-9 col-sm-8 col-xs-12 text-left">
                     <% if upcoming.category == "Paperback" %>
-                        <%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover.to_s, :target => "_blank" do %>
+                        <%= link_to "https://www.valiantdatabase.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB cover by " + upcoming.cover.to_s, :target => "_blank" do %>
                             <h4><%= upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " TPB" %></h4>
                         <% end %>
                     <% elsif upcoming.category == "Hardcover" %>
-                        <%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover.to_s, :target => "_blank" do %>
+                        <%= link_to "https://www.valiantdatabase.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " Deluxe HC cover by " + upcoming.cover.to_s, :target => "_blank" do %>
                             <h4><%= upcoming.title.to_s + " Vol. " + upcoming.issue.to_s + " HC" %></h4>
                         <% end %>
                     <% else %>
-                        <%= link_to "http://www.comicark.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover.to_s, :target => "_blank" do %>
+                        <%= link_to "https://www.valiantdatabase.com/books/" + upcoming.slug.to_s, :title => upcoming.title.to_s + " #" + upcoming.issue.to_s + " cover by " + upcoming.cover.to_s, :target => "_blank" do %>
                             <h4><%= upcoming.title.to_s + " #" + upcoming.issue.to_s %></h4>
                         <% end %>
                     <% end %>
