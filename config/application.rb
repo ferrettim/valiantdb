@@ -23,7 +23,7 @@ module Valiantdb
     # config.i18n.default_locale = :de
     # config.exceptions_app = self.routes
     # config.assets.enabled = true
-    config.assets.paths << "#{Rails}/vendor/assets/fonts"
-    config.active_record.raise_in_transactional_callbacks = true
+    # config.assets.paths << "#{Rails}/vendor/assets/fonts"
+    # config.active_record.raise_in_transactional_callbacks = true
   end
 end
