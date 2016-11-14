@@ -109,9 +109,6 @@ group :production do
 	# Postgres db
 	gem 'pg'
 	gem 'redis'
-	gem 'rails_12factor'
-	# Compression
-	gem 'heroku_rails_deflate'
 	# Server
 	gem "puma-heroku"
 	# Background processing
