@@ -113,7 +113,7 @@ group :production do
 	# Compression
 	gem 'heroku_rails_deflate'
 	# Server
-	gem "unicorn"
+	gem "puma"
 	# Background processing
 	gem 'sidekiq'
 	gem 'sinatra', require: false
