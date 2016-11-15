@@ -45,7 +45,7 @@
                                 <% end %>
                             </li>
                         <% end %>
-                            
+
                         </ul>
                     </div>
                 <% end %>
@@ -113,13 +113,13 @@
                             </li>
                         <% end %>
                         <% if user_signed_in? && @user == current_user %>
-                        
+
                             <li>
                                 <%= link_to mailbox_inbox_path, title: "Message" do %>
                                 <i class="fa fa-envelope grayicon"></i>
                                 Messages <span class="pull-right label label-primary label-as-badge"><%= unread_messages_count %></span><% end %>
                             </li>
-                            
+
                             <li>
                                 <%= link_to edit_user_registration_path, title: "Settings" do %>
                                 <i class="fa fa-gears grayicon"></i>
@@ -131,7 +131,7 @@
                                 Logout <% end %>
                             </li>
                         <% end %>
-                        
+
                         <% if current_user.super_admin? && @user != current_user %>
                             <li>
                                 <%= link_to root_url + "switch_user?scope_identifier=user_#{@user.id}", title: "Impersonate user" do %>
@@ -156,17 +156,13 @@
 
         </div>
         <div class="col-md-9 col-sm-8 col-xs-12 wellclear bottomcorners">
-            <% unless user_signed_in? && current_user.patron? %>
-                <a href="//lootcrate.7eer.net/c/264379/277903/4019"><img src="//a.impactradius-go.com/display-ad/4019-277903" border="0" alt="" width="101.4%" height="100" style="margin: -7px 0px 0px -6px;" /></a><img height="0" width="0" src="//lootcrate.7eer.net/i/264379/277903/4019" style="position:absolute;visibility:hidden;" border="0" />
-            <% end %>
-            <p>You can choose which books you want to see on this site by going to your <%= link_to edit_user_registration_path, :title => "Edit settings" do %>settings page<% end %> and checking only the publishers you want to see. <% unless current_user.patron? %>Remember that patron accounts are ad-free and have no limits on their collection size.<% end %> This site is brought to you by users like <a href="http://www.octobercountrycomics.com/"><strong>October County Comics</strong></a>, <a href="http://www.comicark.com/users/dbs/profile">DBS</a>, and our <%= link_to users_backers_path do %>amazing patrons<% end %>.</p>
             <div class="profile-content">
                 <h4 class="text-left">
                     <%= link_to releases_currentweek_path do %>
                         <% if (Date.today.beginning_of_week + 2.day) > Date.today %>
-                            New releases for 
+                            New releases for
                         <% else %>
-                            Released on 
+                            Released on
                         <% end %>
                         <%= (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y") %>
                     <% end %>
@@ -273,7 +269,7 @@
                       <% end %>
                         <div class="clearfix"><br /></div>
                 <% end %>
-                
+
 
             </div>
         </div>

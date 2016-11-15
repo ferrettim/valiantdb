@@ -54,6 +54,10 @@ class ApplicationController < ActionController::Base
     root_path
   end
 
+  def user_for_paper_trail
+    nil # disable whodunnit tracking
+  end
+
   private
 
   def user_activity

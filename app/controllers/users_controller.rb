@@ -103,23 +103,8 @@ class UsersController < ApplicationController
     @hardcats = [1,5,9,18,26,28,29,36,71,121,132,148,152,170,198,230,310,492,472]
     @activities = PublicActivity::Activity.order("created_at desc").where(owner_id: current_user.followees(User), owner_type: "User").page(params[:page]).per(10)
     @activities_site = PublicActivity::Activity.order("created_at desc").where(trackable_type: "Book").limit(10)
-    @fourfiveone = "451" if current_user.pubfourfiveone?
-    @aftershock = "Aftershock Comics" if current_user.pubaftershock?
-    @aspen = "Aspen Comics" if current_user.pubaspen?
-    @avatar = "Avatar Press" if current_user.pubavatar?
-    @blackmask = "Black Mask Studios" if current_user.pubblackmask?
-    @boom = "Boom Studios" if current_user.pubboom?
-    @darkhorse = "Dark Horse Comics" if current_user.pubdarkhorse?
-    @dc = "DC Comics" if current_user.pubdc?
-    @dynamite = "Dynamite Entertainment" if current_user.pubdynamite?
-    @idw = "IDW Publishing" if current_user.pubidw?
-    @image = "Image Comics" if current_user.pubimage?
-    @marvel = "Marvel Comics" if current_user.pubmarvel?
-    @valiant = "Valiant Entertainment" if current_user.pubvaliant?
-    @vertigo = "Vertigo Comics" if current_user.pubvertigo?
-    @zenescope = "Zenescope Entertainment" if current_user.pubzenescope?
-    @newbooks = Book.where("publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ?", @fourfiveone, @aftershock, @aspen, @avatar, @blackmask, @boom, @darkhorse, @dc, @dynamite, @idw, @image, @marvel, @valiant, @vertigo, @zenescope).where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-    @newbooks2 = Book.where("publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ? OR publisher = ?", @fourfiveone, @aftershock, @aspen, @avatar, @blackmask, @boom, @darkhorse, @dc, @dynamite, @idw, @image, @marvel, @valiant, @vertigo, @zenescope).where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
+    @newbooks = Book.where(:publisher => "Valiant Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+    @newbooks2 = Book.where(:publisher => "Valiant Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
     @owned_last = Own.where(:user_id == @user.id).order(created_at: :asc).limit(12)
     respond_to do |format|
         format.html # show.html.erb

@@ -21,7 +21,7 @@
             <h4><%= link_to t.title.html_safe, "#{t.url}", :target => "_blank" %></h4>
           </td>
           <td class="col-md-2">
-            <small>Published on<br /><strong><%= local_time_ago(t.published.strftime("%B %d %Y at %I:%M %p")) %></strong><br /></small>
+            <small>Published:<br /><strong><%= local_time_ago(t.published.strftime("%B %d %Y at %I:%M %p")) %></strong><br /></small>
           </td>
         </tr>
       <% end %>
