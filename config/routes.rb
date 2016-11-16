@@ -136,8 +136,7 @@ Rails.application.routes.draw do
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
   match '/users/all' => 'users#all', via: [:get]
   match '/users/backers' => 'users#backers', via: [:get]
-  match '/users/top25' => 'users#top25', via: [:get]
-  match '/users/top25/valiant' => 'users#valianttop25', via: [:get]
+  match '/users/top25' => 'users#valianttop25', via: [:get]
   match '/users/leaderboard' => 'users#leaderboard', via: [:get]
   match '/users/:id/followers' => "users#followers", via: [:get], :as => 'followers'
   match '/users/:id/following' => "users#following", via: [:get], :as => 'following'

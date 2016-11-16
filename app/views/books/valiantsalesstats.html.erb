@@ -25,7 +25,7 @@
 			<head>
 			<tbody>
 				<tr>
-					<td><strong>No. of Titles</strong></td>
+					<td><strong>Titles</strong></td>
 					<td class="text-center">
 						<%= Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where(:rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).count %>
 					</td>
@@ -71,7 +71,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><strong>No. of Variants</strong></td>
+					<td><strong>Total Variants</strong></td>
 					<td class="text-center">
 						<%= Book.where(:publisher => "Valiant Entertainment").where(:category => "Variant").where(:rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).count %>
 					</td>
@@ -117,7 +117,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><strong>Variants per Title</strong></td>
+					<td><strong>Variants/Title</strong></td>
 					<td class="text-center">
 						<%= number_with_precision((Book.where(:publisher => "Valiant Entertainment").where(:category => "Variant").where(:rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).count * 1.00) / (Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where(:rdate => (Date.today - 12.month).beginning_of_month..(Date.today - 12.month).end_of_month).count * 1.00), precision: 2) %>
 					</td>
@@ -371,7 +371,7 @@
 			<h4 class="text-center">Sales by month</h4>
 			<%= area_chart Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", (Date.today - 12.month).beginning_of_month).group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Sales", format: "%b %Y", range: (Date.today - 12.month).beginning_of_month..(Date.today - 1.month).beginning_of_month, colors: ["yellow", "white"] %>
 		</div>
-		
+
 	</div>
 
 	<div class="clearfix"><br /></div>

@@ -6,7 +6,7 @@
   <meta name="google-site-verification" content="Q_QVsLuniRn3cINjLMEOB0tIgrD9mgFB6K3SPMYIkMs" />
   <% if controller_name == 'books' && action_name == 'show' %>
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@comicark">
+    <meta name="twitter:site" content="@geekvine">
     <% if @book.category == "Paperback" %>
       <meta name="twitter:title" content="<%= @book.title + " TPB Vol. " + @book.issue.to_s %>">
     <% elsif @book.category == "Hardcover" %>
