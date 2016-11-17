@@ -359,17 +359,17 @@
 
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Average sales</h4>
-			<%= column_chart Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", (Date.today - 12.month).beginning_of_month).group_by_month( :rdate, "avg", "printrun"), xtitle: "Month", ytitle: "Avg", format: "%b %Y", range: (Date.today - 12.month).beginning_of_month..(Date.today - 1.month).beginning_of_month %> 
+			<%= column_chart Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", (Date.today - 12.month).beginning_of_month).group_by_month( :rdate, "avg", "printrun"), xtitle: "Month", ytitle: "Avg", format: "%b", range: (Date.today - 12.month).beginning_of_month..(Date.today - 1.month).beginning_of_month %>
 		</div>
 		<% if Rails.env.production? %>
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<h4 class="text-center">Median sales</h4>
-				<%= column_chart Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", (Date.today - 12.month).beginning_of_month).group("date_trunc('month', rdate)").median(:printrun), xtitle: "Month", ytitle: "Median", format: "%b %Y", range: (Date.today - 12.month).beginning_of_month..(Date.today - 1.month).beginning_of_month %>
+				<%= column_chart Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", (Date.today - 12.month).beginning_of_month).group("date_trunc('month', rdate)").median(:printrun), xtitle: "Month", ytitle: "Median", format: "%b", range: (Date.today - 12.month).beginning_of_month..(Date.today - 1.month).beginning_of_month %>
 			</div>
 		<% end %>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<h4 class="text-center">Sales by month</h4>
-			<%= column_chart Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", (Date.today - 12.month).beginning_of_month).group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Sales", format: "%b %Y", range: (Date.today - 12.month).beginning_of_month..(Date.today - 1.month).beginning_of_month %>
+			<%= column_chart Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", (Date.today - 12.month).beginning_of_month).group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Sales", format: "%b", range: (Date.today - 12.month).beginning_of_month..(Date.today - 1.month).beginning_of_month %>
 		</div>
 
 	</div>
