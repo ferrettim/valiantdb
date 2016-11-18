@@ -194,6 +194,7 @@ Rails.application.routes.draw do
   get 'search' => 'pages#search'
   get 'userlevels' => 'pages#levels'
   get 'news' => 'feeds#news', as: :news
+  get 'chat' => 'pages#chat', as: :chat
 
   match 'sitemap', :to => 'sitemap#index', :via => [:get]
 

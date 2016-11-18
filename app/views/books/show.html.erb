@@ -562,15 +562,17 @@
 												<% end %>
 												<% unless @book.event.blank? %>
 													<% if @book.event == "Armor Hunters" %>
-														<%= link_to events_armorhunters_books_path, :title => "Armor Hunters tie-in" do %><%= @book.event %><% end %> tie-in.
+														<%= link_to valiant_events_armorhunters_books_path, :title => "Armor Hunters tie-in" do %><%= @book.event %><% end %> tie-in.
 													<% elsif @book.event == "Book of Death" %>
-														<%= link_to events_bookofdeath_books_path, :title => "Book of Death tie-in" do %><%= @book.event %><% end %> tie-in.
+														<%= link_to valiant_events_bookofdeath_books_path, :title => "Book of Death tie-in" do %><%= @book.event %><% end %> tie-in.
 													<% elsif @book.event == "Chaos Effect" %>
-														<%= link_to events_chaoseffect_books_path, :title => "Chaos Effect tie-in" do %><%= @book.event %><% end %> tie-in.
+														<%= link_to valiant_events_chaoseffect_books_path, :title => "Chaos Effect tie-in" do %><%= @book.event %><% end %> tie-in.
 													<% elsif @book.event == "Harbinger Wars" %>
-														<%= link_to events_harbingerwars_books_path, :title => "Harbinger Wars tie-in" do %><%= @book.event %><% end %> tie-in.
+														<%= link_to valiant_events_harbingerwars_books_path, :title => "Harbinger Wars tie-in" do %><%= @book.event %><% end %> tie-in.
 													<% elsif @book.event == "Unity" %>
-														<%= link_to events_unity_books_path, :title => "Unity tie-in" do %><%= @book.event %><% end %> tie-in.
+														<%= link_to valiant_events_unity_books_path, :title => "Unity tie-in" do %><%= @book.event %><% end %> tie-in.
+													<% elsif @book.event == "4001 A.D." %>
+														<%= link_to valiant_events_4001ad_books_path, :title => "4001 A.D. tie-in" do %><%= @book.event %><% end %> tie-in.
 													<% end %>
 												<% end %>
 												<% if @book.category == "Paperback" %>
