@@ -54,7 +54,7 @@ Rails.application.routes.draw do
       get :autocomplete
 
       # Valiant
-      get "valiant/keys" => "books#keys"
+      get "valiant/keys" => "books#valiantkeys"
       get "valiant/all" => "books#valiantall"
       get "valiant/all/table" => "books#valiantalltbl"
       get "valiant/all/missing" => "books#valiantallmissing"
