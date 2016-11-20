@@ -26,7 +26,7 @@ module Valiantdb
     # config.assets.paths << "#{Rails}/vendor/assets/fonts"
     # config.active_record.raise_in_transactional_callbacks = true
     config.action_dispatch.default_headers = {
-      'X-Frame-Options' => 'ALLOW-FROM SAMEDOMAIN, www.nerdylegion.com, www.valiantfans.com',
+      'X-Frame-Options' => 'ALLOW-FROM SAMEDOMAIN, ALLOW-FROM *.nerdylegion.com, ALLOW-FROM *.valiantfans.com',
       'X-XSS-Protection' => '1; mode=block',
       'X-Content-Type-Options' => 'nosniff',
       'X-Content-Security-Policy' => "frame-ancestors *.nerdylegion.com, *.valiantfans.com"
