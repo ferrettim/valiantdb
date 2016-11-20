@@ -1,26 +1,32 @@
 <div class="well">
-<div class="row"> 
+<div class="row">
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-body">
+        <%= link_to new_conversation_path, class: "btn btn-success col-md-12" do %> <span class="fa fa-pencil"></span> New Message<% end %>
+        <br /><br />
         <%= render 'mailbox/folders' %>
         <br />
-        <%= link_to new_conversation_path, class: "btn btn-success col-md-12" do %> <span class="glyphicon glyphicon-pencil"></span> New Message<% end %>
+        <%= link_to empty_trash_path, data: { confirm: "Are you sure?" }, class: "btn btn-danger col-md-12" do %> <span class="fa fa-trash"></span> Empty Trash<% end %>
       </div>
     </div>
   </div>
- 
+
   <div class="col-md-8">
     <div class="panel panel-default">
       <div class="panel-body">
         <% if is_conversation %>
           <%= render 'conversations/form' %>
         <% else %>
-            <%= render partial: 'conversations/conversation', collection: messages %>
+            <% if messages.count < 1 %>
+                <h5><i class="fa fa-check"></i> It looks like you have no messages here!</h5>
+            <% else %>
+              <%= render partial: 'conversations/conversation', collection: messages %>
+            <% end %>
         <% end %>
       </div>
     </div>
   </div>
- 
+
 </div>
 </div>

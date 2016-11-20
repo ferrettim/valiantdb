@@ -1,2 +1,4 @@
-<h3 class="text-center white">My Messages</h3>
-<%= render partial: 'mailbox/folder_view', locals: { is_conversation: false, messages: @sent } %>
+<div class="col-md-12 col-sm-12 col-xs-12">
+  <h3 class="text-center">Sent Messages</h3>
+</div>
+  <%= render partial: 'mailbox/folder_view', locals: { is_conversation: false, messages: @sent } %>

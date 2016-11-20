@@ -12,7 +12,7 @@ class ConversationsController < ApplicationController
 	    flash[:success] = "Your message was successfully sent!"
 	    redirect_to conversation_path(conversation)
 	end
- 
+
 	def show
 	    @receipts = conversation.receipts_for(current_user)
 	    # mark conversation as read
@@ -29,14 +29,20 @@ class ConversationsController < ApplicationController
     	conversation.move_to_trash(current_user)
     	redirect_to mailbox_inbox_path
   	end
- 
+
   	def untrash
     	conversation.untrash(current_user)
     	redirect_to mailbox_inbox_path
   	end
 
+		def empty_trash
+		  current_user.mark_as_deleted(mailbox.trash.to_a)
+		  redirect_to mailbox_inbox_path
+			flash[:success] = "Trash messages deleted!"
+		end
+
 	private
-	 
+
 	  def conversation_params
 	    params.require(:conversation).permit(:subject, :body,recipients:[])
 	  end

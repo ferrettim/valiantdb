@@ -10,17 +10,17 @@ class Book < ActiveRecord::Base
 	validates :issue, presence: true
 	validates :title, presence: true
 	validates :rdate, presence: true
-	has_attached_file :image, :styles => { :medium => "300x300>", 
+	has_attached_file :image, :styles => { :medium => "300x300>",
 										   :thumb => "150x150>",
-										   :mini => "36x36>" }, 
-							  :convert_options => { 
+										   :mini => "36x36>" },
+							  :convert_options => {
                                            :medium => "-quality 75 -strip",
                                            :thumb => "-quality 75 -strip",
                                            :mini => "-quality 75 -strip" },
 							  :default_url => "https://s3.amazonaws.com/valiantdb/books/images/medium/missing.png"
 	process_in_background :image, queue: "paperclip"
 	validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
-	searchkick suggest: ["title", "writer", "writer2" "artist", "colors", "cover", "letters", "eic", "isb"], 
+	searchkick suggest: ["title", "writer", "writer2" "artist", "colors", "cover", "letters", "eic", "isb"],
 			   unsearchable: ["id", "created_at", "updated_at", "notes", "summary"],
 			   autocomplete: ["title"],
 			   word_start: ["title", "isb^10"]
@@ -38,7 +38,7 @@ class Book < ActiveRecord::Base
 	end
 
 	def should_generate_new_friendly_id?
-	    slug.nil? || updated_at_changed? || title_changed? || issue_changed? || cover_changed? || category_changed? || printing_changed?
+	    slug.nil? || title_changed? || issue_changed? || cover_changed? || category_changed? || printing_changed?
 	 end
 
 	def price_in_dollars
@@ -86,7 +86,7 @@ class Book < ActiveRecord::Base
 	end
 
 	def self.to_csv
-    attributes = %w{title issue writer artist cover rdate category printrun note} 
+    attributes = %w{title issue writer artist cover rdate category printrun note}
 	    CSV.generate(headers: true) do |csv|
 	      csv << attributes
 	      all.each do |book|
@@ -98,7 +98,7 @@ class Book < ActiveRecord::Base
   	def self.import(file)
 	    CSV.foreach(file.path, headers: true, :encoding => 'utf-8') do |row|
 
-	      product_hash = row.to_hash 
+	      product_hash = row.to_hash
 	      product = Book.where(id: product_hash["id"])
 
 	      #if product.count == 1
