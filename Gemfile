@@ -111,6 +111,7 @@ group :production do
 	gem 'redis'
 	# Server
 	gem "puma-heroku"
+	gem "heroku-deflater"
 	# Background processing
 	gem 'sidekiq'
 	gem 'sinatra', require: false
