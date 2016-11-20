@@ -31,5 +31,6 @@ module Valiantdb
       'X-Content-Type-Options' => 'nosniff',
       'Public-Key-Pins' => 'pin-sha256=VCNF4Yh7vvOsHccjTlvCe8DGiRII0SWeaff7fe4S9gs='
     }
+    config.public_file_server.headers = { 'Cache-Control' => 'public, max-age=604800' }
   end
 end
