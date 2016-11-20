@@ -111,7 +111,7 @@ group :production do
 	gem 'redis'
 	# Server
 	gem "puma-heroku"
-	gem "heroku-deflater"
+	gem 'heroku-deflater', git: "https://github.com/romanbsd/heroku-deflater.git"
 	# Background processing
 	gem 'sidekiq'
 	gem 'sinatra', require: false
