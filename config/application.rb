@@ -25,5 +25,10 @@ module Valiantdb
     # config.assets.enabled = true
     # config.assets.paths << "#{Rails}/vendor/assets/fonts"
     # config.active_record.raise_in_transactional_callbacks = true
+    config.action_dispatch.default_headers = {
+      'X-Frame-Options' => 'http://www.nerdylegion.com',
+      'X-XSS-Protection' => '1; mode=block',
+      'X-Content-Type-Options' => 'nosniff'
+    }
   end
 end
