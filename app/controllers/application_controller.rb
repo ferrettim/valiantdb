@@ -58,6 +58,10 @@ class ApplicationController < ActionController::Base
     nil # disable whodunnit tracking
   end
 
+  def set_x_frame_options
+    response.headers["X-Frame-Options"] = "ALLOW-FROM http://www.nerdylegion.com"
+  end
+
   private
 
   def user_activity
