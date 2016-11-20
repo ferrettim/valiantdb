@@ -29,8 +29,9 @@ module Valiantdb
       'X-Frame-Options' => 'ALLOWALL',
       'X-XSS-Protection' => '1; mode=block',
       'X-Content-Type-Options' => 'nosniff',
-      'X-Content-Security-Policy' => "frame-ancestors http://*.nerdylegion.com",
-      'Content-Security-Policy' => "frame-ancestors http://*.nerdylegion.com"
+      'X-Content-Security-Policy' => "frame-ancestors 'self' nerdylegion.com *.nerdylegion.com",
+      'Content-Security-Policy' => "frame-ancestors 'self' nerdylegion.com *.nerdylegion.com"
+      'Public-Key-Pins' => 'pin-sha256=VCNF4Yh7vvOsHccjTlvCe8DGiRII0SWeaff7fe4S9gs='
     }
   end
 end
