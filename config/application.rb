@@ -29,7 +29,7 @@ module Valiantdb
       'X-Frame-Options' => 'ALLOW-FROM *.nerdylegion.com',
       'X-XSS-Protection' => '1; mode=block',
       'X-Content-Type-Options' => 'nosniff',
-      'X-Content-Security-Policy' => "frame-ancestors *.nerdylegion.com"
+      'X-Content-Security-Policy' => "frame-ancestors *.nerdylegion.com",
       'Content-Security-Policty' => "frame-ancestors *.nerdylegion.com"
     }
   end
