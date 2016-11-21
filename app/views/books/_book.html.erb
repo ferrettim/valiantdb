@@ -133,7 +133,6 @@
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:100)</span>
           <% elsif title.note.include? ("One dollar debut") %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<% title.issue.to_s %> ($1 Debut)</span>
-          <% elsif title.printing == 1 %>
           <% elsif title.printing == 2 %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= (title.printing.to_i).ordinalize %> printing)</span>
           <% elsif title.printing == 3 %>
