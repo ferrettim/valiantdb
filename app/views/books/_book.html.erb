@@ -123,6 +123,10 @@
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Design)</span>
           <% elsif title.note.include? ("Pullbox") %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Pullbox)</span>
+          <% elsif title.note.include? ("Gold") %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Gold)</span>
+          <% elsif title.note.include? ("Retailer preview") %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Retailer Preview)</span>
           <% elsif title.printing == 1 %>
           <% elsif title.printing == 2 %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= (title.printing.to_i).ordinalize %> printing)</span>
