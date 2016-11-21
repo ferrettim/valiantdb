@@ -117,6 +117,10 @@
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %>C</span>
           <% elsif title.note.include? ("D variant cover") %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %>D</span>
+          <% elsif title.note.include? ("Blank") %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Blank)</span>
+          <% elsif title.note.include? ("Character design") %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Design)</span>
           <% elsif title.printing == 1 %>
           <% elsif title.printing == 2 %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= (title.printing.to_i).ordinalize %> printing)</span>
