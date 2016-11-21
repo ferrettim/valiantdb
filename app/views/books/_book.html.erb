@@ -73,7 +73,7 @@
 		 			<% end %>
 		 		<% end %>
         <% if title.category == "Default" %>
-          <% if title.printing = "1" %>
+          <% if title.printing == 1 %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %>A<span>
           <% else %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= (title.printing.to_i).ordinalize %> printing)</span>
