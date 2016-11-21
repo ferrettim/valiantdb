@@ -103,6 +103,12 @@
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:125)</span>
           <% elsif title.note.include? ("1:150") %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:150)</span>
+          <% elsif title.note.include? ("1:175") %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:175)</span>
+          <% elsif title.note.include? ("1:200") %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:200)</span>
+          <% elsif title.note.include? ("1:250") %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:250)</span>
           <% elsif title.note.include? ("B variant cover") %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %>B</span>
           <% elsif title.note.include? ("C variant cover") %>
