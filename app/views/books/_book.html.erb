@@ -82,6 +82,8 @@
           <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Vol. <%= title.issue.to_s %> TPB</span>
         <% elsif title.category == "Hardcover" %>
           <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Deluxe Vol. <%= title.issue.to_s %></span>
+        <% elsif title.category == "Promo" %>
+          <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Promo)</span>
         <% elsif title.category == "Variant" %>
           <% if title.note.include? ("1:10") %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:10)</span>
@@ -115,8 +117,15 @@
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %>C</span>
           <% elsif title.note.include? ("D variant cover") %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %>D</span>
-          <% else %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Variant)</span>
+          <% elsif title.printing == 1 %>
+          <% elsif title.printing == 2 %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= (title.printing.to_i).ordinalize %> printing)</span>
+          <% elsif title.printing == 3 %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= (title.printing.to_i).ordinalize %> printing)</span>
+          <% elsif title.printing == 4 %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= (title.printing.to_i).ordinalize %> printing)</span>
+          <% elsif title.printing == 5 %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= (title.printing.to_i).ordinalize %> printing)</span>
           <% end %>
         <% end %>
 		 	</div>
