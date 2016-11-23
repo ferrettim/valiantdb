@@ -305,6 +305,9 @@ class BooksController < ApplicationController
 
   def valiantsalesstats
     @pgtitle = "Valiant Comics Sales Statistics"
+    @average_sales = Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", (Date.today - 12.month).beginning_of_month).group_by_month( :rdate, "avg", "printrun")
+    @median_sale = Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", (Date.today - 12.month).beginning_of_month).group("date_trunc('month', rdate)").median(:printrun)
+    @salesbymonth = Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", (Date.today - 12.month).beginning_of_month).group_by_month( :rdate, "sum", "printrun")
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -377,15 +380,15 @@ class BooksController < ApplicationController
   def solicitations
     if params[:date].present?
       @date = Date.strptime(params[:date], '%m-%Y')
-      @pgtitle = "Releases for " + Date.parse(@date.to_s).strftime("%B %Y")
+      @pgtitle = "Valiant Solicitations for " + Date.parse(@date.to_s).strftime("%B %Y")
       @newbooks = Book.where(:rdate => @date.beginning_of_month..@date.end_of_month).order(:rdate, :title)
       if params[:publisher].present?
         @date = Date.strptime(params[:date], '%m-%Y')
-        @pgtitle = "Releases for " + Date.parse(@date.to_s).strftime("%B %Y")
+        @pgtitle = "Valiant Solicitations for " + Date.parse(@date.to_s).strftime("%B %Y")
         @newbooks = Book.where(:rdate => @date.beginning_of_month..@date.end_of_month).where(:publisher => params[:publisher]).where.not(:category => "Sketch").order(:rdate, :title)
       end
     else
-        @pgtitle = "Comic Releases for " + DateTime.now.strftime("%B %Y")
+        @pgtitle = "Valiant Solicitations for " + DateTime.now.strftime("%B %Y")
         @newbooks = Book.where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_month..Date.today.end_of_month).order(:rdate, :title)
     end
     respond_to do |format|

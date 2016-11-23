@@ -12,7 +12,6 @@
 	<div class="container wellclear">
 			<div class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
 				<h3><%= @pgtitle %></h3>
-				<h4><%= params[:publisher] %></h4>
 				<p>Breakdown of releases by category -
 					<strong><%= @newbooks.where(:category => "Default").count %></strong> titles, <strong><%= @newbooks.where(:category => "Variant").count %></strong> variant covers, <strong><%= @newbooks.where(:category => "Paperback").count %></strong> trades, and <strong><%= @newbooks.where(:category => "Hardcover").count %></strong> deluxe hardcovers.
 				</p>

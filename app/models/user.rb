@@ -12,17 +12,17 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :lockable, :trackable, :validatable, :omniauthable, :async
+         :recoverable, :rememberable, :lockable, :trackable, :validatable, :omniauthable
   validates :name, presence: true
 
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
 
   before_create :add_to_list
 
-  has_attached_file :avatar, :styles => { :medium => "350x200#", 
+  has_attached_file :avatar, :styles => { :medium => "350x200#",
                                           :thumb => "260x150#",
-                                          :mini => "52x30#" }, 
-                             :convert_options => { 
+                                          :mini => "52x30#" },
+                             :convert_options => {
                                           :medium => "-quality 75 -strip",
                                           :thumb => "-quality 75 -strip",
                                           :mini => "-quality 75 -strip" },
