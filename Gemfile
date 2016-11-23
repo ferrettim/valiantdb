@@ -89,6 +89,8 @@ gem 'money'
 gem 'google_currency'
 # News
 gem 'feedjira'
+# Tuning
+gem 'tunemygc'
 
 group :development do
 # Use sqlite3 as the database for Active Record

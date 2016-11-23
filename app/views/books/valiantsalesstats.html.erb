@@ -364,7 +364,7 @@
 		<% if Rails.env.production? %>
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<h4 class="text-center">Median sales</h4>
-				<%= area_chart @median_sales, xtitle: "Month", ytitle: "Median", format: "%b %Y", range: (Date.today - 12.month).beginning_of_month..(Date.today - 1.month).beginning_of_month, colors: ["#16a085", "#ecf0f1"] %>
+				<%= area_chart Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", (Date.today - 12.month).beginning_of_month).group("date_trunc('month', rdate)").median(:printrun), xtitle: "Month", ytitle: "Median", format: "%b %Y", range: (Date.today - 12.month).beginning_of_month..(Date.today - 1.month).beginning_of_month, colors: ["#16a085", "#ecf0f1"] %>
 			</div>
 		<% end %>
 		<div class="col-md-12 col-sm-12 col-xs-12">

@@ -306,7 +306,6 @@ class BooksController < ApplicationController
   def valiantsalesstats
     @pgtitle = "Valiant Comics Sales Statistics"
     @average_sales = Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", (Date.today - 12.month).beginning_of_month).group_by_month( :rdate, "avg", "printrun")
-    @median_sale = Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", (Date.today - 12.month).beginning_of_month).group("date_trunc('month', rdate)").median(:printrun)
     @salesbymonth = Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", (Date.today - 12.month).beginning_of_month).group_by_month( :rdate, "sum", "printrun")
     respond_to do |format|
       format.html
