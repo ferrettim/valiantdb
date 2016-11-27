@@ -20,11 +20,17 @@
     <meta name="twitter:creator" content="@geekvine">
     <meta name="twitter:image:src" content="<%= @book.image.url %>">
     <meta property="og:image" content="<%= @book.image.url %>">
-    <meta name="twitter:domain" content="ValiantDatabase.com">
+    <meta name="twitter:domain" content="https://www.valiantdatabase.com">
     <meta property="og:url" content="<%= "https://www.valiantdatabase.com/books/" + @book.id.to_s %>">
   <% end %>
   <% if controller_name == 'books' && action_name == 'show' %>
     <meta name="description" content="<%= h raw strip_tags(@book.summary) %>">
+  <% elsif controller_name == 'feeds' && action_name = 'news' %>
+    <meta name="description" content="Valiant Comics news at Valiant Database, updated on the hour, every hour.">
+  <% elsif controller_name == 'pages' && action_name = 'privacy' %>
+    <meta name="description" content="Valiant Database privacy policy...because your privacy matters.">
+  <% elsif  controller_name == 'pages' && action_name = 'terms' %>
+    <meta name="description" content="Valiant Database terms of use.">
   <% else %>
     <meta name="description" content="Valiant Database is the ultimate source for Valiant comics from all eras. We have EVERY title ever published, soliciations, sales and pricing data, and more!">
   <% end %>
@@ -53,11 +59,7 @@
 
     <%= render "books/banner" %>
 
-    <% if controller_name == 'books' && action_name.include?("tbl") %>
-      <div class="container-fluid">
-    <% else %>
-      <div class="container">
-    <% end %>
+    <div class="container-fluid">
 
     	<% flash.each do |name, msg| %>
         <% if name == "alert" %>
