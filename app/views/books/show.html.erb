@@ -799,9 +799,9 @@
 									                        	<%= image_tag u.avatar.url(:medium), :alt => "Profile image", class: "img-responsive" %>
 									                        <% end %>
 									                    <% end %>
-									                    <%= link_to new_conversation_path(:user => u.id, :subject => "TEST"), title: "Message" do %>
-						                                	<i class="fa fa-envelope black"> Message User</i>
-						                                <% end %>
+									                    <%= link_to new_conversation_path(:user => u.id, :subject => "Question re: " + @book.title.to_s + " #" + @book.issue.to_s + " (" + @book.cover.to_s + ")", :body => "https://www.valiantdatabase.com" + request.fullpath), title: "Message This User", class: "btn btn-primary col-md-12 col-sm-12 col-xs-12" do %>
+						                            <small><i class="fa fa-envelope"> Message</i></small>
+						                          <% end %>
 
 					                        		</div>
 					                        	<% end %>

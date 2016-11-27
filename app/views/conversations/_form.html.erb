@@ -9,14 +9,23 @@
       <% end %>
     </div>
     <div class="form-group">
-      <%= f.label :subject %>
-      <%= f.text_field :subject, placeholder: "Subject", class: "form-control" %>
+      <% if params[:subject].present? %>
+        <%= f.label :subject %>
+        <%= f.text_field :subject, value: params[:subject], class: "form-control" %>
+      <% else %>
+        <%= f.label :subject %>
+        <%= f.text_field :subject, placeholder: "Subject", class: "form-control" %>
+      <% end %>
     </div>
     <div class="form-group">
-      <%= f.label :message %>
-      <%= f.text_area :body, class: 'form-control', placeholder: "Type your message here", rows: 4  %>
+      <% if params[:body].present? %>
+        <%= f.text_area :body, class: 'form-control', rows: 4, value: params[:body] %>
+      <% else %>
+        <%= f.label :message %>
+        <%= f.text_area :body, class: 'form-control', placeholder: "Type your message here", rows: 4  %>
+      <% end %>
     </div>
- 
+
     <%= f.submit "Send Message", class: "btn btn-default col-md-12" %>
- 
+
 <% end %>
