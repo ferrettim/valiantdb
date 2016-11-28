@@ -262,12 +262,12 @@ class BooksController < ApplicationController
   def yearlysales
     if params[:date].present?
       @date = Date.strptime(params[:date], '%Y')
-      @pgtitle = "Top Sellers for " + Date.parse(@date.to_s).strftime("%Y")
-      @booksales = Book.where(:category => "Default").where(:rdate => @date.beginning_of_year..@date.end_of_year).where("printrun > ?", "1").printrun_order.limit(300)
+      @pgtitle = "Top 25 Sellers for " + Date.parse(@date.to_s).strftime("%Y")
+      @booksales = Book.where(:category => "Default").where(:rdate => @date.beginning_of_year..@date.end_of_year).where("printrun > ?", "1").printrun_order.limit(25)
     else
       @date = DateTime.now.strftime("%Y")
-      @pgtitle = "Top Sellers for " + DateTime.now.strftime("%Y")
-      @booksales = Book.where(:category => "Default").where(:rdate => DateTime.now.beginning_of_year..DateTime.now.end_of_year).where("printrun > ?", "1").printrun_order.limit(300)
+      @pgtitle = "Top 25 Sellers for " + DateTime.now.strftime("%Y")
+      @booksales = Book.where(:category => "Default").where(:rdate => DateTime.now.beginning_of_year..DateTime.now.end_of_year).where("printrun > ?", "1").printrun_order.limit(25)
     end
   end
 
