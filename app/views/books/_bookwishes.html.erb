@@ -23,7 +23,7 @@
               <li class="options"><%= link_to wishlist_path + "?utf8=✓&publisher=Voyager+Communications" do %>Valiant (Classic) (<%= @bookvh1.count %>)<% end %></li>
             <% end %>
             <% if @bookint.count > 0 %>
-              <li class="options"><%= link_to collectionint_path do %>Valiant (International) (<%= @bookint.count %>)<% end %></li>
+              <li class="options"><%= link_to wishlistint_path do %>Valiant (International) (<%= @bookint.count %>)<% end %></li>
             <% end %>
           </ul>
           <% else %>
@@ -39,7 +39,7 @@
               <li class="options"><%= link_to wishlist_path + "?utf8=✓&publisher=Voyager+Communications" do %>Valiant (Classic) (<%= @bookvh1.count %>)<% end %></li>
             <% end %>
             <% if @bookint.count > 0 %>
-              <li class="options"><%= link_to collectionint_path do %>Valiant (International) (<%= @bookint.count %>)<% end %></li>
+              <li class="options"><%= link_to wishlistint_path do %>Valiant (International) (<%= @bookint.count %>)<% end %></li>
             <% end %>
           </ul>
           <% end %>
@@ -94,9 +94,10 @@
                     <% if user_signed_in? && current_user.owns?(title) %>
                       <%= link_to book_own_path(title), method: :delete, remote: true, class: "btn btn-danger btn-circle", title: "Remove from collection", data: {disable_with: "<i class='fa fa-minus'></i>"} do %><i class="fa fa-heart"></i><% end %>
                     <% else %>
-                      <%= link_to book_own_path(title), method: :post, remote: true, class: "btn btn-circle", title: "Add to collection", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-heart"></i> <% end %>
+                      <%= link_to book_own_path(title), method: :post, remote: true, class: "btn btn-default btn-circle", title: "Add to collection", data: {disable_with: "<i class='fa fa-plus'></i>"} do %><i class="fa fa-heart"></i> <% end %>
                     <% end %>
                   </li>
+              <% end %>
                   <% if user_signed_in? && current_user.wishes?(title) %>
                     <%= link_to book_wish_path(title), method: :delete, remote: true, class: "btn btn-danger btn-circle", title: "Remove from wishlist", data: { toggle: "tooltip", disable_with: "<span class='fa fa-minus'></span>"} do %><span class="fa fa-star-o"></span><% end %>
                   <% else %>
