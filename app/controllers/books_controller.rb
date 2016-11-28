@@ -66,13 +66,13 @@ class BooksController < ApplicationController
       if params[:query].present?
         @book = @user.wished_books.where(:title => params[:query]).page(params[:page]).per(24)
       elsif params[:publisher].present?
-        @book = @user.wished_books.where(:publisher => params[:publisher]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+        @book = @user.wished_books.where(:publisher => params[:publisher]).pub_order.page(params[:page]).per(24)
         @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.wished_books.where.not(:country => "United States")
       elsif params[:title].present?
-        @book = @user.wished_books.where(:title => params[:title]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+        @book = @user.wished_books.where(:title => params[:title]).pub_order.page(params[:page]).per(24)
         @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
@@ -107,13 +107,13 @@ class BooksController < ApplicationController
       if params[:query].present?
         @book = @user.wished_books.where(:title => params[:query]).page(params[:page]).per(24)
       elsif params[:publisher].present?
-        @book = @user.wished_books.where(:publisher => params[:publisher]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+        @book = @user.wished_books.where(:publisher => params[:publisher]).pub_order.page(params[:page]).per(24)
         @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.wished_books.where.not(:country => "United States")
       elsif params[:title].present?
-        @book = @user.wished_books.where(:title => params[:title]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+        @book = @user.wished_books.where(:title => params[:title]).pub_order.page(params[:page]).per(24)
         @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
@@ -177,13 +177,13 @@ class BooksController < ApplicationController
       if params[:query].present?
         @book = @user.forsale_books.where(:title => params[:query]).page(params[:page]).per(24)
       elsif params[:publisher].present?
-        @book = @user.forsale_books.where(:publisher => params[:publisher]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+        @book = @user.forsale_books.where(:publisher => params[:publisher]).pub_order.page(params[:page]).per(24)
         @bookvei = @user.forsale_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.forsale_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.forsale_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.forsale_books.where.not(:country => "United States")
       elsif params[:title].present?
-        @book = @user.forsale_books.where(:title => params[:title]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+        @book = @user.forsale_books.where(:title => params[:title]).pub_order.page(params[:page]).per(24)
         @bookvei = @user.forsale_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.forsale_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.forsale_books.where(:publisher => "Acclaim Entertainment")
@@ -219,13 +219,13 @@ class BooksController < ApplicationController
       if params[:query].present?
         @book = @user.forsale_books.where(:title => params[:query]).page(params[:page]).per(24)
       elsif params[:publisher].present?
-        @book = @user.forsale_books.where(:publisher => params[:publisher]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+        @book = @user.forsale_books.where(:publisher => params[:publisher]).pub_order.page(params[:page]).per(24)
         @bookvei = @user.forsale_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.forsale_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.forsale_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.forsale_books.where.not(:country => "United States")
       elsif params[:title].present?
-        @book = @user.forsale_books.where(:title => params[:title]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+        @book = @user.forsale_books.where(:title => params[:title]).pub_order.page(params[:page]).per(24)
         @bookvei = @user.forsale_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.forsale_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.forsale_books.where(:publisher => "Acclaim Entertainment")
@@ -250,12 +250,12 @@ class BooksController < ApplicationController
     if params[:date].present?
       @date = Date.strptime(params[:date], '%m-%Y')
       @pgtitle = "Monthly Sales for " + Date.parse(@date.to_s).strftime("%B %Y")
-      @booksales = Book.where(:category => "Default").where(:rdate => @date.beginning_of_month..@date.end_of_month).where("printrun > ?", "1").order(printrun: :desc).limit(300)
+      @booksales = Book.where(:category => "Default").where(:rdate => @date.beginning_of_month..@date.end_of_month).where("printrun > ?", "1").printrun_order.limit(300)
     else
       @date = DateTime.now.strftime("%B %Y")
       @pgtitle = "Monthly Comic Book Sales"
-      @booksales = Book.where(:category => "Default").where(:rdate => DateTime.now.beginning_of_month..DateTime.now.end_of_month).where("printrun > ?", "1001").order(printrun: :desc).limit(300)
-      @booksales2 = Book.where(:category => "Default").where(:rdate => (DateTime.now.beginning_of_month - 2.month)..(DateTime.now.end_of_month - 2.month)).where("printrun > ?", "1001").order(printrun: :desc).limit(300)
+      @booksales = Book.where(:category => "Default").where(:rdate => DateTime.now.beginning_of_month..DateTime.now.end_of_month).where("printrun > ?", "1001").printrun_order.limit(300)
+      @booksales2 = Book.where(:category => "Default").where(:rdate => (DateTime.now.beginning_of_month - 2.month)..(DateTime.now.end_of_month - 2.month)).where("printrun > ?", "1001").printrun_order.limit(300)
     end
   end
 
@@ -263,11 +263,11 @@ class BooksController < ApplicationController
     if params[:date].present?
       @date = Date.strptime(params[:date], '%Y')
       @pgtitle = "Top Sellers for " + Date.parse(@date.to_s).strftime("%Y")
-      @booksales = Book.where(:category => "Default").where(:rdate => @date.beginning_of_year..@date.end_of_year).where("printrun > ?", "1").order(printrun: :desc).limit(300)
+      @booksales = Book.where(:category => "Default").where(:rdate => @date.beginning_of_year..@date.end_of_year).where("printrun > ?", "1").printrun_order.limit(300)
     else
       @date = DateTime.now.strftime("%Y")
       @pgtitle = "Top Sellers for " + DateTime.now.strftime("%Y")
-      @booksales = Book.where(:category => "Default").where(:rdate => DateTime.now.beginning_of_year..DateTime.now.end_of_year).where("printrun > ?", "1").order(printrun: :desc).limit(300)
+      @booksales = Book.where(:category => "Default").where(:rdate => DateTime.now.beginning_of_year..DateTime.now.end_of_year).where("printrun > ?", "1").printrun_order.limit(300)
     end
   end
 
@@ -282,8 +282,8 @@ class BooksController < ApplicationController
 
   def valiantsalesvei
     @pgtitle = "Valiant Comics Sales by issue"
-    @book = Book.all.where(:publisher => "Valiant Entertainment").where("printrun > ?", "1").order(printrun: :desc).page(params[:page]).per(24)
-    @bookcsv = Book.all.where(:publisher => "Valiant Entertainment").where("printrun > ?", "1").order(printrun: :desc).limit(100)
+    @book = Book.all.where(:publisher => "Valiant Entertainment").where("printrun > ?", "1").printrun_order.page(params[:page]).per(24)
+    @bookcsv = Book.all.where(:publisher => "Valiant Entertainment").where("printrun > ?", "1").printrun_order.limit(100)
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -596,13 +596,13 @@ class BooksController < ApplicationController
       if params[:query].present?
         @book = @user.owned_books.where(:title => params[:query]).page(params[:page]).per(24)
       elsif params[:publisher].present?
-        @book = @user.owned_books.where(:publisher => params[:publisher]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+        @book = @user.owned_books.where(:publisher => params[:publisher]).pub_order.page(params[:page]).per(24)
         @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.owned_books.where.not(:country => "United States")
       elsif params[:title].present?
-        @book = @user.owned_books.where(:title => params[:title]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+        @book = @user.owned_books.where(:title => params[:title]).pub_order.page(params[:page]).per(24)
         @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
@@ -638,13 +638,13 @@ class BooksController < ApplicationController
       if params[:query].present?
         @book = @user.owned_books.where(:title => params[:query]).page(params[:page]).per(24)
       elsif params[:publisher].present?
-        @book = @user.owned_books.where(:publisher => params[:publisher]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+        @book = @user.owned_books.where(:publisher => params[:publisher]).pub_order.page(params[:page]).per(24)
         @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.owned_books.where.not(:country => "United States")
       elsif params[:title].present?
-        @book = @user.owned_books.where(:title => params[:title]).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+        @book = @user.owned_books.where(:title => params[:title]).pub_order.page(params[:page]).per(24)
         @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
         @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
         @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
@@ -756,8 +756,8 @@ class BooksController < ApplicationController
   def valuesmissing
     @pgtitle = "All with missing values"
     @tcount = Book.all.where(:pricenm => nil).where.not(:category => "Sketch").where.not(:category => "Paperback").where.not(:category => "Hardcover").count
-    @book = Book.all.where("rdate < ?", Date.today).where(:pricenm => nil).where.not(:category => "Sketch").where.not(:category => "Paperback").where.not(:category => "Hardcover").order(title: :asc, issue: :asc).page(params[:page]).per(24)
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:pricenm => nil).where.not(:category => "Sketch").where.not(:category => "Paperback").where.not(:category => "Hardcover").order(title: :asc, issue: :asc)
+    @book = Book.all.where("rdate < ?", Date.today).where(:pricenm => nil).where.not(:category => "Sketch").where.not(:category => "Paperback").where.not(:category => "Hardcover").title_order.page(params[:page]).per(24)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:pricenm => nil).where.not(:category => "Sketch").where.not(:category => "Paperback").where.not(:category => "Hardcover").title_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -770,17 +770,17 @@ class BooksController < ApplicationController
     @pgtitle = "Brazil"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "Brazil").count
     if params[:type].present?
-      @book = Book.all.where(:country => "Brazil").where(:category => params[:type]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Brazil").where(:category => params[:type]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Brazil").where(:category => params[:type]).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "Brazil").where(:issue => params[:number]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Brazil").where(:issue => params[:number]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Brazil").where(:issue => params[:number]).count
     else
       @tcount = Book.all.where(:country => "Brazil").count
-      @book = Book.all.where(:country => "Brazil").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Brazil").pub_order.page(params[:page]).per(24)
     end
     @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Brazil").order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Brazil").main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -793,13 +793,13 @@ class BooksController < ApplicationController
     @pgtitle = "Brazil"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "Brazil").count
-      @book = Book.all.where(:category => params[:type]).where(:country => "Brazil").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "Brazil").created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "Brazil").count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "Brazil").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Brazil").created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "Brazil").count
-      @book = Book.all.where(:country => "Brazil").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Brazil").created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -812,16 +812,16 @@ class BooksController < ApplicationController
     @pgtitle = "Brazil (Missing)"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).count
     if params[:type].present?
-      @book = Book.all.where(:country => "Brazil").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Brazil").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Brazil").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "Brazil").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Brazil").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Brazil").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
     else
       @tcount = Book.all.where(:country => "Brazil").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "Brazil").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Brazil").where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
     end
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -834,13 +834,13 @@ class BooksController < ApplicationController
     @pgtitle = "Brazil (Missing)"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:category => params[:type]).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Brazil").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "Brazil").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "Brazil").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Brazil").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -853,17 +853,17 @@ class BooksController < ApplicationController
     @pgtitle = "Canada"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "Canada").count
     if params[:type].present?
-      @book = Book.all.where(:country => "Canada").where(:category => params[:type]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Canada").where(:category => params[:type]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Canada").where(:category => params[:type]).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "Canada").where(:issue => params[:number]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Canada").where(:issue => params[:number]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Canada").where(:issue => params[:number]).count
     else
       @tcount = Book.all.where(:country => "Canada").count
-      @book = Book.all.where(:country => "Canada").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Canada").pub_order.page(params[:page]).per(24)
     end
     @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Canada").order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Canada").main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -876,13 +876,13 @@ class BooksController < ApplicationController
     @pgtitle = "Canada"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "Canada").count
-      @book = Book.all.where(:category => params[:type]).where(:country => "Canada").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "Canada").created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "Canada").count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "Canada").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Canada").created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "Canada").count
-      @book = Book.all.where(:country => "Canada").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Canada").created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -895,16 +895,16 @@ class BooksController < ApplicationController
     @pgtitle = "Canada (Missing)"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "Canada").where.not(id: current_user.owned_book_ids).count
     if params[:type].present?
-      @book = Book.all.where(:country => "Canada").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Canada").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Canada").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "Canada").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Canada").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Canada").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
     else
       @tcount = Book.all.where(:country => "Canada").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "Canada").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Canada").where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
     end
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Canada").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Canada").where.not(id: current_user.owned_book_ids).main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -917,13 +917,13 @@ class BooksController < ApplicationController
     @pgtitle = "Canada (Missing)"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "Canada").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:category => params[:type]).where(:country => "Canada").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "Canada").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "Canada").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "Canada").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Canada").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "Canada").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "Canada").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Canada").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -936,17 +936,17 @@ class BooksController < ApplicationController
     @pgtitle = "China"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "China").count
     if params[:type].present?
-      @book = Book.all.where(:country => "China").where(:category => params[:type]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "China").where(:category => params[:type]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "China").where(:category => params[:type]).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "China").where(:issue => params[:number]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "China").where(:issue => params[:number]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "China").where(:issue => params[:number]).count
     else
       @tcount = Book.all.where(:country => "China").count
-      @book = Book.all.where(:country => "China").order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "China").main_order.page(params[:page]).per(24)
     end
     @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "China").order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "China").main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -959,13 +959,13 @@ class BooksController < ApplicationController
     @pgtitle = "China"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "China").count
-      @book = Book.all.where(:category => params[:type]).where(:country => "China").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "China").created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "China").count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "China").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "China").created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "China").count
-      @book = Book.all.where(:country => "China").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "China").created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -978,16 +978,16 @@ class BooksController < ApplicationController
     @pgtitle = "China (Missing)"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "China").where.not(id: current_user.owned_book_ids).count
     if params[:type].present?
-      @book = Book.all.where(:country => "China").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "China").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "China").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "China").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "China").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "China").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
     else
       @tcount = Book.all.where(:country => "China").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "China").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "China").where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
     end
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "China").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "China").where.not(id: current_user.owned_book_ids).main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1000,13 +1000,13 @@ class BooksController < ApplicationController
     @pgtitle = "China (Missing)"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "China").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:category => params[:type]).where(:country => "China").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "China").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "China").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "China").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "China").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "China").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "China").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "China").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1019,17 +1019,17 @@ class BooksController < ApplicationController
     @pgtitle = "France"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "France").count
     if params[:type].present?
-      @book = Book.all.where(:country => "France").where(:category => params[:type]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "France").where(:category => params[:type]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "France").where(:category => params[:type]).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "France").where(:issue => params[:number]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "France").where(:issue => params[:number]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "France").where(:issue => params[:number]).count
     else
       @tcount = Book.all.where(:country => "France").count
-      @book = Book.all.where(:country => "France").order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "France").main_order.page(params[:page]).per(24)
     end
     @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "France").order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "France").main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1042,13 +1042,13 @@ class BooksController < ApplicationController
     @pgtitle = "France"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "France").count
-      @book = Book.all.where(:category => params[:type]).where(:country => "France").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "France").created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "France").count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "France").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "France").created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "France").count
-      @book = Book.all.where(:country => "France").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "France").created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1061,16 +1061,16 @@ class BooksController < ApplicationController
     @pgtitle = "France (Missing)"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "France").where.not(id: current_user.owned_book_ids).count
     if params[:type].present?
-      @book = Book.all.where(:country => "France").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "France").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "France").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "France").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "France").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "France").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
     else
       @tcount = Book.all.where(:country => "France").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "France").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "France").where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
     end
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "France").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "France").where.not(id: current_user.owned_book_ids).main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1083,13 +1083,13 @@ class BooksController < ApplicationController
     @pgtitle = "France (Missing)"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "France").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:category => params[:type]).where(:country => "France").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "France").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "France").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "France").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "France").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "France").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "France").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "France").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1102,17 +1102,17 @@ class BooksController < ApplicationController
     @pgtitle = "Italy"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "Italy").count
     if params[:type].present?
-      @book = Book.all.where(:country => "Italy").where(:category => params[:type]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Italy").where(:category => params[:type]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Italy").where(:category => params[:type]).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "Italy").where(:issue => params[:number]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Italy").where(:issue => params[:number]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Italy").where(:issue => params[:number]).count
     else
       @tcount = Book.all.where(:country => "Italy").count
-      @book = Book.all.where(:country => "Italy").order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Italy").main_order.page(params[:page]).per(24)
     end
     @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Italy").order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Italy").main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1125,13 +1125,13 @@ class BooksController < ApplicationController
     @pgtitle = "Italy"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "Italy").count
-      @book = Book.all.where(:category => params[:type]).where(:country => "Italy").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "Italy").created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "Italy").count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "Italy").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Italy").created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "Italy").count
-      @book = Book.all.where(:country => "Italy").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Italy").created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1144,16 +1144,16 @@ class BooksController < ApplicationController
     @pgtitle = "Italy (Missing)"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "Italy").where.not(id: current_user.owned_book_ids).count
     if params[:type].present?
-      @book = Book.all.where(:country => "Italy").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Italy").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Italy").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "Italy").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Italy").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Italy").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
     else
       @tcount = Book.all.where(:country => "Italy").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "Italy").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Italy").where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
     end
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Italy").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Italy").where.not(id: current_user.owned_book_ids).main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1166,13 +1166,13 @@ class BooksController < ApplicationController
     @pgtitle = "Italy (Missing)"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "Italy").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:category => params[:type]).where(:country => "Italy").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "Italy").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "Italy").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "Italy").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Italy").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "Italy").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "Italy").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Italy").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1185,17 +1185,17 @@ class BooksController < ApplicationController
     @pgtitle = "Japan"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "Japan").count
     if params[:type].present?
-      @book = Book.all.where(:country => "Japan").where(:category => params[:type]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Japan").where(:category => params[:type]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Japan").where(:category => params[:type]).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "Japan").where(:issue => params[:number]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Japan").where(:issue => params[:number]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Japan").where(:issue => params[:number]).count
     else
       @tcount = Book.all.where(:country => "Japan").count
-      @book = Book.all.where(:country => "Japan").order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Japan").main_order.page(params[:page]).per(24)
     end
     @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Japan").order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Japan").main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1208,13 +1208,13 @@ class BooksController < ApplicationController
     @pgtitle = "Japan"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "Japan").count
-      @book = Book.all.where(:category => params[:type]).where(:country => "Japan").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "Japan").created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "Japan").count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "Japan").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Japan").created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "Japan").count
-      @book = Book.all.where(:country => "Japan").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Japan").created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1227,16 +1227,16 @@ class BooksController < ApplicationController
     @pgtitle = "Japan (Missing)"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "Japan").where.not(id: current_user.owned_book_ids).count
     if params[:type].present?
-      @book = Book.all.where(:country => "Japan").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Japan").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Japan").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "Japan").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Japan").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Japan").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
     else
       @tcount = Book.all.where(:country => "Japan").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "Japan").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Japan").where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
     end
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Japan").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Japan").where.not(id: current_user.owned_book_ids).main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1249,13 +1249,13 @@ class BooksController < ApplicationController
     @pgtitle = "Japan (Missing)"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "Japan").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:category => params[:type]).where(:country => "Japan").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "Japan").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "Japan").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "Japan").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Japan").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "Japan").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "Japan").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Japan").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1268,17 +1268,17 @@ class BooksController < ApplicationController
     @pgtitle = "Mexico"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "Mexico").count
     if params[:type].present?
-      @book = Book.all.where(:country => "Mexico").where(:category => params[:type]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Mexico").where(:category => params[:type]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Mexico").where(:category => params[:type]).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "Mexico").where(:issue => params[:number]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Mexico").where(:issue => params[:number]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Mexico").where(:issue => params[:number]).count
     else
       @tcount = Book.all.where(:country => "Mexico").count
-      @book = Book.all.where(:country => "Mexico").order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Mexico").main_order.page(params[:page]).per(24)
     end
     @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Mexico").order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Mexico").main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1291,13 +1291,13 @@ class BooksController < ApplicationController
     @pgtitle = "Mexico"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "Mexico").count
-      @book = Book.all.where(:category => params[:type]).where(:country => "Mexico").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "Mexico").created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "Mexico").count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "Mexico").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Mexico").created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "Mexico").count
-      @book = Book.all.where(:country => "Mexico").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Mexico").created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1310,16 +1310,16 @@ class BooksController < ApplicationController
     @pgtitle = "Mexico (Missing)"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).count
     if params[:type].present?
-      @book = Book.all.where(:country => "Mexico").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Mexico").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Mexico").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "Mexico").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Mexico").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Mexico").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
     else
       @tcount = Book.all.where(:country => "Mexico").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "Mexico").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Mexico").where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
     end
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1332,13 +1332,13 @@ class BooksController < ApplicationController
     @pgtitle = "Mexico (Missing)"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:category => params[:type]).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Mexico").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "Mexico").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "Mexico").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Mexico").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1351,17 +1351,17 @@ class BooksController < ApplicationController
     @pgtitle = "Russia"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "Russia").count
     if params[:type].present?
-      @book = Book.all.where(:country => "Russia").where(:category => params[:type]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Russia").where(:category => params[:type]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Russia").where(:category => params[:type]).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "Russia").where(:issue => params[:number]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Russia").where(:issue => params[:number]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Russia").where(:issue => params[:number]).count
     else
       @tcount = Book.all.where(:country => "Russia").count
-      @book = Book.all.where(:country => "Russia").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Russia").pub_order.page(params[:page]).per(24)
     end
     @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Russia").order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Russia").main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1374,13 +1374,13 @@ class BooksController < ApplicationController
     @pgtitle = "Russia"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "Russia").count
-      @book = Book.all.where(:category => params[:type]).where(:country => "Russia").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "Russia").created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "Russia").count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "Russia").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Russia").created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "Russia").count
-      @book = Book.all.where(:country => "Russia").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Russia").created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1393,16 +1393,16 @@ class BooksController < ApplicationController
     @pgtitle = "Russia (Missing)"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "Russia").where.not(id: current_user.owned_book_ids).count
     if params[:type].present?
-      @book = Book.all.where(:country => "Russia").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Russia").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Russia").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "Russia").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Russia").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Russia").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
     else
       @tcount = Book.all.where(:country => "Russia").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "Russia").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Russia").where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
     end
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Russia").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Russia").where.not(id: current_user.owned_book_ids).main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1415,13 +1415,13 @@ class BooksController < ApplicationController
     @pgtitle = "Russia (Missing)"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "Russia").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:category => params[:type]).where(:country => "Russia").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "Russia").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "Russia").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "Russia").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Russia").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "Russia").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "Russia").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Russia").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1434,17 +1434,17 @@ class BooksController < ApplicationController
     @pgtitle = "Turkey"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "Turkey").count
     if params[:type].present?
-      @book = Book.all.where(:country => "Turkey").where(:category => params[:type]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Turkey").where(:category => params[:type]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Turkey").where(:category => params[:type]).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "Turkey").where(:issue => params[:number]).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Turkey").where(:issue => params[:number]).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Turkey").where(:issue => params[:number]).count
     else
       @tcount = Book.all.where(:country => "Turkey").count
-      @book = Book.all.where(:country => "Turkey").order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Turkey").main_order.page(params[:page]).per(24)
     end
     @notowned = Book.where.not(Own.where("owns.book_id = books.id", "owns.user_id = current_user.id").limit(1).arel.exists).page(params[:page]).per(24)
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Turkey").order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Turkey").main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1457,13 +1457,13 @@ class BooksController < ApplicationController
     @pgtitle = "Turkey"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "Turkey").count
-      @book = Book.all.where(:category => params[:type]).where(:country => "Turkey").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "Turkey").created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "Turkey").count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "Turkey").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Turkey").created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "Turkey").count
-      @book = Book.all.where(:country => "Turkey").order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Turkey").created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1476,16 +1476,16 @@ class BooksController < ApplicationController
     @pgtitle = "Turkey (Missing)"
     @search_count = Book.all.where(:category => params[:query]).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).count
     if params[:type].present?
-      @book = Book.all.where(:country => "Turkey").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Turkey").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Turkey").where(:category => params[:type]).where.not(id: current_user.owned_book_ids).count
     elsif params[:number].present?
-      @book = Book.all.where(:country => "Turkey").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Turkey").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
       @tcount = Book.all.where(:country => "Turkey").where(:issue => params[:number]).where.not(id: current_user.owned_book_ids).count
     else
       @tcount = Book.all.where(:country => "Turkey").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "Turkey").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Turkey").where.not(id: current_user.owned_book_ids).main_order.page(params[:page]).per(24)
     end
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).order(rdate: :asc, title: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).main_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1498,13 +1498,13 @@ class BooksController < ApplicationController
     @pgtitle = "Turkey (Missing)"
     if params[:type].present?
       @tcount = Book.all.where(:category => params[:type]).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:category => params[:type]).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:category => params[:type]).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     elsif params[:number].present?
       @tcount = Book.all.where(:issue => params[:number]).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:issue => params[:number]).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:issue => params[:number]).where(:country => "Turkey").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     else
       @tcount = Book.all.where(:country => "Turkey").where.not(id: current_user.owned_book_ids).count
-      @book = Book.all.where(:country => "Turkey").where.not(id: current_user.owned_book_ids).order(title: :asc, rdate: :asc, created_at: :asc).page(params[:page]).per(24)
+      @book = Book.all.where(:country => "Turkey").where.not(id: current_user.owned_book_ids).created_order.page(params[:page]).per(24)
     end
     respond_to do |format|
       format.html
@@ -1518,19 +1518,19 @@ class BooksController < ApplicationController
     if params[:title].present?
       @pgtitle = params[:title]
     else
-      @pgtitle = "Valiant"
+      @pgtitle = "Current Valiant"
     end
     @search_count = Book.all.where(:category => params[:query]).where(:publisher => "Valiant Entertainment").count
     @tcount = Book.all.where(:publisher => "Valiant Entertainment")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").pub_order.page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
     @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").pub_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1548,7 +1548,7 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Valiant Entertainment")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").pub_order.page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
     @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title")
@@ -1571,13 +1571,13 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Valiant Entertainment").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).pub_order.page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
     @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).pub_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1595,7 +1595,7 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Valiant Entertainment").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).pub_order.page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
     @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title")
@@ -1628,7 +1628,7 @@ class BooksController < ApplicationController
 
   def valiantkeys
     @pgtitle = "Key Issues (2012-)"
-    @books = Book.where(:iskey => true).where(:publisher => "Valiant Entertainment").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @books = Book.where(:iskey => true).where(:publisher => "Valiant Entertainment").pub_order.page(params[:page]).per(24)
     respond_to do |format|
       format.html
       format.js
@@ -1640,7 +1640,7 @@ class BooksController < ApplicationController
     @search_count = Book.where(:category => "Sketch").where(:cover => params[:query]).where(:publisher => "Valiant Entertainment")
     @tcount = Book.all.where(:category => "Sketch").where(:publisher => "Valiant Entertainment").where(status: "Active")
     @tcount = @tcount.where(:cover => params[:cover]) if params[:cover].present?
-    @book = Book.all.where(:publisher => "Valiant Entertainment").where(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Valiant Entertainment").where(:category => "Sketch").pub_order.page(params[:page]).per(24)
     @book = @book.where(:cover => params[:cover]) if params[:cover].present?
     @optionscover = Book.where(:category => "Sketch").select("DISTINCT(cover)").group("cover").order("cover")
     respond_to do |format|
@@ -1654,7 +1654,7 @@ class BooksController < ApplicationController
     @pgtitle = "Sketch Covers"
     @tcount = Book.all.where(:category => "Sketch").where(:publisher => "Valiant Entertainment").where(status: "Active")
     @tcount = @tcount.where(:cover => params[:cover]) if params[:cover].present?
-    @book = Book.all.where(:publisher => "Valiant Entertainment").where(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Valiant Entertainment").where(:category => "Sketch").pub_order.page(params[:page]).per(24)
     @book = @book.where(:cover => params[:cover]) if params[:cover].present?
     @optionscover = Book.where(:category => "Sketch").select("DISTINCT(cover)").group("cover").order("cover")
     respond_to do |format|
@@ -1669,7 +1669,7 @@ class BooksController < ApplicationController
     @search_count = Book.where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").where(:title => params[:query]).where(:publisher => "Valiant Entertainment")
     @tcount = Book.all.where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").where(:publisher => "Valiant Entertainment").where(status: "Active")
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").pub_order.page(params[:page]).per(24)
     @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").select("DISTINCT(title)").group("title").order("title")
     respond_to do |format|
@@ -1683,7 +1683,7 @@ class BooksController < ApplicationController
     @pgtitle = "Trades"
     @tcount = Book.all.where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").where(:publisher => "Valiant Entertainment").where(status: "Active")
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").pub_order.page(params[:page]).per(24)
     @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(:category => "Default").where.not(:category => "Variant").where.not(:category => "Promo").select("DISTINCT(title)").group("title").order("title")
     respond_to do |format|
@@ -1696,7 +1696,7 @@ class BooksController < ApplicationController
   # Clasic Valiant
   def valiantvh1keys
     @pgtitle = "Key Issues (1991-1996)"
-    @books = Book.where(:iskey => true).where("rdate < ?", "1996-09-30").order(rdate: :asc, issue: :asc)
+    @books = Book.where(:iskey => true).where("rdate < ?", "1996-09-30").pub_order
     respond_to do |format|
       format.html
       format.js
@@ -1709,13 +1709,13 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Voyager Communications")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Voyager Communications").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Voyager Communications").where.not(:category => "Sketch").pub_order.page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
     @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Voyager Communications").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Voyager Communications").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Voyager Communications").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:era => "VH2").pub_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1729,7 +1729,7 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Voyager Communications")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Voyager Communications").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Voyager Communications").where.not(:category => "Sketch").pub_order.page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
     @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Voyager Communications").select("DISTINCT(title)").group("title").order("title")
@@ -1748,13 +1748,13 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Voyager Communications").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Voyager Communications").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Voyager Communications").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).pub_order.page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
     @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Voyager Communications").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Voyager Communications").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Voyager Communications").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:era => "VH2").pub_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1768,7 +1768,7 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Voyager Communications").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Voyager Communications").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Voyager Communications").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).pub_order.page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
     @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Voyager Communications").select("DISTINCT(title)").group("title").order("title")
@@ -1788,13 +1788,13 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Acclaim Entertainment")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Acclaim Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Acclaim Entertainment").where.not(:category => "Sketch").pub_order.page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
     @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where(:era => "VH2").pub_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1808,7 +1808,7 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Acclaim Entertainment")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Acclaim Entertainment").where.not(:category => "Sketch").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Acclaim Entertainment").where.not(:category => "Sketch").pub_order.page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
     @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(title)").group("title").order("title")
@@ -1827,13 +1827,13 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Acclaim Entertainment").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Acclaim Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Acclaim Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).pub_order.page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
     @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(category)").group("category").order("category")
-    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:era => "VH2").order(rdate: :asc, issue: :asc)
+    @bookcsv = Book.where.not(id: current_user.owned_book_ids).where(:era => "VH2").pub_order
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1847,7 +1847,7 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Acclaim Entertainment").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
-    @book = Book.all.where(:publisher => "Acclaim Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
+    @book = Book.all.where(:publisher => "Acclaim Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).pub_order.page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
     @book = @book.where(:title => params[:title]) if params[:title].present?
     @optionstitle = Book.where(:publisher => "Acclaim Entertainment").select("DISTINCT(title)").group("title").order("title")

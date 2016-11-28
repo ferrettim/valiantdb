@@ -25,11 +25,11 @@
   <% end %>
   <% if controller_name == 'books' && action_name == 'show' %>
     <meta name="description" content="<%= h raw strip_tags(@book.summary) %>">
-  <% elsif controller_name == 'feeds' && action_name = 'news' %>
+  <% elsif controller_name == 'feeds' && action_name == 'news' %>
     <meta name="description" content="Valiant Comics news at Valiant Database, updated on the hour, every hour.">
-  <% elsif controller_name == 'pages' && action_name = 'privacy' %>
+  <% elsif controller_name == 'pages' && action_name == 'privacy' %>
     <meta name="description" content="Valiant Database privacy policy...because your privacy matters.">
-  <% elsif  controller_name == 'pages' && action_name = 'terms' %>
+  <% elsif  controller_name == 'pages' && action_name == 'terms' %>
     <meta name="description" content="Valiant Database terms of use.">
   <% else %>
     <meta name="description" content="Valiant Database is the ultimate source for Valiant comics from all eras. We have EVERY title ever published, soliciations, sales and pricing data, and more!">

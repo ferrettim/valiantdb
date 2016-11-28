@@ -31,6 +31,11 @@ class Book < ActiveRecord::Base
 	has_many :taggings
 	has_many :tags, through: :taggings
 	has_many :comments, :dependent => :destroy
+	scope :pub_order, -> { order(rdate: :asc, issue: :asc) }
+	scope :title_order, -> { order(title: :asc, issue: :asc) }
+	scope :main_order, -> { order(rdate: :asc, title: :asc, issue: :asc) }
+	scope :created_order, -> { order(title: :asc, rdate: :asc, created_at: :asc) }
+	scope :printrun_order, -> { order(printrun: :desc) }
 	has_paper_trail
 
 	def slug_candidates
