@@ -1628,7 +1628,7 @@ class BooksController < ApplicationController
 
   def valiantkeys
     @pgtitle = "Key Issues (2012-)"
-    @books = Book.where(:iskey => true).where(:publisher => "Valiant Entertainment").order(rdate: :asc, issue: :asc)
+    @books = Book.where(:iskey => true).where(:publisher => "Valiant Entertainment").order(rdate: :asc, issue: :asc).page(params[:page]).per(24)
     respond_to do |format|
       format.html
       format.js
