@@ -8,7 +8,7 @@
 		                <!-- SIDEBAR USERPIC -->
 		                <div class="profile-userpic">
 		                	<div class="place pull-right">
-			                	
+
 						    </div>
 		                    <% if u.avatar.blank? %>
 		                        <img src="https://s3.amazonaws.com/valiantdb/images/noimg-med.png" class="img-responsive">
@@ -32,11 +32,15 @@
 									<% end %>
 								</div>
 		                        <%= link_to root_url + "users/" + u.slug + "/profile", :title => "See profile" do %>
-		                        	<small><%= u.name %></small> 
+		                        	<small><%= u.name %></small>
 		                        <% end %>
+                            <br />
 			                    <% if u.patron? %>
-			                        <%= link_to "http://www.patreon.com/comicark", :title => "I'm a patron, are you?", :target => "_blank" do %><%= image_tag "https://s3.amazonaws.com/valiantdb/images/patreonbadge.png", height: "12px" %><% end %>
+			                        <%= link_to "http://www.patreon.com/valiantdb", :title => "I'm a patron, are you?", :target => "_blank" do %><%= image_tag "https://s3.amazonaws.com/valiantdb/images/patreonbadge.png", height: "12px" %><% end %>
 			                    <% end %>
+                          <%= link_to new_conversation_path(:user => u.id), title: "Message This User" do %>
+                            <i class="fa fa-envelope"></i>
+                          <% end %>
 		                        <br />
 		                        <small>Owns <%= u.owned_books.where(:publisher => ["Valiant Entertainment", "Voyager Communications", "Acclaim Entertainment"]).count %> <% if u.owned_books.where(:publisher => ["Valiant Entertainment", "Voyager Communications", "Acclaim Entertainment"]).count == 1 %>book<% else %>books<% end %></small>
 		                        <br />

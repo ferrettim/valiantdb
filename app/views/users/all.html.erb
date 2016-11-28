@@ -16,7 +16,7 @@
 					                            	<i class="fa fa-user-times"></i>
 					                        	<% end %>
 					                    	<% else %>
-					                        	<%= button_to follow_path(user: u.id) , remote: true, method: :get , class: "btn btn-default btn-sm", title: "Follow user" do %> 
+					                        	<%= button_to follow_path(user: u.id) , remote: true, method: :get , class: "btn btn-default btn-sm", title: "Follow user" do %>
 					                                <i class="fa fa-user-plus"></i>
 					                            <% end %>
 					                        <% end %>
@@ -45,17 +45,21 @@
 										</div>
 									<% end %>
 								</div>
-		                        <%= link_to root_url + "users/" + u.slug + "/profile", :title => "See profile" do %>
-		                        	<small><%= u.name %></small>
+		                    <%= link_to root_url + "users/" + u.slug + "/profile", :title => "See profile" do %>
+		                        <small><%= u.name %></small>
 				                <% end %>
+                        <br />
 				                <% if @hardcats.include? u.id %>
 			                        <%= image_tag "https://s3.amazonaws.com/valiantdb/images/hardcorps.jpg", height: "12px", :title => "H.A.R.D. Cat" %>
 			                    <% end %>
 			                    <% if u.patron? %>
-			                        <%= link_to "http://www.patreon.com/comicark", :title => "I'm a patron, are you?", :target => "_blank" do %><%= image_tag "https://s3.amazonaws.com/valiantdb/images/patreonbadge.png", height: "12px" %><% end %>
+			                        <%= link_to "http://www.patreon.com/valiantdb", :title => "I'm a patron, are you?", :target => "_blank" do %><%= image_tag "https://s3.amazonaws.com/valiantdb/images/patreonbadge.png", height: "12px" %><% end %>
 			                    <% end %>
+                          <%= link_to new_conversation_path(:user => u.id), title: "Message This User" do %>
+                            <i class="fa fa-envelope"></i>
+                          <% end %>
 				                <br />
-		                 		
+
 		                    </div>
 		                </div>
 		                <!-- END SIDEBAR USER TITLE -->

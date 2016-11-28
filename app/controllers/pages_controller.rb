@@ -43,8 +43,8 @@ class PagesController < ApplicationController
     @pgtitle = "Valiant Database User Levels"
   end
 
-  def chat
-    @pgtitle = "Valiant Database Chat"
+  def veitimeline
+    @pgtitle = "Valiant Timeline"
   end
 
 end

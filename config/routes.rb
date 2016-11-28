@@ -167,7 +167,7 @@ Rails.application.routes.draw do
   get 'releases/latestsolicitations' => 'books#latestsolicits'
   get 'releases/veibydate' => 'books#valiantreleasedate'
   get 'releases/veibydate/table' => 'books#valiantreleasedatetbl'
-  get 'releases/veitimeline' => 'books#valiantpubvei'
+  get 'timelines/valiant' => 'pages#veitimeline'
   get 'releases/vh1bydate' => 'books#valiantvh1releasedate'
   get 'releases/vh1bydate/table' => 'books#valiantvh1releasedatetbl'
   get 'changelog' => 'pages#changelog'
