@@ -176,7 +176,7 @@ Rails.application.routes.draw do
   # Sales
   get 'sales/monthly' => 'books#monthlysales'
   get 'sales/yearly' => 'books#yearlysales'
-  get 'sales/yearly' => 'books#yearlysales'
+  get 'sales/marketshare' => 'pages#marketshare'
   get 'sales/vei' => 'books#valiantsalesvei'
   get 'sales/veibytitle' => 'books#valiantsalestitle'
   get 'sales/statistics' => 'books#valiantsalesstats'

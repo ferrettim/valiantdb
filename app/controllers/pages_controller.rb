@@ -47,4 +47,8 @@ class PagesController < ApplicationController
     @pgtitle = "Valiant Timeline"
   end
 
+  def marketshare
+    @pgtitle = "Valiant Marketshare"
+  end
+
 end
