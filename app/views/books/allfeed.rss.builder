@@ -28,12 +28,11 @@ xml.rss :version => "2.0" do
         xml.guid article.id.to_s
 
         if article.category == "Paperback"
-          text = article.title.to_s + " Volume " + article.issue.to_s + " Trade Paperback. Written by " + article.writer.to_s + ", art by " + article.artist.to_s + ". Released on " + article.rdate.to_s(:rfc822)
+          text = article.title.to_s + " Volume " + article.issue.to_s + " Trade Paperback. Written by " + article.writer.to_s + ", art by " + article.artist.to_s
         elsif article.category == "Hardcover"
-          text = article.title.to_s + " Deluxe Hardcover Volume " + article.issue.to_s + ".Written by " + article.writer.to_s + ", art by " + article.artist.to_s + ". Released on " + article.rdate.to_s(:rfc822)
+          text = article.title.to_s + " Deluxe Hardcover Volume " + article.issue.to_s + ".Written by " + article.writer.to_s + ", art by " + article.artist.to_s
         elsif article.category == "Default"
-          text = article.title.to_s + " #" + article.issue.to_s + ".Written by " + article.writer.to_s + ", art by " + article.artist.to_s + ". Released on " + article.rdate.to_s(:rfc822)
-        end
+          text = article.title.to_s + " #" + article.issue.to_s + ".Written by " + article.writer.to_s + ", art by " + article.artist.to_s + "This book has " + Book.where(:title => article.title.to_s).where(:issue => article.issue.to_s).where(:rdate => article.rdate.to_s).where(:category => "Variant").count.to_s + " variant covers."
         xml.description text
 
       end
