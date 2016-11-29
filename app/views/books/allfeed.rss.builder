@@ -27,7 +27,8 @@ xml.rss :version => "2.0" do
           text = "Written by " + article.writer.to_s + " with art by " + article.artist.to_s + " and cover by " + article.cover.to_s + "."
         elsif article.category == "Hardcover"
           text = "Written by " + article.writer.to_s + " with art by " + article.artist.to_s + " and cover by " + article.cover.to_s + "."
-		# if you like, do something with your content text here e.g. insert image tags.
+        end
+    # if you like, do something with your content text here e.g. insert image tags.
 		# Optional. I'm doing this on my website.
         unless article.image.blank?
             image_url = article.image.url(:medium)
