@@ -29,7 +29,7 @@ xml.rss :version => "2.0" do
 
         if article.category == "Sketch"
           text = "Sketch cover by " + article.cover.to_s
-        else 
+        else
           text = "Written by " + article.writer.to_s + ", art by " + article.artist.to_s + ". Released on " + article.rdate.to_s(:rfc822)
         end
 		# if you like, do something with your content text here e.g. insert image tags.
