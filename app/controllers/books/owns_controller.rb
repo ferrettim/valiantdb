@@ -8,8 +8,7 @@ class Books::OwnsController < ApplicationController
 		if user_signed_in? && current_user.wishes?(@book)
 			@book.wishes.where(user_id: current_user.id).destroy_all
 		end
-		@own = Own.where(user_id: current_user.id, book_id: @book.id)
-		Own.update(@own, :quantity => "1")
+		Own.where(user_id: current_user.id, book_id: @book.id).update(:quantity => "1")
 		respond_to do |format|
 			format.html { redirect_to request.referer}
 			format.js

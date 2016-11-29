@@ -1,25 +1,25 @@
-Owned by 
+Owned by
 <% if @owners.count > 0 %>
 	<a href="#" data-toggle="modal" data-target="#book_owners">
-		<%= @owners.count %> 
+		<%= @owners.count %>
 		<% if @owners.count == 1 %>user<% else %>users<% end %>
 	</a>
 <% else %>
-	<%= @owners.count %> 
+	<%= @owners.count %>
 		<% if @owners.count == 1 %>user<% else %>users<% end %>
 <% end %>
 
-and in 
+and in
 <% if @wishers.count > 0 %>
 	<a href="#" data-toggle="modal" data-target="#book_wishers">
-		<%= @wishers.count %> 
+		<%= @wishers.count %>
 		<% if @wishers.count == 1 %>wishlist<% else %>wishlists<% end %>
 	</a>.
 <% else %>
-	<%= @wishers.count %> 
+	<%= @wishers.count %>
 		<% if @wishers.count == 1 %>wishlist<% else %>wishlists<% end %>
 <% end %>
- 
+
 
 
 <!-- Owners Modal -->
@@ -33,7 +33,6 @@ and in
       </div>
       <div class="modal-body">
         <% @ownusers.each do |u| %>
-			                        		<% u.owned_books.where(:id => @book.id).limit(20).each do %>
 				                        		<div class="col-md-3 col-sm-4 col-xs-6">
 					                        		<% if u.avatar.blank? %>
 					                        			<%= link_to root_url + "users/" + u.slug.to_s + "/collection", :title => u.name.to_s + "'s Collection" do %>
@@ -44,10 +43,9 @@ and in
 								                        	<%= image_tag u.avatar.url(:medium), :alt => "Profile image", class: "img-responsive" %>
 								                        <% end %>
 								                    <% end %>
-													<br /><br />
+																		<br /><br />
 				                        		</div>
-				                        	<% end %>
-		<% end %>
+				<% end %>
       </div>
       <div class="clearfix"></div>
       <div class="modal-footer">
@@ -68,7 +66,6 @@ and in
       </div>
       <div class="modal-body">
         <% @wishusers.each do |w| %>
-			                        		<% w.wished_books.where(:id => @book.id).limit(20).each do %>
 				                        		<div class="col-md-3 col-sm-4 col-xs-6">
 					                        		<% if w.avatar.blank? %>
 					                        			<%= link_to root_url + "users/" + w.slug.to_s + "/wishlist", :title => w.name.to_s + "'s Wishlist" do %>
@@ -81,8 +78,7 @@ and in
 								                    <% end %>
 													<br /><br />
 				                        		</div>
-				                        	<% end %>
-		<% end %>
+				<% end %>
       </div>
       <div class="clearfix"></div>
       <div class="modal-footer">

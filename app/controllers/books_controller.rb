@@ -489,6 +489,7 @@ class BooksController < ApplicationController
   end
 
   def show
+    @thisuser = current_user
     if @book.category == "Paperback"
       @pgtitle = @book.title + " Vol. " + @book.issue.to_s + " TPB"
     elsif @book.category == "Hardcover"
@@ -502,8 +503,8 @@ class BooksController < ApplicationController
     @intrade = Book.where(:title => @book.title, :arc => @book.arc, :category => "Paperback")
     @sellers2 = Sale.where(:book_id => @book.id).pluck(:user_id).flatten.join(',')
     @sales_count = Sale.where(:book_id => @book.id).count
-    @ownusers = User.joins(:owns).where("owns.book_id = ?", @book.id).order(last_sign_in_at: :desc)
-    @wishusers = User.joins(:wishes).where("wishes.book_id = ?", @book.id).order(last_sign_in_at: :desc)
+    @ownusers = User.joins(:owns).where("owns.book_id = ?", @book.id).order(last_sign_in_at: :desc).limit(20)
+    @wishusers = User.joins(:wishes).where("wishes.book_id = ?", @book.id).order(last_sign_in_at: :desc).limit(20)
     @allusers = User.joins(:sales).where("sales.book_id = ?", @book.id).order(last_sign_in_at: :desc)
     @wishers = Wish.where(:book_id => @book.id).pluck(:user_id)
     @owners = Own.where(:book_id => @book.id).pluck(:user_id)
