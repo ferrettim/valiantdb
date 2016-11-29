@@ -42,7 +42,7 @@ class BooksController < ApplicationController
   end
 
   def allfeed
-    @feed_posts = Book.all.where(:status => "Active").order(created_at: :desc).limit(25)
+    @feed_posts = Book.where(:publisher => "Valiant Entertainment").where.not(:category => "Variant").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).where.not(:category => "Sketch").order(:title)
     respond_to do |format|
       format.rss { render :layout => false }
     end

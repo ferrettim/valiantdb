@@ -3,34 +3,22 @@
 xml.instruct! :xml, :version => "1.0"
 xml.rss :version => "2.0" do
   xml.channel do
-    xml.title "ComicArk Recently Added"
+    xml.title "Valiant Database New releases"
     xml.author "Martin Ferretti"
     xml.description "The best comic book resource on the web"
-    xml.link "https://www.comicark.com"
+    xml.link "https://www.valiantdatabase.com"
     xml.language "en"
 
     for article in @feed_posts
       xml.item do
-        if article.title
-          if article.category == "Paperback"
-            xml.title "New to the database, " + article.title.to_s + " TPB Vol. " + article.issue.to_s
-          elsif article.category == "Hardcover"
-            xml.title "New to the database, " + article.title.to_s + " Deluxe HC Vol. " + article.issue.to_s
-          else
-            xml.title "New to the database, " + article.title.to_s + " #" + article.issue.to_s
-          end
-        else
-          xml.title ""
-        end
-        xml.author article.cover.to_s
-        xml.pubDate article.created_at.to_s(:rfc822)
-        xml.link "http://www.comicark.com/books/" + article.slug.to_s
+        xml.title "Out this week " + article.title.to_s + " #" + article.issue.to_s
+        xml.link "https://www.valiantdatabase.com/books/" + article.slug.to_s
         xml.guid article.id.to_s
 
         if article.category == "Sketch"
           text = "Sketch cover by " + article.cover.to_s
-        else 
-          text = "Written by " + article.writer.to_s + ", art by " + article.artist.to_s + ". Released on " + article.rdate.to_s(:rfc822)
+        else
+          text = "Written by " + article.writer.to_s + " with art by " + article.artist.to_s + " and cover by " + article.cover.to_s + ". This book has " + Book.where(:title => article.title.to_s).where(:issue => article.issue.to_s).where(:rdate => article.rdate.to_s).where(:category => "Variant").count.to_s + " variants."
         end
 		# if you like, do something with your content text here e.g. insert image tags.
 		# Optional. I'm doing this on my website.
