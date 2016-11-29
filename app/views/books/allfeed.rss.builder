@@ -1,4 +1,4 @@
-encoding: UTF-8
+xml.instruct! :encoding => "UTF-8"
 
 xml.instruct! :xml, :version => "1.0"
 xml.rss :version => "2.0" do
