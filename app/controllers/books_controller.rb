@@ -4,7 +4,7 @@
 
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
-  before_action :csvauthenticate
+  before_action :csvauthenticate, except: [:allfeed]
   # before_action :authenticate, :only => :alladmin
   autocomplete :book, :title
   autocomplete :book, :writer
@@ -1878,7 +1878,7 @@ class BooksController < ApplicationController
 
     def csvauthenticate
       case request.format
-      when Mime::XML
+      when Mime[:xml]
         authenticate_or_request_with_http_basic('Administration') do |username, password|
           sha512_of_password = Digest::SHA2.new(512).hexdigest(password)
           username == 'admin' && sha512_of_password == 'DDDB04622B79FCED0EE0BD3381EFC468EC6CE1A110FE493135B179BAE8068416352B3D61077D1000F2A146B2F6B1AAF20D41D7B7A3CCD5E307625D086D5162FD'
