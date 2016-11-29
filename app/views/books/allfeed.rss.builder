@@ -3,7 +3,6 @@ xml.rss :version => "2.0" do
   xml.channel do
     for article in @feed_posts
       xml.item do
-        xml.guid article.id.to_s
         if article.category == "Default"
           xml.title "Out this week " + article.title.to_s + " #" + article.issue.to_s
         elsif article.category == "Paperback"
@@ -20,6 +19,7 @@ xml.rss :version => "2.0" do
         elsif article.category == "Hardcover"
           xml.description = "Written by " + article.writer.to_s + " with art by " + article.artist.to_s + " and cover by " + article.cover.to_s + "."
         end
+        xml.guid article.id.to_s
       end
     end
   end
