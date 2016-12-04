@@ -117,4 +117,7 @@
   ["Oct 16", "0.73"]
 ], colors: ["green"], discrete: true, xtitle: "Time In Months", ytitle: "% Dollar Share" %>
 <div class="clearfix"><br /></div>
+<h4>Unit Sales Per Month</h4>
+<%= line_chart Book.where(:publisher => "Valiant Entertainment").where(:category => "Default").where("printrun > ?", "1").where("rdate > ?", "2012-05-01").group_by_month( :rdate, "sum", "printrun"), xtitle: "Month", ytitle: "Total", format: "%b %Y", colors: ["blue", "white"] %>
+<div class="clearfix"><br /></div>
 </div>

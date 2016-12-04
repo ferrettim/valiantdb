@@ -14,13 +14,13 @@ class FeedsController < ApplicationController
   end
 
   def news
-    @pgtitle = "Latest Comic Book News"
+    @pgtitle = "Latest Valiant Comics News"
     @feeds = Feed.all
     @entries = Entry.all.order(published: :desc).page(params[:page]).per(36)
   end
 
   def newstbl
-    @pgtitle = "Latest Comic Book News"
+    @pgtitle = "Latest Valiant Comics News"
     @feeds = Feed.all
     @entries = Entry.all.order(published: :desc).page(params[:page]).per(36)
   end
