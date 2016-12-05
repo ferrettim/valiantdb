@@ -402,7 +402,7 @@
 										   <% end %>
 
 										   <% unless @book.category == "Sketch" %>
-										   Accounted for: <strong><%= @rescues.sum :quantity %></strong> <% if (@rescues.sum :quantity) == 1 %>copy<% else %>copies<% end %>
+										   Accounted for: <strong><%= @rescues.sum :quantity %></strong> <%= pluralize((@rescues.sum :quantity), "copy") %>
 										   <% end %>
 										   <br />
 

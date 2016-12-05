@@ -23,7 +23,7 @@
 					<th class="text-right"><strong>12 Months</strong></th>
 				</tr>
 			</thead>
-			
+
 			<% @book.each do |title| %>
 				<tr>
 					<% if Book.where(:category => "Default").where(:publisher => "Valiant Entertainment").where(:title => title.title, :rdate => (Date.today - 12.month).beginning_of_month..(Date.today).end_of_month).sum(:printrun) > 0 %>

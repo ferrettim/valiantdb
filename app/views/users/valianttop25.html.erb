@@ -42,7 +42,7 @@
                             <i class="fa fa-envelope"></i>
                           <% end %>
 		                        <br />
-		                        <small>Owns <%= u.owned_books.where(:publisher => ["Valiant Entertainment", "Voyager Communications", "Acclaim Entertainment"]).count %> <% if u.owned_books.where(:publisher => ["Valiant Entertainment", "Voyager Communications", "Acclaim Entertainment"]).count == 1 %>book<% else %>books<% end %></small>
+		                        <small>Owns <%= u.owned_books.count %> <%= pluralize(u.owned_books.count, "book") %></small>
 		                        <br />
 		                        <small>Joined <%= u.created_at.strftime("%B %d, %Y") %></small>
 		                    </div>

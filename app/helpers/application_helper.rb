@@ -4,4 +4,9 @@ module ApplicationHelper
     @active == active_page ? "active" : ""
   end
 
+  def pluralize(number, text)
+    return text.pluralize if number != 1
+    text
+  end
+
 end

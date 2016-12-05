@@ -1,23 +1,19 @@
 Owned by
 <% if @owners.count > 0 %>
 	<a href="#" data-toggle="modal" data-target="#book_owners">
-		<%= @owners.count %>
-		<% if @owners.count == 1 %>user<% else %>users<% end %>
+		<%= @owners.count %> <%= pluralize(@owners.count, "user") %>
 	</a>
 <% else %>
-	<%= @owners.count %>
-		<% if @owners.count == 1 %>user<% else %>users<% end %>
+	<%= @owners.count %> <%= pluralize(@owners.count, "user") %>
 <% end %>
 
 and in
 <% if @wishers.count > 0 %>
 	<a href="#" data-toggle="modal" data-target="#book_wishers">
-		<%= @wishers.count %>
-		<% if @wishers.count == 1 %>wishlist<% else %>wishlists<% end %>
+		<%= @wishers.count %> <%= pluralize(@wishers.count, "wishlist") %>
 	</a>.
 <% else %>
-	<%= @wishers.count %>
-		<% if @wishers.count == 1 %>wishlist<% else %>wishlists<% end %>
+	<%= @wishers.count %> <%= pluralize(@wishers.count, "wishlist") %>
 <% end %>
 
 
