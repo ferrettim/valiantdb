@@ -27,11 +27,16 @@
       </div>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
-      <h5><strong>Layout Preferences</strong></h5>
+      <h5><strong>Additional Preferences</strong></h5>
         <% if @user.tableview == false %>
           <%= f.input :tableview, label: "Check to use table view" %>
         <% else %>
           <%= f.input :tableview, label: "Uncheck to use grid view" %>
+        <% end %>
+        <% if @user.voice == false %>
+          <%= f.input :voice, label: "Check to enable voice commands" %>
+        <% else %>
+          <%= f.input :voice, label: "Uncheck to disable voice commands" %>
         <% end %>
         <!--
         <h5><strong>Publisher Preferences</strong></h5>
