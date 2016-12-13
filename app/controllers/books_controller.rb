@@ -252,10 +252,9 @@ class BooksController < ApplicationController
       @pgtitle = "Monthly Sales for " + Date.parse(@date.to_s).strftime("%B %Y")
       @booksales = Book.where(:category => "Default").where(:rdate => @date.beginning_of_month..@date.end_of_month).where("printrun > ?", "1").printrun_order.limit(300)
     else
-      @date = DateTime.now.strftime("%B %Y")
-      @pgtitle = "Monthly Comic Book Sales"
-      @booksales = Book.where(:category => "Default").where(:rdate => DateTime.now.beginning_of_month..DateTime.now.end_of_month).where("printrun > ?", "1001").printrun_order.limit(300)
-      @booksales2 = Book.where(:category => "Default").where(:rdate => (DateTime.now.beginning_of_month - 2.month)..(DateTime.now.end_of_month - 2.month)).where("printrun > ?", "1001").printrun_order.limit(300)
+      @date = (DateTime.now - 1.month).strftime("%B %Y")
+      @pgtitle = "Monthly Sales for " + Date.parse(@date.to_s).strftime("%B %Y")
+      @booksales = Book.where(:category => "Default").where(:rdate => (DateTime.now.beginning_of_month - 1.month)..(DateTime.now.end_of_month - 1.month)).where("printrun > ?", "1001").printrun_order.limit(300)
     end
   end
 
@@ -263,11 +262,11 @@ class BooksController < ApplicationController
     if params[:date].present?
       @date = Date.strptime(params[:date], '%Y')
       @pgtitle = "Top 25 Sellers for " + Date.parse(@date.to_s).strftime("%Y")
-      @booksales = Book.where(:category => "Default").where(:rdate => @date.beginning_of_year..@date.end_of_year).where("printrun > ?", "1").printrun_order.limit(25)
+      @booksales = Book.where(:category => "Default").where(:rdate => @date.beginning_of_year..@date.end_of_year).where("printrun > ?", "1001").printrun_order.limit(25)
     else
       @date = DateTime.now.strftime("%Y")
       @pgtitle = "Top 25 Sellers for " + DateTime.now.strftime("%Y")
-      @booksales = Book.where(:category => "Default").where(:rdate => DateTime.now.beginning_of_year..DateTime.now.end_of_year).where("printrun > ?", "1").printrun_order.limit(25)
+      @booksales = Book.where(:category => "Default").where(:rdate => DateTime.now.beginning_of_year..DateTime.now.end_of_year).where("printrun > ?", "1001").printrun_order.limit(25)
     end
   end
 
