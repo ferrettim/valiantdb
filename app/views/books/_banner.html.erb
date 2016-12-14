@@ -201,7 +201,7 @@
         </div>
       <% end %>
     <% else %>
-      <div id="bannermine">
+      <div id="bannerall">
       </div>
     <% end %>
   <% elsif action_name == "mybookstbl" %>
@@ -259,7 +259,7 @@
         </div>
       <% end %>
     <% else %>
-      <div id="bannermine">
+      <div id="bannerall">
       </div>
     <% end %>
   <% elsif action_name == "mybooksint" %>
@@ -320,7 +320,7 @@
         </div>
       <% end %>
     <% else %>
-      <div id="bannermine">
+      <div id="bannerall">
       </div>
     <% end %>
   <% elsif action_name == "mywishlisttbl" %>
@@ -378,17 +378,17 @@
         </div>
       <% end %>
     <% else %>
-      <div id="bannermine">
+      <div id="bannerall">
       </div>
     <% end %>
   <% elsif action_name == "mywishlistint" %>
     <div id="bannerall">
     </div>
   <% elsif action_name == "mynotes" %>
-    <div id="bannermine">
+    <div id="bannerall">
     </div>
   <% elsif action_name == "search" %>
-    <div id="bannermine">
+    <div id="bannerall">
       <div class="pageinfo">
         <% if params[:query].present? %>
           <% if @title.count > 0 %>
@@ -464,7 +464,7 @@
         </div>
       <% end %>
     <% else %>
-      <div id="bannermine">
+      <div id="bannerall">
       </div>
     <% end %>
   <% elsif action_name == "forsaletbl" %>
@@ -530,7 +530,7 @@
         </div>
       <% end %>
     <% else %>
-      <div id="bannermine">
+      <div id="bannerall">
       </div>
     <% end %>
   <% elsif action_name == "salesvei" %>
@@ -591,7 +591,7 @@
         </div>
       <% end %>
     <% else %>
-      <div id="bannermine">
+      <div id="bannerall">
       </div>
     <% end %>
   <% elsif action_name == "currentweek" %>
@@ -649,7 +649,7 @@
         </div>
       <% end %>
     <% else %>
-      <div id="bannermine">
+      <div id="bannerall">
       </div>
     <% end %>
   <% elsif action_name == "nextweek" %>
@@ -659,7 +659,7 @@
         </div>
       <% end %>
     <% else %>
-      <div id="bannermine">
+      <div id="bannerall">
       </div>
     <% end %>
   <% elsif action_name == "valiantreleasedate" %>
@@ -685,7 +685,7 @@
   <div id="bannerclassic"></div>
 
   <% elsif action_name == "monthlysales" %>
-    <div id="bannermine">
+    <div id="bannerall">
       <div class="pageinfo">
         <div class="pull-right table-view">
           <div class="dropdown">
