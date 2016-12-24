@@ -515,6 +515,13 @@
 												   			 	<% end %>
 												   			<% end %>
 												   <% end %>
+													 <% if user_signed_in? && @book.note.include?("1:500 ") %>
+												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
+												   				<% if s.printrun? %>
+												   			 		Sales: <strong><%= s.printrun / 500 %> </strong> copies (estimated based on total sales)<br />
+												   			 	<% end %>
+												   			<% end %>
+												   <% end %>
 												<% end %>
 
 												   <% if @book.publisher? %>
