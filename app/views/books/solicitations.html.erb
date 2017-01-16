@@ -56,7 +56,7 @@
 							<% elsif upcoming.category == "Promo" %>
 								Cover by <%= upcoming.cover.to_s.to_s %><br />
 							<% else %>
-								Covers by <%= upcoming.cover.to_s.to_s %> <% unless @book.code.blank? %>(<%= upcoming.code.to_s.upcase %>)<% end %>
+								Covers by <%= upcoming.cover.to_s.to_s %> <% unless upcoming.code.blank? %>(<%= upcoming.code.to_s.upcase %>)<% end %>
 								<% if upcoming.category == "Default" %>
 									<% Book.where(:title => upcoming.title).where(:issue => upcoming.issue).where(rdate: (upcoming.rdate - 1.month)..(upcoming.rdate + 1.month)).where(:category => "Variant").where.not(:id => upcoming.id).each do |related| %>, <%= related.cover.to_s %>
 								<% end %><br />
