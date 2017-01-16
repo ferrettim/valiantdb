@@ -72,13 +72,13 @@
           </ul>
           <% if current_user.super_admin? %>
             <ul class="list-inline">
-              
+
               <li><%= f.input :value_in_dollars, :label => "NM Price" %></li>
               <!-- <li><%= f.input :price98, :label => "CGC Price" %></li> -->
               <li><%= f.input :printrun, :label => "Print run" %></li>
-              
+
               <li><%= f.input :status, collection: ["Active",
-                                              "Pending"], 
+                                              "Pending"],
                                    selected: "Active",
                                    label: "Select published status",
                                    class: "form-control" %></li>
@@ -95,7 +95,7 @@
           <div class="clearfix"><br /></div>
           <%= f.label 'Preview Images' %><br>
           <ul class="list-inline">
-            <% 8.times do |i| %>
+            <% 12.times do |i| %>
                <li>Preview <%= i + 1 %> &nbsp;
                <%= file_field_tag "previews[#{i}]", accept: 'image/png,image/jpeg' %> &nbsp;
                <%= @book.previews[i].nil? ? '' : label_tag(@book.previews[i].image_file_name,nil,id: "photo#{@book.previews[i].id}") %> &nbsp;

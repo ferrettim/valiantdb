@@ -348,7 +348,7 @@ class BooksController < ApplicationController
         @newbooks = Book.where(:publisher => "Valiant Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
       end
     else
-      @pgtitle = "Comics Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
+      @pgtitle = "Valiant Releases for " + (Date.today.beginning_of_week + 2.day).strftime("%B %d, %Y")
       @newbooks = Book.where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
     end
     respond_to do |format|
@@ -365,7 +365,7 @@ class BooksController < ApplicationController
         @newbooks = Book.where(:publisher => "Valiant Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
       end
     else
-      @pgtitle = "Comics Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
+      @pgtitle = "Valiant Releases for " + (Date.today.beginning_of_week + 9.day).strftime("%B %d, %Y")
       @newbooks = Book.where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
     end
     respond_to do |format|

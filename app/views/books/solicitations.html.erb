@@ -15,6 +15,7 @@
 				<p>Breakdown of releases by category -
 					<strong><%= @newbooks.where(:category => "Default").count %></strong> titles, <strong><%= @newbooks.where(:category => "Variant").count %></strong> variant covers, <strong><%= @newbooks.where(:category => "Paperback").count %></strong> trades, and <strong><%= @newbooks.where(:category => "Hardcover").count %></strong> deluxe hardcovers.
 				</p>
+				<p><strong>NOTE:</strong> Remember that covers with order ratios <strong>DO NOT</strong> have Diamond order codes available.</p>
 				<% @newbooks.where.not(:category => "Variant").each do |upcoming| %>
 					<div class="col-md-3 col-sm-4 col-xs-12">
 						<% if upcoming.category == "Paperback" %>
@@ -55,7 +56,7 @@
 							<% elsif upcoming.category == "Promo" %>
 								Cover by <%= upcoming.cover.to_s.to_s %><br />
 							<% else %>
-								Covers by <%= upcoming.cover.to_s.to_s %>
+								Covers by <%= upcoming.cover.to_s.to_s %> <% unless @book.code.blank? %>(<%= upcoming.code.to_s.upcase %>)<% end %>
 								<% if upcoming.category == "Default" %>
 									<% Book.where(:title => upcoming.title).where(:issue => upcoming.issue).where(rdate: (upcoming.rdate - 1.month)..(upcoming.rdate + 1.month)).where(:category => "Variant").where.not(:id => upcoming.id).each do |related| %>, <%= related.cover.to_s %>
 								<% end %><br />
