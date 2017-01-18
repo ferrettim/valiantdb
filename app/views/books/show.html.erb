@@ -196,6 +196,9 @@
 													<%= @book.title + " #50-O" %>
 												<% else %>
 													<%= @book.title + " #" + @book.issue.to_s %>
+													<% unless @book.ratio.blank? %>
+														(<%= @book.ratio.to_s %>)
+													<% end %>
 												<% end %>
 											<% end %>
 
@@ -661,7 +664,7 @@
 																            </div>
 																            <div class="modal-body">
 																			    <% Book.where(:category => "Default", :title => @book.title, :issue => @book.issue.to_s).where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).each do |g| %>
-																			    	<% g.previews.order(image_file_name: :desc).each do |h| %>
+																			    	<% g.previews.order(image_file_name: :asc).each do |h| %>
 																						<%= image_tag(h.image.url(:original), class: "img-responsive", :title => "Preview Image") %>
 																					<% end %>
 																				<% end %>

@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523194649) do
+ActiveRecord::Schema.define(version: 20170118010501) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -24,11 +23,10 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.string   "recipient_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
+    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
+    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
   end
-
-  add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
-  add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
-  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
 
   create_table "average_caches", force: :cascade do |t|
     t.integer  "rater_id"
@@ -85,9 +83,9 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.string   "image_remote_url"
     t.string   "imprint"
     t.string   "slug"
+    t.string   "ratio"
+    t.index ["slug"], name: "index_books_on_slug", unique: true
   end
-
-  add_index "books", ["slug"], name: "index_books_on_slug", unique: true
 
   create_table "characters", force: :cascade do |t|
     t.string   "name",               limit: 255
@@ -109,9 +107,8 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
+    t.index ["slug"], name: "index_characters_on_slug", unique: true
   end
-
-  add_index "characters", ["slug"], name: "index_characters_on_slug", unique: true
 
   create_table "collectibles", force: :cascade do |t|
     t.string   "title"
@@ -135,10 +132,9 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.text     "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_comments_on_book_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
-
-  add_index "comments", ["book_id"], name: "index_comments_on_book_id"
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "entries", force: :cascade do |t|
     t.string   "title"
@@ -175,10 +171,9 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.string   "followable_type", limit: 255
     t.integer  "followable_id"
     t.datetime "created_at"
+    t.index ["followable_id", "followable_type"], name: "fk_followables"
+    t.index ["follower_id", "follower_type"], name: "fk_follows"
   end
-
-  add_index "follows", ["followable_id", "followable_type"], name: "fk_followables"
-  add_index "follows", ["follower_id", "follower_type"], name: "fk_follows"
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -186,12 +181,11 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.string   "sluggable_type", limit: 50
     t.string   "scope"
     t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
-
-  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
-  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
-  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
-  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
 
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id"
@@ -199,9 +193,8 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.string   "uid",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["user_id"], name: "index_identities_on_user_id"
   end
-
-  add_index "identities", ["user_id"], name: "index_identities_on_user_id"
 
   create_table "itemowns", force: :cascade do |t|
     t.integer  "user_id"
@@ -240,10 +233,9 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.integer "unsubscriber_id"
     t.string  "unsubscriber_type", limit: 255
     t.integer "conversation_id"
+    t.index ["conversation_id"], name: "index_mailboxer_conversation_opt_outs_on_conversation_id"
+    t.index ["unsubscriber_id", "unsubscriber_type"], name: "index_mailboxer_conversation_opt_outs_on_unsubscriber_id_type"
   end
-
-  add_index "mailboxer_conversation_opt_outs", ["conversation_id"], name: "index_mailboxer_conversation_opt_outs_on_conversation_id"
-  add_index "mailboxer_conversation_opt_outs", ["unsubscriber_id", "unsubscriber_type"], name: "index_mailboxer_conversation_opt_outs_on_unsubscriber_id_type"
 
   create_table "mailboxer_conversations", force: :cascade do |t|
     t.string   "subject",    limit: 255, default: ""
@@ -267,12 +259,11 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.datetime "created_at",                                       null: false
     t.boolean  "global",                           default: false
     t.datetime "expires"
+    t.index ["conversation_id"], name: "index_mailboxer_notifications_on_conversation_id"
+    t.index ["notified_object_id", "notified_object_type"], name: "index_mailboxer_notifications_on_notified_object_id_and_type"
+    t.index ["sender_id", "sender_type"], name: "index_mailboxer_notifications_on_sender_id_and_sender_type"
+    t.index ["type"], name: "index_mailboxer_notifications_on_type"
   end
-
-  add_index "mailboxer_notifications", ["conversation_id"], name: "index_mailboxer_notifications_on_conversation_id"
-  add_index "mailboxer_notifications", ["notified_object_id", "notified_object_type"], name: "index_mailboxer_notifications_on_notified_object_id_and_type"
-  add_index "mailboxer_notifications", ["sender_id", "sender_type"], name: "index_mailboxer_notifications_on_sender_id_and_sender_type"
-  add_index "mailboxer_notifications", ["type"], name: "index_mailboxer_notifications_on_type"
 
   create_table "mailboxer_receipts", force: :cascade do |t|
     t.integer  "receiver_id"
@@ -284,10 +275,9 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.string   "mailbox_type",    limit: 25
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
+    t.index ["notification_id"], name: "index_mailboxer_receipts_on_notification_id"
+    t.index ["receiver_id", "receiver_type"], name: "index_mailboxer_receipts_on_receiver_id_and_receiver_type"
   end
-
-  add_index "mailboxer_receipts", ["notification_id"], name: "index_mailboxer_receipts_on_notification_id"
-  add_index "mailboxer_receipts", ["receiver_id", "receiver_type"], name: "index_mailboxer_receipts_on_receiver_id_and_receiver_type"
 
   create_table "mentions", force: :cascade do |t|
     t.string   "mentioner_type",   limit: 255
@@ -295,10 +285,9 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.string   "mentionable_type", limit: 255
     t.integer  "mentionable_id"
     t.datetime "created_at"
+    t.index ["mentionable_id", "mentionable_type"], name: "fk_mentionables"
+    t.index ["mentioner_id", "mentioner_type"], name: "fk_mentions"
   end
-
-  add_index "mentions", ["mentionable_id", "mentionable_type"], name: "fk_mentionables"
-  add_index "mentions", ["mentioner_id", "mentioner_type"], name: "fk_mentions"
 
   create_table "overall_averages", force: :cascade do |t|
     t.integer  "rateable_id"
@@ -325,9 +314,8 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.index ["book_id"], name: "index_previews_on_book_id"
   end
-
-  add_index "previews", ["book_id"], name: "index_previews_on_book_id"
 
   create_table "rates", force: :cascade do |t|
     t.integer  "rater_id"
@@ -337,10 +325,9 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.string   "dimension",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["rateable_id", "rateable_type"], name: "index_rates_on_rateable_id_and_rateable_type"
+    t.index ["rater_id"], name: "index_rates_on_rater_id"
   end
-
-  add_index "rates", ["rateable_id", "rateable_type"], name: "index_rates_on_rateable_id_and_rateable_type"
-  add_index "rates", ["rater_id"], name: "index_rates_on_rater_id"
 
   create_table "rating_caches", force: :cascade do |t|
     t.integer  "cacheable_id"
@@ -350,9 +337,8 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.string   "dimension",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["cacheable_id", "cacheable_type"], name: "index_rating_caches_on_cacheable_id_and_cacheable_type"
   end
-
-  add_index "rating_caches", ["cacheable_id", "cacheable_type"], name: "index_rating_caches_on_cacheable_id_and_cacheable_type"
 
   create_table "sales", force: :cascade do |t|
     t.integer  "user_id"
@@ -366,10 +352,9 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.integer  "book_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_taggings_on_book_id"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
   end
-
-  add_index "taggings", ["book_id"], name: "index_taggings_on_book_id"
-  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id"
 
   create_table "tags", force: :cascade do |t|
     t.string   "name"
@@ -432,12 +417,11 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.boolean  "pubarchie",                          default: true,  null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["slug"], name: "index_users_on_slug"
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["slug"], name: "index_users_on_slug"
-  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true
 
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",                     null: false
@@ -446,9 +430,8 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.string   "whodunnit"
     t.text     "object",     limit: 1073741823
     t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
-
-  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
 
   create_table "votes", force: :cascade do |t|
     t.integer  "votable_id"
@@ -460,10 +443,9 @@ ActiveRecord::Schema.define(version: 20160523194649) do
     t.integer  "vote_weight"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
+    t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
   end
-
-  add_index "votes", ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
-  add_index "votes", ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
 
   create_table "wishes", force: :cascade do |t|
     t.integer  "user_id"

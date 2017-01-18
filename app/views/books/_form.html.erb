@@ -34,10 +34,15 @@
               <% if @book.era? %>
                 <li><%= f.input :era, collection: ["", "VEI", "VH1", "VH2","Armada","Crime","Nintendo","Windjammer","Wrestling"], include_blank: true, selected: @book.era %></li>
               <% else %>
-                <li><%= f.input :era, collection: ["", "VEI", "VH1", "VH2","Armada","Crime","Nintendo","Windjammer","Wrestling"], include_blank: true, selected: "" %></li>
+                <li><%= f.input :era, collection: ["", "VEI", "VH1", "VH2","Armada","Crime","Nintendo","Windjammer","Wrestling"], include_blank: true, selected: "VEI" %></li>
               <% end %>
               <li>&nbsp;</li>
               <li><%= f.input :printing, collection: 1..10, selected: 1 %></li>
+              <% if @book.ratio? %>
+                <li><%= f.input :ratio, value: "#{@book.ratio.to_s}" %></li>
+              <% else %>
+                <li><%= f.input :ratio, value: "A" %></li>
+              <% end %>
             </ul>
             <ul class="list-inline">
               <li><%= f.input :isb, :label => "ISBN", as: :text, input_html: { rows: "1"} %></li>
@@ -65,7 +70,11 @@
             <li><%= f.input :letters, :url => autocomplete_book_letters_books_path, :as => :autocomplete, label: false, placeholder: "Enter letterer" %></li>
             <li><%= f.input :editor, :url => autocomplete_book_editor_books_path, :as => :autocomplete, label: false, placeholder: "Enter editor" %></li>
             <li><%= f.input :eic, :url => autocomplete_book_eic_books_path, :as => :autocomplete, label: false, placeholder: "Enter EIC" %></li>
-            <li><%= f.input :publisher, :url => autocomplete_book_publisher_books_path, :as => :autocomplete, label: false, placeholder: "Enter Publisher" %></li>
+            <% if @book.publisher? %>
+              <li><%= f.input :publisher, :url => autocomplete_book_publisher_books_path, :as => :autocomplete, label: false, placeholder: "Enter Publisher", value: "#{@book.publisher.to_s}" %></li>
+            <% else %>
+              <li><%= f.input :publisher, :url => autocomplete_book_publisher_books_path, :as => :autocomplete, label: false, placeholder: "Enter Publisher", value: "Valiant Entertainment" %></li>
+            <% end %>
             <li><%= f.input :imprint, :url => autocomplete_book_imprint_books_path, :as => :autocomplete, label: false, placeholder: "Enter Imprint" %></li>
             <li><%= f.input :country, :url => autocomplete_book_country_books_path, :as => :autocomplete, label: false, placeholder: "Enter Country" %></li>
             <li><%= f.input :code, label: false, placeholder: "Diamond Code" %></li>

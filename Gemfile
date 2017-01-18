@@ -89,8 +89,6 @@ gem 'money'
 gem 'google_currency'
 # News
 gem 'feedjira'
-# Tuning
-gem 'tunemygc'
 
 group :development do
 # Use sqlite3 as the database for Active Record
@@ -114,6 +112,8 @@ group :production do
 	# Server
 	gem "puma-heroku"
 	gem 'heroku-deflater', git: "https://github.com/romanbsd/heroku-deflater.git"
+	# Tuning
+	gem 'tunemygc'
 	# Background processing
 	gem 'sidekiq'
 	gem 'sinatra', require: false
