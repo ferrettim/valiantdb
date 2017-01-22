@@ -1,25 +1,6 @@
-<div class="content transitions-enabled container-fluid wellclear">
-  <h3 class="text-center">
-      <% if @user == current_user %>
-        <% if params[:query].present? %>
-          Wishlist Results <span class="label label-default label-as-badge"><%= current_user.wished_books.where(:title => params[:query]).count %></span>
-        <% else %>
-          <span class="btn btn-success btn-xs">
-            <%= link_to root_url + "users/" + current_user.id.to_s + "/wishlist.csv", :title => "Export collection" do %>
-              <span class="white fa fa-download"></span>
-            <% end %>
-          </span>
-          My Wishlist <% if user_signed_in? && current_user.patron? %><small>$<%= '%.2f' % ((current_user.wished_books.sum :pricenm) / 100.00) %></small><% end %> <% if user_signed_in? && current_user.illuminati? %><small>$<%= '%.2f' % ((current_user.wished_books.sum :pricenm) / 100.00) %></small><% end %>
-          <br />
-        <% end %>
-      <% else %>
-        <%= @user.name %>'s Wishlist <span class="label label-default label-as-badge"><%= @user.wished_books.count %></span>
-        <br />
-      <% end %>
-    </h3>
-    <div class="clearfix"></div>
-    
+<div class="content transitions-enabled container-fluid">
+
     <%= render "bookwishes" %>
-  
+
   <div class="clearfix"></div>
 </div>

@@ -91,7 +91,7 @@ class Book < ActiveRecord::Base
 	end
 
 	def self.to_csv
-    attributes = %w{title issue writer artist cover rdate category printrun note}
+    attributes = %w{title issue writer artist cover rdate category ratio printrun note}
 	    CSV.generate(headers: true) do |csv|
 	      csv << attributes
 	      all.each do |book|

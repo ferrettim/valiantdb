@@ -1,38 +1,6 @@
-<div class="content transitions-enabled container-fluid wellclear">
-  <h3 class="text-center">
-      <% if @user == current_user %>
-        <% if params[:query].present? %>
-          Collection Results <span class="label label-default label-as-badge"><%= current_user.owned_books.where(:title => params[:query]).count %></span>
-        <% else %>
-          <% unless params[:publisher].present? %>
-          <span class="btn btn-success btn-xs">
-            <%= link_to root_url + "users/" + current_user.id.to_s + "/collection.csv", :title => "Export collection" do %>
-                <span class="white fa fa-download"></span>
-            <% end %>    
-          </span>
-          <% end %>
+<div class="content transitions-enabled container-fluid">
 
-          My Collection 
-            <% if user_signed_in? && current_user.patron? %>
-              <% if params[:publisher] == "Valiant Entertainment" or params[:publisher] == "Voyager Communications" or params[:publisher] == "Acclaim Entertainment" %>
-                <small>$<%= '%.2f' % ((current_user.owned_books.sum :pricenm) / 100.00) %></small>
-              <% end %>
-            <% end %> 
-            <% if user_signed_in? && current_user.illuminati? %>
-              <% if params[:publisher] == "Valiant Entertainment" or params[:publisher] == "Voyager Communications" or params[:publisher] == "Acclaim Entertainment" %>
-                <small>$<%= '%.2f' % ((current_user.owned_books.sum :pricenm) / 100.00) %></small>
-              <% end %>
-            <% end %>
-          <br />
-        <% end %>
-      <% else %>
-        <%= @user.name %>'s Collection <span class="label label-default label-as-badge"><%= @user.owned_books.count %></span>
-        <br />
-      <% end %>
-    </h3>
-    <div class="clearfix"></div>
-    
     <%= render "bookown" %>
-  
+
   <div class="clearfix"></div>
 </div>

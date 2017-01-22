@@ -41,6 +41,57 @@
   <% end %>
 <% end %>
 
+<% if controller_name == "books" %>
+  <% if  action_name == "mybooks" or action_name == "mybookstbl" or action_name == "mywishlist" or action_name == "mywishlisttbl" %>
+    <div id="collectionoptions" class="modal fade" role="dialog" aria-labelledby="collectionoptions" aria-hidden="true" tabindex="-1">
+      <br /><br />
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">
+              Filter Options
+            </h4>
+          </div>
+          <div class="modal-body">
+            <div class="center">
+            <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
+              <select name="title" class="form-control chosen-select" style="width: 200px !important;">
+                <option value="">Book Title</option>
+                <% @optionstitle.each do |n| %>
+                  <option value="<%= n.title %>"><%= n.title %></option>
+                <% end %>
+              </select>
+              <select name="issue" class="form-control chosen-select" style="width: 100px !important;">
+                <option value="">Issue</option>
+                <% @optionsissue.each do |n| %>
+                  <option value="<%= n.issue %>"><%= n.issue %></option>
+                <% end %>
+              </select>
+              <select name="category" class="form-control chosen-select" style="width: 150px !important;">
+                <option value="">Type</option>
+                <% @optionscategory.each do |n| %>
+                  <option value="<%= n.category %>"><%= n.category %></option>
+                <% end %>
+              </select>
+              <br /><br />
+              <select name="publisher" class="form-control chosen-select" style="width: 458px !important;">
+                <option value="">Publisher</option>
+                <% @optionspublisher.each do |n| %>
+                  <option value="<%= n.publisher %>"><%= n.publisher %></option>
+                <% end %>
+              </select>
+              <br /><br />
+              <button type="submit" class="btn btn-primary btn-sm" style="width: 458px !important;"><i class="fa fa-filter"> Submit </i></button>
+            <% end %>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
   <% if controller_name == "books" && action_name == "valiantall" %>
     <div id="bannerall">
       <div class="pageinfo">
@@ -143,240 +194,100 @@
     </div>
 
   <% elsif action_name == "mybooks" %>
-    <% if params[:publisher].present? %>
-      <% if params[:publisher] == "Aftershock Comics" %>
-        <div id="aftershock">
-        </div>
-      <% elsif params[:publisher] == "451" %>
-        <div id="banner451">
-        </div>
-      <% elsif params[:publisher] == "Archie Comics" %>
-        <div id="bannerarchie">
-        </div>
-      <% elsif params[:publisher] == "Aspen Comics" %>
-        <div id="banneraspen">
-        </div>
-      <% elsif params[:publisher] == "Avatar Press" %>
-        <div id="banneravatar">
-        </div>
-      <% elsif params[:publisher] == "Black Mask Studios" %>
-        <div id="bannerblackmask">
-        </div>
-      <% elsif params[:publisher] == "Boom Studios" %>
-        <div id="bannerblackmask">
-        </div>
-      <% elsif params[:publisher] == "Dark Horse Comics" %>
-        <div id="bannerdarkhorse">
-        </div>
-      <% elsif params[:publisher] == "DC Comics" %>
-        <div id="bannerdc">
-        </div>
-      <% elsif params[:publisher] == "Dynamite Entertainment" %>
-        <div id="bannerdynamite">
-        </div>
-      <% elsif params[:publisher] == "IDW Publishing" %>
-        <div id="banneridw">
-        </div>
-      <% elsif params[:publisher] == "Image Comics" %>
-        <div id="bannerimage">
-        </div>
-      <% elsif params[:publisher] == "Marvel Comics" %>
-        <div id="bannermarvel">
-        </div>
-      <% elsif params[:publisher] == "Valiant Entertainment" %>
-        <div id="bannerall">
-        </div>
-      <% elsif params[:publisher] == "Top Shelf Productions" %>
-        <div id="bannertopshelf">
-        </div>
-      <% elsif params[:publisher] == "Vertigo Comics" %>
-        <div id="bannervertigo">
-        </div>
-      <% elsif params[:publisher] == "Zenescope Entertainment" %>
-        <div id="bannerzenescope">
-        </div>
-      <% end %>
-    <% else %>
       <div id="bannerall">
+        <div class="pageinfo">
+          <% if user_signed_in? %>
+            <div class="pull-right table-view">
+              <ul class="list-inline btn-group">
+                <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.owned_books.count %></span><% end %></li>
+                <li class="btn btn-default btn-sm">
+                  <%= link_to root_url + "users/" + current_user.id.to_s + "/collection.csv", class: "btn btn-default", :title => "Export collection" do %>
+                      <span class="fa fa-download"></span>
+                  <% end %>
+                </li>
+                <li class="btn btn-default btn-sm">
+                    <%= link_to "#", data: { toggle: "modal", target: "#collectionoptions" }, class: "btn btn-default", :title => "Collection Options" do %>
+                      <span class="fa fa-filter"></span>
+                    <% end %>
+                </li>
+              </ul>
+            </div>
+          <% end %>
+        </div>
       </div>
-    <% end %>
+
   <% elsif action_name == "mybookstbl" %>
-    <% if params[:publisher].present? %>
-      <% if params[:publisher] == "Aftershock Comics" %>
-        <div id="aftershock">
-        </div>
-      <% elsif params[:publisher] == "451" %>
-        <div id="banner451">
-        </div>
-      <% elsif params[:publisher] == "Archie Comics" %>
-        <div id="bannerarchie">
-        </div>
-      <% elsif params[:publisher] == "Aspen Comics" %>
-        <div id="banneraspen">
-        </div>
-      <% elsif params[:publisher] == "Avatar Press" %>
-        <div id="banneravatar">
-        </div>
-      <% elsif params[:publisher] == "Black Mask Studios" %>
-        <div id="bannerblackmask">
-        </div>
-      <% elsif params[:publisher] == "Boom Studios" %>
-        <div id="bannerblackmask">
-        </div>
-      <% elsif params[:publisher] == "Dark Horse Comics" %>
-        <div id="bannerdarkhorse">
-        </div>
-      <% elsif params[:publisher] == "DC Comics" %>
-        <div id="bannerdc">
-        </div>
-      <% elsif params[:publisher] == "Dynamite Entertainment" %>
-        <div id="bannerdynamite">
-        </div>
-      <% elsif params[:publisher] == "IDW Publishing" %>
-        <div id="banneridw">
-        </div>
-      <% elsif params[:publisher] == "Image Comics" %>
-        <div id="bannerimage">
-        </div>
-      <% elsif params[:publisher] == "Marvel Comics" %>
-        <div id="bannerblackmask">
-        </div>
-      <% elsif params[:publisher] == "Valiant Entertainment" %>
-        <div id="bannerall">
-        </div>
-      <% elsif params[:publisher] == "Top Shelf Productions" %>
-        <div id="bannertopshelf">
-        </div>
-      <% elsif params[:publisher] == "Vertigo Comics" %>
-        <div id="bannervertigo">
-        </div>
-      <% elsif params[:publisher] == "Zenescope Entertainment" %>
-        <div id="bannerblackmask">
-        </div>
-      <% end %>
-    <% else %>
-      <div id="bannerall">
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.owned_books.count %></span><% end %></li>
+              <li class="btn btn-default btn-sm">
+                <%= link_to root_url + "users/" + current_user.id.to_s + "/collection.csv", class: "btn btn-default", :title => "Export collection" do %>
+                    <span class="fa fa-download"></span>
+                <% end %>
+              </li>
+              <li class="btn btn-default btn-sm">
+                  <%= link_to "#", data: { toggle: "modal", target: "#collectionoptions" }, class: "btn btn-default", :title => "Collection Options" do %>
+                    <span class="fa fa-filter"></span>
+                  <% end %>
+              </li>
+            </ul>
+          </div>
+        <% end %>
       </div>
-    <% end %>
+    </div>
+
   <% elsif action_name == "mybooksint" %>
     <div id="bannerall">
     </div>
   <% elsif action_name == "mywishlist" %>
-    <% if params[:publisher].present? %>
-      <% if params[:publisher] == "Aftershock Comics" %>
-        <div id="aftershock">
-        </div>
-      <% elsif params[:publisher] == "451" %>
-        <div id="banner451">
-        </div>
-      <% elsif params[:publisher] == "Archie Comics" %>
-        <div id="bannerarchie">
-        </div>
-      <% elsif params[:publisher] == "Aspen Comics" %>
-        <div id="banneraspen">
-        </div>
-      <% elsif params[:publisher] == "Avatar Press" %>
-        <div id="banneravatar">
-        </div>
-      <% elsif params[:publisher] == "Black Mask Studios" %>
-        <div id="bannerblackmask">
-        </div>
-      <% elsif params[:publisher] == "Boom Studios" %>
-        <div id="bannerblackmask">
-        </div>
-      <% elsif params[:publisher] == "Dark Horse Comics" %>
-        <div id="bannerdarkhorse">
-        </div>
-      <% elsif params[:publisher] == "DC Comics" %>
-        <div id="bannerdc">
-        </div>
-      <% elsif params[:publisher] == "Dynamite Entertainment" %>
-        <div id="bannerdynamite">
-        </div>
-      <% elsif params[:publisher] == "IDW Publishing" %>
-        <div id="banneridw">
-        </div>
-      <% elsif params[:publisher] == "Image Comics" %>
-        <div id="bannerimage">
-        </div>
-      <% elsif params[:publisher] == "Marvel Comics" %>
-        <div id="bannerblackmask">
-        </div>
-      <% elsif params[:publisher] == "Valiant Entertainment" %>
-        <div id="bannerall">
-        </div>
-      <% elsif params[:publisher] == "Top Shelf Productions" %>
-        <div id="bannertopshelf">
-        </div>
-      <% elsif params[:publisher] == "Vertigo Comics" %>
-        <div id="bannervertigo">
-        </div>
-      <% elsif params[:publisher] == "Zenescope Entertainment" %>
-        <div id="bannerblackmask">
-        </div>
-      <% end %>
-    <% else %>
-      <div id="bannerall">
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.wished_books.count %></span><% end %></li>
+              <li class="btn btn-default btn-sm">
+                <%= link_to root_url + "users/" + current_user.id.to_s + "/wishlist.csv", class: "btn btn-default", :title => "Export wishlist" do %>
+                    <span class="fa fa-download"></span>
+                <% end %>
+              </li>
+              <li class="btn btn-default btn-sm">
+                  <%= link_to "#", data: { toggle: "modal", target: "#collectionoptions" }, class: "btn btn-default", :title => "Collection Options" do %>
+                    <span class="fa fa-filter"></span>
+                  <% end %>
+              </li>
+            </ul>
+          </div>
+        <% end %>
       </div>
-    <% end %>
+    </div>
+
   <% elsif action_name == "mywishlisttbl" %>
-    <% if params[:publisher].present? %>
-      <% if params[:publisher] == "Aftershock Comics" %>
-        <div id="aftershock">
-        </div>
-      <% elsif params[:publisher] == "451" %>
-        <div id="banner451">
-        </div>
-      <% elsif params[:publisher] == "Archie Comics" %>
-        <div id="bannerarchie">
-        </div>
-      <% elsif params[:publisher] == "Aspen Comics" %>
-        <div id="banneraspen">
-        </div>
-      <% elsif params[:publisher] == "Avatar Press" %>
-        <div id="banneravatar">
-        </div>
-      <% elsif params[:publisher] == "Black Mask Studios" %>
-        <div id="bannerblackmask">
-        </div>
-      <% elsif params[:publisher] == "Boom Studios" %>
-        <div id="bannerblackmask">
-        </div>
-      <% elsif params[:publisher] == "Dark Horse Comics" %>
-        <div id="bannerdarkhorse">
-        </div>
-      <% elsif params[:publisher] == "DC Comics" %>
-        <div id="bannerdc">
-        </div>
-      <% elsif params[:publisher] == "Dynamite Entertainment" %>
-        <div id="bannerdynamite">
-        </div>
-      <% elsif params[:publisher] == "IDW Publishing" %>
-        <div id="banneridw">
-        </div>
-      <% elsif params[:publisher] == "Image Comics" %>
-        <div id="bannerimage">
-        </div>
-      <% elsif params[:publisher] == "Marvel Comics" %>
-        <div id="bannerblackmask">
-        </div>
-      <% elsif params[:publisher] == "Valiant Entertainment" %>
-        <div id="bannerall">
-        </div>
-      <% elsif params[:publisher] == "Top Shelf Productions" %>
-        <div id="bannertopshelf">
-        </div>
-      <% elsif params[:publisher] == "Vertigo Comics" %>
-        <div id="bannervertigo">
-        </div>
-      <% elsif params[:publisher] == "Zenescope Entertainment" %>
-        <div id="bannerblackmask">
-        </div>
-      <% end %>
-    <% else %>
-      <div id="bannerall">
+    <div id="bannerall">
+      <div class="pageinfo">
+        <% if user_signed_in? %>
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.wished_books.count %></span><% end %></li>
+              <li class="btn btn-default btn-sm">
+                <%= link_to root_url + "users/" + current_user.id.to_s + "/wishlist.csv", class: "btn btn-default", :title => "Export wishlist" do %>
+                    <span class="fa fa-download"></span>
+                <% end %>
+              </li>
+              <li class="btn btn-default btn-sm">
+                  <%= link_to "#", data: { toggle: "modal", target: "#collectionoptions" }, class: "btn btn-default", :title => "Collection Options" do %>
+                    <span class="fa fa-filter"></span>
+                  <% end %>
+              </li>
+            </ul>
+          </div>
+        <% end %>
       </div>
-    <% end %>
+    </div>
+
   <% elsif action_name == "mywishlistint" %>
     <div id="bannerall">
     </div>

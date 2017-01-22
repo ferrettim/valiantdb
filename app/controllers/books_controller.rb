@@ -84,6 +84,10 @@ class BooksController < ApplicationController
         @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.wished_books.where.not(:country => "United States")
       end
+      @optionstitle = @user.wished_books.select("DISTINCT(title)").group("title").order("title")
+      @optionsissue = @user.wished_books.select("DISTINCT(issue)").group("issue").order("issue")
+      @optionscategory = @user.wished_books.select("DISTINCT(category)").group("category").order("category")
+      @optionspublisher = @user.wished_books.select("DISTINCT(publisher)").group("publisher").order("publisher")
       @bookcsv = @user.wished_books.order(title: :asc, rdate: :asc)
       respond_to do |format|
         format.html
@@ -97,7 +101,7 @@ class BooksController < ApplicationController
     @user = User.friendly.find(params[:id])
     if user_signed_in?
       if @user == current_user
-        @pgtitle = "My Collection"
+        @pgtitle = "My Wishlist"
       else
         @pgtitle = "#{User.friendly.find(params[:id]).name} 's Wishlist"
       end
@@ -125,6 +129,10 @@ class BooksController < ApplicationController
         @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.wished_books.where.not(:country => "United States")
       end
+      @optionstitle = @user.wished_books.select("DISTINCT(title)").group("title").order("title")
+      @optionsissue = @user.wished_books.select("DISTINCT(issue)").group("issue").order("issue")
+      @optionscategory = @user.wished_books.select("DISTINCT(category)").group("category").order("category")
+      @optionspublisher = @user.wished_books.select("DISTINCT(publisher)").group("publisher").order("publisher")
       @bookcsv = @user.wished_books.order(title: :asc, rdate: :asc)
       respond_to do |format|
         format.html
@@ -154,6 +162,10 @@ class BooksController < ApplicationController
         @bookvh2 = @user.wished_books.where(:era => "VH2")
         @bookint = @user.wished_books.where.not(:country => "United States")
       end
+      @optionstitle = @user.wished_books.select("DISTINCT(title)").group("title").order("title")
+      @optionsissue = @user.wished_books.select("DISTINCT(issue)").group("issue").order("issue")
+      @optionscategory = @user.wished_books.select("DISTINCT(category)").group("category").order("category")
+      @optionspublisher = @user.wished_books.select("DISTINCT(publisher)").group("publisher").order("publisher")
       @bookcsv = @user.wished_books.where(:era => "VH2").order(title: :asc, rdate: :asc)
       respond_to do |format|
         format.html
@@ -614,6 +626,10 @@ class BooksController < ApplicationController
         @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.owned_books.where.not(:country => "United States")
       end
+      @optionstitle = @user.owned_books.select("DISTINCT(title)").group("title").order("title")
+      @optionsissue = @user.owned_books.select("DISTINCT(issue)").group("issue").order("issue")
+      @optionscategory = @user.owned_books.select("DISTINCT(category)").group("category").order("category")
+      @optionspublisher = @user.wished_books.select("DISTINCT(publisher)").group("publisher").order("publisher")
         @bookcsv = @user.owned_books.order(title: :asc, rdate: :asc)
           respond_to do |format|
           format.html
@@ -656,6 +672,10 @@ class BooksController < ApplicationController
         @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
         @bookint = @user.owned_books.where.not(:country => "United States")
       end
+      @optionstitle = @user.owned_books.select("DISTINCT(title)").group("title").order("title")
+      @optionsissue = @user.owned_books.select("DISTINCT(issue)").group("issue").order("issue")
+      @optionscategory = @user.owned_books.select("DISTINCT(category)").group("category").order("category")
+      @optionspublisher = @user.wished_books.select("DISTINCT(publisher)").group("publisher").order("publisher")
       @bookcsv = @user.owned_books.order(title: :asc, rdate: :asc)
       respond_to do |format|
         format.html
