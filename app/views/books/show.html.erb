@@ -416,114 +416,45 @@
 														<% end %><br />
 												   <% end %>
 
-												<% if @book.note? %>
-												   <% if user_signed_in? && @book.note.include?("1:10 ") %>
+												<% if user_signed_in? %>
+												   <% if @book.category == "Variant" %>
 												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-												   				<% if s.printrun? %>
+																<% if @book.ratio? %>
+																	<% if @book.ratio == "1:10" %>
 												   			 		Sales: <strong><%= s.printrun / 10 %></strong> copies (estimated based on total sales)<br />
-												   			 	<% end %>
-												   			<% end %>
-												   <% end %>
-												   <% if user_signed_in? && @book.note.include?("1:20 ") %>
-												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-												   				<% if s.printrun? %>
+												   			 	<% elsif @book.ratio == "1:20" %>
 												   			 		Sales: <strong><%= s.printrun / 20 %> </strong> copies (estimated based on total sales)<br />
-												   			 	<% end %>
-												   			<% end %>
-												   <% end %>
-												   <% if user_signed_in? && @book.note.include?("1:25 ") %>
-												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-												   				<% if s.printrun? %>
+												   			 	<% elsif @book.ratio == "1:25" %>
 												   			 		Sales: <strong><%= s.printrun / 25 %> </strong> copies (estimated based on total sales)<br />
-												   			 	<% end %>
-												   			<% end %>
-												   <% end %>
-												   <% if user_signed_in? && @book.note.include?("1:30 ") %>
-												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-												   				<% if s.printrun? %>
+												   			 	<% elsif @book.ratio == "1:30" %>
 												   			 		Sales: <strong><%= s.printrun / 30 %> </strong> copies (estimated based on total sales)<br />
-												   			 	<% end %>
-												   			<% end %>
-												   <% end %>
-												   <% if user_signed_in? && @book.note.include?("1:40 ") %>
-												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-												   				<% if s.printrun? %>
+												   			 	<% elsif @book.ratio == "1:40" %>
 												   			 		Sales: <strong><%= s.printrun / 40 %> </strong> copies (estimated based on total sales)<br />
-												   			 	<% end %>
-												   			<% end %>
-												   <% end %>
-												   <% if user_signed_in? && @book.note.include?("1:50 ") %>
-												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-												   				<% if s.printrun? %>
+												   			 	<% elsif @book.ratio == "1:50" %>
 												   			 		Sales: <strong><%= s.printrun / 50 %> </strong> copies (estimated based on total sales)<br />
-												   			 	<% end %>
-												   			<% end %>
-												   <% end %>
-												   <% if user_signed_in? && @book.note.include?("1:60 ") %>
-												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-												   				<% if s.printrun? %>
+												   			 	<% elsif @book.ratio == "1:60" %>
 												   			 		Sales: <strong> <%= s.printrun / 60 %> </strong> copies (estimated based on total sales)<br />
-												   			 	<% end %>
-												   			<% end %>
-												   <% end %>
-												   <% if user_signed_in? && @book.note.include?("1:75 ") %>
-												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-												   				<% if s.printrun? %>
+												   			 	<% elsif @book.ratio == "1:75" %>
 												   			 		Sales: <strong> <%= s.printrun / 75 %> </strong> copies (estimated based on total sales)<br />
-												   			 	<% end %>
-												   			<% end %>
-												   <% end %>
-												   <% if user_signed_in? && @book.note.include?("1:80 ") %>
-												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-												   				<% if s.printrun? %>
+												   			 	<% elsif @book.ratio == "1:80" %>
 												   			 		Sales: <strong> <%= s.printrun / 80 %> </strong> copies (estimated based on total sales)<br />
-												   			 	<% end %>
-												   			<% end %>
-												   <% end %>
-												   <% if user_signed_in? && @book.note.include?("1:100 ") %>
-												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-												   				<% if s.printrun? %>
+												   			 	<% elsif @book.ratio == "1:100" %>
 												   			 		Sales: <strong><%= s.printrun / 100 %> </strong> copies (estimated based on total sales)<br />
-												   			 	<% end %>
-												   			<% end %>
-												   <% end %>
-												   <% if user_signed_in? && @book.note.include?("1:125 ") %>
-												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-												   				<% if s.printrun? %>
+												   			 	<% elsif @book.ratio == "1:125" %>
 												   			 		Sales: <strong><%= s.printrun / 125 %> </strong> copies (estimated based on total sales)<br />
+																	<% elsif @book.ratio == "1:200" %>
+																		Sales: <strong><%= s.printrun / 200 %> </strong> copies (estimated based on total sales)<br />
+																	<% elsif @book.ratio == "1:250" %>
+																		Sales: <strong><%= s.printrun / 250 %> </strong> copies (estimated based on total sales)<br />
+																	<% elsif @book.ratio == "1:500" %>
+																		Sales: <strong><%= s.printrun / 500 %> </strong> copies (estimated based on total sales)<br />
+																	<% elsif @book.ratio == "1:100 Linewide" %>
+																		Sales: <strong><%= Book.where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).where(:category => "Default").sum(:printrun) / 100 %></strong> copies (estimated based on total sales)<br />
+																	<% elsif @book.ratio == "1:125 Linewide" %>
+																		Sales: <strong><%= Book.where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).where(:category => "Default").sum(:printrun) / 125 %></strong> copies (estimated based on total sales)<br />
 												   			 	<% end %>
 												   			<% end %>
-												   <% end %>
-												   <% if user_signed_in? && @book.note.include?("For every 100 copies of all titles placed, stores may order one of this linewide variant") %>
-												   		<% if Book.where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).where(:category => "Default").sum(:printrun) > 0 %>
-												   			Sales: <strong><%= Book.where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).where(:category => "Default").sum(:printrun) / 100 %></strong> copies (estimated based on total sales)<br />
-												   		<% end %>
-												   <% end %>
-												   <% if user_signed_in? && @book.note.include?("For every 125 copies of all titles placed, stores may order one of this linewide variant") %>
-												   		<% if Book.where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).where(:category => "Default").sum(:printrun) > 0 %>
-												   			Sales: <strong><%= Book.where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).where(:category => "Default").sum(:printrun) / 125 %></strong> copies (estimated based on total sales)<br />
-												   		<% end %>
-												   <% end %>
-												   <% if user_signed_in? && @book.note.include?("1:200 ") %>
-												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-												   				<% if s.printrun? %>
-												   			 		Sales: <strong><%= s.printrun / 200 %> </strong> copies (estimated based on total sales)<br />
-												   			 	<% end %>
-												   			<% end %>
-												   <% end %>
-												   <% if user_signed_in? && @book.note.include?("1:250 ") %>
-												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-												   				<% if s.printrun? %>
-												   			 		Sales: <strong><%= s.printrun / 250 %> </strong> copies (estimated based on total sales)<br />
-												   			 	<% end %>
-												   			<% end %>
-												   <% end %>
-													 <% if user_signed_in? && @book.note.include?("1:500 ") %>
-												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-												   				<% if s.printrun? %>
-												   			 		Sales: <strong><%= s.printrun / 500 %> </strong> copies (estimated based on total sales)<br />
-												   			 	<% end %>
-												   			<% end %>
+															<% end %>
 												   <% end %>
 												<% end %>
 
@@ -734,7 +665,7 @@
 												</span>
 
 												<% if user_signed_in? && current_user.super_admin? %>
-													<%= link_to edit_book_path, class: "btn btn-default btn-sm" do %><i class="fa fa-pencil"></i> Edit<% end %>
+													<%= link_to edit_book_path, class: "btn btn-default btn-sm" do %><i class="fa fa-pencil"></i> Edit (<%= @book.id.to_s %>)<% end %>
 				                      				<%= link_to @book, method: :delete, data: {
 				                                                                          confirm: 'Are you sure?',
 				                                                                          :'confirm-button-text' => "Yes",

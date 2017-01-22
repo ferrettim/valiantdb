@@ -126,6 +126,27 @@
             <%= image_tag title.image.url(:medium), class: "img-responsive img-shadow", :alt => title.title + title.issue.to_s %>
           <% end %>
         <% end %>
+        <% if title.category == "Default" %>
+          <% if title.printing == 1 %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %>A<span>
+          <% else %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= (title.printing.to_i).ordinalize %> printing)</span>
+          <% end %>
+        <% elsif title.category == "Paperback" %>
+          <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Vol. <%= title.issue.to_s %> TPB</span>
+        <% elsif title.category == "Hardcover" %>
+          <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Deluxe Vol. <%= title.issue.to_s %></span>
+        <% elsif title.category == "Promo" %>
+          <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Promo)</span>
+        <% elsif title.category == "Variant" %>
+          <% if title.ratio? %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= title.ratio.to_s %>)</span>
+          <% else %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Variant)</span>
+          <% end %>
+        <% else %>
+          <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Variant)</span>
+        <% end %>
       </div>
     <% end %>
     <div class="clearfix"></div>

@@ -29,37 +29,15 @@
     <div class="col-md-6 col-sm-6 col-xs-12">
       <h5><strong>Additional Preferences</strong></h5>
         <% if @user.tableview == false %>
-          <%= f.input :tableview, label: "Check to use table view" %>
+          <%= f.input :tableview, label: "Check to use table view", hint: "Table view reformats pages into table format instead of the standard grid view." %>
         <% else %>
           <%= f.input :tableview, label: "Uncheck to use grid view" %>
         <% end %>
-        <% if @user.voice == false %>
-          <%= f.input :voice, label: "Check to enable voice commands" %>
+        <% if @user.readerview == false %>
+          <%= f.input :readerview, label: "Check to enable reader copy view", hint: "Reader copy view will only display (A) covers in the title pages and will not display variants unless you click on an individual book." %>
         <% else %>
-          <%= f.input :voice, label: "Uncheck to disable voice commands" %>
+          <%= f.input :readerview, label: "Uncheck to disable reader copy view" %>
         <% end %>
-        <!--
-        <h5><strong>Publisher Preferences</strong></h5>
-        (Check only the publishers you're interested in)<br />
-        <ul class="list-inline">
-          <li><%= f.input :pubfourfiveone, label: "451" %></li>
-          <li><%= f.input :pubaftershock, label: "Aftershock" %></li>
-          <li><%= f.input :pubarchie, label: "Archie" %></li>
-          <li><%= f.input :pubaspen, label: "Aspen" %></li>
-          <li><%= f.input :pubavatar, label: "Avatar" %></li>
-          <li><%= f.input :pubblackmask, label: "Black Mask" %></li>
-          <li><%= f.input :pubboom, label: "Boom" %></li>
-          <li><%= f.input :pubdarkhorse, label: "Dark Horse" %></li>
-          <li><%= f.input :pubdc, label: "DC" %></li>
-          <li><%= f.input :pubdynamite, label: "Dynamite" %></li>
-          <li><%= f.input :pubidw, label: "IDW" %></li>
-          <li><%= f.input :pubimage, label: "Image" %></li>
-          <li><%= f.input :pubmarvel, label: "Marvel" %></li>
-          <li><%= f.input :pubvaliant, label: "Valiant" %></li>
-          <li><%= f.input :pubvertigo, label: "Vertigo" %></li>
-          <li><%= f.input :pubzenescope, label: "Zenescope" %></li>
-        </ul>
-      -->
 
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
           <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>

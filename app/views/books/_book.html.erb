@@ -85,62 +85,8 @@
         <% elsif title.category == "Promo" %>
           <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Promo)</span>
         <% elsif title.category == "Variant" %>
-          <% if title.note.include? ("1:10") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:10)</span>
-          <% elsif title.note.include? ("1:20") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:20)</span>
-          <% elsif title.note.include? ("1:25") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:25)</span>
-          <% elsif title.note.include? ("1:40") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:40)</span>
-          <% elsif title.note.include? ("1:50") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:50)</span>
-          <% elsif title.note.include? ("1:60") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:60)</span>
-          <% elsif title.note.include? ("1:75") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:75)</span>
-          <% elsif title.note.include? ("1:100") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:100)</span>
-          <% elsif title.note.include? ("1:125") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:125)</span>
-          <% elsif title.note.include? ("1:150") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:150)</span>
-          <% elsif title.note.include? ("1:175") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:175)</span>
-          <% elsif title.note.include? ("1:200") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:200)</span>
-          <% elsif title.note.include? ("1:250") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:250)</span>
-          <% elsif title.note.include? ("B variant cover") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %>B</span>
-          <% elsif title.note.include? ("C variant cover") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %>C</span>
-          <% elsif title.note.include? ("D variant cover") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %>D</span>
-          <% elsif title.note.include? ("Blank") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Blank)</span>
-          <% elsif title.note.include? ("Character design") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Design)</span>
-          <% elsif title.note.include? ("Pullbox") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Pullbox)</span>
-          <% elsif title.note.include? ("Gold") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Gold)</span>
-          <% elsif title.note.include? ("Retailer preview") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Retailer Preview)</span>
-          <% elsif title.note.include? ("For every 125 copies of Valiant titles placed") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:125)</span>
-          <% elsif title.note.include? ("For every 100 copies of Valiant titles placed") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (1:100)</span>
-          <% elsif title.note.include? ("One dollar debut") %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<% title.issue.to_s %> ($1 Debut)</span>
-          <% elsif title.printing == 2 %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= (title.printing.to_i).ordinalize %> printing)</span>
-          <% elsif title.printing == 3 %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= (title.printing.to_i).ordinalize %> printing)</span>
-          <% elsif title.printing == 4 %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= (title.printing.to_i).ordinalize %> printing)</span>
-          <% elsif title.printing == 5 %>
-            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= (title.printing.to_i).ordinalize %> printing)</span>
+          <% if title.ratio? %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= title.ratio.to_s %>)</span>
           <% else %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Variant)</span>
           <% end %>

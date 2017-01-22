@@ -2,7 +2,6 @@
 //= require search
 //= require jquery_ujs
 //= require jquery-ui
-//= require jquery-ui/autocomplete
 //= require tinymce-jquery
 //= require jasny-bootstrap.min
 //= require jquery.flexslider-min

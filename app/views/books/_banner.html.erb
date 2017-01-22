@@ -1,3 +1,46 @@
+<% if controller_name == "books" %>
+  <% if action_name == "valiantall" or action_name == "valiantalltbl" or action_name == "valiantallmissing" or action_name == "valiantalltblmissing" or action_name == "valiantvh1all" or action_name == "valiantvh1alltbl" or action_name == "valiantvh1allmissing" or action_name == "valiantvh1alltblmissing" or action_name == "valiantvh2all" or action_name == "valiantvh2alltbl" or action_name == "valiantvh2allmissing" or action_name == "valiantvh2alltblmissing" %>
+    <div id="filteroptions" class="modal fade" role="dialog" aria-labelledby="filteroptions" aria-hidden="true" tabindex="-1">
+      <br /><br />
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">
+              Filter Options
+            </h4>
+          </div>
+          <div class="modal-body">
+            <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
+              <select name="title" class="form-control chosen-select" style="width: 200px !important;">
+                <option value="">Book Title</option>
+                <% @optionstitle.each do |n| %>
+                  <option value="<%= n.title %>"><%= n.title %></option>
+                <% end %>
+              </select>
+              <select name="issue" class="form-control chosen-select" style="width: 100px !important;">
+                <option value="">Issue</option>
+                <% @optionsissue.each do |n| %>
+                  <option value="<%= n.issue %>"><%= n.issue %></option>
+                <% end %>
+              </select>
+              <% unless user_signed_in? && current_user.readerview == true %>
+                <select name="category" class="form-control chosen-select" style="width: 150px !important;">
+                  <option value="">Type</option>
+                  <% @optionscategory.each do |n| %>
+                    <option value="<%= n.category %>"><%= n.category %></option>
+                  <% end %>
+                </select>
+              <% end %>
+              <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
   <% if controller_name == "books" && action_name == "valiantall" %>
     <div id="bannerall">
       <div class="pageinfo">
@@ -9,25 +52,14 @@
                     <span class="fa fa-th"></span>
                   <% end %></li>
               <% if user_signed_in? %>
-                <li class="btn btn-default btn-sm"><%= link_to valiant_all_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
+                <li class="btn btn-default btn-sm">
+                    <%= link_to valiant_all_missing_books_path, class: "btn btn-default", :title => "Missing Books View" do %>
                       <span class="fa fa-heart-o"></span>
                     <% end %></li>
               <% end %>
               <li class="btn btn-default btn-sm">
-                  <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
-                    <select name="title" class="form-control chosen-select optionstitle">
-                      <option value="">Title</option>
-                      <% @optionstitle.each do |n| %>
-                        <option value="<%= n.title %>"><%= n.title %></option>
-                      <% end %>
-                    </select>
-                    <select name="issue" class="form-control chosen-select optionsissue">
-                      <option value="">#</option>
-                      <% @optionsissue.each do |n| %>
-                        <option value="<%= n.issue %>"><%= n.issue %></option>
-                      <% end %>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                    <span class="fa fa-filter"></span>
                   <% end %>
               </li>
             </ul>
@@ -52,20 +84,8 @@
                     <% end %></li>
               <% end %>
               <li class="btn btn-default btn-sm">
-                  <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
-                    <select name="title" class="form-control chosen-select optionstitle">
-                      <option value="">Title</option>
-                      <% @optionstitle.each do |n| %>
-                        <option value="<%= n.title %>"><%= n.title %></option>
-                      <% end %>
-                    </select>
-                    <select name="issue" class="chosen-select optionsissue">
-                      <option value="">#</option>
-                      <% @optionsissue.each do |n| %>
-                        <option value="<%= n.issue %>"><%= n.issue %></option>
-                      <% end %>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                    <span class="fa fa-filter"></span>
                   <% end %>
               </li>
             </ul>
@@ -87,23 +107,11 @@
               <li class="btn btn-default btn-sm"><%= link_to valiant_all_books_path, class: "btn btn-default", :title => "All Books View" do %>
                     <span class="fa fa-book"></span>
                   <% end %></li>
-              <li class="btn btn-default btn-sm">
-                  <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
-                    <select name="title" class="form-control chosen-select optionstitle">
-                      <option value="">Title</option>
-                      <% @optionstitle.each do |n| %>
-                        <option value="<%= n.title %>"><%= n.title %></option>
+                  <li class="btn btn-default btn-sm">
+                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                        <span class="fa fa-filter"></span>
                       <% end %>
-                    </select>
-                    <select name="issue" class="chosen-select optionsissue">
-                      <option value="">#</option>
-                      <% @optionsissue.each do |n| %>
-                        <option value="<%= n.issue %>"><%= n.issue %></option>
-                      <% end %>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
-                  <% end %>
-              </li>
+                  </li>
             </ul>
           </div>
         <% end %>
@@ -123,23 +131,11 @@
               <li class="btn btn-default btn-sm"><%= link_to valiant_all_table_books_path, class: "btn btn-default", :title => "All Books View" do %>
                     <span class="fa fa-book"></span>
                   <% end %></li>
-              <li class="btn btn-default btn-sm">
-                  <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
-                    <select name="title" class="form-control chosen-select optionstitle">
-                      <option value="">Title</option>
-                      <% @optionstitle.each do |n| %>
-                        <option value="<%= n.title %>"><%= n.title %></option>
+                  <li class="btn btn-default btn-sm">
+                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                        <span class="fa fa-filter"></span>
                       <% end %>
-                    </select>
-                    <select name="issue" class="chosen-select optionsissue">
-                      <option value="">#</option>
-                      <% @optionsissue.each do |n| %>
-                        <option value="<%= n.issue %>"><%= n.issue %></option>
-                      <% end %>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
-                  <% end %>
-              </li>
+                  </li>
             </ul>
           </div>
         <% end %>
@@ -894,20 +890,8 @@
                     <% end %></li>
               <% end %>
               <li class="btn btn-default btn-sm">
-                  <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
-                    <select name="title" class="form-control chosen-select optionstitle">
-                      <option value="">Title</option>
-                      <% @optionstitle.each do |n| %>
-                        <option value="<%= n.title %>"><%= n.title %></option>
-                      <% end %>
-                    </select>
-                    <select name="issue" class="chosen-select optionsissue">
-                      <option value="">#</option>
-                      <% @optionsissue.each do |n| %>
-                        <option value="<%= n.issue %>"><%= n.issue %></option>
-                      <% end %>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                    <span class="fa fa-filter"></span>
                   <% end %>
               </li>
             </ul>
@@ -932,20 +916,8 @@
                     <% end %></li>
               <% end %>
               <li class="btn btn-default btn-sm">
-                  <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
-                    <select name="title" class="form-control chosen-select optionstitle">
-                      <option value="">Title</option>
-                      <% @optionstitle.each do |n| %>
-                        <option value="<%= n.title %>"><%= n.title %></option>
-                      <% end %>
-                    </select>
-                    <select name="issue" class="chosen-select optionsissue">
-                      <option value="">#</option>
-                      <% @optionsissue.each do |n| %>
-                        <option value="<%= n.issue %>"><%= n.issue %></option>
-                      <% end %>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                    <span class="fa fa-filter"></span>
                   <% end %>
               </li>
             </ul>
@@ -967,23 +939,11 @@
               <li class="btn btn-default btn-sm"><%= link_to valiant_classic_all_books_path, class: "btn btn-default", :title => "All Books View" do %>
                     <span class="fa fa-book"></span>
                   <% end %></li>
-              <li class="btn btn-default btn-sm">
-                  <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
-                    <select name="title" class="form-control chosen-select optionstitle">
-                      <option value="">Title</option>
-                      <% @optionstitle.each do |n| %>
-                        <option value="<%= n.title %>"><%= n.title %></option>
+                  <li class="btn btn-default btn-sm">
+                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                        <span class="fa fa-filter"></span>
                       <% end %>
-                    </select>
-                    <select name="issue" class="chosen-select optionsissue">
-                      <option value="">#</option>
-                      <% @optionsissue.each do |n| %>
-                        <option value="<%= n.issue %>"><%= n.issue %></option>
-                      <% end %>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
-                  <% end %>
-              </li>
+                  </li>
             </ul>
           </div>
         <% end %>
@@ -1003,23 +963,11 @@
               <li class="btn btn-default btn-sm"><%= link_to valiant_classic_all_table_books_path, class: "btn btn-default", :title => "All Books View" do %>
                     <span class="fa fa-book"></span>
                   <% end %></li>
-              <li class="btn btn-default btn-sm">
-                  <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
-                    <select name="title" class="form-control chosen-select optionstitle">
-                      <option value="">Title</option>
-                      <% @optionstitle.each do |n| %>
-                        <option value="<%= n.title %>"><%= n.title %></option>
+                  <li class="btn btn-default btn-sm">
+                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                        <span class="fa fa-filter"></span>
                       <% end %>
-                    </select>
-                    <select name="issue" class="chosen-select optionsissue">
-                      <option value="">#</option>
-                      <% @optionsissue.each do |n| %>
-                        <option value="<%= n.issue %>"><%= n.issue %></option>
-                      <% end %>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
-                  <% end %>
-              </li>
+                  </li>
             </ul>
           </div>
         <% end %>
@@ -1042,20 +990,8 @@
                     <% end %></li>
               <% end %>
               <li class="btn btn-default btn-sm">
-                  <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
-                    <select name="title" class="form-control chosen-select optionstitle">
-                      <option value="">Title</option>
-                      <% @optionstitle.each do |n| %>
-                        <option value="<%= n.title %>"><%= n.title %></option>
-                      <% end %>
-                    </select>
-                    <select name="issue" class="chosen-select optionsissue">
-                      <option value="">#</option>
-                      <% @optionsissue.each do |n| %>
-                        <option value="<%= n.issue %>"><%= n.issue %></option>
-                      <% end %>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                    <span class="fa fa-filter"></span>
                   <% end %>
               </li>
             </ul>
@@ -1080,20 +1016,8 @@
                     <% end %></li>
               <% end %>
               <li class="btn btn-default btn-sm">
-                  <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
-                    <select name="title" class="form-control chosen-select optionstitle">
-                      <option value="">Title</option>
-                      <% @optionstitle.each do |n| %>
-                        <option value="<%= n.title %>"><%= n.title %></option>
-                      <% end %>
-                    </select>
-                    <select name="issue" class="chosen-select optionsissue">
-                      <option value="">#</option>
-                      <% @optionsissue.each do |n| %>
-                        <option value="<%= n.issue %>"><%= n.issue %></option>
-                      <% end %>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                    <span class="fa fa-filter"></span>
                   <% end %>
               </li>
             </ul>
@@ -1115,23 +1039,11 @@
               <li class="btn btn-default btn-sm"><%= link_to valiant_acclaim_all_books_path, class: "btn btn-default", :title => "All Books View" do %>
                     <span class="fa fa-book"></span>
                   <% end %></li>
-              <li class="btn btn-default btn-sm">
-                  <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
-                    <select name="title" class="form-control chosen-select optionstitle">
-                      <option value="">Title</option>
-                      <% @optionstitle.each do |n| %>
-                        <option value="<%= n.title %>"><%= n.title %></option>
+                  <li class="btn btn-default btn-sm">
+                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                        <span class="fa fa-filter"></span>
                       <% end %>
-                    </select>
-                    <select name="issue" class="chosen-select optionsissue">
-                      <option value="">#</option>
-                      <% @optionsissue.each do |n| %>
-                        <option value="<%= n.issue %>"><%= n.issue %></option>
-                      <% end %>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
-                  <% end %>
-              </li>
+                  </li>
             </ul>
           </div>
         <% end %>
@@ -1151,23 +1063,11 @@
               <li class="btn btn-default btn-sm"><%= link_to valiant_acclaim_all_table_books_path, class: "btn btn-default", :title => "All Books View" do %>
                     <span class="fa fa-book"></span>
                   <% end %></li>
-              <li class="btn btn-default btn-sm">
-                  <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
-                    <select name="title" class="form-control chosen-select optionstitle">
-                      <option value="">Title</option>
-                      <% @optionstitle.each do |n| %>
-                        <option value="<%= n.title %>"><%= n.title %></option>
+                  <li class="btn btn-default btn-sm">
+                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                        <span class="fa fa-filter"></span>
                       <% end %>
-                    </select>
-                    <select name="issue" class="chosen-select optionsissue">
-                      <option value="">#</option>
-                      <% @optionsissue.each do |n| %>
-                        <option value="<%= n.issue %>"><%= n.issue %></option>
-                      <% end %>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
-                  <% end %>
-              </li>
+                  </li>
             </ul>
           </div>
         <% end %>

@@ -100,51 +100,5 @@
 
 </script>
 
-<% if user_signed_in? && current_user.voice == true %>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
-  <script>
-  if( annyang ) {
-      annyang.addCommands({
-          'go home': function() {
-              location.href = 'https://www.valiantdatabase.com';
-          },
-          'new books this week': function() {
-              location.href = 'https://www.valiantdatabase.com/releases/currentweek';
-          },
-          'new books next week': function() {
-              location.href = 'https://www.valiantdatabase.com/releases/nextweek';
-          },
-          'new books last month': function() {
-              location.href = 'https://www.valiantdatabase.com/releases/solicitations?utf8=✓&date=<%= (Date.today - 1.month).strftime("%m-%Y") %>&publisher=Valiant+Entertainment';
-          },
-          'new books this month': function() {
-              location.href = "https://www.valiantdatabase.com/releases/solicitations?utf8=✓&date=<%= (Date.today).strftime("%m-%Y") %>&publisher=Valiant+Entertainment";
-          },
-          'new books next month': function() {
-              location.href = "https://www.valiantdatabase.com/releases/solicitations?utf8=✓&date=<%= (Date.today + 1.month).strftime("%m-%Y") %>&publisher=Valiant+Entertainment";
-          },
-          'search for *query': function(query) {
-              location.href = 'https://www.valiantdatabase.com/search?utf8=✓&query=' + query;
-          },
-          'take me to *title': function(title) {
-              location.href = 'https://www.valiantdatabase.com/books/valiant/all?utf8=✓&title=' + title;
-          },
-          'show me sales stats': function() {
-              location.href = 'https://www.valiantdatabase.com/sales/statistics';
-          },
-          'show me sales trends': function() {
-              location.href = 'https://www.valiantdatabase.com/sales/veibytitle';
-          },
-          'show me the news': function() {
-              location.href = 'https://www.valiantdatabase.com/news';
-          }
-      });
-
-      // Start listening
-      annyang.start();
-  }
-  </script>
-  <audio id="notification_sound" src="https://s3.amazonaws.com/valiantdb/images/blip.mp3" preload="auto"></audio>
-<% end %>
 </body>
 </html>
