@@ -28,16 +28,9 @@
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
       <h5><strong>Additional Preferences</strong></h5>
-        <% if @user.tableview == false %>
           <%= f.input :tableview, label: "Check to use table view", hint: "Table view reformats pages into table format instead of the standard grid view." %>
-        <% else %>
-          <%= f.input :tableview, label: "Uncheck to use grid view" %>
-        <% end %>
-        <% if @user.readerview == false %>
+
           <%= f.input :readerview, label: "Check to enable reader copy view", hint: "Reader copy view will only display (A) covers in the title pages and will not display variants unless you click on an individual book." %>
-        <% else %>
-          <%= f.input :readerview, label: "Uncheck to disable reader copy view" %>
-        <% end %>
 
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
           <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
