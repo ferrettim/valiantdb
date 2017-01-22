@@ -32,7 +32,7 @@
                   <% end %>
                 </select>
               <% end %>
-              <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+              <button type="submit" class="btn btn-primary btn-sm">Submit</button>
             <% end %>
           </div>
         </div>
@@ -82,7 +82,7 @@
                 <% end %>
               </select>
               <br /><br />
-              <button type="submit" class="btn btn-primary btn-sm" style="width: 458px !important;"><i class="fa fa-filter"> Submit </i></button>
+              <button type="submit" class="btn btn-primary btn-sm" style="width: 458px !important;">Submit</button>
             <% end %>
           </div>
           </div>
@@ -110,7 +110,7 @@
               <% end %>
               <li class="btn btn-default btn-sm">
                   <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
-                    <span class="fa fa-filter"></span>
+                    <span class="fa fa-gears"></span>
                   <% end %>
               </li>
             </ul>
@@ -136,7 +136,7 @@
               <% end %>
               <li class="btn btn-default btn-sm">
                   <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
-                    <span class="fa fa-filter"></span>
+                    <span class="fa fa-gears"></span>
                   <% end %>
               </li>
             </ul>
@@ -160,7 +160,7 @@
                   <% end %></li>
                   <li class="btn btn-default btn-sm">
                       <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
-                        <span class="fa fa-filter"></span>
+                        <span class="fa fa-gears"></span>
                       <% end %>
                   </li>
             </ul>
@@ -184,7 +184,7 @@
                   <% end %></li>
                   <li class="btn btn-default btn-sm">
                       <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
-                        <span class="fa fa-filter"></span>
+                        <span class="fa fa-gears"></span>
                       <% end %>
                   </li>
             </ul>
@@ -199,7 +199,7 @@
           <% if user_signed_in? %>
             <div class="pull-right table-view">
               <ul class="list-inline btn-group">
-                <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.owned_books.count %></span><% end %></li>
+                <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.owned_books.count %> books <% if user_signed_in? && current_user.patron? %>($<%= @user.owned_books.sum(:pricenm) %>)<% end %></span><% end %></li>
                 <li class="btn btn-default btn-sm">
                   <%= link_to root_url + "users/" + current_user.id.to_s + "/collection.csv", class: "btn btn-default", :title => "Export collection" do %>
                       <span class="fa fa-download"></span>
@@ -207,7 +207,7 @@
                 </li>
                 <li class="btn btn-default btn-sm">
                     <%= link_to "#", data: { toggle: "modal", target: "#collectionoptions" }, class: "btn btn-default", :title => "Collection Options" do %>
-                      <span class="fa fa-filter"></span>
+                      <span class="fa fa-gears"></span>
                     <% end %>
                 </li>
               </ul>
@@ -222,7 +222,7 @@
         <% if user_signed_in? %>
           <div class="pull-right table-view">
             <ul class="list-inline btn-group">
-              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.owned_books.count %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.owned_books.count %> books <% if user_signed_in? && current_user.patron? %>($<%= @user.owned_books.sum(:pricenm) %>)<% end %></span><% end %></li>
               <li class="btn btn-default btn-sm">
                 <%= link_to root_url + "users/" + current_user.id.to_s + "/collection.csv", class: "btn btn-default", :title => "Export collection" do %>
                     <span class="fa fa-download"></span>
@@ -230,7 +230,7 @@
               </li>
               <li class="btn btn-default btn-sm">
                   <%= link_to "#", data: { toggle: "modal", target: "#collectionoptions" }, class: "btn btn-default", :title => "Collection Options" do %>
-                    <span class="fa fa-filter"></span>
+                    <span class="fa fa-gears"></span>
                   <% end %>
               </li>
             </ul>
@@ -248,7 +248,7 @@
         <% if user_signed_in? %>
           <div class="pull-right table-view">
             <ul class="list-inline btn-group">
-              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.wished_books.count %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.wished_books.count %>  books <% if user_signed_in? && current_user.patron? %>($<%= @user.wished_books.sum(:pricenm) %>)<% end %></span><% end %></li>
               <li class="btn btn-default btn-sm">
                 <%= link_to root_url + "users/" + current_user.id.to_s + "/wishlist.csv", class: "btn btn-default", :title => "Export wishlist" do %>
                     <span class="fa fa-download"></span>
@@ -256,7 +256,7 @@
               </li>
               <li class="btn btn-default btn-sm">
                   <%= link_to "#", data: { toggle: "modal", target: "#collectionoptions" }, class: "btn btn-default", :title => "Collection Options" do %>
-                    <span class="fa fa-filter"></span>
+                    <span class="fa fa-gears"></span>
                   <% end %>
               </li>
             </ul>
@@ -271,7 +271,7 @@
         <% if user_signed_in? %>
           <div class="pull-right table-view">
             <ul class="list-inline btn-group">
-              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.wished_books.count %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.wished_books.count %></span> books <% if user_signed_in? && current_user.patron? %>($<%= @user.wished_books.sum(:pricenm) %>)<% end %><% end %></li>
               <li class="btn btn-default btn-sm">
                 <%= link_to root_url + "users/" + current_user.id.to_s + "/wishlist.csv", class: "btn btn-default", :title => "Export wishlist" do %>
                     <span class="fa fa-download"></span>
@@ -279,7 +279,7 @@
               </li>
               <li class="btn btn-default btn-sm">
                   <%= link_to "#", data: { toggle: "modal", target: "#collectionoptions" }, class: "btn btn-default", :title => "Collection Options" do %>
-                    <span class="fa fa-filter"></span>
+                    <span class="fa fa-gears"></span>
                   <% end %>
               </li>
             </ul>
@@ -683,7 +683,7 @@
                         <option value="<%= n.cover %>"><%= n.cover %></option>
                       <% end %>
                     </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-gears"></i></button>
                   <% end %>
               </li>
               </ul>
@@ -710,7 +710,7 @@
                         <option value="<%= n.cover %>"><%= n.cover %></option>
                       <% end %>
                     </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-gears"></i></button>
                   <% end %>
               </li>
               </ul>
@@ -737,7 +737,7 @@
                         <option value="<%= n.title %>"><%= n.title %></option>
                       <% end %>
                     </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-gears"></i></button>
                   <% end %>
               </li>
               </ul>
@@ -764,7 +764,7 @@
                         <option value="<%= n.title %>"><%= n.title %></option>
                       <% end %>
                     </select>
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-filter"></i></button>
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-gears"></i></button>
                   <% end %>
               </li>
               </ul>
@@ -802,7 +802,7 @@
               <% end %>
               <li class="btn btn-default btn-sm">
                   <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
-                    <span class="fa fa-filter"></span>
+                    <span class="fa fa-gears"></span>
                   <% end %>
               </li>
             </ul>
@@ -828,7 +828,7 @@
               <% end %>
               <li class="btn btn-default btn-sm">
                   <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
-                    <span class="fa fa-filter"></span>
+                    <span class="fa fa-gears"></span>
                   <% end %>
               </li>
             </ul>
@@ -852,7 +852,7 @@
                   <% end %></li>
                   <li class="btn btn-default btn-sm">
                       <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
-                        <span class="fa fa-filter"></span>
+                        <span class="fa fa-gears"></span>
                       <% end %>
                   </li>
             </ul>
@@ -876,7 +876,7 @@
                   <% end %></li>
                   <li class="btn btn-default btn-sm">
                       <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
-                        <span class="fa fa-filter"></span>
+                        <span class="fa fa-gears"></span>
                       <% end %>
                   </li>
             </ul>
@@ -902,7 +902,7 @@
               <% end %>
               <li class="btn btn-default btn-sm">
                   <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
-                    <span class="fa fa-filter"></span>
+                    <span class="fa fa-gears"></span>
                   <% end %>
               </li>
             </ul>
@@ -928,7 +928,7 @@
               <% end %>
               <li class="btn btn-default btn-sm">
                   <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
-                    <span class="fa fa-filter"></span>
+                    <span class="fa fa-gears"></span>
                   <% end %>
               </li>
             </ul>
@@ -952,7 +952,7 @@
                   <% end %></li>
                   <li class="btn btn-default btn-sm">
                       <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
-                        <span class="fa fa-filter"></span>
+                        <span class="fa fa-gears"></span>
                       <% end %>
                   </li>
             </ul>
@@ -976,7 +976,7 @@
                   <% end %></li>
                   <li class="btn btn-default btn-sm">
                       <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
-                        <span class="fa fa-filter"></span>
+                        <span class="fa fa-gears"></span>
                       <% end %>
                   </li>
             </ul>

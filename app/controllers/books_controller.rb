@@ -63,38 +63,22 @@ class BooksController < ApplicationController
     else
       @pgtitle = "#{User.friendly.find(params[:id]).name}'s Wishlist"
     end
-      if params[:query].present?
-        @book = @user.wished_books.where(:title => params[:query]).page(params[:page]).per(24)
-      elsif params[:publisher].present?
-        @book = @user.wished_books.where(:publisher => params[:publisher]).pub_order.page(params[:page]).per(24)
-        @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
-        @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
-        @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
-        @bookint = @user.wished_books.where.not(:country => "United States")
-      elsif params[:title].present?
-        @book = @user.wished_books.where(:title => params[:title]).pub_order.page(params[:page]).per(24)
-        @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
-        @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
-        @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
-        @bookint = @user.wished_books.where.not(:country => "United States")
-      else
-        @book = @user.wished_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
-        @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
-        @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
-        @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
-        @bookint = @user.wished_books.where.not(:country => "United States")
-      end
-      @optionstitle = @user.wished_books.select("DISTINCT(title)").group("title").order("title")
-      @optionsissue = @user.wished_books.select("DISTINCT(issue)").group("issue").order("issue")
-      @optionscategory = @user.wished_books.select("DISTINCT(category)").group("category").order("category")
-      @optionspublisher = @user.wished_books.select("DISTINCT(publisher)").group("publisher").order("publisher")
-      @bookcsv = @user.wished_books.order(title: :asc, rdate: :asc)
-      respond_to do |format|
-        format.html
-        format.json { render json: @book }
-        format.js
-        format.csv { send_data @bookcsv.to_csv, filename: "wishlist-#{Date.today}.csv" }
-      end
+    @book = @user.wished_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
+    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
+    @book = @book.where(:title => params[:title]) if params[:title].present?
+    @book = @book.where(:category => params[:category]) if params[:category].present?
+    @book = @book.where(:publisher => params[:publisher]) if params[:publisher].present?
+    @optionstitle = @user.wished_books.select("DISTINCT(title)").group("title").order("title")
+    @optionsissue = @user.wished_books.select("DISTINCT(issue)").group("issue").order("issue")
+    @optionscategory = @user.wished_books.select("DISTINCT(category)").group("category").order("category")
+    @optionspublisher = @user.wished_books.select("DISTINCT(publisher)").group("publisher").order("publisher")
+    @bookcsv = @user.wished_books.order(title: :asc, rdate: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.csv { send_data @bookcsv.to_csv, filename: "wishlist-#{Date.today}.csv" }
+    end
   end
 
   def mywishlisttbl
@@ -108,38 +92,22 @@ class BooksController < ApplicationController
     else
       @pgtitle = "#{User.friendly.find(params[:id]).name}'s Wishlist"
     end
-      if params[:query].present?
-        @book = @user.wished_books.where(:title => params[:query]).page(params[:page]).per(24)
-      elsif params[:publisher].present?
-        @book = @user.wished_books.where(:publisher => params[:publisher]).pub_order.page(params[:page]).per(24)
-        @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
-        @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
-        @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
-        @bookint = @user.wished_books.where.not(:country => "United States")
-      elsif params[:title].present?
-        @book = @user.wished_books.where(:title => params[:title]).pub_order.page(params[:page]).per(24)
-        @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
-        @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
-        @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
-        @bookint = @user.wished_books.where.not(:country => "United States")
-      else
-        @book = @user.wished_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
-        @bookvei = @user.wished_books.where(:publisher => "Valiant Entertainment")
-        @bookvh1 = @user.wished_books.where(:publisher => "Voyager Communications")
-        @bookvh2 = @user.wished_books.where(:publisher => "Acclaim Entertainment")
-        @bookint = @user.wished_books.where.not(:country => "United States")
-      end
-      @optionstitle = @user.wished_books.select("DISTINCT(title)").group("title").order("title")
-      @optionsissue = @user.wished_books.select("DISTINCT(issue)").group("issue").order("issue")
-      @optionscategory = @user.wished_books.select("DISTINCT(category)").group("category").order("category")
-      @optionspublisher = @user.wished_books.select("DISTINCT(publisher)").group("publisher").order("publisher")
-      @bookcsv = @user.wished_books.order(title: :asc, rdate: :asc)
-      respond_to do |format|
-        format.html
-        format.json { render json: @book }
-        format.js
-        format.csv { send_data @bookcsv.to_csv, filename: "wishlist-#{Date.today}.csv" }
-      end
+    @book = @user.wished_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
+    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
+    @book = @book.where(:title => params[:title]) if params[:title].present?
+    @book = @book.where(:category => params[:category]) if params[:category].present?
+    @book = @book.where(:publisher => params[:publisher]) if params[:publisher].present?
+    @optionstitle = @user.wished_books.select("DISTINCT(title)").group("title").order("title")
+    @optionsissue = @user.wished_books.select("DISTINCT(issue)").group("issue").order("issue")
+    @optionscategory = @user.wished_books.select("DISTINCT(category)").group("category").order("category")
+    @optionspublisher = @user.wished_books.select("DISTINCT(publisher)").group("publisher").order("publisher")
+    @bookcsv = @user.wished_books.order(title: :asc, rdate: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.csv { send_data @bookcsv.to_csv, filename: "wishlist-#{Date.today}.csv" }
+    end
   end
 
   def mywishlistint
@@ -605,39 +573,22 @@ class BooksController < ApplicationController
     else
       @pgtitle = "#{User.friendly.find(params[:id]).name}'s Collection"
     end
-      if params[:query].present?
-        @book = @user.owned_books.where(:title => params[:query]).page(params[:page]).per(24)
-      elsif params[:publisher].present?
-        @book = @user.owned_books.where(:publisher => params[:publisher]).pub_order.page(params[:page]).per(24)
-        @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
-        @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
-        @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
-        @bookint = @user.owned_books.where.not(:country => "United States")
-      elsif params[:title].present?
-        @book = @user.owned_books.where(:title => params[:title]).pub_order.page(params[:page]).per(24)
-        @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
-        @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
-        @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
-        @bookint = @user.owned_books.where.not(:country => "United States")
-      else
-        @book = @user.owned_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
-        @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
-        @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
-        @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
-        @bookint = @user.owned_books.where.not(:country => "United States")
-      end
-      @optionstitle = @user.owned_books.select("DISTINCT(title)").group("title").order("title")
-      @optionsissue = @user.owned_books.select("DISTINCT(issue)").group("issue").order("issue")
-      @optionscategory = @user.owned_books.select("DISTINCT(category)").group("category").order("category")
-      @optionspublisher = @user.wished_books.select("DISTINCT(publisher)").group("publisher").order("publisher")
-        @bookcsv = @user.owned_books.order(title: :asc, rdate: :asc)
-          respond_to do |format|
-          format.html
-          format.json { render json: @book }
-          format.js
-          format.csv { send_data @bookcsv.to_csv, filename: "collection-#{Date.today}.csv" }
-        end
-
+    @book = @user.owned_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
+    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
+    @book = @book.where(:title => params[:title]) if params[:title].present?
+    @book = @book.where(:category => params[:category]) if params[:category].present?
+    @book = @book.where(:publisher => params[:publisher]) if params[:publisher].present?
+    @optionstitle = @user.owned_books.select("DISTINCT(title)").group("title").order("title")
+    @optionsissue = @user.owned_books.select("DISTINCT(issue)").group("issue").order("issue")
+    @optionscategory = @user.owned_books.select("DISTINCT(category)").group("category").order("category")
+    @optionspublisher = @user.owned_books.select("DISTINCT(publisher)").group("publisher").order("publisher")
+    @bookcsv = @user.owned_books.order(title: :asc, rdate: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.csv { send_data @bookcsv.to_csv, filename: "collection-#{Date.today}.csv" }
+    end
   end
 
   def mybookstbl
@@ -651,38 +602,22 @@ class BooksController < ApplicationController
     else
       @pgtitle = "#{User.friendly.find(params[:id]).name}'s Collection"
     end
-      if params[:query].present?
-        @book = @user.owned_books.where(:title => params[:query]).page(params[:page]).per(24)
-      elsif params[:publisher].present?
-        @book = @user.owned_books.where(:publisher => params[:publisher]).pub_order.page(params[:page]).per(24)
-        @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
-        @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
-        @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
-        @bookint = @user.owned_books.where.not(:country => "United States")
-      elsif params[:title].present?
-        @book = @user.owned_books.where(:title => params[:title]).pub_order.page(params[:page]).per(24)
-        @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
-        @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
-        @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
-        @bookint = @user.owned_books.where.not(:country => "United States")
-      else
-        @book = @user.owned_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
-        @bookvei = @user.owned_books.where(:publisher => "Valiant Entertainment")
-        @bookvh1 = @user.owned_books.where(:publisher => "Voyager Communications")
-        @bookvh2 = @user.owned_books.where(:publisher => "Acclaim Entertainment")
-        @bookint = @user.owned_books.where.not(:country => "United States")
-      end
-      @optionstitle = @user.owned_books.select("DISTINCT(title)").group("title").order("title")
-      @optionsissue = @user.owned_books.select("DISTINCT(issue)").group("issue").order("issue")
-      @optionscategory = @user.owned_books.select("DISTINCT(category)").group("category").order("category")
-      @optionspublisher = @user.wished_books.select("DISTINCT(publisher)").group("publisher").order("publisher")
-      @bookcsv = @user.owned_books.order(title: :asc, rdate: :asc)
-      respond_to do |format|
-        format.html
-        format.json { render json: @book }
-        format.js
-        format.csv { send_data @bookcsv.to_csv, filename: "collection-#{Date.today}.csv" }
-      end
+    @book = @user.owned_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
+    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
+    @book = @book.where(:title => params[:title]) if params[:title].present?
+    @book = @book.where(:category => params[:category]) if params[:category].present?
+    @book = @book.where(:publisher => params[:publisher]) if params[:publisher].present?
+    @optionstitle = @user.owned_books.select("DISTINCT(title)").group("title").order("title")
+    @optionsissue = @user.owned_books.select("DISTINCT(issue)").group("issue").order("issue")
+    @optionscategory = @user.owned_books.select("DISTINCT(category)").group("category").order("category")
+    @optionspublisher = @user.owned_books.select("DISTINCT(publisher)").group("publisher").order("publisher")
+    @bookcsv = @user.owned_books.order(title: :asc, rdate: :asc)
+    respond_to do |format|
+      format.html
+      format.json { render json: @book }
+      format.js
+      format.csv { send_data @bookcsv.to_csv, filename: "collection-#{Date.today}.csv" }
+    end
   end
 
   def mybooksint
