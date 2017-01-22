@@ -199,7 +199,7 @@
           <% if user_signed_in? %>
             <div class="pull-right table-view">
               <ul class="list-inline btn-group">
-                <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.owned_books.count %> books <% if user_signed_in? && current_user.patron? %>($<%= @user.owned_books.sum(:pricenm) %>)<% end %></span><% end %></li>
+                <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.owned_books.count %> books <% if user_signed_in? && current_user.patron? %>($<%= (@user.owned_books.sum(:pricenm) / 100) %>)<% end %></span><% end %></li>
                 <li class="btn btn-default btn-sm">
                   <%= link_to root_url + "users/" + current_user.id.to_s + "/collection.csv", class: "btn btn-default", :title => "Export collection" do %>
                       <span class="fa fa-download"></span>
@@ -222,7 +222,7 @@
         <% if user_signed_in? %>
           <div class="pull-right table-view">
             <ul class="list-inline btn-group">
-              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.owned_books.count %> books <% if user_signed_in? && current_user.patron? %>($<%= @user.owned_books.sum(:pricenm) %>)<% end %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.owned_books.count %> books <% if user_signed_in? && current_user.patron? %>($<%= (@user.owned_books.sum(:pricenm) / 100) %>)<% end %></span><% end %></li>
               <li class="btn btn-default btn-sm">
                 <%= link_to root_url + "users/" + current_user.id.to_s + "/collection.csv", class: "btn btn-default", :title => "Export collection" do %>
                     <span class="fa fa-download"></span>
@@ -248,7 +248,7 @@
         <% if user_signed_in? %>
           <div class="pull-right table-view">
             <ul class="list-inline btn-group">
-              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.wished_books.count %>  books <% if user_signed_in? && current_user.patron? %>($<%= @user.wished_books.sum(:pricenm) %>)<% end %></span><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.wished_books.count %>  books <% if user_signed_in? && current_user.patron? %>($<%= (@user.wished_books.sum(:pricenm) / 100) %>)<% end %></span><% end %></li>
               <li class="btn btn-default btn-sm">
                 <%= link_to root_url + "users/" + current_user.id.to_s + "/wishlist.csv", class: "btn btn-default", :title => "Export wishlist" do %>
                     <span class="fa fa-download"></span>
@@ -271,7 +271,7 @@
         <% if user_signed_in? %>
           <div class="pull-right table-view">
             <ul class="list-inline btn-group">
-              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.wished_books.count %></span> books <% if user_signed_in? && current_user.patron? %>($<%= @user.wished_books.sum(:pricenm) %>)<% end %><% end %></li>
+              <li class="btn btn-default btn-sm"><%= link_to "", class: "btn btn-default", :title => "Book count" do %><span class="label label-primary label-as-badge"><%= @user.wished_books.count %></span> books <% if user_signed_in? && current_user.patron? %>($<%= (@user.wished_books.sum(:pricenm) / 100) %>)<% end %><% end %></li>
               <li class="btn btn-default btn-sm">
                 <%= link_to root_url + "users/" + current_user.id.to_s + "/wishlist.csv", class: "btn btn-default", :title => "Export wishlist" do %>
                     <span class="fa fa-download"></span>
