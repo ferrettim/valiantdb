@@ -399,11 +399,6 @@
 												   		<br />
 												   <% end %>
 
-												   <% if user_signed_in? && current_user.illuminati? && @book.pricenm? %>
-												   		Value: <strong>US $<%= '%.2f' % @book.value_in_dollars %></strong>
-												   		<br />
-												   <% end %>
-
 												   <% unless @book.category == "Sketch" %>
 												   Accounted for: <strong><%= @rescues.sum :quantity %></strong> <%= pluralize((@rescues.sum :quantity), "copy") %>
 												   <% end %>
@@ -419,7 +414,7 @@
 												<% if user_signed_in? %>
 												   <% if @book.category == "Variant" %>
 												   		<% Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).each do |s| %>
-																<% if Book.where(:title => @book.title).where(:issue => @book.issue).where(rdate: (@book.rdate - 1.month)..(@book.rdate + 5.month)).where(:category => "Default").where.not(:id => @book.id).ratio? %>
+																<% if s.printrun? %>
 																	<% if @book.ratio == "1:10" %>
 												   			 		Sales: <strong><%= s.printrun / 10 %></strong> copies (estimated based on total sales)<br />
 												   			 	<% elsif @book.ratio == "1:20" %>
