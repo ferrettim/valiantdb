@@ -1,0 +1,13 @@
+<br />
+<%= form_tag pollvotes_path, method: :post, remote: true, id: 'voting_form' do %>
+  <%= hidden_field_tag 'poll[id]', @poll.id %>
+
+  <%= render partial: 'polls/vote_option', collection: @poll.pollvote_options, as: :option %>
+  <h4><strong>Total votes: <%= @poll.votes_summary %></strong></h4>
+  <% if current_user.pollvoted_for?(@poll) %>
+    <h4>You have already voted!</h4>
+    <span class="pull-right"><%= link_to "Go home", root_url, class: "btn btn-default" %></span>
+  <% else %>
+    <%= submit_tag 'Vote', class: 'btn btn-lg btn-primary' %>
+  <% end %>
+<% end %>

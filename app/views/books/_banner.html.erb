@@ -239,9 +239,6 @@
       </div>
     </div>
 
-  <% elsif action_name == "mybooksint" %>
-    <div id="bannerall">
-    </div>
   <% elsif action_name == "mywishlist" %>
     <div id="bannerall">
       <div class="pageinfo">
@@ -288,9 +285,6 @@
       </div>
     </div>
 
-  <% elsif action_name == "mywishlistint" %>
-    <div id="bannerall">
-    </div>
   <% elsif action_name == "mynotes" %>
     <div id="bannerall">
     </div>
@@ -595,72 +589,67 @@
     <div id="bannerall">
       <div class="pageinfo">
         <div class="pull-right table-view">
-          <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-              Choose Month
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu months" aria-labelledby="dropdownMenu1">
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=05-2012" do %>May 2012<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=06-2012" do %>June 2012<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=07-2012" do %>July 2012<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=08-2012" do %>August 2012<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=09-2012" do %>September 2012<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=10-2012" do %>October 2012<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=11-2012" do %>November 2012<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=12-2012" do %>December 2012<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=01-2013" do %>January 2013<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=02-2013" do %>February 2013<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=03-2013" do %>March 2013<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=04-2013" do %>April 2013<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=05-2013" do %>May 2013<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=06-2013" do %>June 2013<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=07-2013" do %>July 2013<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=08-2013" do %>August 2013<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=09-2013" do %>September 2013<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=10-2013" do %>October 203<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=11-2013" do %>November 2013<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=12-2013" do %>December 2013<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=01-2014" do %>January 2014<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=02-2014" do %>February 2014<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=03-2014" do %>March 2014<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=04-2014" do %>April 2014<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=05-2014" do %>May 2014<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=06-2014" do %>June 2014<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=07-2014" do %>July 2014<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=08-2014" do %>August 2014<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=09-2014" do %>September 2014<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=10-2014" do %>October 2014<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=11-2014" do %>November 2014<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=12-2014" do %>December 2014<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=01-2015" do %>January 2015<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=02-2015" do %>February 2015<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=03-2015" do %>March 2015<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=04-2015" do %>April 2015<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=05-2015" do %>May 2015<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=06-2015" do %>June 2015<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=07-2015" do %>July 2015<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=08-2015" do %>August 2015<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=09-2015" do %>September 2015<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=10-2015" do %>October 2015<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=11-2015" do %>November 2015<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=12-2015" do %>December 2015<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=01-2016" do %>January 2016<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=02-2016" do %>February 2016<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=03-2016" do %>March 2016<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=04-2016" do %>April 2016<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=05-2016" do %>May 2016<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=06-2016" do %>June 2016<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=07-2016" do %>July 2016<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=08-2016" do %>August 2016<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=09-2016" do %>September 2016<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=10-2016" do %>October 2016<% end %></li>
-              <li><%= link_to root_url + "sales/monthly?utf8=%E2%9C%93&date=11-2016" do %>November 2016<% end %></li>
+          <ul class="list-inline btn-group">
+
+            <li class="btn btn-default btn-sm">
+              <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
+                <select name="month" class="form-control chosen-select">
+                  <option value="">Month</option>
+                  <option value="01">January</option>
+                  <option value="02">February</option>
+                  <option value="03">March</option>
+                  <option value="04">April</option>
+                  <option value="05">May</option>
+                  <option value="06">June</option>
+                  <option value="07">July</option>
+                  <option value="08">August</option>
+                  <option value="09">September</option>
+                  <option value="10">October</option>
+                  <option value="11">November</option>
+                  <option value="12">December</option>
+                </select>
+                <select name="year" class="form-control chosen-select">
+                  <option value="">Year</option>
+                  <option value="2012">2012</option>
+                  <option value="2013">2013</option>
+                  <option value="2014">2014</option>
+                  <option value="2015">2015</option>
+                  <option value="2016">2016</option>
+                </select>
+                <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <% elsif action_name == "yearlysales" %>
+      <div id="bannerall">
+        <div class="pageinfo">
+          <div class="pull-right table-view">
+            <ul class="list-inline btn-group">
+
+              <li class="btn btn-default btn-sm">
+                <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
+                  <select name="date" class="form-control chosen-select">
+                    <option value="">Year</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    <option value="2014">2014</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <% if @booksales.count > 1 %>
+                      <option value="2017">2017</option>
+                    <% end %>
+                  </select>
+                  <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+                <% end %>
+              </li>
             </ul>
           </div>
         </div>
       </div>
-    </div>
 
   <% elsif action_name == "valiantkeys" %>
   <div id="bannerall"></div>
@@ -685,7 +674,7 @@
                     </select>
                     <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-gears"></i></button>
                   <% end %>
-              </li>
+                </li>
               </ul>
             </div>
           <% end %>

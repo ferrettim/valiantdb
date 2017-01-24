@@ -44,6 +44,8 @@ class User < ActiveRecord::Base
   has_many :itemsales, :dependent => :destroy
   has_many :forsale_collectibles, :through => :itemsales, source: :collectible, :dependent => :destroy
   has_many :comments, :dependent => :destroy
+  has_many :pollvotes, dependent: :destroy
+  has_many :pollvote_options, through: :pollvotes
 
   def add_to_list
     if Rails.env.production?
@@ -92,6 +94,10 @@ class User < ActiveRecord::Base
 
   def points_rank
     User.where("score > ?", score).count + 1
+  end
+
+  def pollvoted_for?(poll)
+    pollvotes.any? {|v| v.pollvote_option.poll == poll }
   end
 
   def mailboxer_name

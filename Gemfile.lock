@@ -113,6 +113,7 @@ GEM
       activesupport (>= 3.0)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
+    cocoon (1.2.9)
     coderay (1.1.1)
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
@@ -366,6 +367,7 @@ DEPENDENCIES
   brakeman
   chartkick
   childprocess (= 0.3.6)
+  cocoon
   coffee-rails
   dalli
   dateslices
@@ -435,4 +437,4 @@ RUBY VERSION
    ruby 2.3.3p222
 
 BUNDLED WITH
-   1.13.6
+   1.13.7

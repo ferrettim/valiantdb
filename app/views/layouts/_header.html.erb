@@ -17,7 +17,7 @@
                 <span class="icon-bar"></span>
             </button>
               <div itemscope itemtype="http://schema.org/Organization">
-                <a itemprop="url" href="https://www.valiantdatabase.com" class="navbar-brand"><span itemprop="name"><strong>Valiant Database</strong></span></a>
+                <a itemprop="url" href="<%= root_url %>" class="navbar-brand"><span itemprop="name"><strong>Valiant Database</strong></span></a>
               </div>
         </div>
         <div class="collapse navbar-collapse">
@@ -63,6 +63,7 @@
                                                                                       remote: false do %>Delete collectible<% end %>
                                   </li>
                                <% end %>
+                               <li><%= link_to 'Polls', polls_path %></li>
                                <li><%= link_to "User Stats", user_statistics_path %></li>
                             </ul>
                          </li>

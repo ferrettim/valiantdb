@@ -57,7 +57,7 @@
                 <div class="profile-usermenu">
                     <% unless current_user.patron? %>
                         <div class="text-center">
-                            <%= link_to supportus_path, :title => "Support us", class: "label label-as-badge label-primary" do %>Upgrade to patron!<% end %>
+                            <%= link_to supportus_path, :title => "Support us", class: "label label-as-badge label-primary" do %>Become a patron!<% end %>
                         </div>
                     <% end %>
                     <ul class="nav">
@@ -158,6 +158,23 @@
         </div>
         <div class="col-md-9 col-sm-8 col-xs-12 wellclear bottomcorners">
             <div class="profile-content">
+                <% if user_signed_in? && current_user.super_admin? %>
+                  <% if Poll.count > 0 %>
+                    <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-1 col-xs-12">
+                      <p>
+                        <span class="btn btn-default">
+                          <% if current_user.pollvoted_for?(@poll) %>
+                            <i class="fa fa-check" title="You voted on this poll!"></i>
+                          <% else %>
+                            <i class="fa fa-question-circle-o"></i>
+                          <% end %>
+                          <strong>Poll of the Week: <%= link_to @poll.topic.to_s, @poll %></strong>
+                        </span>
+                      </p>
+                    </div>
+                    <div class="clearfix"></div>
+                  <% end %>
+                <% end %>
                 <h4 class="text-left">
                     <%= link_to releases_currentweek_path do %>
                         <% if (Date.today.beginning_of_week + 2.day) > Date.today %>
@@ -222,7 +239,7 @@
                 <% if @user == current_user %>
                     <br />
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#friends" aria-controls="home" role="tab" data-toggle="tab">Friends</a></li>
+                        <li role="presentation" class="active"><a href="#friends" aria-controls="home" role="tab" data-toggle="tab">Friend Activity</a></li>
                         <li role="presentation"><a href="#latest" aria-controls="messages" role="tab" data-toggle="tab">Recently Added</a></li>
                     </ul>
 

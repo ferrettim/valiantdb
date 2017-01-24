@@ -1,0 +1,9 @@
+<div class="form-group">
+  <%= content_tag(:label) do %>
+    <% unless current_user.pollvoted_for?(@poll) %>
+      <%= radio_button_tag 'pollvote_option[id]', option.id %>
+    <% end %>
+    <%= option.title %> (<%= option.poll.normalized_votes_for(option) %>%)
+  <% end %>
+    <%= visualize_votes_for option %>
+</div>

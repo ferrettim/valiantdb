@@ -2,7 +2,15 @@
 	<div class="wellclear">
 		<h3 class="text-center"><%= @pgtitle %></h3>
 		<p><strong>Always remember these numbers are not exact representations of sales</strong>. We use sales data from Diamond Comic Distributors to generate these charts but actual numbers may differ slightly based on returnability, etc. These numbers are not actual sales numbers for each book, but rather level of sales at the distribution level. These numbers take into account physical book sales only. These numbers take into account physical book sales only as digital numbers are unavailable.</p>
-		<p class="text-center"><strong>** You can select a month from the dropdown menu to the right to see available sales figures **</strong></p>
+		<% if params[:month].present? && params[:year].present? %>
+		<% else %>
+			<% if params[:month].nil? && params[:year].nil? %>
+			<% else %>
+				<h3 class="text-center">You must select both a month and a year in order to see the relevant sales numbers! Please try again.</h3>
+				<br /><br />
+			<% end %>
+		<% end %>
+		<% if @booksales.count > 1 %>
 			<table class="table table-responsive table-striped">
 				<thead>
 					<tr>
@@ -27,4 +35,7 @@
 					<% end %>
 				</tbody>
 			</table>
+		<% else %>
+			<p><strong>It looks like numbers for this month have not yet been released. Please try again later or select a different date from the dropdown menu.</strong></p>
+		<% end %>
 	</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170121233902) do
+ActiveRecord::Schema.define(version: 20170124005058) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -303,6 +303,33 @@ ActiveRecord::Schema.define(version: 20170121233902) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "quantity"
+  end
+
+  create_table "polls", force: :cascade do |t|
+    t.text     "topic"
+    t.string   "image1"
+    t.string   "image2"
+    t.string   "image3"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pollvote_options", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "poll_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["poll_id"], name: "index_pollvote_options_on_poll_id"
+  end
+
+  create_table "pollvotes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "pollvote_option_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["pollvote_option_id", "user_id"], name: "index_pollvotes_on_pollvote_option_id_and_user_id", unique: true
+    t.index ["pollvote_option_id"], name: "index_pollvotes_on_pollvote_option_id"
+    t.index ["user_id"], name: "index_pollvotes_on_user_id"
   end
 
   create_table "previews", force: :cascade do |t|

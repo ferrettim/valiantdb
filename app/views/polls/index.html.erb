@@ -1,0 +1,27 @@
+<div class="wellclear">
+  <h2>Polls</h2>
+  <% if user_signed_in? && current_user.super_admin? %>
+    <span class="pull-right">
+      <%= link_to 'Add new poll', new_poll_path, class: "btn btn-primary" %>
+    </span>
+  <% end %>
+  <% @polls.each do |poll| %>
+    <div class="well">
+      <h2><%= poll.topic %> <small></h2>
+      <% if user_signed_in? %>
+        <%= link_to 'View Poll', poll_path(poll), class: 'btn btn-primary block' %>
+      <% else %>
+        Please sign in to participate in this poll.
+      <% end %>
+      <% if user_signed_in? && current_user.super_admin? %>
+        <div class="btn-group pull-right">
+          <%= link_to poll_path(poll), class: 'btn btn-primary' do %>Voted: <%= poll.votes_summary %><% end %>
+          <%= link_to 'Edit', edit_poll_path(poll), class: 'btn btn-default' %>
+          <%= link_to 'Delete', poll_path(poll),
+                      method: :delete,
+                      class: 'btn btn-danger', data: {confirm: 'Are you sure?'} %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

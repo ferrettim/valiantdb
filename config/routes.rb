@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :feeds
   resources :previews
   resources :activities
+  resources :polls
+  resources :pollvotes, only: [:create]
 
   resources :characters do
     get "characters/:page", :action => :index, :on => :collection
@@ -143,10 +145,8 @@ Rails.application.routes.draw do
   get 'users/:id/notes' => 'books#mynotes', :as => 'notes'
   get 'users/:id/collection' => 'books#mybooks', :as => 'collection'
   get 'users/:id/collection/table' => 'books#mybookstbl', :as => 'collection_table'
-  get 'users/:id/international-valiant-collection' => 'books#mybooksint', :as => 'collectionint'
   get 'users/:id/wishlist' => 'books#mywishlist', :as => 'wishlist'
   get 'users/:id/wishlist/table' => 'books#mywishlisttbl', :as => 'wishlist_table'
-  get 'users/:id/international-valiant-wishlist' => 'books#mywishlistint', :as => 'wishlistint'
   get 'users/:id/forsale' => 'books#forsale', :as => 'forsale'
   get 'users/:id/forsale/table' => 'books#forsaletbl', :as => 'forsale_table'
   get 'users/emails' => 'users#emails', via: [:get]

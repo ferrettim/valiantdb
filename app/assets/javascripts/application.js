@@ -6,6 +6,7 @@
 //= require jasny-bootstrap.min
 //= require jquery.flexslider-min
 //= require autocomplete-rails
+//= require cocoon
 //= require conversations
 //= require infinite-scroll
 //= require jquery.raty
