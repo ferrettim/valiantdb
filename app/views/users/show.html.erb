@@ -158,22 +158,20 @@
         </div>
         <div class="col-md-9 col-sm-8 col-xs-12 wellclear bottomcorners">
             <div class="profile-content">
-                <% if user_signed_in? && current_user.super_admin? %>
-                  <% if Poll.count > 0 %>
-                    <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-1 col-xs-12">
+                <% if user_signed_in? && Date.today.strftime("%Y-%m-%d") > "2017-01-25" %>
+                  <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-1 col-xs-12">
                       <p>
                         <span class="btn btn-default">
                           <% if current_user.pollvoted_for?(@poll) %>
                             <i class="fa fa-check" title="You voted on this poll!"></i>
                           <% else %>
-                            <i class="fa fa-question-circle-o"></i>
+                            <i class="fa fa-question-circle-o" title="You have not yet voted for this poll."></i>
                           <% end %>
                           <strong>Poll of the Week: <%= link_to @poll.topic.to_s, @poll %></strong>
                         </span>
                       </p>
                     </div>
-                    <div class="clearfix"></div>
-                  <% end %>
+                  <div class="clearfix"></div>
                 <% end %>
                 <h4 class="text-left">
                     <%= link_to releases_currentweek_path do %>

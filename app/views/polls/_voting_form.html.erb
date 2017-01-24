@@ -8,6 +8,7 @@
     <h4>You have already voted!</h4>
     <span class="pull-right"><%= link_to "Go home", root_url, class: "btn btn-default" %></span>
   <% else %>
-    <%= submit_tag 'Vote', class: 'btn btn-lg btn-primary' %>
+    <p>Participating in polls can earn you points! <%= link_to "Learn more", userlevels_path %> about how to earn points and join the <%= link_to "leaderboard", users_leaderboard_path %>.</p>
+    <%= submit_tag 'Submit My Vote!', class: 'btn btn-lg btn-primary' %>
   <% end %>
 <% end %>
