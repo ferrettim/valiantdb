@@ -25,6 +25,8 @@ $( ".chosen-select" ).select2({
     theme: "bootstrap"
 });
 
+$.fn.modal.Constructor.prototype.enforceFocus = function () {};
+
 $(window).ready(function() {
   $('.flexslider').flexslider({
     animation: "slide",
