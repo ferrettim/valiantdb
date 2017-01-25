@@ -1,5 +1,5 @@
 # Change these
-server '104.131.2.150', roles: [:web, :app, :db], primary: true
+server '104.131.2.150', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:ferrettim/valiantdb.git'
 set :application,     'valiantdb'
