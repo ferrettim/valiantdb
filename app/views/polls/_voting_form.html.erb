@@ -3,12 +3,24 @@
   <%= hidden_field_tag 'poll[id]', @poll.id %>
 
   <%= render partial: 'polls/vote_option', collection: @poll.pollvote_options, as: :option %>
-  <h4><strong>Total votes: <%= @poll.votes_summary %></strong></h4>
-  <% if current_user.pollvoted_for?(@poll) %>
-    <h4>You have already voted!</h4>
-    <span class="pull-right"><%= link_to "Go home", root_url, class: "btn btn-default" %></span>
-  <% else %>
-    <p>Participating in polls can earn you points! <%= link_to "Learn more", userlevels_path %> about how to earn points and join the <%= link_to "leaderboard", users_leaderboard_path %>.</p>
-    <%= submit_tag 'Submit My Vote!', class: 'btn btn-lg btn-primary' %>
+  <span class="btn btn-info"><strong>Votes: <%= @poll.votes_summary %></strong> <% if current_user.pollvoted_for?(@poll) %>(You voted!)<% end %></span>
+  <div class="clearfix"><br /></div>
+  <!-- <div class="pull-right">
+    <ul class="list-inline">
+      <% @users.each do |u| %>
+        <li><%= link_to root_url + "/users/" + u.slug + "/profile" do %><%= image_tag u.avatar.url(:thumb), width: "55px;" %><% end %></li>
+      <% end %>
+      <% if @users.count > 5 %>
+        <li class="btn btn-info">+<%= @poll.votes_summary - (@users_count.to_i - 5) %></li>
+      <% end %>
+    <ul>
+  </div> -->
+  <% unless current_user.pollvoted_for?(@poll) %>
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <%= submit_tag 'Submit My Vote!', class: 'btn btn-primary col-md-12 col-sm-12 col-xs-12' %>
+  </div>
   <% end %>
+  <div class="clearfix"></div>
+  <p><br />Participating in polls can earn you points! <%= link_to "Learn more", userlevels_path %> about how to earn points and join the <%= link_to "leaderboard", users_leaderboard_path %>.</p>
 <% end %>
+<div class="clearfix"><br /></div>

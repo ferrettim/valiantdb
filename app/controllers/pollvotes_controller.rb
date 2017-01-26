@@ -11,5 +11,8 @@ class PollvotesController < ApplicationController
     else
       render js: 'alert(\'Your vote cannot be saved.\');'
     end
+    respond_to do |format|
+      format.js
+    end
   end
 end

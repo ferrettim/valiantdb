@@ -1,19 +1,13 @@
-<div class="wellclear">
-  <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
-    <h2><%= @poll.topic %></h2>
+<div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12" style="background: #fff !important;">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <h3><%= @poll.topic %></h3>
     <% if @poll.image1? && @poll.image2? && @poll.image3? %>
-      <div class="col-md-8 col-md-2 col-sm-10 col-sm-1 col-xs-12 center">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-          <div class="col-md-4 col-sm-4 col-xs-4">
-            <%= image_tag @poll.image1, class: "img-responsive"  %>
-          </div>
-          <div class="col-md-4 col-sm-4 col-xs-4">
-            <%= image_tag @poll.image2, class: "img-responsive"  %>
-          </div>
-          <div class="col-md-4 col-sm-4 col-xs-4">
-            <%= image_tag @poll.image3, class: "img-responsive"  %>
-          </div>
-        </div>
+      <div class="center">
+        <ul class="list-inline">
+            <li><%= image_tag @poll.image1, class: "img-responsive"  %></li>
+            <li><%= image_tag @poll.image2, class: "img-responsive"  %></li>
+            <li><%= image_tag @poll.image3, class: "img-responsive"  %></li>
+        </ul>
       </div>
     <% elsif @poll.image1? && @poll.image2? %>
       <div class="col-md-12 col-sm-12 col-xs-12">
@@ -25,7 +19,7 @@
         </div>
       </div>
     <% end %>
-    <div class="clearfix"><br /></div>
+    <div class="clearfix"></div>
     <%= render 'voting_form' %>
   </div>
   <div class="clearfix"><br /></div>

@@ -159,19 +159,13 @@
         <div class="col-md-9 col-sm-8 col-xs-12 wellclear bottomcorners">
             <div class="profile-content">
                 <% if user_signed_in? %>
-                  <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-1 col-xs-12">
-                      <p>
-                        <span class="btn btn-default col-md-12 col-sm-12 col-xs-12">
                           <% if current_user.pollvoted_for?(@poll) %>
                             <i class="fa fa-check" title="You voted on this poll!"></i>
                           <% else %>
                             <i class="fa fa-question-circle-o" title="You have not yet voted for this poll."></i>
                           <% end %>
-                          <strong>Poll of the Week: <%= link_to @poll.topic.to_s, @poll %></strong>
-                        </span>
-                      </p>
-                    </div>
-                  <div class="clearfix"></div>
+                          <strong>Poll of the Week: <%= link_to @poll.topic.to_s, @poll %></strong> &nbsp;
+                  <div class="clearfix"><hr /></div>
                 <% end %>
                 <h4 class="text-left">
                     <%= link_to releases_currentweek_path do %>
@@ -237,7 +231,7 @@
                 <% if @user == current_user %>
                     <br />
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#friends" aria-controls="home" role="tab" data-toggle="tab">Friend Activity</a></li>
+                        <li role="presentation" class="active"><a href="#friends" aria-controls="home" role="tab" data-toggle="tab">Friends</a></li>
                         <li role="presentation"><a href="#latest" aria-controls="messages" role="tab" data-toggle="tab">Recently Added</a></li>
                     </ul>
 
