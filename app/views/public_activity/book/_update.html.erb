@@ -22,7 +22,7 @@
 				<%= image_tag Book.friendly.find(a.trackable_id).image.url(:mini), :height => "36px", class: "img-shadow" %>
 			</div>
 			<div class="col-md-11 col-sm-10 col-xs-10">
-				<i class="fa fa-plus"></i>  <%= link_to Book.friendly.find(a.trackable_id) do %><%= Book.friendly.find(a.trackable_id).title %> #<%= Book.friendly.find(a.trackable_id).issue %> <% if Book.friendly.find(a.trackable_id).ratio? %>(<%= Book.friendly.find(a.trackable_id).ratio %>)<% end %> cover by <%= Book.friendly.find(a.trackable_id).cover %><% end %> was added to the database
+				<i class="fa fa-plus"></i>  <%= link_to Book.friendly.find(a.trackable_id) do %><%= Book.friendly.find(a.trackable_id).title %> #<%= Book.friendly.find(a.trackable_id).issue %> <% if Book.friendly.find(a.trackable_id).ratio? %>(<%= Book.friendly.find(a.trackable_id).ratio %>)<% end %> cover by <%= Book.friendly.find(a.trackable_id).cover %><% end %> <% unless Book.friendly.find(a.trackable_id).printing == 1 %>(<%= (Book.friendly.find(a.trackable_id).printing.ordinalize) %> printing) <% end %>was added to the database
 				<br />
 				<span class="time"><%= local_time_ago(a.created_at) %></span>
 			</div>

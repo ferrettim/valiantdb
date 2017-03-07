@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124005058) do
+ActiveRecord::Schema.define(version: 20170307004829) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -87,6 +87,14 @@ ActiveRecord::Schema.define(version: 20170124005058) do
     t.index ["slug"], name: "index_books_on_slug", unique: true
   end
 
+  create_table "booksubs", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "book_title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_booksubs_on_user_id"
+  end
+
   create_table "characters", force: :cascade do |t|
     t.string   "name",               limit: 255
     t.string   "image_file_name",    limit: 255
@@ -132,6 +140,10 @@ ActiveRecord::Schema.define(version: 20170124005058) do
     t.text     "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "grade"
+    t.string   "cgcgrade"
+    t.string   "grader"
+    t.boolean  "signature"
     t.index ["book_id"], name: "index_comments_on_book_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end

@@ -46,6 +46,7 @@ class User < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :pollvotes, dependent: :destroy
   has_many :pollvote_options, through: :pollvotes
+  has_many :booksubs, :dependent => :destroy
 
   def add_to_list
     if Rails.env.production?

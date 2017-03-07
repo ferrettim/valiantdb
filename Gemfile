@@ -89,8 +89,12 @@ gem 'money'
 gem 'google_currency'
 # News
 gem 'feedjira'
-
+# Multilevel
 gem 'cocoon'
+# Scraper
+# gem 'mechanize'
+# Service Workers
+gem "serviceworker-rails"
 
 group :development do
 # Use sqlite3 as the database for Active Record
@@ -105,7 +109,7 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin]
+# gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 group :production do
 	# Postgres db

@@ -6,3 +6,4 @@ Rails.application.config.assets.version = '2.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += %w( bx_loader.gif controls.png fonts/flexslider-icon.eot fonts/flexslider-icon.woff fonts/flexslider-icon.ttf *.png *.gif )
+Rails.configuration.assets.precompile += %w[serviceworker.js manifest.json]

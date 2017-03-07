@@ -2,9 +2,15 @@
 	<div id="books" align="center">
 	<h3 class="white text-center page">
 	      <span class="pull-right">
-	        <%= link_to releases_thismonth_path(format: "csv"), :class => "btn btn-success btn-sm" do %>
-	            <span class="fa fa-download"></span> <span class="gone">Export Releases</span>
-	        <% end %>
+					<% if params[:date].present? %>
+		        <%= link_to releases_solicitations_path(date: @date.strftime('%m-%Y'), format: "csv"), :class => "btn btn-success btn-sm" do %>
+		            <span class="fa fa-download"></span> <span class="gone">Export Releases!</span>
+		        <% end %>
+					<% else %>
+						<%= link_to releases_solicitations_path(params[:date], format: "csv"), :class => "btn btn-success btn-sm" do %>
+								<span class="fa fa-download"></span> <span class="gone">Export Releases!</span>
+						<% end %>
+					<% end %>
 	      </span>
 	</h3>
 	<div class="clearfix"></div>

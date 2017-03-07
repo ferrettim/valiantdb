@@ -345,7 +345,7 @@ class BooksController < ApplicationController
       format.html
       format.json { render json: @newbooks }
       format.js
-      format.csv { send_data @newbooks.to_csv, filename: "releases-#{DateTime.now.strftime("%B-%Y")}.csv" }
+      format.csv { send_data @newbooks.to_xcsv, filename: "releases-#{@date.to_s}.csv" }
     end
   end
 

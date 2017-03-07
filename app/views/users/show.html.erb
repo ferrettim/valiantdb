@@ -21,7 +21,7 @@
                                 <%= image_tag "https://s3.amazonaws.com/valiantdb/images/hardcorps.jpg", height: "12px", :title => "H.A.R.D. Cat" %>
                             <% end %>
                             <% if @user.patron? %>
-                                <%= link_to "http://www.patreon.com/valiantdb", :title => "I'm a patron, are you?", :target => "_blank" do %><%= image_tag "https://s3.amazonaws.com/valiantdb/images/patreonbadge.png", height: "12px" %><% end %>
+                                <%= link_to "http://www.patreon.com/valiantdb", :title => "I'm a patron, are you?", :target => "_blank", :rel => "noopener" do %><%= image_tag "https://s3.amazonaws.com/valiantdb/images/patreonbadge.png", height: "12px" %><% end %>
                             <% end %>
                         </span>
                     </div>
@@ -146,6 +146,7 @@
                 <% if current_user.super_admin? && @user == current_user %>
                     <%= form_tag import_books_path, multipart: true do %>
                         <div class="form-group">
+                            <label for="file">Upload File</label>
                             <%= file_field_tag :file %>
                             <%= submit_tag "Import CSV", class: "form-control" %>
                         </div>
@@ -159,12 +160,20 @@
         <div class="col-md-9 col-sm-8 col-xs-12 wellclear bottomcorners">
             <div class="profile-content">
                 <% if user_signed_in? %>
-                          <% if current_user.pollvoted_for?(@poll) %>
+                          <% if current_user.pollvoted_for?(@pollnew) %>
                             <i class="fa fa-check" title="You voted on this poll!"></i>
                           <% else %>
                             <i class="fa fa-question-circle-o" title="You have not yet voted for this poll."></i>
                           <% end %>
-                          <strong>Poll of the Week: <%= link_to @poll.topic.to_s, @poll %></strong> &nbsp;
+                          <strong>Latest Poll: <%= link_to @pollnew.topic.to_s, @pollnew %></strong><br />
+                          <% if @pollold %>
+                            <% if current_user.pollvoted_for?(@pollold) %>
+                              <i class="fa fa-check" title="You voted on this poll!"></i>
+                            <% else %>
+                              <i class="fa fa-question-circle-o" title="You have not yet voted for this poll."></i>
+                            <% end %>
+                            <strong>Previous Poll: <%= link_to @pollold.topic.to_s, @pollold %></strong>
+                          <% end %>
                   <div class="clearfix"><hr /></div>
                 <% end %>
                 <h4 class="text-left">

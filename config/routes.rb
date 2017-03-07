@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   resources :activities
   resources :polls
   resources :pollvotes, only: [:create]
+  resources :users do
+    resources :booksubs
+  end
 
   resources :characters do
     get "characters/:page", :action => :index, :on => :collection

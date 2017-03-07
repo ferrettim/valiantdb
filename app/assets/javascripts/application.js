@@ -20,10 +20,22 @@
 //= require jsapi
 //= require chartkick
 //= require bootstrap-sprockets
+//= require serviceworker-companion
 
 $( ".chosen-select" ).select2({
     theme: "bootstrap"
 });
+
+(function($){
+	$(document).ready(function(){
+		$('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+			$(this).parent().siblings().removeClass('open');
+			$(this).parent().toggleClass('open');
+		});
+	});
+})(jQuery);
 
 $.fn.modal.Constructor.prototype.enforceFocus = function () {};
 

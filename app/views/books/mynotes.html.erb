@@ -1,7 +1,7 @@
 <div class="content transitions-enabled container-fluid wellclear">
   <h3 class="text-center">
   	<% if user_signed_in? && @user == current_user %>
-  		My book notes
+  		My Book Notes
   	<% else %>
   		<%= @user.name %>'s book notes
   	<% end %>
@@ -11,6 +11,10 @@
 	  	<tr>
 	  		<td><strong>Cover</strong></td>
 	  		<td><strong>Book</strong></td>
+        <td><strong>Condition</strong></td>
+        <td><strong>Grade</strong>
+        <td><strong>Graded By</strong>
+        <td><strong>Signed?</strong>
 	  		<td><strong>Note</strong></td>
 	  		<td class="text-right"><strong>Created on</strong></td>
 	  	<tr>
@@ -34,6 +38,10 @@
 			        <% end %>
 	  			<% end %>
 	  		</td>
+        <td><% if n.grade %><%= n.grade %><% end %></td>
+        <td><% if n.cgcgrade? %><%= n.cgcgrade %><% end %></td>
+        <td><% if n.grader? %><%= n.grader %><% end %></td>
+        <td><% if n.signature? %>Yes<% end %></td>
 	  		<td><%= n.content.to_s %></td>
 	  		<td class="text-right"><%= n.created_at.strftime("%b %d, %Y") %></td>
 	  	</tr>
@@ -42,5 +50,5 @@
   </table>
 
  <div class="clearfix"></div>
- <div class="text-center"><%= paginate @book %></div>	
+ <div class="text-center"><%= paginate @book %></div>
  </div>

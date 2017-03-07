@@ -35,11 +35,13 @@
   <% else %>
     <meta name="description" content="Valiant Database is the ultimate source for Valiant comics from all eras. We have EVERY title ever published, soliciations, sales and pricing data, and more!">
   <% end %>
+  <meta name="theme-color" content="#4285f4">
   <% if @pgtitle.blank? %>
-  <title>Valiant Database</title>
+    <title>Valiant Database</title>
   <% else %>
-  <title><%= @pgtitle %> | Valiant Database</title>
+    <title><%= @pgtitle %> | Valiant Database</title>
   <% end %>
+  <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="https://s3.amazonaws.com/valiantdb/images/favicon2.ico" type="image/x-icon" />
   <link rel="sitemap" type="application/xml" title="Sitemap" href="https://www.valiantdatabase.com/sitemap.xml" />
   <%= stylesheet_link_tag 'application', media: 'all', :defer => "defer" %>
@@ -58,10 +60,9 @@
   <div id="main">
     <%= render "layouts/header" unless @skip_footer %>
 
-    <%= render "books/banner" %>
+    <%= render "books/banner" unless controller_name == 'user' && action_name == 'show'%>
 
     <div class="container-fluid">
-
     	<% flash.each do |name, msg| %>
         <% if name == "alert" %>
     		  <div class="alert alert-danger alert-dismissible alert-message" role="alert">

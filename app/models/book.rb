@@ -100,6 +100,16 @@ class Book < ActiveRecord::Base
 	    end
   	end
 
+		def self.to_xcsv
+	    attributes = %w{title issue writer artist cover rdate category ratio bookcode isb note}
+		    CSV.generate(headers: true) do |csv|
+		      csv << attributes
+		      all.each do |book|
+		        csv << book.attributes.values_at(*attributes)
+		      end
+		    end
+	  	end
+
   	def self.import(file)
 	    CSV.foreach(file.path, headers: true, :encoding => 'utf-8') do |row|
 
@@ -130,7 +140,7 @@ class Book < ActiveRecord::Base
 	      csv << attributes
 	      all.each do |book|
 	        row = book.attributes.values_at(*attributes)
-	        row << "http://www.comicark.com/books/" + Book.find(book.id).to_param
+	        row << "https://www.valiantdatabase.com/books/" + Book.find(book.id).to_param
 	        csv << row
 	      end
 	    end

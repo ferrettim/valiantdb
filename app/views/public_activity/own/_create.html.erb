@@ -23,7 +23,7 @@
 			<%= image_tag Book.friendly.find(a.recipient_id).image.url(:mini), :height => "36px", class: "img-shadow" %>
 		</div>
 		<div class="col-md-11 col-sm-10 col-xs-10">
-			<i class="fa fa-heart"></i> <%= link_to root_url + "users/" + User.find(a.owner_id).slug + "/profile" do %><%= User.find(a.owner_id).name %><% end %> added <%= link_to Book.friendly.find(a.recipient_id) do %><%= Book.friendly.find(a.recipient_id).title %> #<%= Book.friendly.find(a.recipient_id).issue %>, cover by <%= Book.friendly.find(a.recipient_id).cover %><% end %> to their collection
+			<i class="fa fa-heart"></i> <%= link_to root_url + "users/" + User.find(a.owner_id).slug + "/profile" do %><%= User.find(a.owner_id).name %><% end %> added <%= link_to Book.friendly.find(a.recipient_id) do %><%= Book.friendly.find(a.recipient_id).title %> #<%= Book.friendly.find(a.recipient_id).issue %>, cover by <%= Book.friendly.find(a.recipient_id).cover %><% end %> <% unless Book.friendly.find(a.recipient_id).printing == 1 %>(<%= (Book.friendly.find(a.recipient_id).printing.ordinalize) %> printing) <% end %>to their collection
 			<br />
 			<span class="time"><%= local_time_ago(a.created_at) %></span>
 		</div>

@@ -161,7 +161,6 @@
                 </li>
                 <li>
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Releases <b class="caret"></b></a>
-                  <% if user_signed_in? %>
                       <ul class="dropdown-menu">
                         <li><%= link_to releases_currentweek_path + "?utf8=✓&publisher=Valiant+Entertainment" do %>This Week<% end %></li>
                         <li><%= link_to releases_nextweek_path + "?utf8=✓&publisher=Valiant+Entertainment" do %>Next Week<% end %></li>
@@ -176,9 +175,6 @@
                           </ul>
                         </li>
                       </ul>
-                  <% else %>
-                    <ul class="dropdown-menu"><li><%= link_to new_user_session_path do %>Login for access<% end %></li></ul>
-                  <% end %>
                 </li>
                 <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sales Data <b class="caret"></b></a>

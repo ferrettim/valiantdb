@@ -2,6 +2,8 @@ require 'feedjira'
 
 class PagesController < ApplicationController
 
+  @optionstitle = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title")
+
   def home
   	@rdate = DateTime.now.next_day(1).strftime("%B %d, %Y")
     @newbooks = Book.where.not("note like ?", "%Sketch cover%").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
