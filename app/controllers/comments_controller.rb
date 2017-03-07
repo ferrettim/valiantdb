@@ -30,11 +30,11 @@ class CommentsController < ApplicationController
 
 	private
 
-	def comment_params  
-	  params.require(:comment).permit(:content)
+	def comment_params
+	  params.require(:comment).permit(:content, :grade, :cgcgrade, :grader, :signature)
 	end
 
-	def set_book 
+	def set_book
 	  @book = Book.friendly.find(params[:book_id])
-	end  
+	end
 end
