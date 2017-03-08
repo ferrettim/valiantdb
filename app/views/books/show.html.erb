@@ -299,7 +299,7 @@
 																							<ul>
 																								<% @book.comments.where(:user_id => current_user.id).order(created_at: :desc).each do |comment| %>
 																									<li>
-																										<%= comment.content %> (<small>added <%= local_time(comment.created_at) %></small>). <% if comment.grade? %>You rate this book <strong><%= comment.grade.to_s %></strong>.<% end %><% if comment.cgcgrade? && comment.grader? %>This book has been certified to be graded at <%= comment.cgcgrade.to_s %> by <%= comment.grader.to_s %>. <% end %>
+																										<%= comment.content %> (<small>added <%= local_time(comment.created_at) %></small>). <% if comment.grade? %> You gave this book a rating of <strong><%= comment.grade.to_s %></strong>.<% end %><% if comment.cgcgrade? && comment.grader? %> This book has been certified to be graded at <%= comment.cgcgrade.to_s %> by <%= comment.grader.to_s %>. <% end %>
 																										<%= link_to book_comment_path(@book, comment), method: :delete, data: { confirm: "Are you sure?" }, remote: true do %>
 																											<i class="fa fa-remove"></i>
 																										<% end %>

@@ -1,6 +1,41 @@
 <div class="content transitions-enabled container-fluid">
 
+<% if params[:title].present? %>
     <%= render "bookown" %>
+<% elsif params[:issue].present? %>
+   <%= render "bookown" %>
+<% elsif params[:category].present? %>
+   <%= render "bookown" %>
+<% elsif params[:publisher].present? %>
+   <%= render "bookown" %>
+<% else %>
+  <div class="col-md-12 col-sm-12 col-xs-12" style="background-color: white;">
+    <h3>Collection Statistics</h3>
+    <p>To view your collection, select your filtering options from the menu above by clicking on the <i class="fa fa-gears"></i> icon and choosing your options. You can filter by title, issue number, book type and publisher.</p>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <h4>Breakdown By Issue</h4>
+      <%= pie_chart @book.group(:title).count %>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <h4>Breakdown By Issue</h4>
+      <%= pie_chart @book.group(:publisher).count %>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <h4>Breakdown By Type</h4>
+      <%= pie_chart @book.group(:category).count %>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <h4>Estimated Value</h4>
+      <% if user_signed_in? && current_user.patron? %>
+        <span style="margin: 0 auto; margin-top: 40px; vertical-align: middle; padding-top: 10%; width: 75%; min-height: 225px; display: block; overflow: auto; font-size: 4em; font-weight: bold;" class="text-center">
+          $<%= (@user.owned_books.sum(:pricenm) / 100) %>
+        </span>
+      <% else %>
+        Patrons Only
+      <% end %>
+    </div>
+  </div>
+<% end %>
 
   <div class="clearfix"></div>
 </div>
