@@ -13,16 +13,16 @@
     <h3>Collection Statistics</h3>
     <p>To view your collection, select your filtering options from the menu above by clicking on the <i class="fa fa-gears"></i> icon and choosing your options. You can filter by title, issue number, book type and publisher.</p>
     <div class="col-md-6 col-sm-6 col-xs-12">
-      <h4>Breakdown By Issue</h4>
-      <%= pie_chart @chartbook.group(:title).count %>
+      <h4>Breakdown By Title</h4>
+      <%= pie_chart @charttitle %>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
       <h4>Breakdown By Issue</h4>
-      <%= pie_chart @chartbook.group(:publisher).count %>
+      <%= pie_chart @chartissue %>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
       <h4>Breakdown By Type</h4>
-      <%= pie_chart @chartbook.group(:category).count %>
+      <%= pie_chart @charttype %>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
       <h4>Estimated Value</h4>
