@@ -546,7 +546,7 @@ class BooksController < ApplicationController
       @pgtitle = "#{User.friendly.find(params[:id]).name}'s Collection"
     end
     @charttitle = @user.owned_books.group(:title).count
-    @chartissue = @user.owned_books.group(:issue).count
+    @chartpublisher = @user.owned_books.group(:publisher).count
     @charttype = @user.owned_books.group(:category).count
     @book = @user.owned_books.order(title: :asc, rdate: :asc).page(params[:page]).per(24)
     @book = @book.where(:issue => params[:issue]) if params[:issue].present?
