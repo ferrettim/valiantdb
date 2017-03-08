@@ -14,15 +14,15 @@
     <p>To view your collection, select your filtering options from the menu above by clicking on the <i class="fa fa-gears"></i> icon and choosing your options. You can filter by title, issue number, book type and publisher.</p>
     <div class="col-md-6 col-sm-6 col-xs-12">
       <h4>Breakdown By Issue</h4>
-      <%= pie_chart @book.group(:title).count %>
+      <%= pie_chart @chartbook.group(:title).count %>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
       <h4>Breakdown By Issue</h4>
-      <%= pie_chart @book.group(:publisher).count %>
+      <%= pie_chart @chartbook.group(:publisher).count %>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
       <h4>Breakdown By Type</h4>
-      <%= pie_chart @book.group(:category).count %>
+      <%= pie_chart @chartbook.group(:category).count %>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
       <h4>Estimated Value</h4>
