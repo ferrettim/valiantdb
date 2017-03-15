@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307004829) do
+ActiveRecord::Schema.define(version: 20170315132143) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -84,6 +84,8 @@ ActiveRecord::Schema.define(version: 20170307004829) do
     t.string   "imprint"
     t.string   "slug"
     t.string   "ratio"
+    t.string   "retailer"
+    t.string   "convention"
     t.index ["slug"], name: "index_books_on_slug", unique: true
   end
 

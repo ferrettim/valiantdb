@@ -199,6 +199,12 @@
 													<% unless @book.ratio.blank? %>
 														(<%= @book.ratio.to_s %>)
 													<% end %>
+													<% unless @book.retailer.blank? %>
+														<small>(<%= @book.retailer.to_s %>)</small>
+													<% end %>
+													<% unless @book.convention.blank? %>
+														<small>(<%= @book.convention.to_s %>)</small>
+													<% end %>
 												<% end %>
 											<% end %>
 
@@ -415,7 +421,6 @@
 												   Accounted for: <strong><%= @rescues.sum :quantity %></strong> <%= pluralize((@rescues.sum :quantity), "copy") %>
 												   <% end %>
 												   <br />
-
 												   <% if user_signed_in? && @book.printrun? %>
 														Print Run: <strong><%= @book.printrun %></strong> copies
 														<% if @book.title == "A&A Bootleg" %>

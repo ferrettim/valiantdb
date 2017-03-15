@@ -45,9 +45,9 @@
               <% end %>
             </ul>
             <ul class="list-inline">
-              <li><%= f.input :isb, :label => "ISBN", as: :text, input_html: { rows: "1"} %></li>
-              <li><%= f.input :link, :label => "Purchase Link", as: :text, input_html: { rows: "1", cols: "30" } %></li>
-              <li><%= f.input :qr, :label => "YouTube Video ID", as: :text, input_html: { rows: "1" } %></li>
+              <li><%= f.input :link, :label => "Purchase Link" %></li>
+              <li><%= f.input :isb, :label => "ISBN" %></li>
+              <li><%= f.input :qr, :label => "YouTube Video ID" %></li>
             </ul>
             <ul class="list-inline">
               <li><%= f.input :event, :label => "Event Title" %></li>
@@ -78,6 +78,8 @@
             <li><%= f.input :imprint, :url => autocomplete_book_imprint_books_path, :as => :autocomplete, label: false, placeholder: "Enter Imprint" %></li>
             <li><%= f.input :country, :url => autocomplete_book_country_books_path, :as => :autocomplete, label: false, placeholder: "Enter Country" %></li>
             <li><%= f.input :code, label: false, placeholder: "Diamond Code" %></li>
+            <li><%= f.input :retailer, :label => false, :url => autocomplete_book_retailer_books_path, :as => :autocomplete, placeholder: "Enter Retailer" %></li>
+            <li><%= f.input :convention, :label => false, :url => autocomplete_book_convention_books_path, :as => :autocomplete, placeholder: "Enter Convention" %></li>
           </ul>
           <% if current_user.super_admin? %>
             <ul class="list-inline">

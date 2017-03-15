@@ -87,6 +87,10 @@
         <% elsif title.category == "Variant" %>
           <% if title.ratio? %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (<%= title.ratio.to_s %>)</span>
+          <% elsif title.retailer? %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Retailer Excl.)</span>
+          <% elsif title.convention? %>
+            <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Con Exclusive)</span>
           <% else %>
             <span class="btn btn-primary col-md-12 col-sm-12 col-xs-12">#<%= title.issue.to_s %> (Variant)</span>
           <% end %>

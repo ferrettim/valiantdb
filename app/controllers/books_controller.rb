@@ -19,6 +19,8 @@ class BooksController < ApplicationController
   autocomplete :book, :country
   autocomplete :book, :publisher
   autocomplete :book, :imprint
+  autocomplete :book, :retailer
+  autocomplete :book, :convention
   respond_to :html, :json, :js
 
   def autocomplete
@@ -1421,20 +1423,33 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Valiant Entertainment")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
+    @tcount = @tcount.where(:category => params[:category]) if params[:category].present?
+    @tcount = @tcount.where(:ratio => params[:ratio]) if params[:ratio].present?
+    @tcount = @tcount.where(:retailer => params[:retailer]) if params[:retailer].present?
+    @tcount = @tcount.where(:convention => params[:convention]) if params[:convention].present?
     if user_signed_in? && current_user.readerview == true
       @book = Book.all.where(:publisher => "Valiant Entertainment").where(:category => "Default").pub_order.page(params[:page]).per(24)
       @book = @book.where(:issue => params[:issue]) if params[:issue].present?
       @book = @book.where(:title => params[:title]) if params[:title].present?
-      @book = @book.where(:title => params[:booktype]) if params[:booktype].present?
+      @book = @book.where(:category => params[:category]) if params[:category].present?
+      @book = @book.where(:ratio => params[:ratio]) if params[:ratio].present?
+      @book = @book.where(:retailer => params[:retailer]) if params[:retailer].present?
+      @book = @book.where(:convention => params[:convention]) if params[:convention].present?
     else
       @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").pub_order.page(params[:page]).per(24)
       @book = @book.where(:issue => params[:issue]) if params[:issue].present?
       @book = @book.where(:title => params[:title]) if params[:title].present?
       @book = @book.where(:category => params[:category]) if params[:category].present?
+      @book = @book.where(:ratio => params[:ratio]) if params[:ratio].present?
+      @book = @book.where(:retailer => params[:retailer]) if params[:retailer].present?
+      @book = @book.where(:convention => params[:convention]) if params[:convention].present?
     end
     @optionstitle = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(category)").group("category").order("category")
+    @optionsratio = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(ratio)").group("ratio").order("ratio desc")
+    @optionsretailer = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(retailer)").group("retailer").order("retailer desc")
+    @optionsconvention = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(convention)").group("convention").order("convention desc")
     @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").pub_order
     respond_to do |format|
       format.html
@@ -1453,20 +1468,32 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Valiant Entertainment")
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
+    @tcount = @tcount.where(:ratio => params[:ratio]) if params[:ratio].present?
+    @tcount = @tcount.where(:retailer => params[:retailer]) if params[:retailer].present?
+    @tcount = @tcount.where(:convention => params[:convention]) if params[:convention].present?
     if user_signed_in? && current_user.readerview == true
       @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Default").pub_order.page(params[:page]).per(24)
       @book = @book.where(:issue => params[:issue]) if params[:issue].present?
       @book = @book.where(:title => params[:title]) if params[:title].present?
       @book = @book.where(:category => params[:category]) if params[:category].present?
+      @book = @book.where(:ratio => params[:ratio]) if params[:ratio].present?
+      @book = @book.where(:retailer => params[:retailer]) if params[:retailer].present?
+      @book = @book.where(:convention => params[:convention]) if params[:convention].present?
     else
       @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").pub_order.page(params[:page]).per(24)
       @book = @book.where(:issue => params[:issue]) if params[:issue].present?
       @book = @book.where(:title => params[:title]) if params[:title].present?
       @book = @book.where(:category => params[:category]) if params[:category].present?
+      @book = @book.where(:ratio => params[:ratio]) if params[:ratio].present?
+      @book = @book.where(:retailer => params[:retailer]) if params[:retailer].present?
+      @book = @book.where(:convention => params[:convention]) if params[:convention].present?
     end
     @optionstitle = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(category)").group("category").order("category")
+    @optionsratio = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(ratio)").group("ratio").order("ratio desc")
+    @optionsretailer = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(retailer)").group("retailer").order("retailer desc")
+    @optionsconvention = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(convention)").group("convention").order("convention desc")
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1484,20 +1511,32 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Valiant Entertainment").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
+    @tcount = @tcount.where(:ratio => params[:ratio]) if params[:ratio].present?
+    @tcount = @tcount.where(:retailer => params[:retailer]) if params[:retailer].present?
+    @tcount = @tcount.where(:convention => params[:convention]) if params[:convention].present?
     if user_signed_in? && current_user.readerview == true
       @book = Book.all.where(:publisher => "Valiant Entertainment").where(:category => "Default").where.not(id: current_user.owned_book_ids).pub_order.page(params[:page]).per(24)
       @book = @book.where(:issue => params[:issue]) if params[:issue].present?
       @book = @book.where(:title => params[:title]) if params[:title].present?
       @book = @book.where(:title => params[:category]) if params[:title].present?
+      @book = @book.where(:ratio => params[:ratio]) if params[:ratio].present?
+      @book = @book.where(:retailer => params[:retailer]) if params[:retailer].present?
+      @book = @book.where(:convention => params[:convention]) if params[:convention].present?
     else
       @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).pub_order.page(params[:page]).per(24)
       @book = @book.where(:issue => params[:issue]) if params[:issue].present?
       @book = @book.where(:title => params[:title]) if params[:title].present?
       @book = @book.where(:title => params[:category]) if params[:title].present?
+      @book = @book.where(:ratio => params[:ratio]) if params[:ratio].present?
+      @book = @book.where(:retailer => params[:retailer]) if params[:retailer].present?
+      @book = @book.where(:convention => params[:convention]) if params[:convention].present?
     end
     @optionstitle = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(category)").group("category").order("category")
+    @optionsratio = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(ratio)").group("ratio").order("ratio desc")
+    @optionsretailer = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(retailer)").group("retailer").order("retailer desc")
+    @optionsconvention = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(convention)").group("convention").order("convention desc")
     @bookcsv = Book.all.where("rdate < ?", Date.today).where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).pub_order
     respond_to do |format|
       format.html
@@ -1516,20 +1555,32 @@ class BooksController < ApplicationController
     @tcount = Book.all.where(:publisher => "Valiant Entertainment").where.not(id: current_user.owned_book_ids)
     @tcount = @tcount.where(:issue => params[:issue]) if params[:issue].present?
     @tcount = @tcount.where(:title => params[:title]) if params[:title].present?
+    @tcount = @tcount.where(:ratio => params[:ratio]) if params[:ratio].present?
+    @tcount = @tcount.where(:retailer => params[:retailer]) if params[:retailer].present?
+    @tcount = @tcount.where(:convention => params[:convention]) if params[:convention].present?
     if user_signed_in? && current_user.readerview == true
       @book = Book.all.where(:publisher => "Valiant Entertainment").where(:category => "Default").where.not(id: current_user.owned_book_ids).pub_order.page(params[:page]).per(24)
       @book = @book.where(:issue => params[:issue]) if params[:issue].present?
       @book = @book.where(:title => params[:title]) if params[:title].present?
       @book = @book.where(:category => params[:category]) if params[:category].present?
+      @book = @book.where(:ratio => params[:ratio]) if params[:ratio].present?
+      @book = @book.where(:retailer => params[:retailer]) if params[:retailer].present?
+      @book = @book.where(:convention => params[:convention]) if params[:convention].present?
     else
       @book = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").where.not(id: current_user.owned_book_ids).pub_order.page(params[:page]).per(24)
       @book = @book.where(:issue => params[:issue]) if params[:issue].present?
       @book = @book.where(:title => params[:title]) if params[:title].present?
       @book = @book.where(:category => params[:category]) if params[:category].present?
+      @book = @book.where(:ratio => params[:ratio]) if params[:ratio].present?
+      @book = @book.where(:retailer => params[:retailer]) if params[:retailer].present?
+      @book = @book.where(:convention => params[:convention]) if params[:convention].present?
     end
     @optionstitle = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title")
     @optionsissue = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
     @optionscategory = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(category)").group("category").order("category")
+    @optionsratio = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(ratio)").group("ratio").order("ratio desc")
+    @optionsretailer = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(retailer)").group("retailer").order("retailer desc")
+    @optionsconvention = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(convention)").group("convention").order("convention desc")
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -1902,6 +1953,6 @@ class BooksController < ApplicationController
     end
 
     def book_params
-      params.require(:book).permit(:issue, :title, :rdate, :note, :image, :image_remote_url, :writer, :writer2, :artist, :artist2, :colors, :letters, :editor, :eic, :cover, :isb, :link, :arc, :summary, :bookcode, :qr, :price, :price_in_dollars, :pricenm, :value_in_dollars, :price98, :printrun, :category, :ratio, :status, :comicrating, :code, :event, :eventpart, :iskey, :keynote, :previews, :era, :country, :publisher, :imprint, :printing, :tag_list, :slug)
+      params.require(:book).permit(:issue, :title, :rdate, :note, :image, :image_remote_url, :writer, :writer2, :artist, :artist2, :colors, :letters, :editor, :eic, :retailer, :convention, :cover, :isb, :link, :arc, :summary, :bookcode, :qr, :price, :price_in_dollars, :pricenm, :value_in_dollars, :price98, :printrun, :category, :ratio, :status, :comicrating, :code, :event, :eventpart, :iskey, :keynote, :previews, :era, :country, :publisher, :imprint, :printing, :tag_list, :slug)
     end
 end
