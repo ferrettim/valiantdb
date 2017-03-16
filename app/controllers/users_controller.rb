@@ -105,8 +105,8 @@ class UsersController < ApplicationController
     @hardcats = [1,5,9,18,26,28,29,36,71,121,132,148,152,170,198,230,310,492,472]
     @activities = PublicActivity::Activity.order("created_at desc").where(owner_id: current_user.followees(User), owner_type: "User").page(params[:page]).per(10)
     @activities_site = PublicActivity::Activity.order("created_at desc").where(trackable_type: "Book").limit(10)
-    @newbooks = Book.where(:publisher => "Valiant Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
-    @newbooks2 = Book.where(:publisher => "Valiant Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(:title)
+    @newbooks = Book.where(:publisher => "Valiant Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(title: :asc, category: :asc)
+    @newbooks2 = Book.where(:publisher => "Valiant Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(title: :asc, category: :asc)
     @owned_last = Own.where(:user_id == @user.id).order(created_at: :asc).limit(12)
     respond_to do |format|
         format.html # show.html.erb
