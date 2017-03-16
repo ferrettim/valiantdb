@@ -6,7 +6,7 @@ class PagesController < ApplicationController
 
   def home
   	@rdate = DateTime.now.next_day(1).strftime("%B %d, %Y")
-    @newbooks = Book.where.not("note like ?", "%Sketch cover%").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(:title)
+    @newbooks = Book.where.not("note like ?", "%Sketch cover%").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(title: :asc, category: :asc)
     @book = Book.order("created_at").last(25)
     @tcount = Book.all.count
     if user_signed_in?
