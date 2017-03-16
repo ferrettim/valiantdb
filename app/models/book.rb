@@ -31,7 +31,7 @@ class Book < ActiveRecord::Base
 	has_many :taggings
 	has_many :tags, through: :taggings
 	has_many :comments, :dependent => :destroy
-	scope :pub_order, -> { order(rdate: :asc, issue: :asc, category: :asc, ratio: :asc) }
+	scope :pub_order, -> { order(rdate: :asc, issue: :asc, category: :asc, ratio: :desc) }
 	scope :title_order, -> { order(title: :asc, issue: :asc) }
 	scope :main_order, -> { order(rdate: :asc, title: :asc, issue: :asc) }
 	scope :created_order, -> { order(title: :asc, issue: :asc, rdate: :asc, created_at: :asc) }
