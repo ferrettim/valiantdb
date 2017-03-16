@@ -165,15 +165,7 @@
                           <% else %>
                             <i class="fa fa-question-circle-o" title="You have not yet voted for this poll."></i>
                           <% end %>
-                          <strong>Latest Poll: <%= link_to @pollnew.topic.to_s, @pollnew %></strong><br />
-                          <% if @pollold %>
-                            <% if current_user.pollvoted_for?(@pollold) %>
-                              <i class="fa fa-check" title="You voted on this poll!"></i>
-                            <% else %>
-                              <i class="fa fa-question-circle-o" title="You have not yet voted for this poll."></i>
-                            <% end %>
-                            <strong>Previous Poll: <%= link_to @pollold.topic.to_s, @pollold %></strong>
-                          <% end %>
+                          <strong>Poll: <%= link_to @pollnew.topic.to_s, @pollnew %></strong><br />
                   <div class="clearfix"></div>
                 <% end %>
                 <h4 class="text-left">

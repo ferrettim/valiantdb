@@ -19,6 +19,25 @@
                 <% end %>
               </select>
               <br /><br />
+              <select name="writer" class="form-control chosen-select" style="width: 32% !important;">
+                <option value="">Writer</option>
+                <% @optionswriter.each do |n| %>
+                  <option value="<%= n.writer %>"><%= n.writer %></option>
+                <% end %>
+              </select>
+              <select name="artist" class="form-control chosen-select" style="width: 32% !important;">
+                <option value="">Artist</option>
+                <% @optionsartist.each do |n| %>
+                  <option value="<%= n.artist %>"><%= n.artist %></option>
+                <% end %>
+              </select>
+              <select name="cover" class="form-control chosen-select" style="width: 32% !important;">
+                <option value="">Cover</option>
+                <% @optionscover.each do |n| %>
+                  <option value="<%= n.cover %>"><%= n.cover %></option>
+                <% end %>
+              </select>
+              <br /><br />
               <select name="issue" class="form-control chosen-select" style="width: 30% !important;">
                 <option value="">Issue</option>
                 <% @optionsissue.each do |n| %>

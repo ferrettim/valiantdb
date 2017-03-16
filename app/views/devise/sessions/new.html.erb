@@ -1,11 +1,9 @@
 <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12">
   <br />
-  <%= image_tag "https://s3.amazonaws.com/valiantdb/images/cabanner.jpg", :alt => "Valiant Database", class: "divfill" %>
+  <%= image_tag "https://s3.amazonaws.com/valiantdb/images/valiantdatabasecom.jpg", :alt => "Valiant Database", class: "divfill" %>
   <div class="wellclear bottomcorners">
 
     <div class="col-md-12 col-sm-12 col-xs-12">
-
-    <h2 class="text-center">Account Login</h2>
     <p>If you get value out of using the site, consider supporting us by <%= link_to "becoming a patron", "http://www.patreon.com/valiantdb", :title => "Join us on Patreon", :target => "_blank" %>. If you forgot your password, you can <%= link_to new_password_path(resource_name) do %>reset it here<% end %>. If you already have an account at Valiant Database, you can connect your social media account to it for easier access.</p>
     <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="form-inputs">
