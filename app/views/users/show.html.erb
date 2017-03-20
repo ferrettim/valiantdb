@@ -165,7 +165,7 @@
                           <% else %>
                             <i class="fa fa-question-circle-o" title="You have not yet voted for this poll."></i>
                           <% end %>
-                          <strong>Poll: <%= link_to @pollnew.topic.to_s, @pollnew %></strong><br />
+                          <%= link_to @pollnew.topic.to_s, @pollnew %><br />
                   <div class="clearfix"></div>
                 <% end %>
                 <h4 class="text-left">

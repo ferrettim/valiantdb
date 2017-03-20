@@ -108,6 +108,26 @@ class UsersController < ApplicationController
     @newbooks = Book.where(:publisher => "Valiant Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => Date.today.beginning_of_week..Date.today.end_of_week).order(title: :asc, category: :asc, ratio: :desc)
     @newbooks2 = Book.where(:publisher => "Valiant Entertainment").where.not("note like ?", "%Sketch cover%").where.not(:category => "Sketch").where(:rdate => (Date.today.beginning_of_week + 1.week)..(Date.today.end_of_week + 1.week)).order(title: :asc, category: :asc, ratio: :desc)
     @owned_last = Own.where(:user_id == @user.id).order(created_at: :asc).limit(12)
+
+    @filter = Book.all.where(:publisher => "Valiant Entertainment").where.not(:category => "Sketch").pub_order.page(params[:page]).per(24)
+    @filter = @filter.where(:issue => params[:issue]) if params[:issue].present?
+    @filter = @filter.where(:title => params[:title]) if params[:title].present?
+    @filter = @filter.where(:category => params[:category]) if params[:category].present?
+    @filter = @filter.where(:ratio => params[:ratio]) if params[:ratio].present?
+    @filter = @filter.where(:retailer => params[:retailer]) if params[:retailer].present?
+    @filter = @filter.where(:convention => params[:convention]) if params[:convention].present?
+    @filter = @filter.where(:writer => params[:writer]) if params[:writer].present?
+    @filter = @filter.where(:artist => params[:artist]) if params[:artist].present?
+    @filter = @filter.where(:cover => params[:cover]) if params[:cover].present?
+    @filtertitle = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(title)").group("title").order("title")
+    @filterissue = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(issue)").group("issue").order("issue")
+    @filtercategory = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(category)").group("category").order("category")
+    @filterratio = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(ratio)").group("ratio").order("ratio desc")
+    @filterretailer = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(retailer)").group("retailer").order("retailer desc")
+    @filterconvention = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(convention)").group("convention").order("convention desc")
+    @filterwriter = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(writer)").group("writer").order("writer asc")
+    @filterartist = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(artist)").group("artist").order("artist asc")
+    @filtercover = Book.where(:publisher => "Valiant Entertainment").select("DISTINCT(cover)").group("cover").order("cover asc")
     respond_to do |format|
         format.html # show.html.erb
         format.xml { render :xml => @user }

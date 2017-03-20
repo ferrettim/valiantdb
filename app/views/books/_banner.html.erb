@@ -1,5 +1,5 @@
 <% if controller_name == "books" %>
-  <% if action_name == "valiantall" or action_name == "valiantalltbl" or action_name == "valiantallmissing" or action_name == "valiantalltblmissing" or action_name == "valiantvh1all" or action_name == "valiantvh1alltbl" or action_name == "valiantvh1allmissing" or action_name == "valiantvh1alltblmissing" or action_name == "valiantvh2all" or action_name == "valiantvh2alltbl" or action_name == "valiantvh2allmissing" or action_name == "valiantvh2alltblmissing" %>
+  <% if action_name == "valiantall" or action_name == "valiantalltbl" or action_name == "valiantallmissing" or action_name == "valiantalltblmissing" %>
     <div id="filteroptions" class="modal fade" role="dialog" aria-labelledby="filteroptions" aria-hidden="true" tabindex="-1">
       <br /><br /><br />
       <div class="modal-dialog">
@@ -7,7 +7,7 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">
-              Filter Options
+              Search Options
             </h4>
           </div>
           <div class="modal-body">
@@ -78,6 +78,65 @@
       </div>
     </div>
   <% end %>
+  <% if action_name == "valiantvh1all" or action_name == "valiantvh1alltbl" or action_name == "valiantvh1allmissing" or action_name == "valiantvh1alltblmissing" or action_name == "valiantvh2all" or action_name == "valiantvh2alltbl" or action_name == "valiantvh2allmissing" or action_name == "valiantvh2alltblmissing" %>
+    <div id="filteroptions" class="modal fade" role="dialog" aria-labelledby="filteroptions" aria-hidden="true" tabindex="-1">
+      <br /><br /><br />
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">
+              Search Options
+            </h4>
+          </div>
+          <div class="modal-body">
+            <%= form_tag "", :method => 'get', :role => "search", class: "form-inline" do %>
+              <select name="title" class="form-control chosen-select" style="width: 100% !important;">
+                <option value="">Book Title</option>
+                <% @optionstitle.each do |n| %>
+                  <option value="<%= n.title %>"><%= n.title %></option>
+                <% end %>
+              </select>
+              <br /><br />
+              <select name="writer" class="form-control chosen-select" style="width: 32% !important;">
+                <option value="">Writer</option>
+                <% @optionswriter.each do |n| %>
+                  <option value="<%= n.writer %>"><%= n.writer %></option>
+                <% end %>
+              </select>
+              <select name="artist" class="form-control chosen-select" style="width: 32% !important;">
+                <option value="">Artist</option>
+                <% @optionsartist.each do |n| %>
+                  <option value="<%= n.artist %>"><%= n.artist %></option>
+                <% end %>
+              </select>
+              <select name="cover" class="form-control chosen-select" style="width: 32% !important;">
+                <option value="">Cover</option>
+                <% @optionscover.each do |n| %>
+                  <option value="<%= n.cover %>"><%= n.cover %></option>
+                <% end %>
+              </select>
+              <br /><br />
+              <select name="issue" class="form-control chosen-select" style="width: 30% !important;">
+                <option value="">Issue</option>
+                <% @optionsissue.each do |n| %>
+                  <option value="<%= n.issue %>"><%= n.issue %></option>
+                <% end %>
+              </select>
+              <select name="category" class="form-control chosen-select" style="width: 40% !important;">
+                <option value="">Type</option>
+                <% @optionscategory.each do |n| %>
+                  <option value="<%= n.category %>"><%= n.category %></option>
+                <% end %>
+              </select>
+              <br /><br />
+              <button type="submit" class="btn btn-primary btn-sm" style="width: 100% !important;">Submit</button>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 <% end %>
 
 <% if controller_name == "books" %>
@@ -89,7 +148,7 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">
-              Filter Options
+              Search Options
             </h4>
           </div>
           <div class="modal-body">
@@ -148,7 +207,7 @@
                     <% end %></li>
               <% end %>
               <li class="btn btn-default btn-sm">
-                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Search Options" do %>
                     <span class="fa fa-gears"></span>
                   <% end %>
               </li>
@@ -175,7 +234,7 @@
                     <% end %></li>
               <% end %>
               <li class="btn btn-default btn-sm">
-                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Search Options" do %>
                     <span class="fa fa-gears"></span>
                   <% end %>
               </li>
@@ -199,7 +258,7 @@
                     <span class="fa fa-book"></span>
                   <% end %></li>
                   <li class="btn btn-default btn-sm">
-                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Search Options" do %>
                         <span class="fa fa-gears"></span>
                       <% end %>
                   </li>
@@ -223,7 +282,7 @@
                     <span class="fa fa-book"></span>
                   <% end %></li>
                   <li class="btn btn-default btn-sm">
-                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Search Options" do %>
                         <span class="fa fa-gears"></span>
                       <% end %>
                   </li>
@@ -830,7 +889,7 @@
                     <% end %></li>
               <% end %>
               <li class="btn btn-default btn-sm">
-                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Search Options" do %>
                     <span class="fa fa-gears"></span>
                   <% end %>
               </li>
@@ -856,7 +915,7 @@
                     <% end %></li>
               <% end %>
               <li class="btn btn-default btn-sm">
-                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Search Options" do %>
                     <span class="fa fa-gears"></span>
                   <% end %>
               </li>
@@ -880,7 +939,7 @@
                     <span class="fa fa-book"></span>
                   <% end %></li>
                   <li class="btn btn-default btn-sm">
-                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Search Options" do %>
                         <span class="fa fa-gears"></span>
                       <% end %>
                   </li>
@@ -904,7 +963,7 @@
                     <span class="fa fa-book"></span>
                   <% end %></li>
                   <li class="btn btn-default btn-sm">
-                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Search Options" do %>
                         <span class="fa fa-gears"></span>
                       <% end %>
                   </li>
@@ -930,7 +989,7 @@
                     <% end %></li>
               <% end %>
               <li class="btn btn-default btn-sm">
-                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Search Options" do %>
                     <span class="fa fa-gears"></span>
                   <% end %>
               </li>
@@ -956,7 +1015,7 @@
                     <% end %></li>
               <% end %>
               <li class="btn btn-default btn-sm">
-                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                  <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Search Options" do %>
                     <span class="fa fa-gears"></span>
                   <% end %>
               </li>
@@ -980,7 +1039,7 @@
                     <span class="fa fa-book"></span>
                   <% end %></li>
                   <li class="btn btn-default btn-sm">
-                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Search Options" do %>
                         <span class="fa fa-gears"></span>
                       <% end %>
                   </li>
@@ -1004,7 +1063,7 @@
                     <span class="fa fa-book"></span>
                   <% end %></li>
                   <li class="btn btn-default btn-sm">
-                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Filter Options" do %>
+                      <%= link_to "#", data: { toggle: "modal", target: "#filteroptions" }, class: "btn btn-default", :title => "Search Options" do %>
                         <span class="fa fa-gears"></span>
                       <% end %>
                   </li>
