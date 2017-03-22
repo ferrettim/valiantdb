@@ -159,15 +159,23 @@
         </div>
         <div class="col-md-9 col-sm-8 col-xs-12 wellclear bottomcorners">
             <div class="profile-content">
-                <% if user_signed_in? %>
-                          <% if current_user.pollvoted_for?(@pollnew) %>
-                            <i class="fa fa-check" title="You voted on this poll!"></i>
-                          <% else %>
-                            <i class="fa fa-question-circle-o" title="You have not yet voted for this poll."></i>
-                          <% end %>
-                          <%= link_to @pollnew.topic.to_s, @pollnew %><br />
-                  <div class="clearfix"></div>
+              <div class="gone">
+                <%= link_to "Buy Now", "https://www.paypal.com/paypalme/MartinFerretti/10", title: "Purchase X-O Manowar #1 Valiant Database exclusive variant", class: "btn btn-danger pull-right", target: "_blank" %>
+              </div>
+              <div class="pull-left">
+                <%= link_to "https://www.valiantdatabase.com/books/x-o-manowar-1-philip-tan-variant-1", title: "Learn about X-O Manowar #1 Valiant Database exclusive variant" do %>
+                    <%= image_tag "https://s3.amazonaws.com/valiantdb/images/xo_manowar1_vbd_sm.jpg", style: "height: 105px; padding-right: 15px;", alt: "X-O Manowar #1 Valiant Database exclusive variant", class: "pull-left" %>
                 <% end %>
+              </div>
+              <div>
+                  <%= link_to "https://www.valiantdatabase.com/books/x-o-manowar-1-philip-tan-variant-1", title: "Learn about X-O Manowar #1 Valiant Database exclusive variant" do %><span style="font-size: 14pt; font-weight: bold;">X-O Manowar #1</span><br />Valiant Database Exclusive Variant Cover<br /><br /><% end %>
+                  <span class="gone">Cover by Philip Tan. Price includes shipping (US Only)! All books shipped bagged and boarded via media mail. For orders outside the US, please <%= link_to "contact me", "http://localhost:3000/contacts/new", title: "Contact" %> before purchasing.</span>
+                  <div class="lg-only" style="margin-top: -12px !important;">
+                    <%= link_to "Buy Now", "https://www.paypal.com/paypalme/MartinFerretti/10", title: "Purchase X-O Manowar #1 Valiant Database exclusive variant", class: "btn btn-danger btn-sm", target: "_blank" %>
+                  </div>
+              </div>
+              <div class="clearfix"></div>
+              <hr />
                 <h4 class="text-left">
                     <%= link_to releases_currentweek_path do %>
                         <% if (Date.today.beginning_of_week + 2.day) > Date.today %>
