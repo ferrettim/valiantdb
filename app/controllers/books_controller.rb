@@ -5,7 +5,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   before_action :csvauthenticate, except: [:allfeed]
-  # before_action :authenticate, :only => :alladmin
   autocomplete :book, :title
   autocomplete :book, :writer
   autocomplete :book, :writer2
@@ -1633,19 +1632,6 @@ class BooksController < ApplicationController
       format.html
       format.json { render json: @book }
       format.js
-    end
-  end
-
-  def alladmin
-    @pgtitle = "Data export"
-    @tcount = Book.all.count
-    @book = Book.all.where.not(:category => "Sketch").order(title: :asc, rdate: :asc, issue: :asc).page(params[:page]).per(24)
-    @book_csv = Book.all.where.not(:category => "Sketch").order(publisher: :desc, title: :asc, rdate: :asc, issue: :asc)
-    respond_to do |format|
-      format.html
-      format.json { render json: @book }
-      format.js
-      format.csv { send_data @book_csv.ext_csv, filename: "vfans-export-#{DateTime.now}.csv" }
     end
   end
 

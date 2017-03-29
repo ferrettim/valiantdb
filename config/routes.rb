@@ -64,7 +64,6 @@ Rails.application.routes.draw do
       get "valiant/all/table" => "books#valiantalltbl"
       get "valiant/all/missing" => "books#valiantallmissing"
       get "valiant/all/table/missing" => "books#valiantalltblmissing"
-      get :alladmin
       get "valiant/sketch" => "books#valiantsketch"
       get "valiant/sketch/table" => "books#valiantsketchtbl"
       get "valiant/trades" => "books#valianttrades"

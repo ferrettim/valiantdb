@@ -44,9 +44,9 @@
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="https://s3.amazonaws.com/valiantdb/images/favicon2.ico" type="image/x-icon" />
   <link rel="sitemap" type="application/xml" title="Sitemap" href="https://www.valiantdatabase.com/sitemap.xml" />
-  <%= stylesheet_link_tag 'application', media: 'all', async: Rails.env.production? %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  <%= javascript_include_tag 'application', async: Rails.env.production? %>
+  <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 
 </head>
