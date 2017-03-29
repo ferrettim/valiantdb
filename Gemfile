@@ -10,7 +10,7 @@ gem 'rack-cache'
 # Assets
 gem 'bootstrap-sass'
 gem 'rails-assets-tether'
-gem 'font-awesome-rails'
+# gem 'font-awesome-rails'
 gem 'sprockets'
 gem 'jasny-bootstrap-rails'
 gem 'sass-rails'
