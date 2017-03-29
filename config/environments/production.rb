@@ -66,7 +66,21 @@ Rails.application.configure do
   end
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.action_controller.asset_host = "https://d2y9jytd9flvo8.cloudfront.net"
+  # config.action_controller.asset_host = "https://d2y9jytd9flvo8.cloudfront.net"
+  config.action_controller.asset_host =
+      Proc.new { |source|
+        if source.ends_with?('.css')
+          "https://d2y9jytd9flvo8.cloudfront.net"
+        elsif source.ends_with?('.js')
+          "https://d2y9jytd9flvo8.cloudfront.net"
+        elsif source.ends_with?('.jpg')
+          "https://d2y9jytd9flvo8.cloudfront.net"
+        elsif source.ends_with?('.jpeg')
+          "https://d2y9jytd9flvo8.cloudfront.net"
+        elsif source.ends_with?('.png')
+          "https://d2y9jytd9flvo8.cloudfront.net"
+        end
+      }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
