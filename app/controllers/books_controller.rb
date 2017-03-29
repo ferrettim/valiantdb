@@ -5,7 +5,7 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   before_action :csvauthenticate, except: [:allfeed]
-  before_action :ensure_canonical_url
+  before_action :ensure_canonical_url, only: [:show]
   autocomplete :book, :title
   autocomplete :book, :writer
   autocomplete :book, :writer2
