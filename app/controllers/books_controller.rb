@@ -5,6 +5,7 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   before_action :csvauthenticate, except: [:allfeed]
+  before_action :ensure_canonical_url
   autocomplete :book, :title
   autocomplete :book, :writer
   autocomplete :book, :writer2
@@ -21,6 +22,10 @@ class BooksController < ApplicationController
   autocomplete :book, :retailer
   autocomplete :book, :convention
   respond_to :html, :json, :js
+
+  def ensure_canonical_url
+    redirect_to action: action_name, id: @book.friendly_id, status: 301 unless @book.friendly_id == params[:id]
+  end
 
   def autocomplete
     render json: Book.search(params[:query], {
