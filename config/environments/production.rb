@@ -66,7 +66,7 @@ Rails.application.configure do
   end
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.action_controller.asset_host = "https://d2y9jytd9flvo8.cloudfront.net"
+  config.action_controller.asset_host = "d2y9jytd9flvo8.cloudfront.net"
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -108,6 +108,7 @@ Rails.application.configure do
     :storage => :s3,
     :s3_region => 'us-east-1',
     :s3_permissions => 'public-read',
+    :s3_host_alias => 'd2y9jytd9flvo8.cloudfront.net',
     :s3_credentials => {
       :bucket => ENV['AWS_BUCKET'],
       :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
