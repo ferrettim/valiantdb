@@ -108,6 +108,7 @@ Rails.application.configure do
     :storage => :s3,
     :s3_region => 'us-east-1',
     :s3_permissions => 'public-read',
+    :url => ':s3_alias_url',
     :s3_host_alias => 'd2y9jytd9flvo8.cloudfront.net',
     :s3_credentials => {
       :bucket => ENV['AWS_BUCKET'],
