@@ -65,8 +65,6 @@ gem 'aws-sdk', '~> 2'
 # Pagination
 gem 'kaminari'
 gem 'kaminari-bootstrap'
-# Search functionality
-gem 'searchkick'
 # Rating system
 gem 'ratyrate', :branch => 'development'
 # Time zone support

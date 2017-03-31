@@ -14,12 +14,6 @@
 			  </div>
 			<% end %>
 
-			<% if params[:query].present? %>
-				<% @search_count = Book.search(params[:query]).count %>
-				<% @title = Book.search(params[:query], page: params[:page], per_page: 20) %>
-				<%= render "pages/search" %>
-				<%= render "pages/book" %>
-			<% else %>
 				<div class="card">
 
 			    <div class="row">
@@ -326,31 +320,31 @@
 
 													</ul>
 												<% unless @book.writer.blank? %>
-												<p>Written by <%= link_to search_path + "/?utf8=✓&query=" + @book.writer, data: { toggle: "tooltip" }, :title => "View books by " + @book.writer do %><%= @book.writer %><% end %>
+												<p>Written by <%= link_to books_path + "/?utf8=✓&writer=" + @book.writer, data: { toggle: "tooltip" }, :title => "View books by " + @book.writer do %><%= @book.writer %><% end %>
 												<% end %>
 													<% unless @book.writer2.blank? %>
-														and <%= link_to search_path + "/?utf8=✓&query=" + @book.writer2, data: { toggle: "tooltip" }, :title => "View books by " + @book.writer2 do %><%= @book.writer2 %><% end %>
+														and <%= link_to books_path + "/?utf8=✓&writer=" + @book.writer2, data: { toggle: "tooltip" }, :title => "View books by " + @book.writer2 do %><%= @book.writer2 %><% end %>
 													<% end %>
 													<br />
 												<% unless @book.artist.blank? %>
-												   Art by <%= link_to search_path + "/?utf8=✓&query=" + @book.artist, data: { toggle: "tooltip" }, :title => "View books by " + @book.artist do %><%= @book.artist %><% end %>
+												   Art by <%= link_to books_path + "/?utf8=✓&artist=" + @book.artist, data: { toggle: "tooltip" }, :title => "View books by " + @book.artist do %><%= @book.artist %><% end %>
 												   <% if @book.artist2.blank? %><br /><% end %>
 												<% end %>
 												   <% unless @book.artist2.blank? %>
-														and <%= link_to search_path + "/?utf8=✓&query=" + @book.artist2, data: { toggle: "tooltip" }, :title => "View books by " + @book.artist2 do %><%= @book.artist2 %><% end %><br />
+														and <%= link_to books_path + "/?utf8=✓&artist=" + @book.artist2, data: { toggle: "tooltip" }, :title => "View books by " + @book.artist2 do %><%= @book.artist2 %><% end %><br />
 													<% end %>
 												   <% unless @book.colors.blank? %>
-												   	Colors by <%= link_to search_path + "/?utf8=✓&query=" + @book.colors, data: { toggle: "tooltip" }, :title => "View books by " + @book.colors do %><%= @book.colors %><% end %><br />
+												   	Colors by <%= link_to books_path + "/?utf8=✓&colors=" + @book.colors, data: { toggle: "tooltip" }, :title => "View books by " + @book.colors do %><%= @book.colors %><% end %><br />
 												   <% end %>
-												   Cover by <%= link_to search_path + "/?utf8=✓&query=" + @book.cover, data: { toggle: "tooltip" }, :title => "View books by " + @book.cover do %><%= @book.cover %><% end %><br />
+												   Cover by <%= link_to books_path + "/?utf8=✓&cover=" + @book.cover, data: { toggle: "tooltip" }, :title => "View books by " + @book.cover do %><%= @book.cover %><% end %><br />
 												   <% unless @book.letters.blank? %>
-													   Letters by <%= link_to search_path + "/?utf8=✓&query=" + @book.letters, data: { toggle: "tooltip" }, :title => "View books by " + @book.letters do %><%= @book.letters %><% end %><br />
+													   Letters by <%= link_to books_path + "/?utf8=✓&letters=" + @book.letters, data: { toggle: "tooltip" }, :title => "View books by " + @book.letters do %><%= @book.letters %><% end %><br />
 													<% end %>
 												   <% unless @book.editor.blank? %>
-													   Editor: <%= link_to search_path + "/?utf8=✓&query=" + @book.editor, data: { toggle: "tooltip" }, :title => "View books by " + @book.editor do %><%= @book.editor %><% end %><br />
+													   Editor: <%= link_to books_path + "/?utf8=✓&editor=" + @book.editor, data: { toggle: "tooltip" }, :title => "View books by " + @book.editor do %><%= @book.editor %><% end %><br />
 													<% end %>
 												   <% unless @book.eic.blank? %>
-													   Editor-in-Chief: <%= link_to search_path + "/?utf8=✓&query=" + @book.eic, data: { toggle: "tooltip" }, :title => "View books by " + @book.eic do %><%= @book.eic %><% end %><br />
+													   Editor-in-Chief: <%= link_to books_path + "/?utf8=✓&eic=" + @book.eic, data: { toggle: "tooltip" }, :title => "View books by " + @book.eic do %><%= @book.eic %><% end %><br />
 													<% end %>
 													<% unless @book.price.blank? %>
 														Cover Price:
@@ -887,4 +881,3 @@
 						<!-- End Modal -->
 						<% end %>
 			</div>
-			<% end %>

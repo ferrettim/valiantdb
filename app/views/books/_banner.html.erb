@@ -684,6 +684,23 @@
   <% elsif action_name == "valianteventschaoseffect" %>
   <div id="bannerclassic"></div>
 
+  <% elsif controller_name == "books" && action_name == "index" %>
+    <% if params[:publisher].present? %>
+      <% if params[:publisher] == "Voyager Communications" %>
+        <div id="bannerclassic">
+        </div>
+      <% elsif params[:publisher] == "Valiant Entertainment" %>
+        <div id="bannerall">
+        </div>
+      <% elsif params[:publisher] == "Acclaim Entertainment" %>
+        <div id="banneracclaim">
+        </div>
+      <% end %>
+    <% else %>
+      <div id="bannerall">
+      </div>
+    <% end %>
+
   <% elsif action_name == "monthlysales" %>
     <div id="bannerall">
       <div class="pageinfo">

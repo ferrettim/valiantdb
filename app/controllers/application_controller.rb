@@ -10,8 +10,24 @@ class ApplicationController < ActionController::Base
   # before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :ensure_signup_complete, only: [:new, :create, :update, :destroy]
+  before_action :load_filters
   after_action :user_activity
   after_action :store_location
+
+  def load_filters
+    @filtertitle = Book.select("DISTINCT(title)").group("title").order("title")
+    @filterissue = Book.select("DISTINCT(issue)").group("issue").order("issue")
+    @filtercategory = Book.select("DISTINCT(category)").group("category").order("category")
+    @filterratio = Book.select("DISTINCT(ratio)").group("ratio").order("ratio desc")
+    @filterretailer = Book.select("DISTINCT(retailer)").group("retailer").order("retailer desc")
+    @filterconvention = Book.select("DISTINCT(convention)").group("convention").order("convention desc")
+    @filterwriter = Book.select("DISTINCT(writer)").group("writer").order("writer asc")
+    @filterartist = Book.select("DISTINCT(artist)").group("artist").order("artist asc")
+    @filtercolors = Book.select("DISTINCT(colors)").group("colors").order("colors asc")
+    @filtercover = Book.select("DISTINCT(cover)").group("cover").order("cover asc")
+    @filtercountry = Book.select("DISTINCT(country)").group("country").order("country asc")
+    @filterpublisher = Book.select("DISTINCT(publisher)").group("publisher").order("publisher asc")
+  end
 
   protected
 

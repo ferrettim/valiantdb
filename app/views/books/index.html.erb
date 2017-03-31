@@ -1,2 +1,5 @@
 
-
+<% if params[:query].present? %>
+<%= render "search" %>
+<% end %>
+<%= render "book" %>

@@ -209,13 +209,132 @@
                 </li>
                 <li><%= link_to news_path, :title => "News", :rel => "prerender" do %>News<% end %></li>
                 <% if user_signed_in? %>
-                  <li><a href="#searchpopup"><i class="fa fa-search"></i> <span class="lg-only">Search</span></a></li>
-                  <div id="searchpopup">
+                  <li>
+                    <%= link_to "#", data: { toggle: "modal", target: "#filterpopup" }, :title => "Search Valiant Database" do %>
+                      <i class="fa fa-search"></i> <span class="lg-only">Search</span>
+                    <% end %>
+                  </li>
+                  <div id="filterpopup" class="modal fade" role="dialog" aria-labelledby="filterpopup" aria-hidden="true">
                       <button type="button" class="close">×</button>
-                      <%= form_tag "/search", :method => 'get', :role => "search" do %>
-                        <%= text_field_tag :query, params[:query], autocomplete: "off", :placeholder => "Search Valiant Database...", type: "search", id: "barcode" %>
-                        <button type="submit" class="btn btn-primary btn-lg">Search</button>
-                      <% end %>
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">
+                                Search the database
+                              </h4>
+                            </div>
+                            <div class="modal-body" style="overflow-y: visible !important; position: static !important;">
+                              <%= form_tag "/books", :method => 'get', :role => "search", class: "form-inline" do %>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                  <select name="title" class="form-control chosen-select" style="width: 100% !important;">
+                                    <option disabled selected>Select book title</option>
+                                    <% @filtertitle.each do |n| %>
+                                      <option value="<%= n.title %>"><%= n.title %></option>
+                                    <% end %>
+                                  </select>
+                                </div>
+                                <br /><br />
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="display: inline-block; width: 50%;">
+                                  <br />
+                                  <select name="writer" class="form-control chosen-select" style="width: 100% !important;">
+                                    <option disabled selected>Select writer</option>
+                                    <% @filterwriter.each do |n| %>
+                                      <option value="<%= n.writer %>"><%= n.writer %></option>
+                                    <% end %>
+                                  </select>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="display: inline-block; width: 50%;">
+                                  <br />
+                                  <select name="artist" class="form-control chosen-select" style="width: 100% !important;">
+                                    <option disabled selected>Select artist</option>
+                                    <% @filterartist.each do |n| %>
+                                      <option value="<%= n.artist %>"><%= n.artist %></option>
+                                    <% end %>
+                                  </select>
+                                </div>
+                                <br /><br />
+                                <div class="col-md-12 col-sm-12 col-xs-12" style="display: inline-block;">
+                                  <br />
+                                  <select name="cover" class="form-control chosen-select" style="width: 100% !important;">
+                                    <option disabled selected>Select cover artist</option>
+                                    <% @filtercover.each do |n| %>
+                                      <option value="<%= n.cover %>"><%= n.cover %></option>
+                                    <% end %>
+                                  </select>
+                                </div>
+                                <br /><br />
+                                <div class="col-md-4 col-sm-4 col-xs-4" style="display: inline-block;">
+                                  <br />
+                                  <select name="issue" class="form-control chosen-select" style="width: 100% !important;">
+                                    <option disabled selected>Issue</option>
+                                    <% @filterissue.each do |n| %>
+                                      <option value="<%= n.issue %>"><%= n.issue %></option>
+                                    <% end %>
+                                  </select>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-4" style="display: inline-block;">
+                                  <br />
+                                  <select name="ratio" class="form-control chosen-select" style="width: 100% !important;">
+                                    <option disabled selected>Ratio</option>
+                                    <% @filterratio.each do |n| %>
+                                      <option value="<%= n.ratio %>"><%= n.ratio %></option>
+                                    <% end %>
+                                  </select>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-4" style="display: inline-block;">
+                                  <br />
+                                  <select name="category" class="form-control chosen-select" style="width: 100% !important;">
+                                    <option disabled selected>Category</option>
+                                    <% @filtercategory.each do |n| %>
+                                      <option value="<%= n.category %>"><%= n.category %></option>
+                                    <% end %>
+                                  </select>
+                                </div>
+                                <br /><br />
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="display: inline-block; width: 50%;">
+                                  <br />
+                                  <select name="retailer" class="form-control chosen-select" style="width: 100% !important;">
+                                    <option disabled selected>Select a convention</option>
+                                    <% @filterretailer.each do |n| %>
+                                      <option value="<%= n.retailer %>"><%= n.retailer %></option>
+                                    <% end %>
+                                  </select>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="display: inline-block; width: 50%;">
+                                  <br />
+                                  <select name="convention" class="form-control chosen-select" style="width: 100% !important;">
+                                    <option disabled selected>Select a convention</option>
+                                    <% @filterconvention.each do |n| %>
+                                      <option value="<%= n.convention %>"><%= n.convention %></option>
+                                    <% end %>
+                                  </select>
+                                </div>
+                                <br /><br />
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                  <br />
+                                  <select name="publisher" class="form-control chosen-select" style="width: 100% !important;">
+                                    <option value="">No Preference</option>
+                                    <% @filterpublisher.each do |n| %>
+                                      <% if n.publisher == "Valiant Entertainment" %>
+                                        <option value="<%= n.publisher %>" selected><%= n.publisher %></option>
+                                      <% else %>
+                                        <option value="<%= n.publisher %>"><%= n.publisher %></option>
+                                      <% end %>
+                                    <% end %>
+                                  </select>
+                                  <br />
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                  <br />
+                                  <button type="submit" class="btn btn-primary btn-sm" style="width: 100% !important;">Search</button>
+                                </div>
+                                <div class="clearfix"><br /></div>
+                              <% end %>
+                            </div>
+                          </div>
+                        </div>
+
                   </div>
                 <% end %>
             </ul>

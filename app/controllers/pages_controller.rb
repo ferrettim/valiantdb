@@ -15,10 +15,7 @@ class PagesController < ApplicationController
   end
 
   def search
-  	@pgtitle = "Search"
-    @search_count = Book.search(params[:query]).count
-    @title = Book.search(params[:query], page: params[:page], per_page: 24)
-    @tcount = Book.all.count
+  	redirect_to root_path
   end
 
   def privacy

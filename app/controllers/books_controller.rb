@@ -55,7 +55,21 @@ class BooksController < ApplicationController
   end
 
   def index
-    redirect_to root_path
+    @book = Book.all.pub_order.page(params[:page]).per(24)
+    @book = @book.where(:issue => params[:issue]) if params[:issue].present?
+    @book = @book.where(:title => params[:title]) if params[:title].present?
+    @book = @book.where(:category => params[:category]) if params[:category].present?
+    @book = @book.where(:ratio => params[:ratio]) if params[:ratio].present?
+    @book = @book.where(:retailer => params[:retailer]) if params[:retailer].present?
+    @book = @book.where(:convention => params[:convention]) if params[:convention].present?
+    @book = @book.where(:writer => params[:writer]) if params[:writer].present?
+    @book = @book.where(:colors => params[:colors]) if params[:colors].present?
+    @book = @book.where(:artist => params[:artist]) if params[:artist].present?
+    @book = @book.where(:letters => params[:letters]) if params[:letters].present?
+    @book = @book.where(:editor => params[:editor]) if params[:editor].present?
+    @book = @book.where(:eic => params[:eic]) if params[:eic].present?
+    @book = @book.where(:cover => params[:cover]) if params[:cover].present?
+    @book = @book.where(:publisher => params[:publisher]) if params[:publisher].present?
   end
 
   def mywishlist

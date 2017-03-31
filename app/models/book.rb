@@ -20,10 +20,6 @@ class Book < ActiveRecord::Base
 							  :default_url => "https://s3.amazonaws.com/valiantdb/books/images/medium/missing.png"
 	process_in_background :image, queue: "paperclip"
 	validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
-	searchkick suggest: ["title", "writer", "writer2" "artist", "colors", "cover", "letters", "eic", "isb"],
-			   unsearchable: ["id", "created_at", "updated_at", "notes", "summary"],
-			   autocomplete: ["title"],
-			   word_start: ["title", "isb^10"]
 	has_many :wishes, :dependent => :destroy
 	has_many :owns, :dependent => :destroy
 	has_many :sales, :dependent => :destroy
