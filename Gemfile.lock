@@ -241,8 +241,6 @@ GEM
     puma-heroku (1.0.0)
       puma (~> 3.0)
     rack (2.0.1)
-    rack-attack (5.0.1)
-      rack
     rack-cache (1.6.1)
       rack (>= 0.4)
     rack-protection (1.5.3)
@@ -392,7 +390,6 @@ DEPENDENCIES
   public_activity
   puma-heroku
   rack
-  rack-attack
   rack-cache
   rails
   rails-assets-tether
