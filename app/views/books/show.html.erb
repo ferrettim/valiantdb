@@ -541,7 +541,7 @@
 															Includes appearances by <%= h raw @book.tags.map(&:name).map { |c| link_to c, root_url + "characters/" + c.parameterize }.join(', ') %>.
 														<% end %>
 													<% end %>
-													<% unless @book.arc.blank? || @book.category == "Paperback" || @book.category == "Hardcover" %>Part of <%= link_to search_path + "/?utf8=✓&query=" + @book.arc, data: { toggle: "tooltip" }, :title => "View books in this arc" do %><%= @book.arc %><% end %> arc.
+													<% unless @book.arc.blank? || @book.category == "Paperback" || @book.category == "Hardcover" %>Part of <%= link_to search_path + "/?utf8=✓&arc=" + @book.arc, data: { toggle: "tooltip" }, :title => "View books in this arc" do %><%= @book.arc %><% end %> arc.
 													<% end %>
 													<% if user_signed_in? %>
 														<span id="own_notes"><%= render 'ownsnotes' %></span>

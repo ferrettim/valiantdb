@@ -7,6 +7,7 @@ gem 'railties'
 gem 'excon'
 gem 'rack'
 gem 'rack-cache'
+gem 'rack-attack'
 # Assets
 gem 'bootstrap-sass'
 gem 'rails-assets-tether'

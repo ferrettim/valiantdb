@@ -1,0 +1,3 @@
+Rack::Attack.blacklist('block 136.243.36.88') do |req|
+  '136.243.36.88' == req.ip
+end

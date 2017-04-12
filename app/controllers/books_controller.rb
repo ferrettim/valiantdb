@@ -70,6 +70,7 @@ class BooksController < ApplicationController
     @book = @book.where(:eic => params[:eic]) if params[:eic].present?
     @book = @book.where(:cover => params[:cover]) if params[:cover].present?
     @book = @book.where(:publisher => params[:publisher]) if params[:publisher].present?
+    @book = @book.where(:arc) => params[:arc] if params[:arc].present?
   end
 
   def mywishlist
