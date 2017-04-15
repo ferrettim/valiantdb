@@ -6,7 +6,6 @@
     </div>
   <% end %>
 <% end %>
-
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -295,7 +294,7 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12" style="display: inline-block; width: 50%;">
                                   <br />
                                   <select name="retailer" class="form-control chosen-select" style="width: 100% !important;">
-                                    <option disabled selected>Select a convention</option>
+                                    <option disabled selected>Select a retailer</option>
                                     <% @filterretailer.each do |n| %>
                                       <option value="<%= n.retailer %>"><%= n.retailer %></option>
                                     <% end %>

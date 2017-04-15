@@ -46,7 +46,7 @@
   <link rel="sitemap" type="application/xml" title="Sitemap" href="https://www.valiantdatabase.com/sitemap.xml" />
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-<style>span.select2-container { z-index:10050 !important; }</style>
+  <style>span.select2-container { z-index:10050 !important; } #nprogress .bar, #nprogress .spinner { z-index: 999999999999999999999; }</style>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 
@@ -91,6 +91,17 @@
         <%= render "layouts/footer2" unless @skip_footer %>
   <% end %>
 </div>
+
+<script type="text/javascript">
+NProgress.start();
+NProgress.set(0.4);
+//Increment
+var interval = setInterval(function() { NProgress.inc(); }, 1500);
+$(document).ready(function(){
+    NProgress.done();
+    clearInterval(interval);
+});
+</script>
 
 <script type="text/javascript">
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

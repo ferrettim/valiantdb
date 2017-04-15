@@ -421,6 +421,7 @@ class BooksController < ApplicationController
       format.html
       format.json { render json: @book }
       format.js
+      format.csv { send_data @bookcsv.to_csv2, filename: "veibydate.csv" }
       format.xml { send_data @bookcsv.to_csv, filename: "vei-releases-bydate.csv" }
     end
   end

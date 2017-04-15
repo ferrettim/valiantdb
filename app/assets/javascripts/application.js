@@ -1,5 +1,4 @@
 //= require jquery
-//= require search
 //= require jquery_ujs
 //= require jquery-ui
 //= require tinymce-jquery
