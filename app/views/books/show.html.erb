@@ -225,21 +225,9 @@
 													<ul class="list-unstyled pull-right">
 														<% if user_signed_in? %>
 															<% unless @book.rdate.future? %>
-																<% if current_user.patron? %>
 																	<li id="<%= @book.id %>_owns">
 																		<%= render partial: "owns" %>
 																	</li>
-																<% else %>
-																	<% if current_user.owns_count < 1500 %>
-																		<li id="<%= @book.id %>_owns">
-																			<%= render partial: "owns" %>
-																		</li>
-																	<% else %>
-																		<li id="<%= @book.id %>_owns">
-																			<span class="fa fa-heart"></span>
-																		</li>
-																	<% end %>
-																<% end %>
 															<% end %>
 															<li id="<%= @book.id %>_wishes">
 																<%= render partial: "wishes" %>
