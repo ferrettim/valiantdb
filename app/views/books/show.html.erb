@@ -444,6 +444,8 @@
 																		Sales: <strong><%= s.printrun / 500 %> </strong> copies (estimated based on total sales)<br />
 																	<% elsif @book.ratio == "1:100 Linewide" %>
 																		Sales: <strong><%= Book.where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).where(:category => "Default").sum(:printrun) / 100 %></strong> copies (estimated based on total sales)<br />
+																		<% elsif @book.ratio == "1:120 Linewide" %>
+																			Sales: <strong><%= Book.where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).where(:category => "Default").sum(:printrun) / 120 %></strong> copies (estimated based on total sales)<br />
 																	<% elsif @book.ratio == "1:125 Linewide" %>
 																		Sales: <strong><%= Book.where(rdate: (@book.rdate.beginning_of_month)..(@book.rdate.end_of_month)).where(:category => "Default").sum(:printrun) / 125 %></strong> copies (estimated based on total sales)<br />
 												   			 	<% end %>

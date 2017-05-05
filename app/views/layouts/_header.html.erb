@@ -69,7 +69,6 @@
                      <% end %>
                       <li class="dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown">My Links</a>
                         <ul class="dropdown-menu multi-level">
-                           <li><a href='/'>My Dashboard</a></li>
                            <li><%= link_to root_url + "users/" + current_user.slug + "/collection", :title => "My Collection" do %>My Collection<% end %></li>
                            <li><%= link_to root_url + "users/" + current_user.slug + "/wishlist", :title => "My Wishlist" do %>My Wishlist<% end %></li>
                            <li><%= link_to root_url + "users/" + current_user.slug + "/forsale", :title => "My Books For Sale" do %>My Books For Sale<% end %></li>
