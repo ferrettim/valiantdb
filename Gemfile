@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby "2.3.3"
+ruby "2.4.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
@@ -67,7 +67,7 @@ gem 'aws-sdk', '~> 2'
 gem 'kaminari'
 gem 'kaminari-bootstrap'
 # Rating system
-gem 'ratyrate', :branch => 'development'
+gem 'ratyrate'
 # Time zone support
 gem 'local_time'
 # Charts

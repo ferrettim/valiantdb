@@ -14,7 +14,7 @@
 //= require nprogress
 //= require nprogress-turbolinks
 //= require select2
-//= require local_time
+//= require local-time
 //= require fancybox
 //= require jsapi
 //= require chartkick

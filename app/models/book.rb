@@ -40,7 +40,7 @@ class Book < ActiveRecord::Base
 
 	def should_generate_new_friendly_id?
 	    slug.nil? || title_changed? || issue_changed? || cover_changed? || category_changed? || printing_changed?
-	 end
+	end
 
 	def price_in_dollars
 		price.to_d/100 if price
