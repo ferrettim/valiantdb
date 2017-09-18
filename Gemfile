@@ -5,6 +5,7 @@ ruby "2.4.0"
 gem 'rails'
 gem 'railties'
 gem 'excon'
+gem 'bootsnap', require: false
 gem 'rack'
 gem 'rack-cache'
 gem 'rack-attack'
