@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :ensure_signup_complete, only: [:new, :create, :update, :destroy]
   before_action :load_filters
-  after_action :user_activity
   after_action :store_location
 
   def load_filters
