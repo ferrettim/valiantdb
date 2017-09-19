@@ -124,5 +124,4 @@ group :production do
 	gem 'sidekiq'
 	gem 'sinatra', require: false
 	gem 'activejob'
-	gem 'scout_apm'
 end
