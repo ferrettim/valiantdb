@@ -48,23 +48,23 @@
 							<% end %>
 						<% end %>
 						<p>
-							Written by <%= upcoming.writer.to_s %>
-								<% if upcoming.writer2? %> and <%= upcoming.writer2.to_s %><% end %><br />
-							Art by <%= upcoming.artist.to_s %>
-								<% if upcoming.artist2? %> and <%= upcoming.artist2.to_s %><% end %><br />
+							Written by <%= link_to upcoming.writer.to_s, "https://www.valiantdatabase.com/books?utf8=%E2%9C%93&writer=#{upcoming.writer}" %>
+								<% if upcoming.writer2? %> and <%= link_to upcoming.writer2.to_s, "https://www.valiantdatabase.com/books?utf8=%E2%9C%93&writer=#{upcoming.writer2}" %><% end %><br />
+							Art by <%= link_to upcoming.artist.to_s, "https://www.valiantdatabase.com/books?utf8=%E2%9C%93&artist=#{upcoming.artist}" %>
+								<% if upcoming.artist2? %> and <%= link_to upcoming.artist2.to_s, "https://www.valiantdatabase.com/books?utf8=%E2%9C%93&artist=#{upcoming.artist2}" %><% end %><br />
 							<% if upcoming.colors? %>
-								Colors by <%= upcoming.colors.to_s %><br />
+								Colors by <%= link_to upcoming.colors.to_s, "https://www.valiantdatabase.com/books?utf8=%E2%9C%93&colors=#{upcoming.colors}" %><br />
 							<% end %>
 							<% if upcoming.category == "Paperback" %>
-								Cover by <%= upcoming.cover.to_s.to_s %><br />
+								Cover by <%= link_to upcoming.cover.to_s, "https://www.valiantdatabase.com/books?utf8=%E2%9C%93&cover=#{upcoming.cover}" %><br />
 							<% elsif upcoming.category == "Hardcover" %>
-								Cover by <%= upcoming.cover.to_s.to_s %><br />
+								Cover by <%= link_to upcoming.cover.to_s, "https://www.valiantdatabase.com/books?utf8=%E2%9C%93&cover=#{upcoming.cover}" %><br />
 							<% elsif upcoming.category == "Promo" %>
-								Cover by <%= upcoming.cover.to_s.to_s %><br />
+								Cover by <%= link_to upcoming.cover.to_s, "https://www.valiantdatabase.com/books?utf8=%E2%9C%93&cover=#{upcoming.cover}" %><br />
 							<% else %>
-								Covers by <%= upcoming.cover.to_s.to_s %>
+								Covers by <%= link_to upcoming.cover.to_s, "https://www.valiantdatabase.com/books?utf8=%E2%9C%93&cover=#{upcoming.cover}" %>
 								<% if upcoming.category == "Default" %>
-									<% Book.where(:title => upcoming.title).where(:issue => upcoming.issue).where(rdate: (upcoming.rdate - 1.month)..(upcoming.rdate + 1.month)).where(:category => "Variant").where.not(:id => upcoming.id).each do |related| %>, <%= related.cover.to_s %>
+									<% Book.where(:title => upcoming.title).where(:issue => upcoming.issue).where(rdate: (upcoming.rdate - 1.month)..(upcoming.rdate + 1.month)).where(:category => "Variant").where.not(:id => upcoming.id).each do |related| %>, <%= link_to related.cover.to_s, "https://www.valiantdatabase.com/books?utf8=%E2%9C%93&cover=#{related.cover}" %>
 								<% end %><br />
 							<% end %>
 							<% end %>
