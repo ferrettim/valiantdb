@@ -69,7 +69,7 @@
 							<% end %>
 							<% end %>
 							<% if upcoming.letters? %>
-								Letters by <%= upcoming.letters.to_s %><br />
+								Letters by <%= upcoming.letters.to_s, "https://www.valiantdatabase.com/books?utf8=%E2%9C%93&letters=#{upcoming.letters}" %><br />
 							<% end %>
 							Price: US $<%= upcoming.price_in_dollars %><br />
 							<% unless upcoming.code.blank? %>Diamond Order Code: <%= upcoming.code.to_s.upcase %><br /><% end %>
